@@ -8,7 +8,7 @@
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Typographies Star Wars / Cyber-militaires -->
+  <!-- Typographies Star Wars / Militaires -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -19,11 +19,11 @@
       theme: {
         extend: {
           colors: {
-            fondCarbone: '#080a0f',
-            panneauSombre: '#0e1219',
-            panneauSous: '#141a24',
-            bordureTactique: '#1f2736',
-            bordureLueur: '#2d3748',
+            fondCarbone: '#07090e',
+            panneauSombre: '#0d1117',
+            panneauSous: '#131822',
+            bordureTactique: '#1e2634',
+            bordureLueur: '#2a3548',
             rougeKamino: '#b91c1c',
             rougeAlerte: '#ef4444',
             ambreArmement: '#f59e0b',
@@ -45,11 +45,11 @@
     :root {
       --teinte-accent: #b91c1c;
       --teinte-lueur: rgba(185, 28, 28, 0.15);
-      --teinte-bordure: rgba(185, 28, 28, 0.3);
+      --teinte-bordure: rgba(185, 28, 28, 0.35);
     }
 
     body {
-      background-color: #080a0f;
+      background-color: #07090e;
       color: #e2e8f0;
       font-family: 'Rajdhani', sans-serif;
       min-height: 100vh;
@@ -57,152 +57,126 @@
       letter-spacing: 0.02em;
     }
 
-    /* Fond de carlingue Maraudeur haute lisibilité et anti-fatigue oculaire */
     .arriere-plan-vaisseau {
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(20, 26, 36, 0.5) 0%, rgba(8, 10, 15, 0.98) 80%),
-        linear-gradient(rgba(26, 34, 48, 0.12) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(26, 34, 48, 0.12) 1px, transparent 1px);
-      background-size: 100% 100%, 48px 48px, 48px 48px;
+        radial-gradient(circle at 50% 0%, rgba(19, 24, 34, 0.6) 0%, rgba(7, 9, 14, 0.98) 75%),
+        linear-gradient(rgba(30, 38, 52, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30, 38, 52, 0.12) 1px, transparent 1px);
+      background-size: 100% 100%, 40px 40px, 40px 40px;
     }
 
     .biseau-plaque {
       clip-path: polygon(
-        0 6px,
-        6px 0,
-        calc(100% - 6px) 0,
-        100% 6px,
-        100% calc(100% - 6px),
-        calc(100% - 6px) 100%,
-        6px 100%,
-        0 calc(100% - 6px)
+        0 6px, 6px 0,
+        calc(100% - 6px) 0, 100% 6px,
+        100% calc(100% - 6px), calc(100% - 6px) 100%,
+        6px 100%, 0 calc(100% - 6px)
       );
     }
 
     .biseau-bouton {
       clip-path: polygon(
-        0 4px,
-        4px 0,
-        calc(100% - 4px) 0,
-        100% 4px,
-        100% calc(100% - 4px),
-        calc(100% - 4px) 100%,
-        4px 100%,
-        0 calc(100% - 4px)
+        0 3px, 3px 0,
+        calc(100% - 3px) 0, 100% 3px,
+        100% calc(100% - 3px), calc(100% - 3px) 100%,
+        3px 100%, 0 calc(100% - 3px)
       );
     }
 
     .panneau-tactique {
-      background-color: #0e1219;
+      background-color: #0d1117;
       border: 1px solid var(--teinte-bordure);
-      box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.8), 0 0 12px -2px var(--teinte-lueur);
+      box-shadow: 0 4px 18px -2px rgba(0, 0, 0, 0.8), 0 0 10px -2px var(--teinte-lueur);
     }
 
-    /* Thèmes Lore par personnage */
     body.theme-hunter {
       --teinte-accent: #dc2626;
-      --teinte-lueur: rgba(220, 38, 38, 0.18);
-      --teinte-bordure: rgba(220, 38, 38, 0.35);
+      --teinte-lueur: rgba(220, 38, 38, 0.2);
+      --teinte-bordure: rgba(220, 38, 38, 0.4);
     }
-
     body.theme-wrecker {
       --teinte-accent: #f59e0b;
-      --teinte-lueur: rgba(245, 158, 11, 0.18);
-      --teinte-bordure: rgba(245, 158, 11, 0.35);
+      --teinte-lueur: rgba(245, 158, 11, 0.2);
+      --teinte-bordure: rgba(245, 158, 11, 0.4);
     }
-
     body.theme-crosshair {
       --teinte-accent: #10b981;
-      --teinte-lueur: rgba(16, 185, 129, 0.18);
-      --teinte-bordure: rgba(16, 185, 129, 0.35);
+      --teinte-lueur: rgba(16, 185, 129, 0.2);
+      --teinte-bordure: rgba(16, 185, 129, 0.4);
     }
-
     body.theme-tech {
       --teinte-accent: #06b6d4;
-      --teinte-lueur: rgba(6, 182, 212, 0.18);
-      --teinte-bordure: rgba(6, 182, 212, 0.35);
+      --teinte-lueur: rgba(6, 182, 212, 0.2);
+      --teinte-bordure: rgba(6, 182, 212, 0.4);
     }
 
-    ::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #080a0f;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #1f2736;
-      border-radius: 2px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--teinte-accent);
-    }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #07090e; }
+    ::-webkit-scrollbar-thumb { background: #1e2634; border-radius: 2px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--teinte-accent); }
   </style>
 </head>
 <body class="arriere-plan-vaisseau flex flex-col justify-between selection:bg-red-800 selection:text-white">
 
   <!-- Filigrane d'ambiance du Havoc Marauder -->
-  <div class="fixed top-2 right-4 w-72 h-72 pointer-events-none opacity-[0.025] -z-0">
+  <div class="fixed top-2 right-4 w-72 h-72 pointer-events-none opacity-[0.02] -z-0">
     <svg viewBox="0 0 100 100" class="w-full h-full fill-current text-white">
       <polygon points="50,5 95,75 75,85 50,60 25,85 5,75" />
       <polygon points="50,25 70,70 50,55 30,70" />
     </svg>
   </div>
 
-  <!-- BANDEAU SUPÉRIEUR UNIFIÉ DU COCKPIT (HUD COMPACT ET HARMONISÉ) -->
-  <header class="border-b border-bordureTactique bg-fondCarbone/95 backdrop-blur sticky top-0 z-40 shadow-md">
-    <div class="max-w-7xl mx-auto px-3 sm:px-4 py-1.5 flex items-center justify-between gap-3">
+  <!-- BANDEAU SUPÉRIEUR HUD ULTRA-OPTIMISÉ ET ALIGNÉ SANS DÉBORDEMENT -->
+  <header class="border-b border-bordureTactique bg-fondCarbone/95 backdrop-blur sticky top-0 z-40 shadow-lg">
+    <div class="max-w-7xl mx-auto px-2 sm:px-4 py-1.5 flex items-center justify-between gap-2">
       
-      <!-- Gauche : Écusson militaire et statut liaison -->
+      <!-- Gauche : Insigne Force Clone 99 & État de liaison -->
       <div class="flex items-center space-x-2.5 shrink-0">
-        <div class="h-8 w-8 bg-rougeKamino/20 border border-rougeKamino biseau-bouton flex items-center justify-center font-titre font-black text-rougeAlerte text-base tracking-tighter">
+        <div class="h-8 w-8 bg-rougeKamino/25 border border-rougeKamino biseau-bouton flex items-center justify-center font-titre font-black text-rougeAlerte text-base tracking-tighter">
           99
         </div>
         <div>
           <div class="flex items-center space-x-2">
-            <span class="font-titre font-bold tracking-wider text-xs sm:text-sm text-gray-100 uppercase">FORCE CLONE 99 // BAD BATCH</span>
-            <span class="hidden sm:inline-block px-1.5 py-0.5 bg-ambreArmement/15 text-ambreArmement text-[9px] font-terminal border border-ambreArmement/30 uppercase rounded-sm">CONSOLE DU MARAUDEUR</span>
+            <span class="font-titre font-bold tracking-wider text-xs sm:text-sm text-gray-100 uppercase">FORCE CLONE 99</span>
+            <span class="hidden sm:inline-block px-1.5 py-0.2 bg-ambreArmement/15 text-ambreArmement text-[9px] font-terminal border border-ambreArmement/30 uppercase rounded-sm">BAD BATCH</span>
           </div>
           <div class="text-[9px] text-gray-400 font-terminal flex items-center gap-1.5 leading-none mt-0.5">
-            <span class="inline-block w-2 h-2 rounded-full bg-vertViseur shadow-[0_0_6px_#10b981]"></span>
+            <span id="point-liaison" class="inline-block w-2 h-2 rounded-full bg-vertViseur shadow-[0_0_6px_#10b981]"></span>
             <span id="indicateur-liaison">LIAISON DISTANTE FIRESTORE : CONNECTÉE</span>
           </div>
         </div>
       </div>
 
-      <!-- Centre : Bannière d'alerte commandement discrète intégrée -->
-      <div class="hidden lg:flex items-center flex-grow justify-center px-4">
-        <div id="banniere-alerte-quota" class="hidden items-center gap-2 px-2.5 py-1 bg-red-950/50 border border-red-700/50 rounded text-xs font-terminal text-red-200">
-          <span class="text-rougeAlerte font-bold">⚠️ ALERTE :</span>
-          <span id="texte-alerte-quota" class="truncate max-w-sm">Rapports d'escouade incomplets</span>
-        </div>
+      <!-- Centre : Mention sobre du Maraudeur -->
+      <div class="hidden md:flex items-center justify-center text-center">
+        <span class="px-2 py-0.5 bg-panneauSombre border border-bordureTactique text-gray-400 text-[10px] font-terminal uppercase rounded tracking-widest">
+          CONSOLE DU HAVOC MARAUDER
+        </span>
       </div>
 
-      <!-- Droite : Commandes audio et profil opérateur compact -->
-      <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
+      <!-- Droite : Commandes audio et profil opérateur compact sécurisé -->
+      <div class="flex items-center space-x-2 shrink-0">
         <button id="bouton-audio" class="px-2 py-1 border border-bordureTactique hover:border-bordureLueur bg-panneauSombre text-gray-300 hover:text-white rounded text-[10px] font-terminal transition">
           🔊 SONS : ACTIVÉS
         </button>
 
-        <!-- Profil opérateur compact avec casque et clé discrète -->
+        <!-- Profil compact : Casque miniature + Nom + Bouton Clé + Déconnexion rouge vif -->
         <div id="bloc-profil-actif" class="hidden items-center space-x-2 bg-panneauSombre border border-bordureTactique px-2 py-1 rounded biseau-bouton">
-          <div class="w-6 h-6 rounded bg-fondCarbone border border-bordureLueur overflow-hidden shrink-0 flex items-center justify-center">
-            <img id="avatar-profil-haut" src="hunter.png" alt="Casque Opérateur" class="w-full h-full object-cover">
+          <div class="w-7 h-7 rounded bg-fondCarbone border border-bordureLueur overflow-hidden shrink-0 flex items-center justify-center p-0.5">
+            <img id="avatar-profil-haut" src="hunter.png" alt="Casque" class="w-full h-full object-contain">
           </div>
-          <div class="text-left hidden sm:block">
-            <div id="nom-operateur" class="text-[11px] font-titre font-bold text-gray-100 uppercase leading-none">Hunter</div>
-            <div id="grade-operateur" class="text-[8px] font-terminal text-gray-400 leading-none mt-0.5">Chef d'escouade</div>
+          <div class="text-left hidden lg:block leading-none">
+            <div id="nom-operateur" class="text-[11px] font-titre font-bold text-gray-100 uppercase">Hunter</div>
+            <div id="grade-operateur" class="text-[8px] font-terminal text-gray-400 mt-0.5">Sergent</div>
           </div>
 
-          <!-- Bouton MDP fin et stylisé -->
-          <button id="bouton-cle-mdp" title="Modifier mon code d'accès" class="px-1.5 py-0.5 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-[10px] font-terminal text-amber-300 hover:text-amber-200 rounded flex items-center gap-1 transition">
+          <button id="bouton-cle-mdp" title="Modifier mon mot de passe" class="px-1.5 py-1 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-[10px] font-terminal text-amber-300 rounded flex items-center gap-1 transition">
             <span>🔑</span>
-            <span class="hidden md:inline">MODIFIER MDP</span>
+            <span class="hidden sm:inline">MODIF MDP</span>
           </button>
 
-          <!-- Bouton Déconnexion épuré -->
-          <button id="bouton-quitter-session" title="Fermer la session" class="text-[10px] text-rougeAlerte hover:text-red-300 font-bold px-1 transition font-terminal">
-            [QUITTER]
+          <button id="bouton-quitter-session" title="Fermer la session" class="px-2 py-1 bg-red-950 hover:bg-red-800 border border-rougeAlerte text-[10px] font-titre font-bold text-red-200 hover:text-white rounded transition tracking-wider shrink-0">
+            [DÉCONNEXION]
           </button>
         </div>
       </div>
@@ -212,7 +186,7 @@
 
   <!-- Navigation Principale -->
   <nav id="barre-navigation" class="hidden bg-fondCarbone/90 border-b border-bordureTactique">
-    <div class="max-w-7xl mx-auto px-4 flex overflow-x-auto space-x-2 py-1.5">
+    <div class="max-w-7xl mx-auto px-3 sm:px-4 flex overflow-x-auto space-x-2 py-1.5">
       <button data-onglet="poste-commandement" class="nav-bouton px-3 py-1 font-titre text-xs tracking-wider border-b-2 border-rougeAlerte text-white bg-panneauSombre biseau-bouton transition flex items-center gap-1.5 shrink-0">
         <span>📊</span> POSTE DE COMMANDEMENT
       </button>
@@ -231,14 +205,28 @@
     </div>
   </nav>
 
-  <!-- Contenu Principal -->
-  <main class="max-w-7xl mx-auto px-3 sm:px-4 py-4 flex-grow w-full relative z-10">
+  <!-- BANNIÈRE D'ALERTE DE COMMANDEMENT (DÉPLACÉE SOUS LA NAVIGATION POUR ÉVITER TOUT DÉBORDEMENT) -->
+  <div id="banniere-alerte-quota" class="hidden max-w-7xl mx-auto px-3 sm:px-4 pt-3 w-full">
+    <div class="p-2.5 bg-red-950/70 border border-rougeAlerte rounded flex items-center justify-between gap-3 text-xs font-terminal text-red-200 shadow-md">
+      <div class="flex items-center gap-2 overflow-hidden">
+        <span class="text-base shrink-0">⚠️</span>
+        <span class="font-bold text-rougeAlerte shrink-0 uppercase">ALERTE COMMANDEMENT :</span>
+        <span id="texte-alerte-quota" class="truncate">Rapports d'escouade incomplets</span>
+      </div>
+      <button data-action-nav="effectif" class="text-[10px] text-amber-400 hover:underline uppercase shrink-0 font-bold">
+        Vérifier l'effectif →
+      </button>
+    </div>
+  </div>
 
-    <!-- 1. AUTHENTIFICATION & DOSSIER D'ÉQUIPEMENT (SPLIT SCREEN D'ACCUEIL) -->
+  <!-- Contenu Principal -->
+  <main class="max-w-7xl mx-auto px-3 sm:px-4 py-3 flex-grow w-full relative z-10">
+
+    <!-- 1. AUTHENTIFICATION & FICHE TACTIQUE HOLOGRAPHIQUE (ACCUEIL) -->
     <section id="fenetre-connexion" class="my-2">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
         
-        <!-- Colonne Gauche : Formulaire de connexion -->
+        <!-- Colonne Gauche : Formulaire d'accès -->
         <div class="lg:col-span-5 bg-panneauSombre border border-bordureTactique biseau-plaque p-4 sm:p-5 shadow-xl flex flex-col justify-between">
           <div>
             <div class="border-b border-bordureTactique pb-3 mb-3">
@@ -295,7 +283,7 @@
               </div>
 
               <div id="erreur-connexion" class="hidden text-xs font-terminal text-red-400 bg-red-950/70 p-2 rounded border border-red-800">
-                Mot de passe incorrect pour cet opérateur.
+                Code d'accès incorrect pour cet opérateur.
               </div>
 
               <button type="submit" class="w-full py-2 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold tracking-wider text-xs uppercase biseau-bouton transition shadow-md">
@@ -306,11 +294,11 @@
 
           <div class="pt-3 border-t border-bordureTactique text-[10px] font-terminal text-gray-500 mt-3 flex items-center justify-between">
             <span>RÉSEAU SÉCURISÉ GAR // PROTOCOLE 99</span>
-            <span>CYPHER SHA-256 V1.3</span>
+            <span>CYPHER SHA-256 V1.4</span>
           </div>
         </div>
 
-        <!-- Colonne Droite : Dossier Holographique avec Casque Officiel & Équipement -->
+        <!-- Colonne Droite : Fiche Tactique Officielle avec Casque HD -->
         <div class="lg:col-span-7 bg-panneauSombre border border-bordureTactique biseau-plaque p-4 sm:p-5 shadow-xl relative overflow-hidden flex flex-col justify-between">
           <div>
             <div class="flex flex-wrap items-center justify-between border-b border-bordureTactique pb-2.5 mb-3 gap-2">
@@ -323,10 +311,10 @@
               </span>
             </div>
 
-            <!-- Portrait du Casque & Attributs -->
+            <!-- Casque Officiel & Caractéristiques -->
             <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center mb-4">
               <div class="sm:col-span-4 flex justify-center">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded border-2 border-bordureLueur overflow-hidden bg-fondCarbone relative shadow-inner p-1 flex items-center justify-center">
+                <div class="w-32 h-32 rounded border-2 border-bordureLueur overflow-hidden bg-fondCarbone relative shadow-inner p-1.5 flex items-center justify-center">
                   <img id="dossier-photo-operateur" src="hunter.png" alt="Casque de l'opérateur" class="w-full h-full object-contain">
                 </div>
               </div>
@@ -350,7 +338,7 @@
               </div>
             </div>
 
-            <!-- Grille d'Armement et Équipement -->
+            <!-- Grille d'Armement -->
             <div>
               <h3 class="font-titre text-[10px] uppercase tracking-wider text-gray-400 mb-1.5 flex items-center gap-1.5">
                 <span class="text-amber-400">■</span> ARMEMENT RÉGLEMENTAIRE & ÉQUIPEMENT DE COMBAT
@@ -363,7 +351,7 @@
 
           <div class="pt-2.5 border-t border-bordureTactique text-[9px] font-terminal text-gray-500 mt-3 flex justify-between">
             <span>Dossier issu des archives de Kamino</span>
-            <span>Cliquez sur un opérateur pour basculer la vue d'équipement</span>
+            <span>Sélectionnez un opérateur pour charger son arsenal</span>
           </div>
         </div>
 
@@ -372,11 +360,11 @@
 
     <!-- 2. POSTE DE COMMANDEMENT -->
     <section id="fenetre-poste-commandement" class="hidden space-y-4">
-      <div id="banniere-lore-personnage" class="panneau-tactique p-3.5 rounded flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-        <!-- Rempli par JavaScript selon le personnage -->
+      <div id="banniere-lore-personnage" class="panneau-tactique p-3 rounded flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+        <!-- Rempli par JavaScript -->
       </div>
 
-      <!-- Synthèse du cycle hebdomadaire -->
+      <!-- Synthèse hebdomadaire -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
         <div class="bg-panneauSombre border border-bordureTactique p-3 rounded biseau-plaque">
           <span class="text-[10px] font-terminal text-gray-400 uppercase">OBJECTIF DU CYCLE EN COURS</span>
@@ -403,17 +391,17 @@
         </div>
       </div>
 
-      <!-- 4 Fiches de synthèse des opérateurs -->
+      <!-- STATUT OPÉRATIONNEL DE L'UNITÉ (CARTES DES 4 MEMBRES AVEC CASQUES VISIBLES) -->
       <div>
         <h3 class="font-titre text-[11px] uppercase tracking-wider text-gray-400 mb-2 flex items-center gap-1.5">
           <span class="text-rougeAlerte">■</span> STATUT OPÉRATIONNEL DE L'UNITÉ
         </h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3" id="cartes-membres-synthese">
-          <!-- Rempli par JavaScript -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" id="cartes-membres-synthese">
+          <!-- Injecté par JavaScript avec miniature nette du casque -->
         </div>
       </div>
 
-      <!-- Derniers rapports et plans de bataille -->
+      <!-- Derniers rapports & Plans -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div class="lg:col-span-2 bg-panneauSombre border border-bordureTactique rounded p-3.5">
           <div class="flex items-center justify-between border-b border-bordureTactique pb-2 mb-2.5">
@@ -443,7 +431,7 @@
               <!-- Rempli par JavaScript -->
             </div>
           </div>
-          <div class="mt-3 pt-2.5 border-t border-bordureTactique text-[10px] font-terminal text-gray-400">
+          <div class="mt-3 pt-2 border-t border-bordureTactique text-[10px] font-terminal text-gray-400">
             Protocole Clone Force 99 : Initiative tactique et autonomie de combat.
           </div>
         </div>
@@ -488,7 +476,7 @@
               </select>
             </div>
             <div id="champ-specialiste-conteneur">
-              <!-- Injecté par JavaScript selon l'opérateur connecté -->
+              <!-- Rempli dynamiquement -->
             </div>
           </div>
 
@@ -563,7 +551,7 @@
       </div>
     </section>
 
-    <!-- 5. PLANS TACTIQUES -->
+    <!-- 5. PLANS TACTIQUES (AVEC LE PLAN 0/0) -->
     <section id="fenetre-plans" class="hidden space-y-4">
       <div class="bg-panneauSombre border border-bordureTactique p-3.5 rounded flex flex-wrap items-center justify-between gap-3">
         <div>
@@ -575,7 +563,6 @@
           </p>
         </div>
 
-        <!-- Bouton visible UNIQUEMENT pour Hunter -->
         <button id="bouton-ajouter-plan-hunter" class="hidden px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold text-xs uppercase biseau-bouton transition shadow">
           + ENREGISTRER UN NOUVEAU PLAN
         </button>
@@ -599,7 +586,7 @@
           <span class="text-xs font-terminal text-amber-400">RESPONSABLE ANALYTIQUE : TECH</span>
         </div>
         <p class="text-xs font-terminal text-gray-300">
-          Toutes les transmissions et données séparatistes piratées par Tech sont déchiffrées et partagées avec l'escouade.
+          Toutes les transmissions et données séparatistes interceptées par Tech sont partagées avec l'escouade.
         </p>
       </div>
 
@@ -770,7 +757,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT SECURISE : ENCAPSULATION STRICTE IIFE, HACHAGE SHA-256, ANTI-XSS ET FIRESTORE -->
+  <!-- SCRIPT SÉCURISÉ : MODULE IIFE FERMÉ, GESTION PRÉCISE DES IMAGES ET SYNC FIRESTORE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { 
@@ -787,7 +774,7 @@
     (function initialiserDatapadBadBatch() {
       'use strict';
 
-      // ==================== UTILITAIRES DE SÉCURITÉ ====================
+      // ==================== UTILITAIRES DE SÉCURITÉ ET FORMATAGE ====================
       function echapperTexteHTML(chaine) {
         if (typeof chaine !== 'string') return '';
         return chaine
@@ -852,14 +839,6 @@
         }
       };
 
-      // Replis SVG haute fidélité au cas où l'image locale est en cours d'upload
-      const REPLI_SVG_CASQUES = {
-        hunter: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="%23141a24" stroke="%23dc2626" stroke-width="4"/><path d="M50 15 L50 45" stroke="%23dc2626" stroke-width="8"/><path d="M25 45 Q50 65 75 45" stroke="%23ffffff" stroke-width="6" fill="none"/><text x="50" y="82" fill="%23dc2626" font-family="sans-serif" font-weight="bold" font-size="14" text-anchor="middle">HUNTER</text></svg>',
-        wrecker: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="%23141a24" stroke="%23f59e0b" stroke-width="4"/><text x="50" y="38" fill="%23f59e0b" font-family="sans-serif" font-weight="900" font-size="20" text-anchor="middle">99</text><path d="M25 50 Q50 72 75 50" stroke="%23ffffff" stroke-width="6" fill="none"/><text x="50" y="82" fill="%23f59e0b" font-family="sans-serif" font-weight="bold" font-size="13" text-anchor="middle">WRECKER</text></svg>',
-        crosshair: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="%23141a24" stroke="%2310b981" stroke-width="4"/><circle cx="50" cy="45" r="14" stroke="%2310b981" stroke-width="4" fill="none"/><line x1="50" y1="20" x2="50" y2="70" stroke="%2310b981" stroke-width="2"/><text x="50" y="85" fill="%2310b981" font-family="sans-serif" font-weight="bold" font-size="12" text-anchor="middle">CROSSHAIR</text></svg>',
-        tech: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="%23141a24" stroke="%2306b6d4" stroke-width="4"/><rect x="30" y="32" width="40" height="24" fill="%23eab308" rx="3"/><text x="50" y="82" fill="%2306b6d4" font-family="sans-serif" font-weight="bold" font-size="14" text-anchor="middle">TECH</text></svg>'
-      };
-
       // Fichiers d'images exacts fournis par l'utilisateur
       const FICHIERS_CASQUES = {
         hunter: 'hunter.png',
@@ -868,7 +847,25 @@
         tech: 'Tech.png'
       };
 
-      // Configuration initiale de l'escouade
+      // Replis SVG propres et nets sans texte cassé (en cas de problème de chemin)
+      const REPLI_SVG_CASQUES = {
+        hunter: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230d1117"/><circle cx="50" cy="50" r="42" fill="%23131822" stroke="%23dc2626" stroke-width="3"/><path d="M50 18 L50 48" stroke="%23dc2626" stroke-width="7"/><path d="M30 48 Q50 68 70 48" stroke="%23ffffff" stroke-width="5" fill="none"/></svg>',
+        wrecker: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230d1117"/><circle cx="50" cy="50" r="42" fill="%23131822" stroke="%23f59e0b" stroke-width="3"/><text x="50" y="44" fill="%23f59e0b" font-family="sans-serif" font-weight="900" font-size="22" text-anchor="middle">99</text><path d="M28 54 Q50 72 72 54" stroke="%23ffffff" stroke-width="5" fill="none"/></svg>',
+        crosshair: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230d1117"/><circle cx="50" cy="50" r="42" fill="%23131822" stroke="%2310b981" stroke-width="3"/><circle cx="50" cy="46" r="15" stroke="%2310b981" stroke-width="3.5" fill="none"/><line x1="50" y1="22" x2="50" y2="70" stroke="%2310b981" stroke-width="2.5"/><line x1="26" y1="46" x2="74" y2="46" stroke="%2310b981" stroke-width="2.5"/></svg>',
+        tech: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230d1117"/><circle cx="50" cy="50" r="42" fill="%23131822" stroke="%2306b6d4" stroke-width="3"/><rect x="30" y="36" width="40" height="22" fill="%23f59e0b" rx="3"/><circle cx="40" cy="47" r="4" fill="%230d1117"/><circle cx="60" cy="47" r="4" fill="%230d1117"/></svg>'
+      };
+
+      // Attachement sécurisé d'image avec repli
+      function attacherImageCasque(elementImg, idOperateur) {
+        if (!elementImg) return;
+        const cheminImage = FICHIERS_CASQUES[idOperateur] || 'hunter.png';
+        elementImg.src = cheminImage;
+        elementImg.onerror = () => {
+          elementImg.onerror = null;
+          elementImg.src = REPLI_SVG_CASQUES[idOperateur] || REPLI_SVG_CASQUES.hunter;
+        };
+      }
+
       const EFFECTIF_CANONIQUE = {
         hunter: {
           id: 'hunter',
@@ -879,15 +876,14 @@
           dateEntree: '15/01/2024',
           symbole: '🎯',
           couleur: '#dc2626',
-          fichierCasque: FICHIERS_CASQUES.hunter,
           mutation: 'Sensibilité spectrale et fréquences électromagnétiques',
           armure: 'Armure Katarn modifiée avec capteurs thermiques',
           notes: 'Perception des fréquences et flux électromagnétiques. Maîtrise tactique absolue et coordination de toute l\'escouade.',
-          compteurSemaine: 3,
+          compteurSemaine: 0,
           libelleStatistique: 'Missions coordonnées',
           totalStatistique: 48,
           equipement: [
-            { nom: 'Carabine Blaster DC-17m', desc: 'Arme principale polyvalente à haute vélocité' },
+            { nom: 'Carabine Blaster DC-17m', desc: 'Arme principale compacte et polyvalente' },
             { nom: 'Couteau Vibro Tactique', desc: 'Lame d\'assaut au corps-à-corps en beskar trempé' },
             { nom: 'Gants à Récepteurs EM', desc: 'Localisation des circuits et flux énergétiques ennemis' },
             { nom: 'Balise de Ralliement 99', desc: 'Fréquence chiffrée prioritaire de commandement' }
@@ -902,11 +898,10 @@
           dateEntree: '15/01/2024',
           symbole: '💥',
           couleur: '#f59e0b',
-          fichierCasque: FICHIERS_CASQUES.wrecker,
           mutation: 'Masse musculaire colossale et résistance aux chocs extrêmes',
           armure: 'Plastron d\'assaut lourd et casque renforcé anti-blast',
-          notes: 'Capacité physique surdéveloppée. Maîtrise des explosifs thermiques et des charges lourdes.',
-          compteurSemaine: 2,
+          notes: 'Capacité physique surdéveloppée. Maîtrise des explosifs thermiques et des charges lourdes. Maintenir l\'inventaire des détonateurs.',
+          compteurSemaine: 0,
           libelleStatistique: 'Chars MTT & blindés détruits',
           totalStatistique: 89,
           equipement: [
@@ -921,19 +916,18 @@
           nom: 'Crosshair',
           matricule: 'FC-99-03',
           grade: 'Tireur d\'Élite',
-          specialite: 'Tir de haute précision & Neutralisation',
+          specialite: 'Tir de précision & Neutralisation',
           dateEntree: '15/01/2024',
           symbole: '🦅',
           couleur: '#10b981',
-          fichierCasque: FICHIERS_CASQUES.crosshair,
           mutation: 'Acuité visuelle millimétrique et réflexes de visée décuplés',
           armure: 'Armure furtive profilée noire mate anti-reflets',
-          notes: 'Précision balistique naturelle sans assistance télémétrique. Rigueur absolue et isolement tactique.',
-          compteurSemaine: 1,
+          notes: 'Précision balistique naturelle sans assistance télémétrique. Rigueur absolue et isolement tactique. Entretien continu du fusil 773.',
+          compteurSemaine: 0,
           libelleStatistique: 'Tirs de précision à la tête',
           totalStatistique: 342,
           equipement: [
-            { nom: 'Fusil Sniper 773 Firepuncher', desc: 'Portée extrême et pénétration balistique lourde' },
+            { nom: 'Fusil Sniper 773 Firepuncher', desc: 'Portée extrême et cadence de tir balistique perforante' },
             { nom: 'Réflecteurs Balistiques Mixtes', desc: 'Disques de déviation pour tirs à ricochet contournant les boucliers' },
             { nom: 'Viseur Télémétrique Oculaire', desc: 'Correction atmosphérique et vitesse du vent' },
             { nom: 'Pistolet Blaster DC-17 d\'urgence', desc: 'Neutralisation immédiate à courte portée' }
@@ -948,15 +942,14 @@
           dateEntree: '15/01/2024',
           symbole: '💻',
           couleur: '#06b6d4',
-          fichierCasque: FICHIERS_CASQUES.tech,
           mutation: 'Vitesse d\'analyse synaptique et mémoire eidétique totale',
           armure: 'Combinaison tactique légère intégrant un processeur de calcul',
-          notes: 'Traitement analytique ultrarapide. Neutralisation et dérivation des systèmes ennemis.',
-          compteurSemaine: 3,
+          notes: 'Traitement analytique ultrarapide. Neutralisation et dérivation des systèmes ennemis. Surveillance du réseau central du Maraudeur.',
+          compteurSemaine: 0,
           libelleStatistique: 'Terminaux et archives piratées',
           totalStatistique: 156,
           equipement: [
-            { nom: 'Ordinateur de Poing Slicer', desc: 'Terminal mobile de déchiffrement et de piratage' },
+            { nom: 'Ordinateur de Poing Slicer', desc: 'Terminal mobile de déchiffrement et de piratage de droïdes' },
             { nom: 'Lunettes d\'Analyse Spectrale', desc: 'Affichage tête haute, télémétrie et scan des structures' },
             { nom: 'Doubles Blasters DC-17', desc: 'Armement ambidextre à haute fréquence' },
             { nom: 'Kit de Dérivation Électrique', desc: 'Outils de diagnostic rapide des systèmes du Maraudeur' }
@@ -964,12 +957,50 @@
         }
       };
 
+      // PLANS TACTIQUES INCLUANT LE PLAN 0/0
       const PLANS_CANONIQUES = [
-        { id: 'p7', code: 'PLAN 7', cible: 'Percée par projection d\'épave blindée', chefDeManoeuvre: 'Wrecker', description: 'Wrecker projette un blindé lourd ou un caisson renforcé contre la ligne de front pour pulvériser l\'infanterie ennemie.' },
-        { id: 'p25', code: 'PLAN 25', cible: 'Surcharge électromagnétique & diversion sonore', chefDeManoeuvre: 'Tech & Hunter', description: 'Surcharge ciblée des relais d\'alimentation du complexe ennemi avec diversion sonore pendant l\'exfiltration sécurisée de l\'escouade.' },
-        { id: 'p55', code: 'PLAN 55', cible: 'Tir balistique à ricochet réflecteur', chefDeManoeuvre: 'Crosshair', description: 'Crosshair tire sur les panneaux réflecteurs disposés à grande vitesse par Tech afin de contourner les boucliers déflecteurs.' },
-        { id: 'p82', code: 'PLAN 82', cible: 'Infiltration et piratage terminal sous tir nourri', chefDeManoeuvre: 'Tech', description: 'Pénétration directe du poste de commandement adverse et reprogrammation immédiate des batteries automatisées contre leurs propres positions.' },
-        { id: 'p99', code: 'PLAN 99', cible: 'Protocole de ralliement et de sacrifice de l\'unité', chefDeManoeuvre: 'Tous les opérateurs', description: 'Protocole ultime de sauvegarde de l\'escouade. Accomplir la mission et donner sa vie pour assurer la survie des frères d\'armes.' }
+        { 
+          id: 'p0', 
+          code: 'PLAN 0/0', 
+          cible: 'Évacuation d\'urgence & Rupture de contact', 
+          chefDeManoeuvre: 'Toute l\'escouade (Coordination Hunter)', 
+          description: 'Manœuvre d\'évacuation immédiate en cas d\'encerclement critique ou de compromission totale. Tech prépare le décollage d\'urgence du Havoc Marauder, Wrecker sature la zone aux détonateurs thermiques et mines de diversion, Crosshair couvre le repli depuis un point haut avec tirs de suppression, Hunter coordonne la trajectoire de repli et verrouille les issues.' 
+        },
+        { 
+          id: 'p7', 
+          code: 'PLAN 7', 
+          cible: 'Percée par projection d\'épave blindée', 
+          chefDeManoeuvre: 'Wrecker', 
+          description: 'Wrecker projette un blindé lourd ou un caisson renforcé contre la ligne de front pour pulvériser l\'infanterie ennemie.' 
+        },
+        { 
+          id: 'p25', 
+          code: 'PLAN 25', 
+          cible: 'Surcharge électromagnétique & diversion sonore', 
+          chefDeManoeuvre: 'Tech & Hunter', 
+          description: 'Surcharge ciblée des relais d\'alimentation du complexe ennemi avec diversion sonore pendant l\'exfiltration sécurisée de l\'escouade.' 
+        },
+        { 
+          id: 'p55', 
+          code: 'PLAN 55', 
+          cible: 'Tir balistique à ricochet réflecteur', 
+          chefDeManoeuvre: 'Crosshair', 
+          description: 'Crosshair tire sur les disques réflecteurs disposés à grande vitesse par Tech afin de contourner les boucliers déflecteurs.' 
+        },
+        { 
+          id: 'p82', 
+          code: 'PLAN 82', 
+          cible: 'Infiltration et piratage terminal sous tir nourri', 
+          chefDeManoeuvre: 'Tech', 
+          description: 'Pénétration directe du poste de commandement adverse et reprogrammation immédiate des batteries automatisées contre leurs propres positions.' 
+        },
+        { 
+          id: 'p99', 
+          code: 'PLAN 99', 
+          cible: 'Protocole de ralliement et de sacrifice de l\'unité', 
+          chefDeManoeuvre: 'Tous les opérateurs', 
+          description: 'Protocole ultime de sauvegarde de l\'escouade. Accomplir la mission et donner sa vie pour assurer la survie des frères d\'armes.' 
+        }
       ];
 
       const etat = {
@@ -984,7 +1015,7 @@
         motsDePasseHashes: {}
       };
 
-      // Hash SHA-256 de base pour "1234" = 03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4
+      // Hash de base SHA-256 pour "1234"
       const HASH_DEFAUT = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4";
       ['hunter', 'wrecker', 'crosshair', 'tech'].forEach(id => {
         etat.motsDePasseHashes[id] = HASH_DEFAUT;
@@ -1012,9 +1043,13 @@
       }
 
       function initialiserSynchronisationFirestore() {
-        if (!estConnecteFirestore) return;
+        if (!estConnecteFirestore) {
+          document.getElementById('indicateur-liaison').textContent = "LIAISON LOCALE (HORS LIGNE)";
+          document.getElementById('point-liaison').className = "inline-block w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_6px_#f59e0b]";
+          return;
+        }
 
-        // 1. Synchronisation de la configuration (mots de passe hachés et quota)
+        // 1. Config escouade (quotas et mots de passe)
         const refConfigEscouade = doc(baseDeDonnees, 'config', 'escouade');
         onSnapshot(refConfigEscouade, snap => {
           if (snap.exists()) {
@@ -1032,7 +1067,7 @@
           }
         }, err => console.warn(err));
 
-        // 2. Synchronisation de l'effectif
+        // 2. Fiches opérateurs
         const refOperateurs = collection(baseDeDonnees, 'operateurs');
         onSnapshot(refOperateurs, snap => {
           if (snap.empty) {
@@ -1049,7 +1084,7 @@
           }
         }, err => console.warn(err));
 
-        // 3. Synchronisation des missions
+        // 3. Missions
         const refMissions = collection(baseDeDonnees, 'missions');
         onSnapshot(refMissions, snap => {
           const liste = [];
@@ -1059,7 +1094,7 @@
           if (etat.operateurConnecte) actualiserVueEnCours();
         }, err => console.warn(err));
 
-        // 4. Synchronisation des plans tactiques
+        // 4. Plans tactiques
         const refPlans = collection(baseDeDonnees, 'plans');
         onSnapshot(refPlans, snap => {
           if (snap.empty) {
@@ -1072,7 +1107,7 @@
           }
         }, err => console.warn(err));
 
-        // 5. Synchronisation des archives de piratage (Tech)
+        // 5. Archives piratées (Tech)
         const refArchives = collection(baseDeDonnees, 'archivesPiratees');
         onSnapshot(refArchives, snap => {
           const liste = [];
@@ -1081,15 +1116,6 @@
           etat.archivesPiratees = liste;
           if (etat.operateurConnecte) afficherVueArchives();
         }, err => console.warn(err));
-      }
-
-      function attacherImageCasque(elementImg, idOperateur) {
-        const fichier = FICHIERS_CASQUES[idOperateur] || 'hunter.png';
-        elementImg.src = fichier;
-        elementImg.onerror = () => {
-          elementImg.onerror = null;
-          elementImg.src = REPLI_SVG_CASQUES[idOperateur] || REPLI_SVG_CASQUES.hunter;
-        };
       }
 
       function selectionnerOperateurAccueil(id) {
@@ -1151,7 +1177,6 @@
         const empreinteSaisie = await calculerEmpreinteSHA256(saisieMDP);
         const empreinteAttendue = etat.motsDePasseHashes[id] || HASH_DEFAUT;
 
-        // Rétrocompatibilité si un mot de passe en clair subsiste
         const estValide = (empreinteSaisie === empreinteAttendue) || (saisieMDP === empreinteAttendue);
 
         if (estValide) {
@@ -1202,7 +1227,6 @@
             document.getElementById('bloc-profil-actif').classList.add('hidden');
             document.getElementById('bloc-profil-actif').classList.remove('flex');
             document.getElementById('banniere-alerte-quota').classList.add('hidden');
-            document.getElementById('banniere-alerte-quota').classList.remove('flex');
             masquerToutesLesFenetres();
             selectionnerOperateurAccueil('hunter');
           }
@@ -1296,7 +1320,7 @@
         masquerToutesLesFenetres();
 
         document.querySelectorAll('.nav-bouton').forEach(btn => {
-          btn.classList.remove('border-rougeAlerte', 'border-amber-400', 'border-vertViseur', 'border-cyanTech', 'text-white', 'bg-panneauSombre');
+          btn.classList.remove('border-rougeAlerte', 'text-white', 'bg-panneauSombre');
           btn.classList.add('border-transparent', 'text-gray-400');
         });
 
@@ -1335,12 +1359,10 @@
         });
 
         if (etat.operateurConnecte === 'hunter' && membresEnRetard.length > 0) {
-          texteAlerte.textContent = `Rapports incomplets : ${membresEnRetard.join(', ')} (${etat.quotaHebdomadaire} requis/semaine)`;
+          texteAlerte.textContent = `Rapports incomplets pour : ${membresEnRetard.join(', ')} (${etat.quotaHebdomadaire} missions requises / sem.)`;
           banniere.classList.remove('hidden');
-          banniere.classList.add('flex');
         } else {
           banniere.classList.add('hidden');
-          banniere.classList.remove('flex');
         }
       }
 
@@ -1413,38 +1435,48 @@
         elemConf.textContent = `${ratio}%`;
         elemConf.className = ratio === 100 ? 'text-xl font-titre font-black text-vertViseur mt-0.5' : 'text-xl font-titre font-black text-rougeAlerte mt-0.5';
 
-        // Cartes membres synthèse avec les casques
+        // 4 CARTES D'ÉTAT OPÉRATIONNEL AVEC CASQUES CLAIREMENT POSITIONNÉS
         const conteneurMembres = document.getElementById('cartes-membres-synthese');
         conteneurMembres.innerHTML = '';
 
         Object.values(etat.operateurs).forEach(m => {
           const estOk = (m.compteurSemaine || 0) >= etat.quotaHebdomadaire;
           const carte = document.createElement('div');
-          carte.className = `bg-panneauSombre border-l-4 ${estOk ? 'border-vertViseur' : 'border-rougeAlerte'} border border-bordureTactique p-3 rounded biseau-plaque`;
+          carte.className = `bg-panneauSombre border-l-4 ${estOk ? 'border-vertViseur' : 'border-rougeAlerte'} border border-bordureTactique p-3 rounded biseau-plaque flex flex-col justify-between`;
+          
           carte.innerHTML = `
-            <div class="flex items-center justify-between mb-2">
-              <div class="w-8 h-8 rounded border border-bordureLueur bg-fondCarbone overflow-hidden flex items-center justify-center">
-                <img src="${FICHIERS_CASQUES[m.id]}" alt="Casque" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='${REPLI_SVG_CASQUES[m.id]}'">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2 pb-1.5 border-b border-bordureTactique/60">
+                <div class="w-12 h-12 rounded border-2 border-bordureLueur bg-fondCarbone overflow-hidden shrink-0 flex items-center justify-center p-1 shadow-inner">
+                  <img id="casque-carte-${m.id}" src="${FICHIERS_CASQUES[m.id]}" alt="Casque de ${m.nom}" class="w-full h-full object-contain">
+                </div>
+                <span class="text-[9px] font-terminal px-1.5 py-0.5 rounded font-bold whitespace-nowrap ${estOk ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800 animate-pulse'}">
+                  ${estOk ? '✓ EN RÈGLE' : '✗ NON ATTEINT'}
+                </span>
               </div>
-              <span class="text-[9px] font-terminal px-1.5 py-0.5 rounded font-bold ${estOk ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800 animate-pulse'}">
-                ${estOk ? '✓ EN RÈGLE' : '✗ NON ATTEINT'}
-              </span>
+              <div class="font-titre font-bold text-xs text-gray-100 uppercase">${echapperTexteHTML(m.nom)}</div>
+              <div class="text-[10px] font-terminal text-gray-400 mb-2 truncate">${echapperTexteHTML(m.specialite)}</div>
             </div>
-            <div class="font-titre font-bold text-xs text-gray-100">${echapperTexteHTML(m.nom)}</div>
-            <div class="text-[10px] font-terminal text-gray-400 mb-2 truncate">${echapperTexteHTML(m.specialite)}</div>
-            <div class="border-t border-bordureTactique pt-1.5 flex items-center justify-between text-xs font-terminal">
-              <span class="text-gray-400">Missions semaine :</span>
-              <span class="font-bold ${estOk ? 'text-vertViseur' : 'text-rougeAlerte'}">${m.compteurSemaine || 0} / ${etat.quotaHebdomadaire}</span>
-            </div>
-            <div class="flex items-center justify-between text-[11px] font-terminal text-amber-400 mt-1">
-              <span class="truncate pr-1">${echapperTexteHTML(m.libelleStatistique)} :</span>
-              <span class="font-bold">${m.totalStatistique || 0}</span>
+
+            <div class="border-t border-bordureTactique pt-1.5 space-y-1">
+              <div class="flex items-center justify-between text-xs font-terminal">
+                <span class="text-gray-400">Missions semaine :</span>
+                <span class="font-bold ${estOk ? 'text-vertViseur' : 'text-rougeAlerte'}">${m.compteurSemaine || 0} / ${etat.quotaHebdomadaire}</span>
+              </div>
+              <div class="flex items-center justify-between text-[11px] font-terminal text-amber-400">
+                <span class="truncate pr-1">${echapperTexteHTML(m.libelleStatistique)} :</span>
+                <span class="font-bold">${m.totalStatistique || 0}</span>
+              </div>
             </div>
           `;
           conteneurMembres.appendChild(carte);
+
+          // Attacher l'image avec fallback sécurisé
+          const imgElem = carte.querySelector(`#casque-carte-${m.id}`);
+          attacherImageCasque(imgElem, m.id);
         });
 
-        // 4 Derniers rapports
+        // Derniers rapports
         const fluxRecents = document.getElementById('flux-rapports-recents');
         fluxRecents.innerHTML = '';
         const recents = etat.rapports.slice(0, 4);
@@ -1471,7 +1503,7 @@
           });
         }
 
-        // Aperçu 3 plans
+        // Aperçu des 3 premiers plans
         const conteneurPlans = document.getElementById('apercu-plans-tactiques');
         conteneurPlans.innerHTML = '';
         etat.plans.slice(0, 3).forEach(p => {
@@ -1480,7 +1512,7 @@
           item.innerHTML = `
             <div class="flex justify-between text-amber-400 font-titre text-[10px]">
               <span>${echapperTexteHTML(p.code)}</span>
-              <span class="text-gray-400 font-terminal text-[9px]">${echapperTexteHTML(p.chefDeManoeuvre)}</span>
+              <span class="text-gray-400 font-terminal text-[9px] truncate max-w-[120px]">${echapperTexteHTML(p.chefDeManoeuvre)}</span>
             </div>
             <p class="text-gray-300 text-[11px] mt-0.5 line-clamp-1">${echapperTexteHTML(p.cible)}</p>
           `;
@@ -1614,7 +1646,6 @@
           }
         }
 
-        // Mise à jour de l'état local
         op.compteurSemaine = (op.compteurSemaine || 0) + 1;
         op.totalStatistique = (op.totalStatistique || 0) + incrementStat;
         etat.rapports.unshift(nouveauRapport);
@@ -1664,8 +1695,8 @@
           carte.innerHTML = `
             <div class="flex items-start justify-between border-b border-bordureTactique pb-2">
               <div class="flex items-center space-x-2.5">
-                <div class="w-11 h-11 rounded border border-bordureLueur bg-fondCarbone overflow-hidden shrink-0 flex items-center justify-center">
-                  <img src="${FICHIERS_CASQUES[m.id]}" alt="Casque de ${m.nom}" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='${REPLI_SVG_CASQUES[m.id]}'">
+                <div class="w-12 h-12 rounded border border-bordureLueur bg-fondCarbone overflow-hidden shrink-0 flex items-center justify-center p-1">
+                  <img id="casque-effectif-${m.id}" src="${FICHIERS_CASQUES[m.id]}" alt="Casque de ${m.nom}" class="w-full h-full object-contain">
                 </div>
                 <div>
                   <div class="font-titre font-black text-xs sm:text-sm text-gray-100 uppercase">${echapperTexteHTML(m.nom)}</div>
@@ -1718,9 +1749,11 @@
             ` : ''}
           `;
           conteneur.appendChild(carte);
+
+          const imgElem = carte.querySelector(`#casque-effectif-${m.id}`);
+          attacherImageCasque(imgElem, m.id);
         });
 
-        // Liaison des boutons d'édition pour Hunter
         document.querySelectorAll('.btn-editer-dossier').forEach(btn => {
           btn.addEventListener('click', () => {
             const id = btn.getAttribute('data-editer-membre');
@@ -1832,19 +1865,22 @@
         conteneur.innerHTML = '';
 
         etat.plans.forEach(p => {
+          const estPlanZero = p.code === 'PLAN 0/0';
           const div = document.createElement('div');
-          div.className = 'bg-panneauSombre border border-bordureTactique biseau-plaque p-3.5 space-y-2 relative hover:border-amber-500/40 transition';
+          div.className = `bg-panneauSombre border ${estPlanZero ? 'border-red-600/70 shadow-[0_0_12px_rgba(220,38,38,0.2)]' : 'border-bordureTactique'} biseau-plaque p-3.5 space-y-2 relative hover:border-amber-500/40 transition`;
           div.innerHTML = `
             <div class="flex items-center justify-between border-b border-bordureTactique pb-1.5">
-              <span class="font-titre font-bold text-xs text-amber-400 tracking-wider">${echapperTexteHTML(p.code)}</span>
-              <span class="text-[8px] font-terminal px-1.5 py-0.5 bg-panneauSous text-gray-300 rounded border border-bordureTactique">HOMOLOGUÉ 99</span>
+              <span class="font-titre font-bold text-xs ${estPlanZero ? 'text-rougeAlerte' : 'text-amber-400'} tracking-wider">${echapperTexteHTML(p.code)}</span>
+              <span class="text-[8px] font-terminal px-1.5 py-0.5 bg-panneauSous ${estPlanZero ? 'text-red-300 border-red-700' : 'text-gray-300 border-bordureTactique'} rounded border">
+                ${estPlanZero ? 'URGENCE ABSOLUE' : 'HOMOLOGUÉ 99'}
+              </span>
             </div>
             <div>
               <div class="text-[9px] font-terminal uppercase text-gray-400">Objectif tactique :</div>
               <div class="font-titre font-bold text-xs text-gray-100">${echapperTexteHTML(p.cible)}</div>
             </div>
             <div>
-              <div class="text-[10px] font-terminal text-rougeAlerte font-bold">Chef(s) de manœuvre : ${echapperTexteHTML(p.chefDeManoeuvre)}</div>
+              <div class="text-[10px] font-terminal ${estPlanZero ? 'text-amber-400' : 'text-rougeAlerte'} font-bold">Chef(s) de manœuvre : ${echapperTexteHTML(p.chefDeManoeuvre)}</div>
               <p class="text-xs font-terminal text-gray-300 mt-1 leading-relaxed bg-fondCarbone p-2 rounded border border-bordureTactique">
                 ${echapperTexteHTML(p.description)}
               </p>
@@ -1958,7 +1994,6 @@
       }
 
       function attacherTousLesEcouteurs() {
-        // Sélection d'opérateur sur l'écran d'accueil
         document.querySelectorAll('.bouton-choix-op').forEach(btn => {
           btn.addEventListener('click', () => {
             const opId = btn.getAttribute('data-op');
@@ -1966,10 +2001,8 @@
           });
         });
 
-        // Formulaire de connexion
         document.getElementById('formulaire-connexion').addEventListener('submit', executerConnexion);
 
-        // Barre de navigation
         document.querySelectorAll('.nav-bouton').forEach(btn => {
           btn.addEventListener('click', () => {
             const onglet = btn.getAttribute('data-onglet');
@@ -1977,7 +2010,6 @@
           });
         });
 
-        // Liens de raccourci internes
         document.querySelectorAll('[data-action-nav]').forEach(el => {
           el.addEventListener('click', () => {
             const onglet = el.getAttribute('data-action-nav');
@@ -1985,7 +2017,6 @@
           });
         });
 
-        // Contrôle audio
         document.getElementById('bouton-audio').addEventListener('click', () => {
           AudioTactique.actif = !AudioTactique.actif;
           const b = document.getElementById('bouton-audio');
@@ -1993,7 +2024,6 @@
           if (AudioTactique.actif) AudioTactique.succes();
         });
 
-        // Profil en haut à droite
         document.getElementById('bouton-cle-mdp').addEventListener('click', () => {
           document.getElementById('champ-mot-de-passe-actuel').value = '';
           document.getElementById('champ-nouveau-mot-de-passe').value = '';
@@ -2003,7 +2033,6 @@
 
         document.getElementById('bouton-quitter-session').addEventListener('click', demanderDeconnexion);
 
-        // Fermeture des modales par boutons ✕ ou Annuler
         document.querySelectorAll('.btn-fermer-modale').forEach(btn => {
           btn.addEventListener('click', () => {
             const idModale = btn.getAttribute('data-modale');
@@ -2011,7 +2040,6 @@
           });
         });
 
-        // Formulaires des modales
         document.getElementById('formulaire-nouveau-mdp').addEventListener('submit', executerModificationMotDePasse);
         document.getElementById('formulaire-rapport-mission').addEventListener('submit', executerTransmissionRapport);
         document.getElementById('filtre-operateurs-rapports').addEventListener('change', afficherListeRapports);
@@ -2028,7 +2056,6 @@
         document.getElementById('formulaire-reglage-quota').addEventListener('submit', executerReglageQuota);
         document.getElementById('bouton-reset-semaine').addEventListener('click', executerResetSemaine);
 
-        // Plans tactiques
         document.getElementById('bouton-ajouter-plan-hunter').addEventListener('click', () => {
           if (etat.operateurConnecte !== 'hunter') return;
           document.getElementById('champ-code-plan').value = '';
@@ -2039,11 +2066,9 @@
         });
         document.getElementById('formulaire-nouveau-plan').addEventListener('submit', executerCreationPlan);
 
-        // Archives Tech
         document.getElementById('formulaire-archive-tech').addEventListener('submit', executerTransmissionArchiveTech);
       }
 
-      // Initialisation au chargement de la fenêtre
       window.addEventListener('DOMContentLoaded', () => {
         attacherTousLesEcouteurs();
         initialiserSynchronisationFirestore();
