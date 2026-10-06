@@ -3,35 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FORCE CLONE 99 // UNITÉ BAD BATCH // TERMINAL DU MARAUDEUR</title>
+  <title>FORCE CLONE 99 // UNITÉ BAD BATCH // CONSOLE DU MARAUDEUR</title>
 
-  <!-- Feuilles de style Tailwind par réseau CDN -->
+  <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Polices de caractères tactiques : Orbitron, Rajdhani, Share Tech Mono -->
+  <!-- Polices d'inspiration militaire et de bord : Orbitron, Rajdhani, Share Tech Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
-  <!-- Bibliothèques de synchronisation en ligne Firebase Firestore -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
-  <!-- Configuration graphique personnalisée -->
+  <!-- Configuration Tailwind avec palettes républicaines et Bad Batch -->
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            carbone: '#0c0e12',
-            acier: '#151821',
-            panneau: '#1e2330',
-            carmin: '#c82333',
-            carminFonce: '#8b0000',
-            ambre: '#ffaa00',
-            cyanHolo: '#00f0ff',
-            emeraude: '#10b981',
+            carboneFond: '#080a0e',
+            plaqueBlindage: '#12161f',
+            plaqueSecondaire: '#181e2b',
+            bordureMilitaire: '#242d3d',
+            bordureClaire: '#364359',
+            rougeKamino: '#b91c1c',
+            rougeVif: '#ef4444',
+            ambreArtillerie: '#f59e0b',
+            vertViseur: '#10b981',
+            cyanTech: '#06b6d4',
+            bleuRepublique: '#2563eb'
           },
           fontFamily: {
             titre: ['Orbitron', 'sans-serif'],
@@ -43,43 +42,47 @@
     }
   </script>
 
+  <!-- Feuilles de styles : Confort visuel apaisé et décors Clone Wars -->
   <style>
-    body {
-      background-color: #080a0d;
-      color: #e2e8f0;
-      font-family: 'Rajdhani', sans-serif;
-      overflow-x: hidden;
-    }
-    
-    /* Trame cathodique et balayage tactique */
-    .lignes-balayage {
-      background: linear-gradient(
-        rgba(18, 16, 16, 0) 50%, 
-        rgba(0, 0, 0, 0.35) 50%
-      ), linear-gradient(
-        90deg,
-        rgba(255, 0, 0, 0.04),
-        rgba(0, 255, 0, 0.01),
-        rgba(0, 240, 255, 0.04)
-      );
-      background-size: 100% 3px, 6px 100%;
-      pointer-events: none;
+    :root {
+      --teinte-accent: #b91c1c;
+      --teinte-lueur: rgba(185, 28, 28, 0.25);
+      --teinte-bordure: rgba(185, 28, 28, 0.4);
     }
 
-    /* Découpe d'armure biseautée */
-    .panneau-biseaute {
+    body {
+      background-color: #080a0e;
+      color: #e2e8f0;
+      font-family: 'Rajdhani', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      letter-spacing: 0.02em;
+    }
+
+    /* Arrière-plan Clone Wars : Silhouette tactique du Havoc Marauder et réseau défensif */
+    .arriere-plan-vaisseau {
+      background-image: 
+        radial-gradient(circle at 50% 10%, rgba(20, 26, 38, 0.7) 0%, rgba(8, 10, 14, 0.95) 75%),
+        linear-gradient(rgba(18, 22, 31, 0.3) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(18, 22, 31, 0.3) 1px, transparent 1px);
+      background-size: 100% 100%, 48px 48px, 48px 48px;
+    }
+
+    /* Découpes biseautées de blindage sans scanlines fatigantes */
+    .biseau-plaque {
       clip-path: polygon(
-        0 12px,
-        12px 0,
-        calc(100% - 12px) 0,
-        100% 12px,
-        100% calc(100% - 12px),
-        calc(100% - 12px) 100%,
-        12px 100%,
-        0 calc(100% - 12px)
+        0 10px,
+        10px 0,
+        calc(100% - 10px) 0,
+        100% 10px,
+        100% calc(100% - 10px),
+        calc(100% - 10px) 100%,
+        10px 100%,
+        0 calc(100% - 10px)
       );
     }
-    .panneau-biseaute-fin {
+
+    .biseau-bouton {
       clip-path: polygon(
         0 6px,
         6px 0,
@@ -92,36 +95,82 @@
       );
     }
 
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #0c0e12;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #9e1b1b;
-      border-radius: 2px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #ffaa00;
+    /* Finitions des fenêtres et des cartes d'opérateurs */
+    .panneau-tactique {
+      background-color: #12161f;
+      border: 1px solid var(--teinte-bordure);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.65), 0 0 15px -3px var(--teinte-lueur);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .lueur-rouge {
-      box-shadow: 0 0 18px rgba(200, 35, 51, 0.35);
+    /* Thèmes spécifiques par opérateur */
+    body.theme-hunter {
+      --teinte-accent: #dc2626;
+      --teinte-lueur: rgba(220, 38, 38, 0.22);
+      --teinte-bordure: rgba(220, 38, 38, 0.45);
     }
-    .lueur-cyan {
-      box-shadow: 0 0 16px rgba(0, 240, 255, 0.25);
+
+    body.theme-wrecker {
+      --teinte-accent: #f59e0b;
+      --teinte-lueur: rgba(245, 158, 11, 0.22);
+      --teinte-bordure: rgba(245, 158, 11, 0.45);
+    }
+
+    body.theme-crosshair {
+      --teinte-accent: #10b981;
+      --teinte-lueur: rgba(16, 185, 129, 0.22);
+      --teinte-bordure: rgba(16, 185, 129, 0.45);
+    }
+
+    body.theme-tech {
+      --teinte-accent: #06b6d4;
+      --teinte-lueur: rgba(6, 182, 212, 0.22);
+      --teinte-bordure: rgba(6, 182, 212, 0.45);
+    }
+
+    /* Éléments filigranes du lore */
+    .radar-hunter {
+      background: radial-gradient(circle, rgba(220, 38, 38, 0.08) 0%, transparent 65%);
+    }
+    .impact-wrecker {
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.08) 0%, transparent 65%);
+    }
+    .reticule-crosshair {
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 65%);
+    }
+    .matrice-tech {
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, transparent 65%);
+    }
+
+    /* Barres de défilement douces */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b0e14;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #252e3e;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--teinte-accent);
     }
   </style>
 </head>
-<body class="min-h-screen relative flex flex-col justify-between selection:bg-carmin selection:text-white">
+<body class="arriere-plan-vaisseau flex flex-col justify-between selection:bg-red-800 selection:text-white">
 
-  <!-- Couche visuelle de balayage cathodique -->
-  <div class="fixed inset-0 lignes-balayage z-50"></div>
+  <!-- Filigrane visuel en haut à droite symbolisant le Maraudeur -->
+  <div class="fixed top-0 right-0 w-96 h-96 pointer-events-none opacity-5 -z-0">
+    <svg viewBox="0 0 100 100" class="w-full h-full fill-current text-gray-100">
+      <polygon points="50,5 95,75 75,85 50,60 25,85 5,75" />
+      <polygon points="50,25 70,70 50,55 30,70" />
+    </svg>
+  </div>
 
   <script>
-    // Module sonore militaire autonome (API Audio Web, aucun fichier audio distant requis)
+    // Module sonore militaire autonome (API Audio Web intégrée sans fichier externe)
     const AudioTactique = {
       contexte: null,
       actif: true,
@@ -131,247 +180,156 @@
           if (ContexteAudio) this.contexte = new ContexteAudio();
         }
       },
-      emettreBip(frequence, typeOnde = 'sine', duree = 0.08, volume = 0.06) {
+      bip(frequence, type = 'sine', duree = 0.07, volume = 0.04) {
         if (!this.actif) return;
         try {
           this.demarrer();
           if (this.contexte.state === 'suspended') this.contexte.resume();
-          const oscillateur = this.contexte.createOscillator();
+          const osc = this.contexte.createOscillator();
           const gain = this.contexte.createGain();
-          oscillateur.type = typeOnde;
-          oscillateur.frequency.setValueAtTime(frequence, this.contexte.currentTime);
+          osc.type = type;
+          osc.frequency.setValueAtTime(frequence, this.contexte.currentTime);
           gain.gain.setValueAtTime(volume, this.contexte.currentTime);
           gain.gain.exponentialRampToValueAtTime(0.0001, this.contexte.currentTime + duree);
-          oscillateur.connect(gain);
+          osc.connect(gain);
           gain.connect(this.contexte.destination);
-          oscillateur.start();
-          oscillateur.stop(this.contexte.currentTime + duree);
-        } catch(erreur) {}
+          osc.start();
+          osc.stop(this.contexte.currentTime + duree);
+        } catch(e) {}
       },
-      clic() { this.emettreBip(1100, 'square', 0.03, 0.02); },
-      validation() {
-        this.emettreBip(840, 'sine', 0.05, 0.05);
-        setTimeout(() => this.emettreBip(1680, 'sine', 0.08, 0.06), 60);
+      clic() { this.bip(950, 'triangle', 0.03, 0.02); },
+      succes() {
+        this.bip(780, 'sine', 0.06, 0.03);
+        setTimeout(() => this.bip(1450, 'sine', 0.08, 0.04), 50);
       },
-      alarme() {
-        this.emettreBip(420, 'sawtooth', 0.14, 0.08);
-        setTimeout(() => this.emettreBip(315, 'sawtooth', 0.2, 0.08), 120);
-      },
-      toucheClavier() {
-        this.emettreBip(2200 + (Math.random() * 600 - 300), 'triangle', 0.02, 0.015);
+      alerte() {
+        this.bip(380, 'sawtooth', 0.12, 0.05);
+        setTimeout(() => this.bip(310, 'sawtooth', 0.18, 0.06), 90);
       }
     };
-  </script>
 
-  <script>
-    // Configuration de liaison Firestore fournie par l'utilisateur
-    const configurationServeur = {
-      apiKey: "AIzaSyB3Dpovo-Fsa7nNlMeUzngYl03_Vlns1jw",
-      authDomain: "bad-batch-datapad.firebaseapp.com",
-      projectId: "bad-batch-datapad",
-      storageBucket: "bad-batch-datapad.firebasestorage.app",
-      messagingSenderId: "445159897876",
-      appId: "1:445159897876:web:ae69817443abe0693fe001"
-    };
-
-    let baseDeDonnees;
-    let liaisonServeurPrete = false;
-
-    try {
-      firebase.initializeApp(configurationServeur);
-      baseDeDonnees = firebase.firestore();
-      liaisonServeurPrete = true;
-    } catch(erreurLiaison) {
-      console.warn("Échec d'initialisation du réseau distant :", erreurLiaison);
+    function inverserAudio() {
+      AudioTactique.actif = !AudioTactique.actif;
+      const b = document.getElementById('bouton-audio');
+      b.textContent = AudioTactique.actif ? '🔊 EFFETS SONORES : ACTIVÉS' : '🔇 EFFETS SONORES : DÉSACTIVÉS';
+      if (AudioTactique.actif) AudioTactique.succes();
     }
-
-    // Références initiales de l'unité Bad Batch
-    const EFFECTIF_INITIAL = {
-      hunter: {
-        id: 'hunter',
-        nom: 'Hunter',
-        matricule: 'FC-99-01',
-        grade: 'Sergent // Chef d\'escouade',
-        specialite: 'Pisteur & Commandement tactique',
-        dateEntree: '19 av. BBY (Kamino)',
-        couleur: '#c82333',
-        symbole: '🎯',
-        notes: 'Perception sensorielle des signaux électromagnétiques. Analyse immédiate du terrain. Garant de la chaîne opérationnelle de l\'unité.',
-        compteurSemaine: 3,
-        libelleStatistique: 'Missions coordonnées',
-        totalStatistique: 48
-      },
-      wrecker: {
-        id: 'wrecker',
-        nom: 'Wrecker',
-        matricule: 'FC-99-02',
-        grade: 'Spécialiste d\'Assaut Lourd',
-        specialite: 'Démolition lourde & Percée frontale',
-        dateEntree: '19 av. BBY (Kamino)',
-        couleur: '#ffaa00',
-        symbole: '💥',
-        notes: 'Capacité physique surdéveloppée. Maîtrise des explosifs thermiques et des charges lourdes. Maintenir l\'inventaire des détonateurs.',
-        compteurSemaine: 2,
-        libelleStatistique: 'Chars MTT & blindés détruits',
-        totalStatistique: 89
-      },
-      crosshair: {
-        id: 'crosshair',
-        nom: 'Crosshair',
-        matricule: 'FC-99-03',
-        grade: 'Tireur d\'Élite',
-        specialite: 'Tir de haute précision & Neutralisation',
-        dateEntree: '19 av. BBY (Kamino)',
-        couleur: '#10b981',
-        symbole: '🦅',
-        notes: 'Précision balistique naturelle sans assistance télémétrique. Rigueur absolue et isolement tactique. Entretien continu du fusil 773.',
-        compteurSemaine: 1,
-        libelleStatistique: 'Tirs de précision à la tête',
-        totalStatistique: 342
-      },
-      tech: {
-        id: 'tech',
-        nom: 'Tech',
-        matricule: 'FC-99-04',
-        grade: 'Spécialiste Données',
-        specialite: 'Piratage informatique & Ingénierie de bord',
-        dateEntree: '19 av. BBY (Kamino)',
-        couleur: '#00f0ff',
-        symbole: '💻',
-        notes: 'Traitement analytique ultrarapide. Neutralisation et dérivation des systèmes ennemis. Surveillance du réseau central du Maraudeur.',
-        compteurSemaine: 3,
-        libelleStatistique: 'Terminaux et archives piratées',
-        totalStatistique: 156
-      }
-    };
-
-    const PLANS_HISTORIQUES = [
-      { id: 'p7', code: 'PLAN 7', cible: 'Percée par projection d\'épave blindée', chefDeManœuvre: 'Wrecker', description: 'Wrecker projette un blindé lourd ou un caisson renforcé contre la ligne de front pour pulvériser l\'infanterie de droïdes.' },
-      { id: 'p25', code: 'PLAN 25', cible: 'Surcharge électromagnétique & diversion sonore', chefDeManœuvre: 'Tech & Hunter', description: 'Surcharge ciblée des relais d\'alimentation du complexe ennemi avec diversion sonore pendant l\'exfiltration sécurisée de l\'escouade.' },
-      { id: 'p55', code: 'PLAN 55', cible: 'Tir balistique à ricochet réflecteur', chefDeManœuvre: 'Crosshair', description: 'Crosshair tire sur les panneaux réflecteurs disposés à grande vitesse par Tech afin de contourner les boucliers déflecteurs.' },
-      { id: 'p82', code: 'PLAN 82', cible: 'Infiltration et piratage terminal sous tir nourri', chefDeManœuvre: 'Tech', description: 'Pénétration directe du poste de commandement adverse et reprogrammation immédiate des batteries automatisées contre leurs positions.' },
-      { id: 'p99', code: 'PLAN 99', cible: 'Protocole de ralliement et de sacrifice de l\'unité', chefDeManœuvre: 'Tous les opérateurs', description: 'Protocole ultime de sauvegarde de l\'escouade. Accomplir la mission et donner sa vie pour assurer la survie des frères d\'armes.' }
-    ];
-
-    // Registre local en mémoire tampon
-    let etatGlobal = {
-      operateurConnecte: null,
-      ongletActif: 'poste-commandement',
-      motsDePasse: { hunter: '1234', wrecker: '1234', crosshair: '1234', tech: '1234' },
-      operateurs: JSON.parse(JSON.stringify(EFFECTIF_INITIAL)),
-      quotaHebdomadaire: 3,
-      rapports: [],
-      plans: JSON.parse(JSON.stringify(PLANS_HISTORIQUES)),
-      archivesPiratees: []
-    };
   </script>
 
-  <!-- En-tête principal du Datapad -->
-  <header class="border-b border-carmin/50 bg-carbone/95 backdrop-blur sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+  <!-- Bandeau Supérieur du Datapad -->
+  <header class="border-b border-bordureMilitaire bg-carboneFond/95 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
       
-      <!-- Insigne et indicatif républicain -->
+      <!-- Écusson officiel de la Force Clone 99 -->
       <div class="flex items-center space-x-3">
-        <div class="h-11 w-11 bg-carmin/25 border-2 border-carmin panneau-biseaute flex items-center justify-center font-titre font-black text-carmin text-2xl tracking-tighter">
+        <div class="h-10 w-10 bg-rougeKamino/20 border-2 border-rougeKamino biseau-bouton flex items-center justify-center font-titre font-black text-rougeVif text-xl tracking-tighter">
           99
         </div>
         <div>
           <div class="flex items-center space-x-2">
-            <span class="font-titre font-black tracking-widest text-sm text-gray-100 uppercase">FORCE CLONE 99 // BAD BATCH</span>
-            <span class="px-1.5 py-0.5 bg-ambre/20 text-ambre text-[10px] font-terminal border border-ambre/40 uppercase">CONSOLE DU MARAUDEUR</span>
+            <span class="font-titre font-bold tracking-wider text-xs md:text-sm text-gray-100 uppercase">FORCE CLONE 99 // BAD BATCH</span>
+            <span class="px-2 py-0.5 bg-ambreArtillerie/15 text-ambreArtillerie text-[10px] font-terminal border border-ambreArtillerie/30 uppercase rounded-sm">CONSOLE DU MARAUDEUR</span>
           </div>
-          <p class="text-xs text-gray-400 font-terminal flex items-center gap-2">
-            <span id="indicateur-liaison" class="inline-block w-2.5 h-2.5 rounded-full bg-emeraude animate-pulse"></span>
-            <span id="texte-liaison">LIAISON DISTANTE RÉSEAU : ÉTABLIE</span>
-          </p>
+          <div class="text-[11px] text-gray-400 font-terminal flex items-center gap-2 mt-0.5">
+            <span id="voyant-reseau" class="inline-block w-2 h-2 rounded-full bg-vertViseur"></span>
+            <span id="statut-reseau">LIAISON DISTANTE FIRESTORE : OPÉRATIONNELLE</span>
+          </div>
         </div>
       </div>
 
-      <!-- Bandeau d'alerte spécifique pour le Chef d'escouade Hunter -->
-      <div id="banniere-alerte-quota" class="hidden px-3.5 py-1.5 bg-red-950/90 border border-carmin rounded text-xs text-red-200 font-terminal items-center gap-2 animate-pulse">
-        <span class="text-carmin font-black">⚠️ ALERTE DE COMMANDEMENT :</span>
+      <!-- Alerte de commandement pour Hunter -->
+      <div id="banniere-alerte-quota" class="hidden px-3 py-1 bg-red-950/80 border border-rougeVif text-xs text-red-200 font-terminal items-center gap-2 rounded biseau-bouton">
+        <span class="text-rougeVif font-black">⚠️ ALERTE COMMANDEMENT :</span>
         <span id="texte-alerte-quota">Rapports d'escouade incomplets</span>
       </div>
 
-      <!-- Contrôles et profil de l'opérateur en cours -->
-      <div class="flex items-center space-x-3">
-        <!-- Commutateur sonore -->
-        <button onclick="inverserAudio()" id="bouton-audio" class="p-2 border border-slate-700 hover:border-ambre bg-acier text-gray-300 hover:text-ambre rounded transition text-xs font-terminal">
+      <!-- Contrôles et volet profil utilisateur -->
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <button onclick="inverserAudio()" id="bouton-audio" class="px-2.5 py-1.5 border border-bordureMilitaire hover:border-bordureClaire bg-plaqueBlindage text-gray-300 hover:text-white rounded text-xs font-terminal transition">
           🔊 EFFETS SONORES : ACTIVÉS
         </button>
 
-        <!-- Profil opérateur connecté -->
-        <div id="bloc-profil-actif" class="hidden items-center space-x-3 bg-acier border border-slate-700 px-3.5 py-1.5 rounded">
-          <span id="symbole-operateur" class="text-xl">🎯</span>
+        <!-- Profil opérateur actif -->
+        <div id="bloc-profil-actif" class="hidden items-center space-x-3 bg-plaqueBlindage border border-bordureMilitaire px-3 py-1.5 rounded biseau-bouton">
+          <span id="symbole-operateur" class="text-lg">🎯</span>
           <div class="text-left">
             <div id="nom-operateur" class="text-xs font-titre font-bold text-gray-100 uppercase leading-none">Hunter</div>
-            <div id="grade-operateur" class="text-[10px] font-terminal text-ambre leading-none mt-0.5">Chef d'escouade</div>
+            <div id="grade-operateur" class="text-[10px] font-terminal text-gray-400 leading-none mt-0.5">Chef d'escouade</div>
           </div>
-          <button onclick="ouvrirBoiteChangerMotDePasse()" title="Modifier le mot de passe" class="text-xs text-gray-400 hover:text-white p-1 hover:bg-slate-700 rounded transition">
-            🔑
+
+          <!-- Bouton MODIFIER MOT DE PASSE bien visible et distinct -->
+          <button onclick="ouvrirBoiteChangerMotDePasse()" title="Modifier mon mot de passe" class="px-2 py-1 bg-bordureMilitaire/60 hover:bg-bordureClaire border border-bordureClaire text-[11px] font-terminal text-amber-300 hover:text-amber-200 rounded flex items-center gap-1 transition">
+            <span>🔑</span>
+            <span class="hidden sm:inline">MODIFIER MOT DE PASSE</span>
           </button>
-          <button onclick="demanderDeconnexion()" title="Fermer la session" class="text-xs text-carmin hover:text-red-400 font-bold p-1 transition font-terminal">
+
+          <button onclick="demanderDeconnexion()" title="Fermer la session" class="text-xs text-rougeVif hover:text-red-300 font-bold px-1 transition font-terminal">
             [DÉCONNEXION]
           </button>
         </div>
       </div>
+
     </div>
   </header>
 
-  <!-- Barre de navigation des sections -->
-  <nav id="barre-navigation" class="hidden bg-carbone/90 border-b border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 flex overflow-x-auto space-x-1 py-2">
-      <button onclick="naviguerOnglet('poste-commandement')" id="bouton-onglet-poste-commandement" class="nav-bouton px-4 py-2 font-titre text-xs tracking-wider border-b-2 border-carmin text-white bg-panneau/60 panneau-biseaute-fin transition">
-        📊 POSTE DE COMMANDEMENT
+  <!-- Navigation principale -->
+  <nav id="barre-navigation" class="hidden bg-carboneFond/90 border-b border-bordureMilitaire">
+    <div class="max-w-7xl mx-auto px-4 flex overflow-x-auto space-x-2 py-2">
+      <button onclick="naviguerOnglet('poste-commandement')" id="bouton-onglet-poste-commandement" class="nav-bouton px-4 py-2 font-titre text-xs tracking-wider border-b-2 border-rougeVif text-white bg-plaqueBlindage biseau-bouton transition flex items-center gap-2">
+        <span>📊</span> POSTE DE COMMANDEMENT
       </button>
-      <button onclick="naviguerOnglet('rapports')" id="bouton-onglet-rapports" class="nav-bouton px-4 py-2 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 panneau-biseaute-fin transition">
-        📝 RAPPORTS DE MISSION
+      <button onclick="naviguerOnglet('rapports')" id="bouton-onglet-rapports" class="nav-bouton px-4 py-2 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-2">
+        <span>📝</span> RAPPORTS DE MISSION
       </button>
-      <button onclick="naviguerOnglet('effectif')" id="bouton-onglet-effectif" class="nav-bouton px-4 py-2 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 panneau-biseaute-fin transition">
-        👥 EFFECTIF DE L'ESCOUADE
+      <button onclick="naviguerOnglet('effectif')" id="bouton-onglet-effectif" class="nav-bouton px-4 py-2 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-2">
+        <span>👥</span> EFFECTIF DE L'ESCOUADE
       </button>
-      <button onclick="naviguerOnglet('plans')" id="bouton-onglet-plans" class="nav-bouton px-4 py-2 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 panneau-biseaute-fin transition">
-        📋 PLANS TACTIQUES
+      <button onclick="naviguerOnglet('plans')" id="bouton-onglet-plans" class="nav-bouton px-4 py-2 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-2">
+        <span>📋</span> PLANS TACTIQUES
       </button>
-      <button onclick="naviguerOnglet('archives')" id="bouton-onglet-archives" class="nav-bouton px-4 py-2 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 panneau-biseaute-fin transition">
-        💾 ARCHIVES DE PIRATAGE
+      <button onclick="naviguerOnglet('archives')" id="bouton-onglet-archives" class="nav-bouton px-4 py-2 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-2">
+        <span>💾</span> ARCHIVES DE PIRATAGE
       </button>
     </div>
   </nav>
 
+  <!-- Contenu Principal -->
   <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full relative z-10">
 
     <!-- 1. ÉCRAN D'AUTHENTIFICATION -->
-    <section id="fenetre-connexion" class="max-w-md mx-auto my-12">
-      <div class="bg-acier border-2 border-carmin panneau-biseaute p-6 lueur-rouge relative">
-        <div class="absolute -top-3 left-6 bg-carmin px-3 py-0.5 text-[10px] font-titre font-black uppercase tracking-widest text-white">
-          ACCÈS SÉCURISÉ // UNITÉ BAD BATCH
-        </div>
-
-        <div class="text-center mb-6 pt-2">
-          <h1 class="text-xl font-titre font-black text-gray-100 uppercase tracking-widest">
+    <section id="fenetre-connexion" class="max-w-md mx-auto my-10">
+      <div class="bg-plaqueBlindage border-2 border-bordureClaire biseau-plaque p-6 sm:p-7 relative shadow-2xl">
+        
+        <!-- En-tête bien aligné sans aucun texte écrasé ou coupé -->
+        <div class="border-b border-bordureMilitaire pb-4 mb-5 text-center">
+          <div class="inline-block px-3 py-1 bg-rougeKamino/30 border border-rougeKamino text-rougeVif font-titre text-[10px] font-bold tracking-widest uppercase rounded mb-2">
+            ACCÈS SÉCURISÉ // UNITÉ BAD BATCH
+          </div>
+          <h1 class="text-xl sm:text-2xl font-titre font-black text-gray-100 tracking-wider">
             TERMINAL DU MARAUDEUR
           </h1>
-          <p class="text-xs font-terminal text-gray-400 mt-1">Identifiez votre matricule pour accéder aux consoles tactiques de bord.</p>
+          <p class="text-xs font-terminal text-gray-400 mt-1">
+            Sélectionnez votre matricule d'opérateur pour ouvrir la console.
+          </p>
         </div>
 
         <form id="formulaire-connexion" onsubmit="executerConnexion(event)" class="space-y-4">
           <div>
-            <label class="block text-xs font-terminal uppercase text-gray-300 mb-2">Sélectionnez votre matricule d'opérateur :</label>
-            <div class="grid grid-cols-2 gap-2">
-              <button type="button" onclick="choisirOperateurConnexion('hunter')" id="choix-hunter" class="bouton-choix-operateur p-2 border border-carmin bg-carmin/25 text-white rounded text-left flex items-center space-x-2">
+            <label class="block text-xs font-terminal uppercase text-gray-300 mb-2">Opérateur de bord :</label>
+            <div class="grid grid-cols-2 gap-2.5">
+              <button type="button" onclick="choisirOperateurConnexion('hunter')" id="choix-hunter" class="bouton-choix-op p-2.5 border-2 border-rougeVif bg-red-950/30 text-white rounded biseau-bouton text-left flex items-center space-x-2 transition">
                 <span class="text-base">🎯</span>
                 <span class="text-xs font-titre font-bold">HUNTER</span>
               </button>
-              <button type="button" onclick="choisirOperateurConnexion('wrecker')" id="choix-wrecker" class="bouton-choix-operateur p-2 border border-slate-700 bg-panneau/40 text-gray-300 rounded text-left flex items-center space-x-2">
+              <button type="button" onclick="choisirOperateurConnexion('wrecker')" id="choix-wrecker" class="bouton-choix-op p-2.5 border border-bordureMilitaire bg-plaqueSecondaire text-gray-300 rounded biseau-bouton text-left flex items-center space-x-2 transition">
                 <span class="text-base">💥</span>
                 <span class="text-xs font-titre font-bold">WRECKER</span>
               </button>
-              <button type="button" onclick="choisirOperateurConnexion('crosshair')" id="choix-crosshair" class="bouton-choix-operateur p-2 border border-slate-700 bg-panneau/40 text-gray-300 rounded text-left flex items-center space-x-2">
+              <button type="button" onclick="choisirOperateurConnexion('crosshair')" id="choix-crosshair" class="bouton-choix-op p-2.5 border border-bordureMilitaire bg-plaqueSecondaire text-gray-300 rounded biseau-bouton text-left flex items-center space-x-2 transition">
                 <span class="text-base">🦅</span>
                 <span class="text-xs font-titre font-bold">CROSSHAIR</span>
               </button>
-              <button type="button" onclick="choisirOperateurConnexion('tech')" id="choix-tech" class="bouton-choix-operateur p-2 border border-slate-700 bg-panneau/40 text-gray-300 rounded text-left flex items-center space-x-2">
+              <button type="button" onclick="choisirOperateurConnexion('tech')" id="choix-tech" class="bouton-choix-op p-2.5 border border-bordureMilitaire bg-plaqueSecondaire text-gray-300 rounded biseau-bouton text-left flex items-center space-x-2 transition">
                 <span class="text-base">💻</span>
                 <span class="text-xs font-titre font-bold">TECH</span>
               </button>
@@ -380,64 +338,76 @@
           </div>
 
           <div>
-            <label for="saisie-mot-de-passe" class="block text-xs font-terminal uppercase text-gray-300 mb-1">Mot de passe chiffré :</label>
-            <input type="password" id="saisie-mot-de-passe" required placeholder="Mot de passe initial : 1234" class="w-full bg-carbone border border-slate-700 focus:border-ambre px-3 py-2 text-sm font-terminal text-ambre outline-none rounded">
+            <label for="saisie-mot-de-passe" class="block text-xs font-terminal uppercase text-gray-300 mb-1">Mot de passe de sécurité :</label>
+            <input type="password" id="saisie-mot-de-passe" required placeholder="Saisissez votre code" class="w-full bg-carboneFond border border-bordureMilitaire focus:border-amber-400 px-3.5 py-2.5 text-sm font-terminal text-gray-100 rounded outline-none transition">
           </div>
 
           <div id="erreur-connexion" class="hidden text-xs font-terminal text-red-400 bg-red-950/70 p-2.5 rounded border border-red-800">
             Mot de passe incorrect pour cet opérateur.
           </div>
 
-          <button type="submit" class="w-full py-2.5 bg-carmin hover:bg-carminFonce text-white font-titre font-bold tracking-wider text-xs uppercase panneau-biseaute transition">
+          <button type="submit" class="w-full py-3 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold tracking-wider text-xs uppercase biseau-bouton transition shadow-lg">
             AUTHENTIFICATION & OUVERTURE DE SESSION
           </button>
         </form>
 
-        <div class="mt-4 pt-4 border-t border-slate-800 text-[11px] font-terminal text-gray-500 text-center">
-          Mot de passe par défaut : <span class="text-ambre">1234</span>. Modifiable après connexion via l'icône 🔑.
-        </div>
       </div>
     </section>
 
     <!-- 2. POSTE DE COMMANDEMENT -->
     <section id="fenetre-poste-commandement" class="hidden space-y-6">
-      <!-- Synthèse du cycle -->
-      <div class="bg-acier border-l-4 border-carmin p-4 rounded-r flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div>
-          <h2 class="text-lg font-titre font-black uppercase text-gray-100 flex items-center gap-2">
-            <span>CYCLE OPÉRATIONNEL EN COURS</span>
-          </h2>
-          <p class="text-xs font-terminal text-gray-400">
-            Objectif réglementaire : <span class="text-ambre font-bold" id="valeur-quota-affiche">3</span> missions par membre / semaine.
-          </p>
+      
+      <!-- Carte d'ambiance dynamique du personnage connecté -->
+      <div id="banniere-lore-personnage" class="panneau-tactique p-4 rounded-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <!-- Rempli par JavaScript selon le personnage -->
+      </div>
+
+      <!-- Synthèse du cycle hebdomadaire -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-plaqueBlindage border border-bordureMilitaire p-4 rounded biseau-plaque">
+          <span class="text-xs font-terminal text-gray-400 uppercase">OBJECTIF DU CYCLE EN COURS</span>
+          <div class="text-2xl font-titre font-black text-amber-400 mt-1">
+            <span id="valeur-quota-affiche">3</span> MISSIONS / SEMAINE
+          </div>
+          <p class="text-[11px] font-terminal text-gray-500 mt-1">Quota réglementaire fixé par le Sergent Hunter.</p>
         </div>
-        <div class="flex items-center space-x-6">
-          <div class="text-right">
-            <span class="text-[10px] font-terminal text-gray-400 uppercase">Rapports enregistrés</span>
-            <div class="text-2xl font-titre font-bold text-ambre" id="total-rapports-enregistres">0</div>
+
+        <div class="bg-plaqueBlindage border border-bordureMilitaire p-4 rounded biseau-plaque">
+          <span class="text-xs font-terminal text-gray-400 uppercase">RAPPORTS ENREGISTRÉS AU REGISTRE</span>
+          <div class="text-2xl font-titre font-black text-gray-100 mt-1" id="total-rapports-enregistres">
+            0
           </div>
-          <div class="h-8 w-px bg-slate-700"></div>
-          <div class="text-right">
-            <span class="text-[10px] font-terminal text-gray-400 uppercase">Conformité de l'escouade</span>
-            <div class="text-2xl font-titre font-bold text-emeraude" id="pourcentage-conformite">100%</div>
+          <p class="text-[11px] font-terminal text-gray-500 mt-1">Synchronisés sur le terminal central du Maraudeur.</p>
+        </div>
+
+        <div class="bg-plaqueBlindage border border-bordureMilitaire p-4 rounded biseau-plaque">
+          <span class="text-xs font-terminal text-gray-400 uppercase">CONFORMITÉ HEBDOMADAIRE</span>
+          <div class="text-2xl font-titre font-black text-vertViseur mt-1" id="pourcentage-conformite">
+            100%
           </div>
+          <p class="text-[11px] font-terminal text-gray-500 mt-1">Pourcentage de membres à jour de leurs quotas.</p>
         </div>
       </div>
 
-      <!-- Fiches d'état rapide des 4 membres -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="cartes-membres-synthese">
-        <!-- Rempli par JavaScript -->
+      <!-- 4 fiches de synthèse rapide des opérateurs -->
+      <div>
+        <h3 class="font-titre text-xs uppercase tracking-wider text-gray-400 mb-3 flex items-center gap-2">
+          <span class="text-rougeVif">■</span> STATUT OPÉRATIONNEL DE L'UNITÉ
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="cartes-membres-synthese">
+          <!-- Rempli par JavaScript -->
+        </div>
       </div>
 
-      <!-- Flux des rapports récents et aperçu des plans -->
+      <!-- Derniers rapports et aperçu tactique -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Flux des dernières missions -->
-        <div class="lg:col-span-2 bg-acier border border-slate-800 rounded p-4">
-          <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
-            <h3 class="font-titre text-sm text-gray-200 uppercase tracking-wider flex items-center gap-2">
-              <span class="text-carmin">■</span> DERNIERS RAPPORTS TRANSMIS
+        <!-- Flux des derniers rapports -->
+        <div class="lg:col-span-2 bg-plaqueBlindage border border-bordureMilitaire rounded-lg p-4">
+          <div class="flex items-center justify-between border-b border-bordureMilitaire pb-3 mb-3">
+            <h3 class="font-titre text-xs uppercase tracking-wider text-gray-200 flex items-center gap-2">
+              <span class="text-rougeVif">■</span> DERNIERS RAPPORTS TRANSMIS
             </h3>
-            <button onclick="naviguerOnglet('rapports')" class="text-xs font-terminal text-ambre hover:underline">
+            <button onclick="naviguerOnglet('rapports')" class="text-xs font-terminal text-amber-400 hover:underline">
               Consulter tout le registre →
             </button>
           </div>
@@ -447,102 +417,101 @@
         </div>
 
         <!-- Plans tactiques d'engagement rapide -->
-        <div class="bg-acier border border-slate-800 rounded p-4 flex flex-col justify-between">
+        <div class="bg-plaqueBlindage border border-bordureMilitaire rounded-lg p-4 flex flex-col justify-between">
           <div>
-            <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
-              <h3 class="font-titre text-sm text-gray-200 uppercase tracking-wider flex items-center gap-2">
-                <span class="text-ambre">■</span> PLANS DE BATAILLE DE L'UNITÉ
+            <div class="flex items-center justify-between border-b border-bordureMilitaire pb-3 mb-3">
+              <h3 class="font-titre text-xs uppercase tracking-wider text-gray-200 flex items-center gap-2">
+                <span class="text-amber-400">■</span> PLANS DE BATAILLE RECONNUS
               </h3>
-              <button onclick="naviguerOnglet('plans')" class="text-xs font-terminal text-ambre hover:underline">
-                Consulter tous les plans →
+              <button onclick="naviguerOnglet('plans')" class="text-xs font-terminal text-amber-400 hover:underline">
+                Tous les plans →
               </button>
             </div>
-            <p class="text-xs font-terminal text-gray-400 mb-3">Tactiques éprouvées de la Bad Batch prêtes au déploiement.</p>
             <div id="apercu-plans-tactiques" class="space-y-2">
               <!-- Rempli par JavaScript -->
             </div>
           </div>
-
-          <div class="mt-4 pt-3 border-t border-slate-800 text-[11px] font-terminal text-gray-400">
-            <span class="text-cyanHolo">TERMINAL DE TECH :</span> Tout renseignement intercepté est synchronisé immédiatement pour l'ensemble des opérateurs.
+          <div class="mt-4 pt-3 border-t border-bordureMilitaire text-[11px] font-terminal text-gray-400">
+            Protocole Clone Force 99 : Toute initiative d'assaut coordonnée garantit l'efficacité opérationnelle.
           </div>
         </div>
       </div>
+
     </section>
 
     <!-- 3. RAPPORTS DE MISSION -->
     <section id="fenetre-rapports" class="hidden space-y-6">
       
-      <!-- Formulaire de transmission de rapport -->
-      <div class="bg-acier border border-slate-800 panneau-biseaute p-5 relative">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+      <!-- Formulaire d'encodage de rapport -->
+      <div class="panneau-tactique p-5 rounded-lg">
+        <div class="flex flex-wrap items-center justify-between border-b border-bordureMilitaire pb-3 mb-4 gap-2">
           <div class="flex items-center space-x-2">
-            <span class="text-carmin font-bold text-lg">📝</span>
-            <h2 class="text-sm font-titre font-black uppercase text-gray-100">
-              ENCODER UN RAPPORT DE MISSION // OPÉRATEUR : <span id="nom-auteur-rapport" class="text-ambre">HUNTER</span>
+            <span class="text-xl">📝</span>
+            <h2 class="text-sm font-titre font-bold uppercase text-gray-100">
+              TRANSMETTRE UN RAPPORT DE MISSION // OPÉRATEUR : <span id="nom-auteur-rapport" class="text-amber-400">HUNTER</span>
             </h2>
           </div>
-          <span class="text-[11px] font-terminal text-gray-400">Transmission et synchronisation immédiates</span>
+          <span class="text-xs font-terminal text-gray-400">Diffusion instantanée sur le réseau du Maraudeur</span>
         </div>
 
         <form id="formulaire-rapport-mission" onsubmit="transmettreRapportMission(event)" class="space-y-4">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label class="block text-xs font-terminal uppercase text-gray-300 mb-1">Matricule / Nom de l'opération *</label>
-              <input type="text" id="champ-nom-mission" required placeholder="Exemple : OPÉRATION-ANAXES-CYBER" class="w-full bg-carbone border border-slate-700 px-3 py-2 text-xs font-terminal text-gray-100 rounded focus:border-carmin outline-none">
+              <label class="block text-xs font-terminal uppercase text-gray-300 mb-1">Désignation de la mission *</label>
+              <input type="text" id="champ-nom-mission" required placeholder="Exemple : BATAILLE D'ANAXES" class="w-full bg-carboneFond border border-bordureMilitaire px-3 py-2 text-xs font-terminal text-gray-100 rounded focus:border-red-500 outline-none">
             </div>
             <div>
               <label class="block text-xs font-terminal uppercase text-gray-300 mb-1">Secteur / Planète d'intervention *</label>
-              <input type="text" id="champ-secteur-mission" required placeholder="Exemple : Anaxes // Complexe Nord" class="w-full bg-carbone border border-slate-700 px-3 py-2 text-xs font-terminal text-gray-100 rounded focus:border-carmin outline-none">
+              <input type="text" id="champ-secteur-mission" required placeholder="Exemple : Anaxes // Relais de communication" class="w-full bg-carboneFond border border-bordureMilitaire px-3 py-2 text-xs font-terminal text-gray-100 rounded focus:border-red-500 outline-none">
             </div>
             <div>
-              <label class="block text-xs font-terminal uppercase text-gray-300 mb-1">Date / Cycle de la mission *</label>
-              <input type="text" id="champ-date-mission" required value="7932.4" class="w-full bg-carbone border border-slate-700 px-3 py-2 text-xs font-terminal text-ambre rounded focus:border-carmin outline-none">
+              <label class="block text-xs font-terminal uppercase text-gray-300 mb-1">Date calendaire de la mission *</label>
+              <!-- Pré-remplie automatiquement par la date du jour, entièrement modifiable -->
+              <input type="text" id="champ-date-mission" required class="w-full bg-carboneFond border border-bordureMilitaire px-3 py-2 text-xs font-terminal text-amber-300 rounded focus:border-red-500 outline-none">
             </div>
           </div>
 
-          <!-- Présence et champ tactique spécifique à l'opérateur -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label class="block text-xs font-terminal uppercase text-gray-300 mb-1">Statut de présence au combat</label>
-              <select id="champ-presence-mission" class="w-full bg-carbone border border-slate-700 px-3 py-2 text-xs font-terminal text-gray-100 rounded focus:border-carmin outline-none">
+              <label class="block text-xs font-terminal uppercase text-gray-300 mb-1">Présence opérationnelle</label>
+              <select id="champ-presence-mission" class="w-full bg-carboneFond border border-bordureMilitaire px-3 py-2 text-xs font-terminal text-gray-100 rounded focus:border-red-500 outline-none">
                 <option value="present">PRÉSENT AU COMBAT [CONFIRMÉ]</option>
-                <option value="absent">ABSENT / EN DÉTACHEMENT TACTIQUE</option>
+                <option value="absent">ABSENT / DÉTACHEMENT SÉPARÉ</option>
               </select>
             </div>
 
-            <!-- Champ dynamique (Wrecker: Chars MTT, Crosshair: Tirs tête, Tech: Données piratées, Hunter: Analyse) -->
+            <!-- Champ dynamique personnalisé selon l'opérateur connecté -->
             <div id="champ-specialiste-conteneur">
-              <!-- Alimenté selon l'opérateur connecté -->
+              <!-- Injecté par JavaScript -->
             </div>
           </div>
 
           <div>
-            <label class="block text-xs font-terminal uppercase text-gray-300 mb-1">Compte-rendu de l'engagement *</label>
-            <textarea id="champ-description-mission" required rows="3" placeholder="Détaillez les manœuvres, la résistance adverse et les objectifs accomplis..." class="w-full bg-carbone border border-slate-700 px-3 py-2 text-xs font-terminal text-gray-100 rounded focus:border-carmin outline-none"></textarea>
+            <label class="block text-xs font-terminal uppercase text-gray-300 mb-1">Compte-rendu tactique des opérations *</label>
+            <textarea id="champ-description-mission" required rows="3" placeholder="Détaillez les manœuvres exécutées, la résistance adverse et les résultats obtenus..." class="w-full bg-carboneFond border border-bordureMilitaire px-3 py-2 text-xs font-terminal text-gray-100 rounded focus:border-red-500 outline-none"></textarea>
           </div>
 
           <div class="flex items-center justify-end space-x-3 pt-2">
-            <button type="reset" class="px-4 py-2 border border-slate-700 text-xs font-terminal text-gray-400 hover:text-white rounded">
-              Effacer la saisie
+            <button type="reset" class="px-4 py-2 border border-bordureMilitaire hover:border-bordureClaire text-xs font-terminal text-gray-400 hover:text-white rounded">
+              Réinitialiser la saisie
             </button>
-            <button type="submit" id="bouton-envoi-rapport" class="px-5 py-2 bg-carmin hover:bg-carminFonce text-white font-titre font-bold text-xs uppercase panneau-biseaute transition">
-              TRANSMETTRE LE RAPPORT
+            <button type="submit" id="bouton-envoi-rapport" class="px-5 py-2.5 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold text-xs uppercase biseau-bouton transition shadow-md">
+              ENREGISTRER LE RAPPORT
             </button>
           </div>
         </form>
       </div>
 
-      <!-- Registre de tous les rapports de mission -->
-      <div class="bg-acier border border-slate-800 rounded p-4">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3 mb-4">
-          <h3 class="font-titre text-sm text-gray-200 uppercase tracking-wider flex items-center gap-2">
-            <span class="text-ambre">■</span> REGISTRE DES RAPPORTS DE L'UNITÉ
+      <!-- Registre complet des rapports -->
+      <div class="bg-plaqueBlindage border border-bordureMilitaire rounded-lg p-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-bordureMilitaire pb-3 mb-4">
+          <h3 class="font-titre text-xs uppercase tracking-wider text-gray-200 flex items-center gap-2">
+            <span class="text-amber-400">■</span> REGISTRE OFFICIEL DES RAPPORTS DE L'UNITÉ
           </h3>
           <div class="flex items-center space-x-2">
             <span class="text-xs font-terminal text-gray-400">Filtrer par opérateur :</span>
-            <select id="filtre-operateurs-rapports" onchange="afficherListeRapports()" class="bg-carbone border border-slate-700 text-xs font-terminal text-gray-200 px-2 py-1 rounded">
-              <option value="tous">Toute l'escouade</option>
+            <select id="filtre-operateurs-rapports" onchange="afficherListeRapports()" class="bg-carboneFond border border-bordureMilitaire text-xs font-terminal text-gray-200 px-2.5 py-1 rounded">
+              <option value="tous">Toute la Bad Batch</option>
               <option value="hunter">Hunter</option>
               <option value="wrecker">Wrecker</option>
               <option value="crosshair">Crosshair</option>
@@ -555,438 +524,713 @@
           <!-- Rempli par JavaScript -->
         </div>
       </div>
+
     </section>
 
     <!-- 4. EFFECTIF DE L'ESCOUADE -->
     <section id="fenetre-effectif" class="hidden space-y-6">
       
-      <!-- Panneau de commandement exclusif à Hunter -->
-      <div id="panneau-commandement-hunter" class="bg-panneau border-2 border-ambre p-4 panneau-biseaute flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <!-- Panneau exclusif au Chef d'escouade Hunter -->
+      <div id="panneau-commandement-hunter" class="panneau-tactique p-4 rounded-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-2 border-red-600/60">
         <div>
           <div class="flex items-center space-x-2">
-            <span class="px-2 py-0.5 bg-ambre text-carbone text-[10px] font-titre font-black uppercase">COMMANDEMENT DE L'UNITÉ</span>
-            <span class="text-xs font-titre font-bold text-gray-200">AUTORITÉ DU SERGENT HUNTER</span>
+            <span class="px-2 py-0.5 bg-rougeKamino text-white text-[10px] font-titre font-black uppercase rounded">COMMANDEMENT SUPÉRIEUR</span>
+            <span class="text-xs font-titre font-bold text-gray-100">AUTORITÉ MILITAIRE DU SERGENT HUNTER</span>
           </div>
           <p class="text-xs font-terminal text-gray-300 mt-1">
-            En qualité de chef d'escouade, vous seul pouvez modifier les dates d'incorporation, inscrire des annotations d'évaluation et clôturer le cycle hebdomadaire.
+            En tant que chef d'escouade, vous gérez les dates d'incorporation, les évaluations militaires, l'ajustement des statistiques globales et la clôture hebdomadaire.
           </p>
         </div>
 
-        <div class="flex items-center space-x-3">
-          <button onclick="ouvrirBoiteQuota()" class="px-3 py-1.5 border border-ambre/60 text-ambre hover:bg-ambre/10 font-terminal text-xs rounded transition">
-            ⚙️ Quota : <span id="affichage-quota-hunter">3</span> missions/semaine
+        <div class="flex flex-wrap items-center gap-2.5">
+          <button onclick="ouvrirBoiteQuota()" class="px-3 py-1.5 border border-amber-500/50 hover:border-amber-400 text-amber-300 font-terminal text-xs rounded transition bg-plaqueSecondaire">
+            ⚙️ Quota : <span id="affichage-quota-hunter">3</span> missions / sem.
           </button>
-          <button onclick="demanderReinitialisationHebdomadaire()" class="px-4 py-2 bg-carmin hover:bg-carminFonce text-white font-titre font-bold text-xs uppercase tracking-wider panneau-biseaute transition lueur-rouge">
-            🔄 CLÔTURER ET RÉINITIALISER LE CYCLE HEBDOMADAIRE
+          <button onclick="demanderReinitialisationHebdomadaire()" class="px-3.5 py-1.5 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold text-xs uppercase biseau-bouton transition shadow">
+            🔄 CLÔTURER LA SEMAINE & RESET QUOTAS
           </button>
         </div>
       </div>
 
-      <!-- Mention informative pour les membres autres que Hunter -->
-      <div id="avis-lecture-seule" class="hidden bg-acier border border-slate-700 p-3 rounded text-xs font-terminal text-gray-400">
-        ℹ️ Vous consultez les dossiers militaires en mode lecture. Seul le Sergent Hunter dispose des autorisations pour annoter les effectifs ou réinitialiser le cycle hebdomadaire.
+      <div id="avis-lecture-seule" class="hidden bg-plaqueBlindage border border-bordureMilitaire p-3.5 rounded text-xs font-terminal text-gray-400">
+        ℹ️ Consultation des dossiers militaires en mode lecture. Seul le Sergent Hunter peut ajuster les annotations, dates d'incorporation ou statistiques de l'escouade.
       </div>
 
-      <!-- Fiches détaillées des 4 opérateurs -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="conteneur-fiches-effectif">
+      <!-- 4 fiches complètes des membres de l'escouade -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5" id="conteneur-fiches-effectif">
         <!-- Rempli par JavaScript -->
       </div>
     </section>
 
-    <!-- 5. PLANS TACTIQUES (BAD BATCH) -->
+    <!-- 5. PLANS TACTIQUES -->
     <section id="fenetre-plans" class="hidden space-y-6">
       
-      <div class="flex flex-wrap items-center justify-between gap-4 bg-acier border-b border-slate-800 p-4 rounded">
+      <div class="bg-plaqueBlindage border border-bordureMilitaire p-4 rounded-lg flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h2 class="text-base font-titre font-black uppercase text-gray-100 flex items-center gap-2">
+          <h2 class="text-sm font-titre font-black uppercase text-gray-100 flex items-center gap-2">
             <span>PLANS D'ENGAGEMENT // UNITÉ BAD BATCH</span>
           </h2>
-          <p class="text-xs font-terminal text-gray-400">Procédés tactiques codifiés et enregistrés dans la mémoire de manœuvre du Maraudeur.</p>
+          <p class="text-xs font-terminal text-gray-400">
+            Procédures d'assaut tactiques codifiées dans la mémoire stratégique du Maraudeur.
+          </p>
         </div>
-        <button onclick="ouvrirBoiteNouveauPlan()" class="px-4 py-2 bg-ambre hover:bg-amber-400 text-carbone font-titre font-bold text-xs uppercase panneau-biseaute transition">
+
+        <!-- Bouton visible UNIQUEMENT pour Hunter -->
+        <button id="bouton-ajouter-plan-hunter" onclick="ouvrirBoiteNouveauPlan()" class="hidden px-4 py-2 bg-amber-500 hover:bg-amber-400 text-carboneFond font-titre font-bold text-xs uppercase biseau-bouton transition shadow">
           + ENREGISTRER UN NOUVEAU PLAN
         </button>
       </div>
 
-      <!-- Grille d'affichage des plans -->
+      <!-- Grille des plans -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="conteneur-plans-tactiques">
         <!-- Rempli par JavaScript -->
       </div>
     </section>
 
-    <!-- 6. ARCHIVES DE PIRATAGE (TECH) -->
+    <!-- 6. ARCHIVES DE PIRATAGE -->
     <section id="fenetre-archives" class="hidden space-y-6">
       
-      <div class="bg-carbone border-2 border-cyanHolo/50 panneau-biseaute p-4 lueur-cyan">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-cyanHolo/30 pb-3 mb-3">
+      <div class="panneau-tactique p-4 rounded-lg border-cyan-500/50">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-bordureMilitaire pb-3 mb-3">
           <div class="flex items-center space-x-2">
-            <span class="text-cyanHolo animate-pulse">●</span>
-            <h2 class="font-titre font-bold text-sm text-cyanHolo uppercase tracking-widest">
+            <span class="text-cyanTech">💻</span>
+            <h2 class="font-titre font-bold text-sm text-cyanTech uppercase tracking-wider">
               TERMINAL D'INTERCEPTION CYBERNÉTIQUE // ARCHIVES DÉCRYPTÉES
             </h2>
           </div>
-          <span class="text-xs font-terminal text-ambre">RESPONSABLE DU TRAITEMENT : TECH</span>
+          <span class="text-xs font-terminal text-amber-400">SUPERVISION ANALYTIQUE : TECH</span>
         </div>
         <p class="text-xs font-terminal text-gray-300">
-          Chaque donnée hostile piratée lors des missions de Tech est automatiquement injectée dans ce registre pour toute l'escouade.
+          Toutes les transmissions et schémas séparatistes piratés par Tech sont instantanément déchiffrés et partagés avec toute l'escouade.
         </p>
       </div>
 
-      <!-- Console d'injection directe réservée à Tech -->
-      <div id="panneau-saisie-piratage-tech" class="hidden bg-acier border border-cyanHolo/40 p-4 rounded">
-        <h3 class="font-titre text-xs text-cyanHolo uppercase mb-2">Injecter une transmission piratée dans la mémoire centrale</h3>
+      <!-- Injection directe disponible pour Tech (ou consultation générale) -->
+      <div id="panneau-saisie-piratage-tech" class="hidden bg-plaqueBlindage border border-cyan-500/40 p-4 rounded-lg">
+        <h3 class="font-titre text-xs text-cyanTech uppercase mb-2">Injecter une transmission piratée dans la mémoire centrale</h3>
         <form onsubmit="transmettreNouvelleArchive(event)" class="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <input type="text" id="titre-archive-piratee" required placeholder="Désignation du document (ex: Schémas des tourelles)" class="bg-carbone border border-slate-700 px-3 py-1.5 text-xs font-terminal text-gray-100 rounded focus:border-cyanHolo outline-none">
-          <input type="text" id="source-archive-piratee" required placeholder="Origine ennemie (ex: Frégate Séparatiste)" class="bg-carbone border border-slate-700 px-3 py-1.5 text-xs font-terminal text-gray-100 rounded focus:border-cyanHolo outline-none">
-          <button type="submit" class="bg-cyanHolo/20 hover:bg-cyanHolo/30 border border-cyanHolo text-cyanHolo font-titre text-xs font-bold py-1.5 rounded transition">
+          <input type="text" id="titre-archive-piratee" required placeholder="Désignation (ex: Fréquence des droïdes B1)" class="bg-carboneFond border border-bordureMilitaire px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none focus:border-cyanTech">
+          <input type="text" id="source-archive-piratee" required placeholder="Origine ennemie (ex: Frégate CIS Munificent)" class="bg-carboneFond border border-bordureMilitaire px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none focus:border-cyanTech">
+          <button type="submit" class="bg-cyanTech/20 hover:bg-cyanTech/30 border border-cyanTech text-cyanTech font-titre text-xs font-bold py-1.5 rounded transition">
             INJECTER LES DONNÉES
           </button>
           <div class="md:col-span-3">
-            <textarea id="contenu-archive-piratee" required rows="2" placeholder="Contenu du chiffrement, faiblesses techniques identifiées, codes de neutralisation..." class="w-full bg-carbone border border-slate-700 px-3 py-1.5 text-xs font-terminal text-gray-100 rounded focus:border-cyanHolo outline-none"></textarea>
+            <textarea id="contenu-archive-piratee" required rows="2" placeholder="Contenu du déchiffrement, faiblesses des boucliers déflecteurs, fréquences d'interférence..." class="w-full bg-carboneFond border border-bordureMilitaire px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none focus:border-cyanTech"></textarea>
           </div>
         </form>
       </div>
 
-      <!-- Registre des archives interceptées -->
-      <div class="bg-carbone border border-slate-800 rounded p-4 font-terminal">
-        <div class="flex items-center justify-between text-xs text-gray-500 border-b border-slate-800 pb-2 mb-3">
+      <!-- Registre des données décryptées -->
+      <div class="bg-plaqueBlindage border border-bordureMilitaire rounded-lg p-4 font-terminal">
+        <div class="flex items-center justify-between text-xs text-gray-400 border-b border-bordureMilitaire pb-2 mb-3">
           <span>REGISTRE DES TRANSMISSIONS ADVERSES DÉCHIFFRÉES</span>
-          <span id="compteur-archives-enregistrees">0 document intercepté</span>
+          <span id="compteur-archives-enregistrees">0 transmission interceptée</span>
         </div>
         <div id="liste-archives-piratees" class="space-y-3">
           <!-- Rempli par JavaScript -->
         </div>
       </div>
+
     </section>
 
   </main>
 
-  <!-- BOÎTES DE DIALOGUE (MODALES) 100% EN FRANÇAIS -->
+  <!-- ==================== BOÎTES DE DIALOGUE (MODALES) ==================== -->
 
-  <!-- Boîte 1 : Modifier le mot de passe -->
+  <!-- Boîte 1 : MODIFIER MOT DE PASSE -->
   <div id="boite-changer-mot-de-passe" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-acier border-2 border-ambre panneau-biseaute max-w-sm w-full p-5 shadow-2xl">
-      <div class="flex items-center justify-between border-b border-slate-700 pb-2 mb-4">
-        <h3 class="font-titre text-xs font-bold text-ambre uppercase">Modifier votre mot de passe</h3>
+    <div class="bg-plaqueBlindage border-2 border-amber-500 biseau-plaque max-w-sm w-full p-5 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-bordureMilitaire pb-2 mb-4">
+        <h3 class="font-titre text-xs font-bold text-amber-400 uppercase">MODIFIER VOTRE MOT DE PASSE</h3>
         <button onclick="fermerBoite('boite-changer-mot-de-passe')" class="text-gray-400 hover:text-white">✕</button>
       </div>
       <form onsubmit="enregistrerNouveauMotDePasse(event)" class="space-y-3">
         <div>
           <label class="block text-[11px] font-terminal text-gray-300 mb-1">Mot de passe actuel :</label>
-          <input type="password" id="champ-mot-de-passe-actuel" required class="w-full bg-carbone border border-slate-700 px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none focus:border-ambre">
+          <input type="password" id="champ-mot-de-passe-actuel" required class="w-full bg-carboneFond border border-bordureMilitaire px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none focus:border-amber-400">
         </div>
         <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Nouveau mot de passe :</label>
-          <input type="password" id="champ-nouveau-mot-de-passe" required class="w-full bg-carbone border border-slate-700 px-3 py-1.5 text-xs font-terminal text-ambre rounded outline-none focus:border-ambre">
+          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Nouveau mot de passe de sécurité :</label>
+          <input type="password" id="champ-nouveau-mot-de-passe" required class="w-full bg-carboneFond border border-bordureMilitaire px-3 py-2 text-xs font-terminal text-amber-300 rounded outline-none focus:border-amber-400">
         </div>
-        <div id="erreur-changement-mot-de-passe" class="hidden text-[10px] font-terminal text-red-400 bg-red-950/60 p-2 rounded"></div>
+        <div id="erreur-changement-mot-de-passe" class="hidden text-[10px] font-terminal text-red-400 bg-red-950/70 p-2 rounded border border-red-800"></div>
         <div class="flex justify-end space-x-2 pt-2">
-          <button type="button" onclick="fermerBoite('boite-changer-mot-de-passe')" class="px-3 py-1.5 border border-slate-700 text-xs font-terminal text-gray-400 rounded">Annuler</button>
-          <button type="submit" class="px-4 py-1.5 bg-ambre hover:bg-amber-400 text-carbone font-titre font-bold text-xs uppercase rounded">Valider le changement</button>
+          <button type="button" onclick="fermerBoite('boite-changer-mot-de-passe')" class="px-3 py-1.5 border border-bordureMilitaire text-xs font-terminal text-gray-400 rounded">Annuler</button>
+          <button type="submit" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-carboneFond font-titre font-bold text-xs uppercase rounded">Mettre à jour</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Boîte 2 : Ajouter un nouveau plan tactique -->
+  <!-- Boîte 2 : NOUVEAU PLAN TACTIQUE (Hunter uniquement) -->
   <div id="boite-nouveau-plan" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-acier border-2 border-ambre panneau-biseaute max-w-md w-full p-5 shadow-2xl">
-      <div class="flex items-center justify-between border-b border-slate-700 pb-2 mb-4">
-        <h3 class="font-titre text-xs font-bold text-ambre uppercase">Enregistrer un nouveau plan d'engagement</h3>
+    <div class="bg-plaqueBlindage border-2 border-amber-500 biseau-plaque max-w-md w-full p-5 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-bordureMilitaire pb-2 mb-4">
+        <h3 class="font-titre text-xs font-bold text-amber-400 uppercase">ENREGISTRER UN NOUVEAU PLAN D'ENGAGEMENT</h3>
         <button onclick="fermerBoite('boite-nouveau-plan')" class="text-gray-400 hover:text-white">✕</button>
       </div>
       <form onsubmit="enregistrerNouveauPlan(event)" class="space-y-3">
         <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Identifiant codé (exemple : PLAN 44)</label>
-          <input type="text" id="champ-code-plan" required placeholder="PLAN XX" class="w-full bg-carbone border border-slate-700 px-3 py-1.5 text-xs font-terminal text-ambre rounded outline-none uppercase">
+          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Code tactique (ex: PLAN 33)</label>
+          <input type="text" id="champ-code-plan" required placeholder="PLAN XX" class="w-full bg-carboneFond border border-bordureMilitaire px-3 py-1.5 text-xs font-terminal text-amber-300 rounded outline-none uppercase">
         </div>
         <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Cible principale / Objectif tactique</label>
-          <input type="text" id="champ-cible-plan" required placeholder="Exemple : Neutralisation de blindé lourd" class="w-full bg-carbone border border-slate-700 px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none">
+          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Objectif tactique principal</label>
+          <input type="text" id="champ-cible-plan" required placeholder="Exemple : Neutralisation de générateur à distance" class="w-full bg-carboneFond border border-bordureMilitaire px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none">
         </div>
         <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Opérateurs en charge de la manœuvre</label>
-          <input type="text" id="champ-meneurs-plan" required placeholder="Exemple : Crosshair & Wrecker" class="w-full bg-carbone border border-slate-700 px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none">
+          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Opérateurs engagés</label>
+          <input type="text" id="champ-meneurs-plan" required placeholder="Exemple : Crosshair & Tech" class="w-full bg-carboneFond border border-bordureMilitaire px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none">
         </div>
         <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Description détaillée de la procédure</label>
-          <textarea id="champ-description-plan" required rows="3" placeholder="Étapes précises de l'assaut..." class="w-full bg-carbone border border-slate-700 px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none"></textarea>
+          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Description détaillée de la manœuvre</label>
+          <textarea id="champ-description-plan" required rows="3" placeholder="Étapes précises de déroulement du plan..." class="w-full bg-carboneFond border border-bordureMilitaire px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none"></textarea>
         </div>
         <div class="flex justify-end space-x-2 pt-2">
-          <button type="button" onclick="fermerBoite('boite-nouveau-plan')" class="px-3 py-1.5 border border-slate-700 text-xs font-terminal text-gray-400 rounded">Annuler</button>
-          <button type="submit" class="px-4 py-1.5 bg-ambre text-carbone font-titre font-bold text-xs uppercase rounded">Enregistrer le plan</button>
+          <button type="button" onclick="fermerBoite('boite-nouveau-plan')" class="px-3 py-1.5 border border-bordureMilitaire text-xs font-terminal text-gray-400 rounded">Annuler</button>
+          <button type="submit" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-carboneFond font-titre font-bold text-xs uppercase rounded">Enregistrer le plan</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Boîte 3 : Modifier le dossier militaire d'un membre (Hunter uniquement) -->
+  <!-- Boîte 3 : MODIFIER DOSSIER & STATISTIQUES MILITAIRES (Hunter uniquement) -->
   <div id="boite-modifier-dossier" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-acier border-2 border-carmin panneau-biseaute max-w-md w-full p-5 shadow-2xl">
-      <div class="flex items-center justify-between border-b border-slate-700 pb-2 mb-4">
-        <h3 class="font-titre text-xs font-bold text-carmin uppercase" id="titre-dossier-militaire">Dossier Militaire</h3>
+    <div class="bg-plaqueBlindage border-2 border-rougeKamino biseau-plaque max-w-md w-full p-5 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-bordureMilitaire pb-2 mb-4">
+        <h3 class="font-titre text-xs font-bold text-rougeVif uppercase" id="titre-dossier-militaire">Dossier Militaire</h3>
         <button onclick="fermerBoite('boite-modifier-dossier')" class="text-gray-400 hover:text-white">✕</button>
       </div>
       <form onsubmit="enregistrerDossierMilitaire(event)" class="space-y-3">
         <input type="hidden" id="identifiant-membre-edite">
         <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Date d'incorporation dans l'unité Bad Batch :</label>
-          <input type="text" id="champ-date-incorporation" required class="w-full bg-carbone border border-slate-700 px-3 py-1.5 text-xs font-terminal text-ambre rounded outline-none">
+          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Date d'incorporation dans l'unité (calendrier civil) :</label>
+          <input type="text" id="champ-date-incorporation" required placeholder="Exemple : 15/01/2024" class="w-full bg-carboneFond border border-bordureMilitaire px-3 py-1.5 text-xs font-terminal text-amber-300 rounded outline-none">
         </div>
+        
+        <!-- Ajustement et reset des statistiques de l'opérateur par Hunter -->
+        <div class="bg-carboneFond p-2.5 rounded border border-bordureMilitaire">
+          <label class="block text-[11px] font-terminal text-amber-400 mb-1" id="libelle-stat-edition">Compteur statistique global :</label>
+          <div class="flex items-center space-x-2">
+            <input type="number" id="champ-stat-globale" min="0" required class="flex-grow bg-plaqueBlindage border border-bordureMilitaire px-3 py-1.5 text-xs font-terminal text-white rounded outline-none">
+            <button type="button" onclick="remettreStatAZero()" class="px-3 py-1.5 bg-red-950/70 border border-rougeVif text-rougeVif hover:bg-rougeKamino hover:text-white text-xs font-terminal rounded transition">
+              Remettre à 0
+            </button>
+          </div>
+        </div>
+
         <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Notes de commandement & aptitudes évaluées :</label>
-          <textarea id="champ-notes-commandement" rows="4" class="w-full bg-carbone border border-slate-700 px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none"></textarea>
+          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Notes de commandement & évaluation tactique :</label>
+          <textarea id="champ-notes-commandement" rows="4" class="w-full bg-carboneFond border border-bordureMilitaire px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none"></textarea>
         </div>
         <div class="flex justify-end space-x-2 pt-2">
-          <button type="button" onclick="fermerBoite('boite-modifier-dossier')" class="px-3 py-1.5 border border-slate-700 text-xs font-terminal text-gray-400 rounded">Annuler</button>
-          <button type="submit" class="px-4 py-1.5 bg-carmin hover:bg-carminFonce text-white font-titre font-bold text-xs uppercase rounded">Mettre à jour le dossier</button>
+          <button type="button" onclick="fermerBoite('boite-modifier-dossier')" class="px-3 py-1.5 border border-bordureMilitaire text-xs font-terminal text-gray-400 rounded">Annuler</button>
+          <button type="submit" class="px-4 py-1.5 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold text-xs uppercase rounded">Valider les modifications</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Boîte 4 : Réglage du quota de missions (Hunter uniquement) -->
+  <!-- Boîte 4 : RÉGLAGE DU QUOTA (Hunter uniquement) -->
   <div id="boite-reglage-quota" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-acier border-2 border-ambre panneau-biseaute max-w-xs w-full p-5 shadow-2xl">
-      <div class="flex items-center justify-between border-b border-slate-700 pb-2 mb-4">
-        <h3 class="font-titre text-xs font-bold text-ambre uppercase">Réglage du quota</h3>
+    <div class="bg-plaqueBlindage border-2 border-amber-500 biseau-plaque max-w-xs w-full p-5 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-bordureMilitaire pb-2 mb-4">
+        <h3 class="font-titre text-xs font-bold text-amber-400 uppercase">RÉGLAGE DU QUOTA DE MISSIONS</h3>
         <button onclick="fermerBoite('boite-reglage-quota')" class="text-gray-400 hover:text-white">✕</button>
       </div>
       <form onsubmit="enregistrerReglageQuota(event)" class="space-y-3">
         <div>
           <label class="block text-[11px] font-terminal text-gray-300 mb-1">Missions requises par semaine et par opérateur :</label>
-          <input type="number" id="champ-valeur-quota" min="1" max="15" required class="w-full bg-carbone border border-slate-700 px-3 py-1.5 text-xs font-terminal text-ambre rounded outline-none">
+          <input type="number" id="champ-valeur-quota" min="1" max="15" required class="w-full bg-carboneFond border border-bordureMilitaire px-3 py-1.5 text-xs font-terminal text-amber-300 rounded outline-none">
         </div>
         <div class="flex justify-end space-x-2 pt-2">
-          <button type="button" onclick="fermerBoite('boite-reglage-quota')" class="px-3 py-1.5 border border-slate-700 text-xs font-terminal text-gray-400 rounded">Annuler</button>
-          <button type="submit" class="px-4 py-1.5 bg-ambre text-carbone font-titre font-bold text-xs uppercase rounded">Appliquer</button>
+          <button type="button" onclick="fermerBoite('boite-reglage-quota')" class="px-3 py-1.5 border border-bordureMilitaire text-xs font-terminal text-gray-400 rounded">Annuler</button>
+          <button type="submit" class="px-4 py-1.5 bg-amber-500 text-carboneFond font-titre font-bold text-xs uppercase rounded">Appliquer</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Boîte 5 : Boîte de confirmation visuelle (remplace toute alerte de navigateur) -->
+  <!-- Boîte 5 : MODALE DE CONFIRMATION (Aucun alert() de navigateur) -->
   <div id="boite-confirmation" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-acier border-2 border-carmin panneau-biseaute max-w-sm w-full p-5 shadow-2xl">
-      <div class="flex items-center space-x-2 text-carmin mb-3">
+    <div class="bg-plaqueBlindage border-2 border-rougeKamino biseau-plaque max-w-sm w-full p-5 shadow-2xl">
+      <div class="flex items-center space-x-2 text-rougeVif mb-3">
         <span class="text-xl">⚠️</span>
-        <h3 class="font-titre text-xs font-black uppercase tracking-wider" id="titre-boite-confirmation">Confirmation requise</h3>
+        <h3 class="font-titre text-xs font-black uppercase tracking-wider" id="titre-boite-confirmation">Confirmation militaire requise</h3>
       </div>
       <p class="text-xs font-terminal text-gray-300 mb-5 leading-relaxed" id="message-boite-confirmation">
         Confirmer l'opération demandée ?
       </p>
       <div class="flex justify-end space-x-2">
-        <button type="button" id="bouton-annuler-confirmation" class="px-3 py-1.5 border border-slate-700 text-xs font-terminal text-gray-400 hover:text-white rounded">Annuler</button>
-        <button type="button" id="bouton-valider-confirmation" class="px-4 py-1.5 bg-carmin hover:bg-carminFonce text-white font-titre font-bold text-xs uppercase rounded panneau-biseaute">Confirmer</button>
+        <button type="button" id="bouton-annuler-confirmation" class="px-3 py-1.5 border border-bordureMilitaire text-xs font-terminal text-gray-400 hover:text-white rounded">Annuler</button>
+        <button type="button" id="bouton-valider-confirmation" class="px-4 py-1.5 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold text-xs uppercase rounded biseau-bouton">Confirmer</button>
       </div>
     </div>
   </div>
 
   <!-- Pied de page officiel républicain -->
-  <footer class="border-t border-slate-800 bg-carbone py-3 text-center text-xs font-terminal text-gray-500 relative z-20">
+  <footer class="border-t border-bordureMilitaire bg-carboneFond py-3 text-center text-xs font-terminal text-gray-500 relative z-20">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
       <div>FORCE CLONE 99 // UNITÉ BAD BATCH // CONSOLE DU MARAUDEUR</div>
       <div class="text-gray-400">GRANDE ARMÉE DE LA RÉPUBLIQUE // GUERRE DES CLONES</div>
     </div>
   </footer>
 
+  <!-- Module de synchronisation Firebase Firestore v10 -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { 
+      getFirestore, 
+      doc, 
+      getDoc, 
+      setDoc, 
+      updateDoc, 
+      onSnapshot, 
+      collection, 
+      addDoc, 
+      writeBatch, 
+      increment 
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    // Configuration Firebase du projet
+    const firebaseConfig = {
+      apiKey: "AIzaSyB3Dpovo-Fsa7nNlMeUzngYl03_Vlns1jw",
+      authDomain: "bad-batch-datapad.firebaseapp.com",
+      projectId: "bad-batch-datapad",
+      storageBucket: "bad-batch-datapad.firebasestorage.app",
+      messagingSenderId: "445159897876",
+      appId: "1:445159897876:web:ae69817443abe0693fe001"
+    };
+
+    let baseDeDonnees;
+    let connexionFirestorePrete = false;
+
+    try {
+      const app = initializeApp(firebaseConfig);
+      baseDeDonnees = getFirestore(app);
+      connexionFirestorePrete = true;
+    } catch (e) {
+      console.warn("Échec d'initialisation de Firebase distant :", e);
+    }
+
+    // Effectif initial avec dates calendaires réelles par défaut
+    const EFFECTIF_INITIAL = {
+      hunter: {
+        id: 'hunter',
+        nom: 'Hunter',
+        matricule: 'FC-99-01',
+        grade: 'Sergent // Chef d\'escouade',
+        specialite: 'Pisteur & Commandement tactique',
+        dateEntree: '15/01/2024',
+        couleur: '#dc2626',
+        symbole: '🎯',
+        notes: 'Perception des fréquences et flux électromagnétiques. Maîtrise tactique absolue et coordination de toute l\'escouade.',
+        compteurSemaine: 3,
+        libelleStatistique: 'Missions coordonnées',
+        totalStatistique: 48
+      },
+      wrecker: {
+        id: 'wrecker',
+        nom: 'Wrecker',
+        matricule: 'FC-99-02',
+        grade: 'Spécialiste d\'Assaut Lourd',
+        specialite: 'Démolition lourde & Percée frontale',
+        dateEntree: '15/01/2024',
+        couleur: '#f59e0b',
+        symbole: '💥',
+        notes: 'Force physique hors normes. Spécialiste des explosifs et de la destruction des blindés séparatistes MTT.',
+        compteurSemaine: 2,
+        libelleStatistique: 'Chars MTT & blindés détruits',
+        totalStatistique: 89
+      },
+      crosshair: {
+        id: 'crosshair',
+        nom: 'Crosshair',
+        matricule: 'FC-99-03',
+        grade: 'Tireur d\'Élite',
+        specialite: 'Tir de haute précision & Neutralisation',
+        dateEntree: '15/01/2024',
+        couleur: '#10b981',
+        symbole: '🦅',
+        notes: 'Précision millimétrique sans assistance télémétrique. Sang-froid légendaire avec son fusil longue portée 773 Firepuncher.',
+        compteurSemaine: 1,
+        libelleStatistique: 'Tirs de précision à la tête',
+        totalStatistique: 342
+      },
+      tech: {
+        id: 'tech',
+        nom: 'Tech',
+        matricule: 'FC-99-04',
+        grade: 'Spécialiste Données',
+        specialite: 'Piratage informatique & Ingénierie de bord',
+        dateEntree: '15/01/2024',
+        couleur: '#06b6d4',
+        symbole: '💻',
+        notes: 'Capacité de calcul et d\'ingénierie ultrarapide. Neutralisation immédiate des réseaux informatiques et systèmes drakkars adverses.',
+        compteurSemaine: 3,
+        libelleStatistique: 'Terminaux et archives piratées',
+        totalStatistique: 156
+      }
+    };
+
+    const PLANS_HISTORIQUES = [
+      { id: 'p7', code: 'PLAN 7', cible: 'Percée par projection d\'épave blindée', chefDeManoeuvre: 'Wrecker', description: 'Wrecker projette un blindé lourd ou un caisson renforcé contre la ligne de front pour pulvériser l\'infanterie ennemie.' },
+      { id: 'p25', code: 'PLAN 25', cible: 'Surcharge électromagnétique & diversion sonore', chefDeManoeuvre: 'Tech & Hunter', description: 'Surcharge ciblée des relais d\'alimentation du complexe ennemi avec diversion sonore pendant l\'exfiltration sécurisée de l\'escouade.' },
+      { id: 'p55', code: 'PLAN 55', cible: 'Tir balistique à ricochet réflecteur', chefDeManoeuvre: 'Crosshair', description: 'Crosshair tire sur les panneaux réflecteurs disposés à grande vitesse par Tech afin de contourner les boucliers déflecteurs.' },
+      { id: 'p82', code: 'PLAN 82', cible: 'Infiltration et piratage terminal sous tir nourri', chefDeManoeuvre: 'Tech', description: 'Pénétration directe du poste de commandement adverse et reprogrammation immédiate des batteries automatisées contre leurs propres positions.' },
+      { id: 'p99', code: 'PLAN 99', cible: 'Protocole de ralliement et de sacrifice de l\'unité', chefDeManoeuvre: 'Tous les opérateurs', description: 'Protocole ultime de sauvegarde de l\'escouade. Accomplir la mission et donner sa vie pour assurer la survie des frères d\'armes.' }
+    ];
+
+    // Registre global en mémoire
+    window.etatGlobal = {
+      operateurConnecte: null,
+      ongletActif: 'poste-commandement',
+      motsDePasse: { hunter: '1234', wrecker: '1234', crosshair: '1234', tech: '1234' },
+      operateurs: JSON.parse(JSON.stringify(EFFECTIF_INITIAL)),
+      quotaHebdomadaire: 3,
+      rapports: [],
+      plans: JSON.parse(JSON.stringify(PLANS_HISTORIQUES)),
+      archivesPiratees: []
+    };
+
+    // ==================== ÉCOUTES FIRESTORE EN TEMPS RÉEL ====================
+    window.initialiserSynchronisation = function() {
+      if (!connexionFirestorePrete) return;
+
+      // 1. Mots de passe
+      const refMdp = doc(baseDeDonnees, 'config', 'motsDePasse');
+      onSnapshot(refMdp, snap => {
+        if (snap.exists()) {
+          window.etatGlobal.motsDePasse = { ...window.etatGlobal.motsDePasse, ...snap.data() };
+        } else {
+          setDoc(refMdp, window.etatGlobal.motsDePasse);
+        }
+      }, err => console.warn("Erreur Firestore MDP :", err));
+
+      // 2. Configuration d'escouade (quota)
+      const refConfig = doc(baseDeDonnees, 'config', 'escouade');
+      onSnapshot(refConfig, snap => {
+        if (snap.exists()) {
+          const d = snap.data();
+          if (d.quotaHebdomadaire) {
+            window.etatGlobal.quotaHebdomadaire = d.quotaHebdomadaire;
+            if (window.etatGlobal.operateurConnecte) window.actualiserVueEnCours();
+          }
+        } else {
+          setDoc(refConfig, { quotaHebdomadaire: 3 });
+        }
+      }, err => console.warn("Erreur Firestore Quota :", err));
+
+      // 3. Effectif et fiches militaires
+      const refMembres = collection(baseDeDonnees, 'operateurs');
+      onSnapshot(refMembres, snap => {
+        if (snap.empty) {
+          Object.keys(EFFECTIF_INITIAL).forEach(cle => {
+            setDoc(doc(baseDeDonnees, 'operateurs', cle), EFFECTIF_INITIAL[cle]);
+          });
+        } else {
+          snap.forEach(d => {
+            window.etatGlobal.operateurs[d.id] = { ...window.etatGlobal.operateurs[d.id], ...d.data() };
+          });
+          if (window.etatGlobal.operateurConnecte) window.actualiserVueEnCours();
+        }
+      }, err => console.warn("Erreur Firestore Effectif :", err));
+
+      // 4. Rapports de mission
+      const refRapports = collection(baseDeDonnees, 'rapports');
+      onSnapshot(refRapports, snap => {
+        const liste = [];
+        snap.forEach(d => liste.push({ id: d.id, ...d.data() }));
+        liste.sort((a, b) => (b.dateCreation || 0) - (a.dateCreation || 0));
+        window.etatGlobal.rapports = liste;
+        if (window.etatGlobal.operateurConnecte) window.actualiserVueEnCours();
+      }, err => console.warn("Erreur Firestore Rapports :", err));
+
+      // 5. Plans tactiques
+      const refPlans = collection(baseDeDonnees, 'plans');
+      onSnapshot(refPlans, snap => {
+        if (snap.empty) {
+          PLANS_HISTORIQUES.forEach(p => {
+            setDoc(doc(baseDeDonnees, 'plans', p.id), p);
+          });
+        } else {
+          const lPlans = [];
+          snap.forEach(d => lPlans.push({ id: d.id, ...d.data() }));
+          window.etatGlobal.plans = lPlans;
+          if (window.etatGlobal.operateurConnecte) window.afficherVuePlans();
+        }
+      }, err => console.warn("Erreur Firestore Plans :", err));
+
+      // 6. Archives de piratage (Tech)
+      const refArchives = collection(baseDeDonnees, 'archivesPiratees');
+      onSnapshot(refArchives, snap => {
+        const lArchives = [];
+        snap.forEach(d => lArchives.push({ id: d.id, ...d.data() }));
+        lArchives.sort((a, b) => (b.dateCreation || 0) - (a.dateCreation || 0));
+        window.etatGlobal.archivesPiratees = lArchives;
+        if (window.etatGlobal.operateurConnecte) window.afficherVueArchives();
+      }, err => console.warn("Erreur Firestore Archives :", err));
+    };
+
+    // ==================== ACTIONS FIRESTORE EXPORTÉES ====================
+
+    // Mettre à jour un mot de passe
+    window.sauvegarderNouveauMotDePasse = async function(nouv) {
+      if (connexionFirestorePrete) {
+        const refMdp = doc(baseDeDonnees, 'config', 'motsDePasse');
+        await updateDoc(refMdp, { [window.etatGlobal.operateurConnecte]: nouv });
+      }
+      window.etatGlobal.motsDePasse[window.etatGlobal.operateurConnecte] = nouv;
+    };
+
+    // Mettre à jour le quota par Hunter
+    window.sauvegarderReglageQuota = async function(valeur) {
+      if (connexionFirestorePrete) {
+        const refConfig = doc(baseDeDonnees, 'config', 'escouade');
+        await updateDoc(refConfig, { quotaHebdomadaire: valeur });
+      }
+      window.etatGlobal.quotaHebdomadaire = valeur;
+    };
+
+    // Enregistrer dossier militaire & stats par Hunter
+    window.sauvegarderDossierMilitaire = async function(idMembre, dateEntree, notes, statGlobale) {
+      if (connexionFirestorePrete) {
+        const refMembre = doc(baseDeDonnees, 'operateurs', idMembre);
+        await updateDoc(refMembre, {
+          dateEntree: dateEntree,
+          notes: notes,
+          totalStatistique: statGlobale
+        });
+      }
+      window.etatGlobal.operateurs[idMembre].dateEntree = dateEntree;
+      window.etatGlobal.operateurs[idMembre].notes = notes;
+      window.etatGlobal.operateurs[idMembre].totalStatistique = statGlobale;
+    };
+
+    // Réinitialiser les compteurs hebdomadaires par Hunter
+    window.sauvegarderResetHebdomadaire = async function() {
+      if (connexionFirestorePrete) {
+        const batch = writeBatch(baseDeDonnees);
+        Object.keys(window.etatGlobal.operateurs).forEach(cle => {
+          const ref = doc(baseDeDonnees, 'operateurs', cle);
+          batch.update(ref, { compteurSemaine: 0 });
+        });
+        await batch.commit();
+      }
+      Object.keys(window.etatGlobal.operateurs).forEach(cle => {
+        window.etatGlobal.operateurs[cle].compteurSemaine = 0;
+      });
+    };
+
+    // Enregistrer un nouveau plan d'engagement (Hunter uniquement)
+    window.sauvegarderNouveauPlan = async function(plan) {
+      if (connexionFirestorePrete) {
+        await addDoc(collection(baseDeDonnees, 'plans'), plan);
+      } else {
+        window.etatGlobal.plans.push({ id: 'plan-' + Date.now(), ...plan });
+      }
+    };
+
+    // Transmettre un rapport de mission
+    window.sauvegarderRapportMission = async function(rapport, incrementStat) {
+      if (connexionFirestorePrete) {
+        const batch = writeBatch(baseDeDonnees);
+        
+        // 1. Ajouter le rapport
+        const refNouvRapport = doc(collection(baseDeDonnees, 'rapports'));
+        batch.set(refNouvRapport, rapport);
+
+        // 2. Mettre à jour l'opérateur
+        const refMembre = doc(baseDeDonnees, 'operateurs', rapport.idOperateur);
+        batch.update(refMembre, {
+          compteurSemaine: increment(1),
+          totalStatistique: increment(incrementStat)
+        });
+
+        // 3. Si l'auteur est Tech, injecter dans les archives
+        if (rapport.idOperateur === 'tech') {
+          const refArchive = doc(collection(baseDeDonnees, 'archivesPiratees'));
+          batch.set(refArchive, {
+            titre: `Interception : ${rapport.nomMission}`,
+            source: rapport.secteur,
+            horodatage: rapport.date,
+            contenu: `${rapport.metriqueSpecifique} - ${rapport.description}`,
+            dateCreation: Date.now()
+          });
+        }
+
+        await batch.commit();
+      } else {
+        const op = window.etatGlobal.operateurs[rapport.idOperateur];
+        op.compteurSemaine = (op.compteurSemaine || 0) + 1;
+        op.totalStatistique = (op.totalStatistique || 0) + incrementStat;
+        window.etatGlobal.rapports.unshift(rapport);
+
+        if (rapport.idOperateur === 'tech') {
+          window.etatGlobal.archivesPiratees.unshift({
+            id: 'arc-' + Date.now(),
+            titre: `Interception : ${rapport.nomMission}`,
+            source: rapport.secteur,
+            horodatage: rapport.date,
+            contenu: `${rapport.metriqueSpecifique} - ${rapport.description}`,
+            dateCreation: Date.now()
+          });
+        }
+      }
+    };
+
+    // Enregistrer une archive décryptée directement par Tech
+    window.sauvegarderNouvelleArchive = async function(archive) {
+      if (connexionFirestorePrete) {
+        const batch = writeBatch(baseDeDonnees);
+        const refArchive = doc(collection(baseDeDonnees, 'archivesPiratees'));
+        batch.set(refArchive, archive);
+
+        const refTech = doc(baseDeDonnees, 'operateurs', 'tech');
+        batch.update(refTech, { totalStatistique: increment(1) });
+        await batch.commit();
+      } else {
+        window.etatGlobal.archivesPiratees.unshift({ id: 'arc-' + Date.now(), ...archive });
+        window.etatGlobal.operateurs.tech.totalStatistique += 1;
+      }
+    };
+
+    // Démarrage automatique
+    window.onload = function() {
+      window.initialiserSynchronisation();
+      document.getElementById('fenetre-connexion').classList.remove('hidden');
+    };
+  </script>
+
   <script>
-    // Activation / Désactivation des signaux sonores
-    function inverserAudio() {
-      AudioTactique.actif = !AudioTactique.actif;
-      document.getElementById('bouton-audio').textContent = AudioTactique.actif 
-        ? '🔊 EFFETS SONORES : ACTIVÉS' 
-        : '🔇 EFFETS SONORES : DÉSACTIVÉS';
-      if (AudioTactique.actif) AudioTactique.validation();
+    // ==================== GESTION DE L'INTERFACE TACTIQUE ====================
+
+    function dateAujourdhuiCivil() {
+      const d = new Date();
+      const jour = String(d.getDate()).padStart(2, '0');
+      const mois = String(d.getMonth() + 1).padStart(2, '0');
+      const annee = d.getFullYear();
+      return `${jour}/${mois}/${annee}`;
     }
 
-    // Gestionnaires des fenêtres modales
-    function ouvrirBoite(identifiant) {
-      document.getElementById(identifiant).classList.remove('hidden');
-      AudioTactique.clic();
-    }
-    function fermerBoite(identifiant) {
-      document.getElementById(identifiant).classList.add('hidden');
+    function ouvrirBoite(id) {
+      document.getElementById(id).classList.remove('hidden');
       AudioTactique.clic();
     }
 
-    function afficherConfirmation(titre, message, actionSiConfirme) {
-      AudioTactique.alarme();
-      const fenetreModale = document.getElementById('boite-confirmation');
+    function fermerBoite(id) {
+      document.getElementById(id).classList.add('hidden');
+      AudioTactique.clic();
+    }
+
+    function afficherConfirmation(titre, message, actionSiValide) {
+      AudioTactique.alerte();
+      const boite = document.getElementById('boite-confirmation');
       document.getElementById('titre-boite-confirmation').textContent = titre;
       document.getElementById('message-boite-confirmation').textContent = message;
       
-      const boutonValider = document.getElementById('bouton-valider-confirmation');
-      const boutonAnnuler = document.getElementById('bouton-annuler-confirmation');
+      const btnValider = document.getElementById('bouton-valider-confirmation');
+      const btnAnnuler = document.getElementById('bouton-annuler-confirmation');
 
       const nettoyer = () => {
-        fenetreModale.classList.add('hidden');
-        boutonValider.onclick = null;
-        boutonAnnuler.onclick = null;
+        boite.classList.add('hidden');
+        btnValider.onclick = null;
+        btnAnnuler.onclick = null;
       };
 
-      boutonValider.onclick = () => {
+      btnValider.onclick = () => {
         nettoyer();
-        AudioTactique.validation();
-        actionSiConfirme();
+        AudioTactique.succes();
+        actionSiValide();
       };
 
-      boutonAnnuler.onclick = () => {
+      btnAnnuler.onclick = () => {
         nettoyer();
         AudioTactique.clic();
       };
 
-      fenetreModale.classList.remove('hidden');
-    }
-
-    // ==================== ÉCOUTES EN TEMPS RÉEL SUR FIRESTORE ====================
-    function initialiserLiaisonsDistant() {
-      if (!liaisonServeurPrete) return;
-
-      // 1. Mots de passe chiffrés
-      baseDeDonnees.collection('config').doc('motsDePasse').onSnapshot(documentSnapshot => {
-        if (documentSnapshot.exists) {
-          etatGlobal.motsDePasse = { ...etatGlobal.motsDePasse, ...documentSnapshot.data() };
-        } else {
-          baseDeDonnees.collection('config').doc('motsDePasse').set(etatGlobal.motsDePasse);
-        }
-      }, err => console.warn("Erreur mots de passe :", err));
-
-      // 2. Configuration du quota de l'escouade
-      baseDeDonnees.collection('config').doc('escouade').onSnapshot(documentSnapshot => {
-        if (documentSnapshot.exists) {
-          const donnees = documentSnapshot.data();
-          if (donnees.quotaHebdomadaire) {
-            etatGlobal.quotaHebdomadaire = donnees.quotaHebdomadaire;
-            if (etatGlobal.operateurConnecte) actualiserVueEnCours();
-          }
-        } else {
-          baseDeDonnees.collection('config').doc('escouade').set({ quotaHebdomadaire: 3 });
-        }
-      }, err => console.warn("Erreur configuration escouade :", err));
-
-      // 3. Fiches militaires des 4 opérateurs de la Bad Batch
-      baseDeDonnees.collection('operateurs').onSnapshot(snapshotMembres => {
-        if (snapshotMembres.empty) {
-          Object.keys(EFFECTIF_INITIAL).forEach(cle => {
-            baseDeDonnees.collection('operateurs').doc(cle).set(EFFECTIF_INITIAL[cle]);
-          });
-        } else {
-          snapshotMembres.forEach(docMembre => {
-            etatGlobal.operateurs[docMembre.id] = { ...etatGlobal.operateurs[docMembre.id], ...docMembre.data() };
-          });
-          if (etatGlobal.operateurConnecte) actualiserVueEnCours();
-        }
-      }, err => console.warn("Erreur effectif :", err));
-
-      // 4. Registre des rapports de mission en direct
-      baseDeDonnees.collection('rapports').onSnapshot(snapshotRapports => {
-        const liste = [];
-        snapshotRapports.forEach(docRapport => {
-          liste.push({ id: docRapport.id, ...docRapport.data() });
-        });
-        liste.sort((premier, second) => (second.dateCreation || 0) - (premier.dateCreation || 0));
-        etatGlobal.rapports = liste;
-
-        if (etatGlobal.operateurConnecte) actualiserVueEnCours();
-      }, err => console.warn("Erreur rapports :", err));
-
-      // 5. Plans tactiques
-      baseDeDonnees.collection('plans').onSnapshot(snapshotPlans => {
-        if (snapshotPlans.empty) {
-          PLANS_HISTORIQUES.forEach(planHistorique => {
-            baseDeDonnees.collection('plans').doc(planHistorique.id).set(planHistorique);
-          });
-        } else {
-          const plansRecuperes = [];
-          snapshotPlans.forEach(docPlan => {
-            plansRecuperes.push({ id: docPlan.id, ...docPlan.data() });
-          });
-          etatGlobal.plans = plansRecuperes;
-          if (etatGlobal.operateurConnecte) afficherVuePlans();
-        }
-      }, err => console.warn("Erreur plans :", err));
-
-      // 6. Archives de piratage (données interceptées par Tech)
-      baseDeDonnees.collection('archivesPiratees').onSnapshot(snapshotArchives => {
-        const donneesPiratees = [];
-        snapshotArchives.forEach(docArchive => {
-          donneesPiratees.push({ id: docArchive.id, ...docArchive.data() });
-        });
-        donneesPiratees.sort((premier, second) => (second.dateCreation || 0) - (premier.dateCreation || 0));
-        etatGlobal.archivesPiratees = donneesPiratees;
-        if (etatGlobal.operateurConnecte) afficherVueArchives();
-      }, err => console.warn("Erreur archives :", err));
-    }
-
-    // Réactualisation de la vue visible
-    function actualiserVueEnCours() {
-      if (etatGlobal.ongletActif === 'poste-commandement') afficherVuePosteCommandement();
-      if (etatGlobal.ongletActif === 'rapports') afficherVueRapports();
-      if (etatGlobal.ongletActif === 'effectif') afficherVueEffectif();
-      if (etatGlobal.ongletActif === 'plans') afficherVuePlans();
-      if (etatGlobal.ongletActif === 'archives') afficherVueArchives();
-      verifierAlertesCommandementHunter();
+      boite.classList.remove('hidden');
     }
 
     // ==================== AUTHENTIFICATION ====================
-    function choisirOperateurConnexion(identifiant) {
+    function choisirOperateurConnexion(id) {
       AudioTactique.clic();
-      document.getElementById('identifiant-selectionne').value = identifiant;
-      document.querySelectorAll('.bouton-choix-operateur').forEach(bouton => {
-        bouton.classList.remove('border-carmin', 'bg-carmin/25', 'text-white');
-        bouton.classList.add('border-slate-700', 'bg-panneau/40', 'text-gray-300');
+      document.getElementById('identifiant-selectionne').value = id;
+      document.querySelectorAll('.bouton-choix-op').forEach(btn => {
+        btn.classList.remove('border-rougeVif', 'border-amber-400', 'border-vertViseur', 'border-cyanTech', 'bg-red-950/30', 'bg-amber-950/30', 'bg-emerald-950/30', 'bg-cyan-950/30', 'text-white');
+        btn.classList.add('border-bordureMilitaire', 'bg-plaqueSecondaire', 'text-gray-300');
       });
-      const boutonChoisi = document.getElementById(`choix-${identifiant}`);
-      boutonChoisi.classList.remove('border-slate-700', 'bg-panneau/40', 'text-gray-300');
-      boutonChoisi.classList.add('border-carmin', 'bg-carmin/25', 'text-white');
+
+      const btnChoisi = document.getElementById(`choix-${id}`);
+      btnChoisi.classList.remove('border-bordureMilitaire', 'bg-plaqueSecondaire', 'text-gray-300');
+      
+      if (id === 'hunter') btnChoisi.classList.add('border-rougeVif', 'bg-red-950/30', 'text-white');
+      if (id === 'wrecker') btnChoisi.classList.add('border-amber-400', 'bg-amber-950/30', 'text-white');
+      if (id === 'crosshair') btnChoisi.classList.add('border-vertViseur', 'bg-emerald-950/30', 'text-white');
+      if (id === 'tech') btnChoisi.classList.add('border-cyanTech', 'bg-cyan-950/30', 'text-white');
     }
 
-    function executerConnexion(evenement) {
-      evenement.preventDefault();
-      const identifiant = document.getElementById('identifiant-selectionne').value;
-      const motDePasseSaisi = document.getElementById('saisie-mot-de-passe').value;
-      const zoneErreur = document.getElementById('erreur-connexion');
+    function executerConnexion(e) {
+      e.preventDefault();
+      const id = document.getElementById('identifiant-selectionne').value;
+      const mdp = document.getElementById('saisie-mot-de-passe').value;
+      const blocErreur = document.getElementById('erreur-connexion');
 
-      const motDePasseAttendu = etatGlobal.motsDePasse[identifiant] || '1234';
-      if (motDePasseSaisi === motDePasseAttendu) {
-        etatGlobal.operateurConnecte = identifiant;
-        zoneErreur.classList.add('hidden');
+      const mdpAttendu = window.etatGlobal.motsDePasse[id] || '1234';
+      if (mdp === mdpAttendu) {
+        window.etatGlobal.operateurConnecte = id;
+        blocErreur.classList.add('hidden');
         document.getElementById('saisie-mot-de-passe').value = '';
-        AudioTactique.validation();
-        lancerSessionOperateur();
+        AudioTactique.succes();
+        lancerSession();
       } else {
-        zoneErreur.classList.remove('hidden');
-        AudioTactique.alarme();
+        blocErreur.classList.remove('hidden');
+        AudioTactique.alerte();
       }
     }
 
-    function demanderDeconnexion() {
-      afficherConfirmation("DÉCONNEXION DE LA CONSOLE", "Voulez-vous fermer votre session sur le terminal du Maraudeur ?", () => {
-        etatGlobal.operateurConnecte = null;
-        document.getElementById('fenetre-connexion').classList.remove('hidden');
-        document.getElementById('barre-navigation').classList.add('hidden');
-        document.getElementById('bloc-profil-actif').classList.add('hidden');
-        document.getElementById('banniere-alerte-quota').classList.add('hidden');
-        masquerToutesLesFenetres();
-      });
-    }
-
-    function lancerSessionOperateur() {
+    function lancerSession() {
       document.getElementById('fenetre-connexion').classList.add('hidden');
       document.getElementById('barre-navigation').classList.remove('hidden');
       document.getElementById('bloc-profil-actif').classList.remove('hidden');
 
-      const operateur = etatGlobal.operateurs[etatGlobal.operateurConnecte] || EFFECTIF_INITIAL[etatGlobal.operateurConnecte];
-      document.getElementById('symbole-operateur').textContent = operateur.symbole;
-      document.getElementById('nom-operateur').textContent = operateur.nom;
-      document.getElementById('grade-operateur').textContent = operateur.grade;
+      const op = window.etatGlobal.operateurs[window.etatGlobal.operateurConnecte];
+      document.getElementById('symbole-operateur').textContent = op.symbole;
+      document.getElementById('nom-operateur').textContent = op.nom;
+      document.getElementById('grade-operateur').textContent = op.grade;
+
+      // Appliquer le thème visuel spécifique au personnage
+      document.body.className = `arriere-plan-vaisseau flex flex-col justify-between theme-${window.etatGlobal.operateurConnecte}`;
+
+      // Restriction des droits : bouton création de plan uniquement pour Hunter
+      const btnAjoutPlan = document.getElementById('bouton-ajouter-plan-hunter');
+      if (window.etatGlobal.operateurConnecte === 'hunter') {
+        btnAjoutPlan.classList.remove('hidden');
+      } else {
+        btnAjoutPlan.classList.add('hidden');
+      }
 
       naviguerOnglet('poste-commandement');
       verifierAlertesCommandementHunter();
     }
 
-    // ==================== CHANGEMENT DU MOT DE PASSE ====================
+    function demanderDeconnexion() {
+      afficherConfirmation(
+        "DÉCONNEXION DU TERMINAL",
+        "Voulez-vous fermer votre session sécurisée sur la console du Maraudeur ?",
+        () => {
+          window.etatGlobal.operateurConnecte = null;
+          document.body.className = "arriere-plan-vaisseau flex flex-col justify-between";
+          document.getElementById('fenetre-connexion').classList.remove('hidden');
+          document.getElementById('barre-navigation').classList.add('hidden');
+          document.getElementById('bloc-profil-actif').classList.add('hidden');
+          document.getElementById('banniere-alerte-quota').classList.add('hidden');
+          masquerToutesLesFenetres();
+        }
+      );
+    }
+
+    // ==================== MODIFICATION DU MOT DE PASSE ====================
     function ouvrirBoiteChangerMotDePasse() {
       document.getElementById('champ-mot-de-passe-actuel').value = '';
       document.getElementById('champ-nouveau-mot-de-passe').value = '';
@@ -994,74 +1238,70 @@
       ouvrirBoite('boite-changer-mot-de-passe');
     }
 
-    function enregistrerNouveauMotDePasse(evenement) {
-      evenement.preventDefault();
+    async function enregistrerNouveauMotDePasse(e) {
+      e.preventDefault();
       const actuel = document.getElementById('champ-mot-de-passe-actuel').value;
       const nouveau = document.getElementById('champ-nouveau-mot-de-passe').value;
       const blocErreur = document.getElementById('erreur-changement-mot-de-passe');
 
-      const attendu = etatGlobal.motsDePasse[etatGlobal.operateurConnecte] || '1234';
+      const attendu = window.etatGlobal.motsDePasse[window.etatGlobal.operateurConnecte] || '1234';
       if (actuel !== attendu) {
         blocErreur.textContent = "Le mot de passe actuel saisi est erroné.";
         blocErreur.classList.remove('hidden');
-        AudioTactique.alarme();
+        AudioTactique.alerte();
         return;
       }
 
-      if (liaisonServeurPrete) {
-        baseDeDonnees.collection('config').doc('motsDePasse').update({
-          [etatGlobal.operateurConnecte]: nouveau
-        }).then(() => {
-          etatGlobal.motsDePasse[etatGlobal.operateurConnecte] = nouveau;
-          fermerBoite('boite-changer-mot-de-passe');
-          AudioTactique.validation();
-        }).catch(err => {
-          blocErreur.textContent = "Échec de synchronisation distante.";
-          blocErreur.classList.remove('hidden');
-        });
-      } else {
-        etatGlobal.motsDePasse[etatGlobal.operateurConnecte] = nouveau;
+      try {
+        await window.sauvegarderNouveauMotDePasse(nouveau);
         fermerBoite('boite-changer-mot-de-passe');
-        AudioTactique.validation();
+        AudioTactique.succes();
+      } catch(err) {
+        blocErreur.textContent = "Échec de synchronisation distante avec la console.";
+        blocErreur.classList.remove('hidden');
       }
     }
 
-    // ==================== GESTION DES ONGLETS ====================
+    // ==================== NAVIGATION ONGLETS ====================
     function masquerToutesLesFenetres() {
-      ['poste-commandement', 'rapports', 'effectif', 'plans', 'archives'].forEach(nomOnglet => {
-        document.getElementById(`fenetre-${nomOnglet}`).classList.add('hidden');
+      ['poste-commandement', 'rapports', 'effectif', 'plans', 'archives'].forEach(tab => {
+        document.getElementById(`fenetre-${tab}`).classList.add('hidden');
       });
     }
 
-    function naviguerOnglet(nomOnglet) {
+    function naviguerOnglet(tab) {
       AudioTactique.clic();
-      etatGlobal.ongletActif = nomOnglet;
+      window.etatGlobal.ongletActif = tab;
       masquerToutesLesFenetres();
 
-      document.querySelectorAll('.nav-bouton').forEach(bouton => {
-        bouton.classList.remove('border-carmin', 'text-white', 'bg-panneau/60');
-        bouton.classList.add('border-transparent', 'text-gray-400');
+      document.querySelectorAll('.nav-bouton').forEach(btn => {
+        btn.classList.remove('border-rougeVif', 'border-amber-400', 'border-vertViseur', 'border-cyanTech', 'text-white', 'bg-plaqueBlindage');
+        btn.classList.add('border-transparent', 'text-gray-400');
       });
-      const boutonCible = document.getElementById(`bouton-onglet-${nomOnglet}`);
-      if (boutonCible) {
-        boutonCible.classList.remove('border-transparent', 'text-gray-400');
-        boutonCible.classList.add('border-carmin', 'text-white', 'bg-panneau/60');
+
+      const btnActif = document.getElementById(`bouton-onglet-${tab}`);
+      if (btnActif) {
+        btnActif.classList.remove('border-transparent', 'text-gray-400');
+        btnActif.classList.add('border-rougeVif', 'text-white', 'bg-plaqueBlindage');
       }
 
-      document.getElementById(`fenetre-${nomOnglet}`).classList.remove('hidden');
-
-      if (nomOnglet === 'poste-commandement') afficherVuePosteCommandement();
-      if (nomOnglet === 'rapports') afficherVueRapports();
-      if (nomOnglet === 'effectif') afficherVueEffectif();
-      if (nomOnglet === 'plans') afficherVuePlans();
-      if (nomOnglet === 'archives') afficherVueArchives();
+      document.getElementById(`fenetre-${tab}`).classList.remove('hidden');
+      window.actualiserVueEnCours();
     }
 
-    // ==================== VÉRIFICATION DU QUOTA HEBDOMADAIRE ====================
-    function membreEnRegle(identifiantMembre) {
-      const operateur = etatGlobal.operateurs[identifiantMembre];
-      if (!operateur) return false;
-      return (operateur.compteurSemaine || 0) >= etatGlobal.quotaHebdomadaire;
+    window.actualiserVueEnCours = function() {
+      if (window.etatGlobal.ongletActif === 'poste-commandement') afficherVuePosteCommandement();
+      if (window.etatGlobal.ongletActif === 'rapports') afficherVueRapports();
+      if (window.etatGlobal.ongletActif === 'effectif') afficherVueEffectif();
+      if (window.etatGlobal.ongletActif === 'plans') window.afficherVuePlans();
+      if (window.etatGlobal.ongletActif === 'archives') window.afficherVueArchives();
+      verifierAlertesCommandementHunter();
+    };
+
+    function membreEstEnRegle(idMembre) {
+      const op = window.etatGlobal.operateurs[idMembre];
+      if (!op) return false;
+      return (op.compteurSemaine || 0) >= window.etatGlobal.quotaHebdomadaire;
     }
 
     function verifierAlertesCommandementHunter() {
@@ -1069,14 +1309,14 @@
       const texteAlerte = document.getElementById('texte-alerte-quota');
       
       const membresEnRetard = [];
-      Object.keys(etatGlobal.operateurs).forEach(cle => {
-        if (!membreEnRegle(cle)) {
-          membresEnRetard.push(etatGlobal.operateurs[cle].nom);
+      Object.keys(window.etatGlobal.operateurs).forEach(k => {
+        if (!membreEstEnRegle(k)) {
+          membresEnRetard.push(window.etatGlobal.operateurs[k].nom);
         }
       });
 
-      if (etatGlobal.operateurConnecte === 'hunter' && membresEnRetard.length > 0) {
-        texteAlerte.textContent = `Rapports hebdomadaires incomplets pour : ${membresEnRetard.join(', ')} (${etatGlobal.quotaHebdomadaire} requis)`;
+      if (window.etatGlobal.operateurConnecte === 'hunter' && membresEnRetard.length > 0) {
+        texteAlerte.textContent = `Rapports hebdomadaires manquants : ${membresEnRetard.join(', ')} (${window.etatGlobal.quotaHebdomadaire} requis)`;
         banniere.classList.remove('hidden');
         banniere.classList.add('flex');
       } else {
@@ -1085,46 +1325,106 @@
       }
     }
 
-    // ==================== 1. AFFICHAGE DU POSTE DE COMMANDEMENT ====================
+    // ==================== 1. POSTE DE COMMANDEMENT ====================
     function afficherVuePosteCommandement() {
-      document.getElementById('valeur-quota-affiche').textContent = etatGlobal.quotaHebdomadaire;
-      document.getElementById('total-rapports-enregistres').textContent = etatGlobal.rapports.length;
+      const op = window.etatGlobal.operateurs[window.etatGlobal.operateurConnecte];
+      const banniereLore = document.getElementById('banniere-lore-personnage');
 
-      let nombreMembresValides = 0;
-      Object.keys(etatGlobal.operateurs).forEach(cle => {
-        if (membreEnRegle(cle)) nombreMembresValides++;
+      // Ambiances du lore spécifiques au personnage
+      if (window.etatGlobal.operateurConnecte === 'hunter') {
+        banniereLore.className = 'panneau-tactique p-4 rounded-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4 radar-hunter border-red-500/50';
+        banniereLore.innerHTML = `
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl">🎯</span>
+              <h2 class="font-titre font-bold text-base text-rougeVif uppercase">INTERFACE DE COMMANDEMENT // RADAR TACTIQUE HUNTER</h2>
+            </div>
+            <p class="text-xs font-terminal text-gray-300 mt-1">
+              Capteurs électromagnétiques actifs. Supervision globale des manœuvres, cohérence de la ligne de front et ordre de marche de l'unité.
+            </p>
+          </div>
+          <span class="px-3 py-1 bg-red-950/70 border border-rougeVif text-red-200 text-xs font-terminal rounded">RÉCEPTEUR EM : CALIBRÉ</span>
+        `;
+      } else if (window.etatGlobal.operateurConnecte === 'wrecker') {
+        banniereLore.className = 'panneau-tactique p-4 rounded-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4 impact-wrecker border-amber-500/50';
+        banniereLore.innerHTML = `
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl">💥</span>
+              <h2 class="font-titre font-bold text-base text-amber-400 uppercase">CONSOLE D'ASSAUT LOURD // BALISTIQUE WRECKER</h2>
+            </div>
+            <p class="text-xs font-terminal text-gray-300 mt-1">
+              Détonateurs thermiques armés et vérification des charges de brèche. Prêt pour les assauts contre les chars blindés MTT.
+            </p>
+          </div>
+          <span class="px-3 py-1 bg-amber-950/70 border border-amber-500 text-amber-200 text-xs font-terminal rounded">ARSENAL LOURD : CHARGÉ</span>
+        `;
+      } else if (window.etatGlobal.operateurConnecte === 'crosshair') {
+        banniereLore.className = 'panneau-tactique p-4 rounded-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4 reticule-crosshair border-emerald-500/50';
+        banniereLore.innerHTML = `
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl">🦅</span>
+              <h2 class="font-titre font-bold text-base text-vertViseur uppercase">VISÉE TÉLÉMÉTRIQUE // RÉTICULE CROSSHAIR</h2>
+            </div>
+            <p class="text-xs font-terminal text-gray-300 mt-1">
+              Fusil 773 Firepuncher calibré. Calcul des déviations atmosphériques et trajectoires d'élimination de haute précision.
+            </p>
+          </div>
+          <span class="px-3 py-1 bg-emerald-950/70 border border-vertViseur text-emerald-200 text-xs font-terminal rounded">FUSIL 773 : VERROUILLÉ</span>
+        `;
+      } else {
+        banniereLore.className = 'panneau-tactique p-4 rounded-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4 matrice-tech border-cyan-500/50';
+        banniereLore.innerHTML = `
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl">💻</span>
+              <h2 class="font-titre font-bold text-base text-cyanTech uppercase">TERMINAL D'INGÉNIERIE & DE SLICING // TECH</h2>
+            </div>
+            <p class="text-xs font-terminal text-gray-300 mt-1">
+              Surveillance continue de la mémoire centrale du Maraudeur, des liaisons sub-spatiales et déchiffrement des flux séparatistes.
+            </p>
+          </div>
+          <span class="px-3 py-1 bg-cyan-950/70 border border-cyanTech text-cyan-200 text-xs font-terminal rounded">FLUX CRYPTÉ : SYNCHRONISÉ</span>
+        `;
+      }
+
+      document.getElementById('valeur-quota-affiche').textContent = window.etatGlobal.quotaHebdomadaire;
+      document.getElementById('total-rapports-enregistres').textContent = window.etatGlobal.rapports.length;
+
+      let valides = 0;
+      Object.keys(window.etatGlobal.operateurs).forEach(k => {
+        if (membreEstEnRegle(k)) valides++;
       });
-      const conformite = Math.round((nombreMembresValides / 4) * 100);
-      const elementConformite = document.getElementById('pourcentage-conformite');
-      elementConformite.textContent = `${conformite}%`;
-      elementConformite.className = conformite === 100 
-        ? 'text-2xl font-titre font-bold text-emeraude' 
-        : 'text-2xl font-titre font-bold text-red-400';
+      const ratio = Math.round((valides / 4) * 100);
+      const elemConf = document.getElementById('pourcentage-conformite');
+      elemConf.textContent = `${ratio}%`;
+      elemConf.className = ratio === 100 ? 'text-2xl font-titre font-black text-vertViseur mt-1' : 'text-2xl font-titre font-black text-rougeVif mt-1';
 
-      // 4 fiches de synthèse rapide
+      // 4 cartes de synthèse
       const conteneurMembres = document.getElementById('cartes-membres-synthese');
       conteneurMembres.innerHTML = '';
 
-      Object.values(etatGlobal.operateurs).forEach(op => {
-        const estEnRegle = (op.compteurSemaine || 0) >= etatGlobal.quotaHebdomadaire;
+      Object.values(window.etatGlobal.operateurs).forEach(m => {
+        const estOk = (m.compteurSemaine || 0) >= window.etatGlobal.quotaHebdomadaire;
         const carte = document.createElement('div');
-        carte.className = `bg-acier border-l-4 ${estEnRegle ? 'border-emeraude' : 'border-carmin'} border border-slate-800 p-4 rounded panneau-biseaute-fin`;
+        carte.className = `bg-plaqueBlindage border-l-4 ${estOk ? 'border-vertViseur' : 'border-rougeVif'} border border-bordureMilitaire p-4 rounded biseau-plaque`;
         carte.innerHTML = `
           <div class="flex items-center justify-between mb-2">
-            <span class="text-2xl">${op.symbole}</span>
-            <span class="text-[10px] font-terminal px-2 py-0.5 rounded font-bold ${estEnRegle ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800 animate-pulse'}">
-              ${estEnRegle ? '✓ EN RÈGLE' : '✗ QUOTA NON ATTEINT'}
+            <span class="text-2xl">${m.symbole}</span>
+            <span class="text-[10px] font-terminal px-2 py-0.5 rounded font-bold ${estOk ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800 animate-pulse'}">
+              ${estOk ? '✓ EN RÈGLE' : '✗ QUOTA NON ATTEINT'}
             </span>
           </div>
-          <div class="font-titre font-bold text-sm text-gray-100">${op.nom}</div>
-          <div class="text-[11px] font-terminal text-gray-400 mb-2">${op.specialite}</div>
-          <div class="border-t border-slate-800 pt-2 flex items-center justify-between text-xs font-terminal">
-            <span class="text-gray-400">Missions cette semaine :</span>
-            <span class="font-bold ${estEnRegle ? 'text-emeraude' : 'text-carmin'}">${op.compteurSemaine || 0} / ${etatGlobal.quotaHebdomadaire}</span>
+          <div class="font-titre font-bold text-sm text-gray-100">${m.nom}</div>
+          <div class="text-[11px] font-terminal text-gray-400 mb-2 truncate">${m.specialite}</div>
+          <div class="border-t border-bordureMilitaire pt-2 flex items-center justify-between text-xs font-terminal">
+            <span class="text-gray-400">Missions hebdomadaires :</span>
+            <span class="font-bold ${estOk ? 'text-vertViseur' : 'text-rougeVif'}">${m.compteurSemaine || 0} / ${window.etatGlobal.quotaHebdomadaire}</span>
           </div>
-          <div class="flex items-center justify-between text-[11px] font-terminal text-ambre mt-1">
-            <span class="truncate pr-1">${op.libelleStatistique}:</span>
-            <span class="font-bold">${op.totalStatistique || 0}</span>
+          <div class="flex items-center justify-between text-[11px] font-terminal text-amber-400 mt-1">
+            <span class="truncate pr-1">${m.libelleStatistique} :</span>
+            <span class="font-bold">${m.totalStatistique || 0}</span>
           </div>
         `;
         conteneurMembres.appendChild(carte);
@@ -1133,24 +1433,24 @@
       // Derniers rapports
       const fluxRecents = document.getElementById('flux-rapports-recents');
       fluxRecents.innerHTML = '';
-      const recents = etatGlobal.rapports.slice(0, 4);
+      const recents = window.etatGlobal.rapports.slice(0, 4);
       if (recents.length === 0) {
-        fluxRecents.innerHTML = `<p class="text-xs font-terminal text-gray-500 italic p-2">Aucun rapport encodé récemment sur le réseau.</p>`;
+        fluxRecents.innerHTML = `<p class="text-xs font-terminal text-gray-500 italic p-3 text-center border border-dashed border-bordureMilitaire rounded">Aucun rapport encodé actuellement au registre.</p>`;
       } else {
         recents.forEach(rap => {
           const item = document.createElement('div');
-          item.className = 'bg-carbone/70 border border-slate-800 p-2.5 rounded text-xs font-terminal flex items-start justify-between gap-3';
+          item.className = 'bg-plaqueSecondaire border border-bordureMilitaire p-3 rounded text-xs font-terminal flex items-start justify-between gap-3';
           item.innerHTML = `
             <div>
               <div class="flex items-center gap-2">
-                <span class="text-carmin font-bold uppercase">${rap.nomOperateur}</span>
-                <span class="text-gray-200 font-bold">${rap.nomMission}</span>
-                <span class="text-[10px] text-gray-500">[${rap.secteur}]</span>
+                <span class="text-rougeVif font-bold uppercase">${rap.nomOperateur}</span>
+                <span class="text-gray-100 font-bold">${rap.nomMission}</span>
+                <span class="text-[10px] text-gray-400">[${rap.secteur}]</span>
               </div>
-              <p class="text-gray-400 text-[11px] mt-0.5 line-clamp-1">${rap.description}</p>
-              ${rap.metriqueSpecifique ? `<div class="text-[10px] text-ambre mt-1">⚡ ${rap.metriqueSpecifique}</div>` : ''}
+              <p class="text-gray-300 text-[11px] mt-1 line-clamp-1">${rap.description}</p>
+              ${rap.metriqueSpecifique ? `<div class="text-[10px] text-amber-400 mt-1">⚡ ${rap.metriqueSpecifique}</div>` : ''}
             </div>
-            <span class="text-[10px] text-gray-500 whitespace-nowrap">${rap.date}</span>
+            <span class="text-[10px] text-gray-400 whitespace-nowrap">${rap.date}</span>
           `;
           fluxRecents.appendChild(item);
         });
@@ -1159,48 +1459,49 @@
       // Aperçu des plans
       const conteneurPlans = document.getElementById('apercu-plans-tactiques');
       conteneurPlans.innerHTML = '';
-      etatGlobal.plans.slice(0, 3).forEach(pl => {
+      window.etatGlobal.plans.slice(0, 3).forEach(p => {
         const itemPlan = document.createElement('div');
-        itemPlan.className = 'p-2 bg-carbone/60 border border-slate-800 rounded text-xs font-terminal';
+        itemPlan.className = 'p-2.5 bg-plaqueSecondaire border border-bordureMilitaire rounded text-xs font-terminal';
         itemPlan.innerHTML = `
-          <div class="flex justify-between text-ambre font-titre text-[11px]">
-            <span>${pl.code}</span>
-            <span class="text-gray-400 font-terminal text-[10px]">${pl.cible}</span>
+          <div class="flex justify-between text-amber-400 font-titre text-[11px]">
+            <span>${p.code}</span>
+            <span class="text-gray-400 font-terminal text-[10px]">${p.chefDeManoeuvre}</span>
           </div>
-          <p class="text-gray-400 text-[10px] mt-0.5 line-clamp-1">${pl.description}</p>
+          <p class="text-gray-300 text-[11px] mt-0.5 line-clamp-1">${p.cible}</p>
         `;
         conteneurPlans.appendChild(itemPlan);
       });
-
-      verifierAlertesCommandementHunter();
     }
 
-    // ==================== 2. AFFICHAGE DES RAPPORTS ====================
+    // ==================== 2. RAPPORTS DE MISSION ====================
     function afficherVueRapports() {
-      const utilisateur = etatGlobal.operateurs[etatGlobal.operateurConnecte];
-      document.getElementById('nom-auteur-rapport').textContent = `${utilisateur.nom} [${utilisateur.grade}]`;
+      const op = window.etatGlobal.operateurs[window.etatGlobal.operateurConnecte];
+      document.getElementById('nom-auteur-rapport').textContent = `${op.nom} [${op.grade}]`;
+
+      // Date automatique du jour pré-remplie et modifiable
+      document.getElementById('champ-date-mission').value = dateAujourdhuiCivil();
 
       const conteneurChampDynamique = document.getElementById('champ-specialiste-conteneur');
       
-      if (etatGlobal.operateurConnecte === 'wrecker') {
+      if (window.etatGlobal.operateurConnecte === 'wrecker') {
         conteneurChampDynamique.innerHTML = `
-          <label class="block text-xs font-terminal uppercase text-ambre mb-1">💥 Chars MTT & Blindés Lourds Détruits *</label>
-          <input type="number" id="champ-metrique-specifique" min="0" required value="1" placeholder="Nombre de blindés détruits" class="w-full bg-carbone border border-ambre/50 px-3 py-2 text-xs font-terminal text-ambre rounded focus:border-ambre outline-none">
+          <label class="block text-xs font-terminal uppercase text-amber-400 mb-1">💥 Chars MTT & Blindés Lourds Détruits *</label>
+          <input type="number" id="champ-metrique-specifique" min="0" required value="1" class="w-full bg-carboneFond border border-amber-500/60 px-3 py-2 text-xs font-terminal text-amber-300 rounded outline-none">
         `;
-      } else if (etatGlobal.operateurConnecte === 'crosshair') {
+      } else if (window.etatGlobal.operateurConnecte === 'crosshair') {
         conteneurChampDynamique.innerHTML = `
-          <label class="block text-xs font-terminal uppercase text-emeraude mb-1">🎯 Tirs de Haute Précision à la Tête Confirmés *</label>
-          <input type="number" id="champ-metrique-specifique" min="0" required value="5" placeholder="Nombre d'éliminations directes réussies" class="w-full bg-carbone border border-emeraude/50 px-3 py-2 text-xs font-terminal text-emeraude rounded focus:border-emeraude outline-none">
+          <label class="block text-xs font-terminal uppercase text-vertViseur mb-1">🎯 Tirs de Haute Précision à la Tête Confirmés *</label>
+          <input type="number" id="champ-metrique-specifique" min="0" required value="5" class="w-full bg-carboneFond border border-vertViseur/60 px-3 py-2 text-xs font-terminal text-vertViseur rounded outline-none">
         `;
-      } else if (etatGlobal.operateurConnecte === 'tech') {
+      } else if (window.etatGlobal.operateurConnecte === 'tech') {
         conteneurChampDynamique.innerHTML = `
-          <label class="block text-xs font-terminal uppercase text-cyanHolo mb-1">💾 Renseignement et Données Piratées *</label>
-          <input type="text" id="champ-metrique-specifique" required placeholder="Exemple : Clés de chiffrement des droïdes d'assaut Skako" class="w-full bg-carbone border border-cyanHolo/50 px-3 py-2 text-xs font-terminal text-cyanHolo rounded focus:border-cyanHolo outline-none">
+          <label class="block text-xs font-terminal uppercase text-cyanTech mb-1">💻 Données et Schémas Piratés (Injectés aux Archives) *</label>
+          <input type="text" id="champ-metrique-specifique" required placeholder="Exemple : Clés de chiffrement des droïdes Skako" class="w-full bg-carboneFond border border-cyanTech/60 px-3 py-2 text-xs font-terminal text-cyanTech rounded outline-none">
         `;
       } else {
         conteneurChampDynamique.innerHTML = `
-          <label class="block text-xs font-terminal uppercase text-ambre mb-1">🧭 Relevé Électromagnétique & Évaluation du Commandement</label>
-          <input type="text" id="champ-metrique-specifique" required placeholder="Exemple : Émissions électromagnétiques ennemies repérées" class="w-full bg-carbone border border-slate-700 px-3 py-2 text-xs font-terminal text-ambre rounded focus:border-carmin outline-none">
+          <label class="block text-xs font-terminal uppercase text-rougeVif mb-1">🧭 Relevé Électromagnétique & Évaluation du Commandement</label>
+          <input type="text" id="champ-metrique-specifique" required placeholder="Exemple : Émissions électromagnétiques et failles repérées" class="w-full bg-carboneFond border border-red-500/60 px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none">
         `;
       }
 
@@ -1212,37 +1513,37 @@
       feed.innerHTML = '';
       const filtre = document.getElementById('filtre-operateurs-rapports').value;
 
-      const listeFiltree = filtre === 'tous' 
-        ? etatGlobal.rapports 
-        : etatGlobal.rapports.filter(r => r.idOperateur === filtre);
+      const liste = filtre === 'tous'
+        ? window.etatGlobal.rapports
+        : window.etatGlobal.rapports.filter(r => r.idOperateur === filtre);
 
-      if (listeFiltree.length === 0) {
-        feed.innerHTML = `<div class="text-xs font-terminal text-gray-500 p-4 text-center border border-dashed border-slate-800 rounded">Aucun rapport encodé pour cette sélection.</div>`;
+      if (liste.length === 0) {
+        feed.innerHTML = `<div class="text-xs font-terminal text-gray-500 p-4 text-center border border-dashed border-bordureMilitaire rounded">Aucun rapport enregistré pour cette sélection.</div>`;
         return;
       }
 
-      listeFiltree.forEach(rap => {
+      liste.forEach(rap => {
         const carte = document.createElement('div');
-        carte.className = 'bg-carbone border border-slate-800 p-4 rounded text-xs font-terminal space-y-2';
+        carte.className = 'bg-plaqueSecondaire border border-bordureMilitaire p-4 rounded text-xs font-terminal space-y-2';
         carte.innerHTML = `
-          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-2">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-bordureMilitaire pb-2">
             <div class="flex items-center space-x-2">
-              <span class="font-titre font-bold text-gray-200 uppercase">${rap.nomMission}</span>
+              <span class="font-titre font-bold text-gray-100 uppercase">${rap.nomMission}</span>
               <span class="px-2 py-0.5 rounded text-[10px] font-bold ${rap.estPresent ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800'}">
                 ${rap.estPresent ? '✓ PRÉSENT' : '✗ ABSENT'}
               </span>
             </div>
             <div class="text-gray-400 text-[11px]">
-              Secteur : <span class="text-gray-200 font-bold">${rap.secteur}</span> // Cycle : <span class="text-ambre">${rap.date}</span>
+              Secteur : <span class="text-gray-200 font-bold">${rap.secteur}</span> // Date : <span class="text-amber-400">${rap.date}</span>
             </div>
           </div>
           <p class="text-gray-300 text-xs leading-relaxed">${rap.description}</p>
-          <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800/50 text-[11px]">
-            <div class="text-ambre">
+          <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-bordureMilitaire text-[11px]">
+            <div class="text-amber-400">
               <span class="font-bold">MÉTRIQUE OPÉRATIONNELLE :</span> ${rap.metriqueSpecifique}
             </div>
             <div class="text-gray-400">
-              Opérateur : <span class="text-carmin font-bold uppercase">${rap.nomOperateur}</span>
+              Opérateur : <span class="text-rougeVif font-bold uppercase">${rap.nomOperateur}</span>
             </div>
           </div>
         `;
@@ -1250,9 +1551,9 @@
       });
     }
 
-    function transmettreRapportMission(evenement) {
-      evenement.preventDefault();
-      const op = etatGlobal.operateurs[etatGlobal.operateurConnecte];
+    async function transmettreRapportMission(e) {
+      e.preventDefault();
+      const op = window.etatGlobal.operateurs[window.etatGlobal.operateurConnecte];
       const nomMission = document.getElementById('champ-nom-mission').value;
       const secteur = document.getElementById('champ-secteur-mission').value;
       const date = document.getElementById('champ-date-mission').value;
@@ -1273,71 +1574,31 @@
       };
 
       let incrementStat = 1;
-      if (etatGlobal.operateurConnecte === 'wrecker' || etatGlobal.operateurConnecte === 'crosshair') {
+      if (window.etatGlobal.operateurConnecte === 'wrecker' || window.etatGlobal.operateurConnecte === 'crosshair') {
         incrementStat = parseInt(metriqueValeur, 10) || 1;
       }
 
-      if (liaisonServeurPrete) {
-        const lotOperations = baseDeDonnees.batch();
-
-        // 1. Sauvegarde du rapport
-        const refRapport = baseDeDonnees.collection('rapports').doc();
-        lotOperations.set(refRapport, nouveauRapport);
-
-        // 2. Mise à jour de la statistique de l'opérateur
-        const refMembre = baseDeDonnees.collection('operateurs').doc(op.id);
-        lotOperations.update(refMembre, {
-          compteurSemaine: firebase.firestore.FieldValue.increment(1),
-          totalStatistique: firebase.firestore.FieldValue.increment(incrementStat)
-        });
-
-        // 3. Injection automatique dans les archives si l'auteur est Tech
-        if (etatGlobal.operateurConnecte === 'tech') {
-          const refArchive = baseDeDonnees.collection('archivesPiratees').doc();
-          lotOperations.set(refArchive, {
-            titre: `Interception : ${nomMission}`,
-            source: secteur,
-            horodatage: `Cycle ${date}`,
-            contenu: `${metriqueValeur} - ${description}`,
-            dateCreation: Date.now()
-          });
-        }
-
-        lotOperations.commit().then(() => {
-          AudioTactique.validation();
-          document.getElementById('formulaire-rapport-mission').reset();
-        }).catch(err => {
-          console.error("Erreur de transmission :", err);
-          AudioTactique.alarme();
-        });
-
-      } else {
-        op.compteurSemaine += 1;
-        op.totalStatistique += incrementStat;
-        etatGlobal.rapports.unshift(nouveauRapport);
-        if (etatGlobal.operateurConnecte === 'tech') {
-          etatGlobal.archivesPiratees.unshift({
-            id: 'arc-' + Date.now(),
-            titre: `Interception : ${nomMission}`,
-            source: secteur,
-            horodatage: `Cycle ${date}`,
-            contenu: `${metriqueValeur} - ${description}`,
-            dateCreation: Date.now()
-          });
-        }
-        AudioTactique.validation();
-        document.getElementById('formulaire-rapport-mission').reset();
+      try {
+        await window.sauvegarderRapportMission(nouveauRapport, incrementStat);
+        AudioTactique.succes();
+        document.getElementById('champ-nom-mission').value = '';
+        document.getElementById('champ-secteur-mission').value = '';
+        document.getElementById('champ-description-mission').value = '';
+        document.getElementById('champ-date-mission').value = dateAujourdhuiCivil();
         afficherVueRapports();
+      } catch(err) {
+        console.error(err);
+        AudioTactique.alerte();
       }
     }
 
-    // ==================== 3. AFFICHAGE DE L'EFFECTIF ====================
+    // ==================== 3. EFFECTIF DE L'ESCOUADE ====================
     function afficherVueEffectif() {
-      const estHunter = etatGlobal.operateurConnecte === 'hunter';
+      const estHunter = window.etatGlobal.operateurConnecte === 'hunter';
       
       const panneauHunter = document.getElementById('panneau-commandement-hunter');
       const avisLectureSeule = document.getElementById('avis-lecture-seule');
-      document.getElementById('affichage-quota-hunter').textContent = etatGlobal.quotaHebdomadaire;
+      document.getElementById('affichage-quota-hunter').textContent = window.etatGlobal.quotaHebdomadaire;
 
       if (estHunter) {
         panneauHunter.classList.remove('hidden');
@@ -1352,66 +1613,63 @@
       const conteneurFiches = document.getElementById('conteneur-fiches-effectif');
       conteneurFiches.innerHTML = '';
 
-      Object.values(etatGlobal.operateurs).forEach(op => {
-        const estEnRegle = (op.compteurSemaine || 0) >= etatGlobal.quotaHebdomadaire;
+      Object.values(window.etatGlobal.operateurs).forEach(m => {
+        const estOk = (m.compteurSemaine || 0) >= window.etatGlobal.quotaHebdomadaire;
         const carte = document.createElement('div');
-        carte.className = 'bg-acier border-2 border-slate-800 panneau-biseaute p-5 relative space-y-4';
+        carte.className = 'bg-plaqueBlindage border border-bordureMilitaire biseau-plaque p-5 relative space-y-4';
 
         carte.innerHTML = `
-          <!-- En-tête de la fiche militaire -->
-          <div class="flex items-start justify-between border-b border-slate-800 pb-3">
+          <div class="flex items-start justify-between border-b border-bordureMilitaire pb-3">
             <div class="flex items-center space-x-3">
-              <span class="text-3xl">${op.symbole}</span>
+              <span class="text-3xl">${m.symbole}</span>
               <div>
-                <div class="font-titre font-black text-base text-gray-100 uppercase tracking-wider">${op.nom}</div>
-                <div class="text-xs font-terminal text-ambre">${op.matricule} // ${op.grade}</div>
+                <div class="font-titre font-black text-base text-gray-100 uppercase">${m.nom}</div>
+                <div class="text-xs font-terminal text-amber-400">${m.matricule} // ${m.grade}</div>
               </div>
             </div>
 
-            <!-- Voyant ROUGE ou VERT du rapport hebdomadaire -->
+            <!-- Voyant vert si quota atteint, rouge si incomplet -->
             <div class="text-right">
-              <div class="text-[10px] font-terminal uppercase text-gray-400">Statut Hebdomadaire</div>
-              <div class="px-2.5 py-1 text-xs font-terminal font-bold rounded ${estEnRegle ? 'bg-emerald-950 text-emerald-300 border border-emerald-600' : 'bg-red-950 text-red-300 border border-red-700 animate-pulse'}">
-                ${estEnRegle ? '✓ RAPPORT EN RÈGLE' : '✗ RAPPORT NON ENCODÉ'}
+              <div class="text-[10px] font-terminal uppercase text-gray-400">Statut hebdomadaire</div>
+              <div class="px-2.5 py-1 text-xs font-terminal font-bold rounded ${estOk ? 'bg-emerald-950 text-emerald-300 border border-emerald-600' : 'bg-red-950 text-red-300 border border-red-700 animate-pulse'}">
+                ${estOk ? '✓ RAPPORT EN RÈGLE' : '✗ RAPPORT NON ENCODÉ'}
               </div>
             </div>
           </div>
 
-          <!-- Métriques hebdomadaires et historiques -->
-          <div class="bg-carbone p-3 rounded border border-slate-800 flex items-center justify-between text-xs font-terminal">
+          <div class="bg-carboneFond p-3 rounded border border-bordureMilitaire flex items-center justify-between text-xs font-terminal">
             <div>
               <span class="text-gray-400">Missions hebdomadaires :</span>
-              <span class="font-bold text-sm ml-1 ${estEnRegle ? 'text-emeraude' : 'text-carmin'}">${op.compteurSemaine || 0} / ${etatGlobal.quotaHebdomadaire}</span>
+              <span class="font-bold text-sm ml-1 ${estOk ? 'text-vertViseur' : 'text-rougeVif'}">${m.compteurSemaine || 0} / ${window.etatGlobal.quotaHebdomadaire}</span>
             </div>
             <div>
-              <span class="text-gray-400">${op.libelleStatistique} :</span>
-              <span class="font-bold text-sm text-ambre ml-1">${op.totalStatistique || 0}</span>
+              <span class="text-gray-400">${m.libelleStatistique} :</span>
+              <span class="font-bold text-sm text-amber-400 ml-1">${m.totalStatistique || 0}</span>
             </div>
           </div>
 
-          <!-- Spécialité, date d'entrée et notes de commandement -->
           <div class="space-y-2 text-xs font-terminal">
             <div>
               <span class="text-gray-400 uppercase">Spécialité opérationnelle :</span>
-              <span class="text-gray-200 ml-1 font-bold">${op.specialite}</span>
+              <span class="text-gray-200 ml-1 font-bold">${m.specialite}</span>
             </div>
             <div>
               <span class="text-gray-400 uppercase">Date d'incorporation dans l'unité :</span>
-              <span class="text-ambre ml-1 font-bold">${op.dateEntree}</span>
+              <span class="text-amber-300 ml-1 font-bold">${m.dateEntree}</span>
             </div>
             <div>
-              <span class="text-gray-400 uppercase block mb-1">Notes de commandement & évaluation militaire :</span>
-              <div class="bg-carbone/70 p-2.5 rounded border border-slate-800 text-gray-300 text-[11px] leading-relaxed">
-                ${op.notes || 'Aucune observation consignée.'}
+              <span class="text-gray-400 uppercase block mb-1">Notes de commandement & évaluation tactique :</span>
+              <div class="bg-carboneFond p-2.5 rounded border border-bordureMilitaire text-gray-300 text-[11px] leading-relaxed">
+                ${m.notes || 'Aucune observation consignée.'}
               </div>
             </div>
           </div>
 
           <!-- Bouton de modification réservé au Sergent Hunter -->
           ${estHunter ? `
-            <div class="pt-2 border-t border-slate-800 flex justify-end">
-              <button onclick="ouvrirBoiteModificationDossier('${op.id}')" class="px-3 py-1.5 bg-panneau hover:bg-slate-700 border border-slate-600 text-xs font-terminal text-gray-200 rounded flex items-center gap-1.5 transition">
-                ✏️ Modifier Date & Notes de Commandement
+            <div class="pt-2 border-t border-bordureMilitaire flex justify-end">
+              <button onclick="ouvrirBoiteModificationDossier('${m.id}')" class="px-3 py-1.5 bg-plaqueSecondaire hover:bg-bordureMilitaire border border-bordureClaire text-xs font-terminal text-gray-200 rounded flex items-center gap-1.5 transition">
+                ✏️ Modifier Date, Stats & Notes de Commandement
               </button>
             </div>
           ` : ''}
@@ -1422,118 +1680,107 @@
     }
 
     function ouvrirBoiteModificationDossier(idMembre) {
-      const membre = etatGlobal.operateurs[idMembre];
-      document.getElementById('identifiant-membre-edite').value = membre.id;
-      document.getElementById('titre-dossier-militaire').textContent = `Dossier Militaire // ${membre.nom}`;
-      document.getElementById('champ-date-incorporation').value = membre.dateEntree;
-      document.getElementById('champ-notes-commandement').value = membre.notes || '';
+      const m = window.etatGlobal.operateurs[idMembre];
+      document.getElementById('identifiant-membre-edite').value = m.id;
+      document.getElementById('titre-dossier-militaire').textContent = `Dossier Militaire // ${m.nom}`;
+      document.getElementById('champ-date-incorporation').value = m.dateEntree;
+      document.getElementById('champ-stat-globale').value = m.totalStatistique || 0;
+      document.getElementById('libelle-stat-edition').textContent = `Compteur "${m.libelleStatistique}" :`;
+      document.getElementById('champ-notes-commandement').value = m.notes || '';
       ouvrirBoite('boite-modifier-dossier');
     }
 
-    function enregistrerDossierMilitaire(evenement) {
-      evenement.preventDefault();
-      const idMembre = document.getElementById('identifiant-membre-edite').value;
+    function remettreStatAZero() {
+      document.getElementById('champ-stat-globale').value = 0;
+      AudioTactique.clic();
+    }
+
+    async function enregistrerDossierMilitaire(e) {
+      e.preventDefault();
+      const id = document.getElementById('identifiant-membre-edite').value;
       const dateEntree = document.getElementById('champ-date-incorporation').value;
       const notes = document.getElementById('champ-notes-commandement').value;
+      const statGlobale = parseInt(document.getElementById('champ-stat-globale').value, 10) || 0;
 
-      if (liaisonServeurPrete) {
-        baseDeDonnees.collection('operateurs').doc(idMembre).update({
-          dateEntree: dateEntree,
-          notes: notes
-        }).then(() => {
-          fermerBoite('boite-modifier-dossier');
-          AudioTactique.validation();
-        });
-      } else {
-        etatGlobal.operateurs[idMembre].dateEntree = dateEntree;
-        etatGlobal.operateurs[idMembre].notes = notes;
+      try {
+        await window.sauvegarderDossierMilitaire(id, dateEntree, notes, statGlobale);
         fermerBoite('boite-modifier-dossier');
-        AudioTactique.validation();
+        AudioTactique.succes();
         afficherVueEffectif();
+      } catch(err) {
+        console.error(err);
       }
     }
 
     function ouvrirBoiteQuota() {
-      document.getElementById('champ-valeur-quota').value = etatGlobal.quotaHebdomadaire;
+      document.getElementById('champ-valeur-quota').value = window.etatGlobal.quotaHebdomadaire;
       ouvrirBoite('boite-reglage-quota');
     }
 
-    function enregistrerReglageQuota(evenement) {
-      evenement.preventDefault();
-      const nouvelleValeur = parseInt(document.getElementById('champ-valeur-quota').value, 10);
-      if (nouvelleValeur > 0) {
-        if (liaisonServeurPrete) {
-          baseDeDonnees.collection('config').doc('escouade').update({ quotaHebdomadaire: nouvelleValeur }).then(() => {
-            fermerBoite('boite-reglage-quota');
-            AudioTactique.validation();
-          });
-        } else {
-          etatGlobal.quotaHebdomadaire = nouvelleValeur;
+    async function enregistrerReglageQuota(e) {
+      e.preventDefault();
+      const val = parseInt(document.getElementById('champ-valeur-quota').value, 10);
+      if (val > 0) {
+        try {
+          await window.sauvegarderReglageQuota(val);
           fermerBoite('boite-reglage-quota');
-          AudioTactique.validation();
+          AudioTactique.succes();
           afficherVueEffectif();
+        } catch(err) {
+          console.error(err);
         }
       }
     }
 
-    // Réinitialisation du cycle hebdomadaire par Hunter
     function demanderReinitialisationHebdomadaire() {
-      if (etatGlobal.operateurConnecte !== 'hunter') return;
+      if (window.etatGlobal.operateurConnecte !== 'hunter') return;
 
       afficherConfirmation(
         "CLÔTURE DU CYCLE HEBDOMADAIRE",
-        "Voulez-vous clôturer la semaine ? Les compteurs hebdomadaires de missions de tous les membres de la Bad Batch seront remis à zéro. Les totaux cumulés historiques restent conservés.",
-        () => {
-          if (liaisonServeurPrete) {
-            const lotReset = baseDeDonnees.batch();
-            Object.keys(etatGlobal.operateurs).forEach(cle => {
-              const ref = baseDeDonnees.collection('operateurs').doc(cle);
-              lotReset.update(ref, { compteurSemaine: 0 });
-            });
-            lotReset.commit().then(() => {
-              AudioTactique.validation();
-            });
-          } else {
-            Object.keys(etatGlobal.operateurs).forEach(cle => {
-              etatGlobal.operateurs[cle].compteurSemaine = 0;
-            });
+        "Voulez-vous clôturer la semaine ? Les compteurs hebdomadaires de missions de tous les membres de la Bad Batch seront remis à zéro. Les totaux cumulés et dossiers sont conservés.",
+        async () => {
+          try {
+            await window.sauvegarderResetHebdomadaire();
+            AudioTactique.succes();
             afficherVueEffectif();
             verifierAlertesCommandementHunter();
-            AudioTactique.validation();
+          } catch(err) {
+            console.error(err);
           }
         }
       );
     }
 
-    // ==================== 4. AFFICHAGE DES PLANS TACTIQUES ====================
-    function afficherVuePlans() {
-      const conteneurPlans = document.getElementById('conteneur-plans-tactiques');
-      conteneurPlans.innerHTML = '';
+    // ==================== 4. PLANS TACTIQUES ====================
+    window.afficherVuePlans = function() {
+      const conteneur = document.getElementById('conteneur-plans-tactiques');
+      conteneur.innerHTML = '';
 
-      etatGlobal.plans.forEach(plan => {
-        const cartePlan = document.createElement('div');
-        cartePlan.className = 'bg-acier border border-slate-800 panneau-biseaute p-4 space-y-3 relative hover:border-ambre/50 transition';
-        cartePlan.innerHTML = `
-          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-            <span class="font-titre font-black text-sm text-ambre tracking-wider">${plan.code}</span>
-            <span class="text-[10px] font-terminal px-2 py-0.5 bg-panneau text-gray-300 rounded border border-slate-700">OPÉRATIONNEL</span>
+      window.etatGlobal.plans.forEach(p => {
+        const carte = document.createElement('div');
+        carte.className = 'bg-plaqueBlindage border border-bordureMilitaire biseau-plaque p-4 space-y-3 relative hover:border-amber-500/50 transition';
+        carte.innerHTML = `
+          <div class="flex items-center justify-between border-b border-bordureMilitaire pb-2">
+            <span class="font-titre font-bold text-sm text-amber-400 tracking-wider">${p.code}</span>
+            <span class="text-[10px] font-terminal px-2 py-0.5 bg-plaqueSecondaire text-gray-300 rounded border border-bordureMilitaire">OPÉRATIONNEL</span>
           </div>
           <div>
             <div class="text-xs font-terminal uppercase text-gray-400">Objectif tactique :</div>
-            <div class="font-titre font-bold text-xs text-gray-100">${plan.cible}</div>
+            <div class="font-titre font-bold text-xs text-gray-100">${p.cible}</div>
           </div>
           <div>
-            <div class="text-[11px] font-terminal text-carmin font-bold">Chef(s) de manœuvre : ${plan.chefDeManœuvre}</div>
-            <p class="text-xs font-terminal text-gray-300 mt-1 leading-relaxed bg-carbone/60 p-2.5 rounded border border-slate-800/80">
-              ${plan.description}
+            <div class="text-[11px] font-terminal text-rougeVif font-bold">Chef(s) de manœuvre : ${p.chefDeManoeuvre}</div>
+            <p class="text-xs font-terminal text-gray-300 mt-1 leading-relaxed bg-carboneFond p-2.5 rounded border border-bordureMilitaire">
+              ${p.description}
             </p>
           </div>
         `;
-        conteneurPlans.appendChild(cartePlan);
+        conteneur.appendChild(carte);
       });
-    }
+    };
 
     function ouvrirBoiteNouveauPlan() {
+      if (window.etatGlobal.operateurConnecte !== 'hunter') return;
       document.getElementById('champ-code-plan').value = '';
       document.getElementById('champ-cible-plan').value = '';
       document.getElementById('champ-meneurs-plan').value = '';
@@ -1541,31 +1788,28 @@
       ouvrirBoite('boite-nouveau-plan');
     }
 
-    function enregistrerNouveauPlan(evenement) {
-      evenement.preventDefault();
+    async function enregistrerNouveauPlan(e) {
+      e.preventDefault();
+      if (window.etatGlobal.operateurConnecte !== 'hunter') return;
+
       const code = document.getElementById('champ-code-plan').value.toUpperCase();
       const cible = document.getElementById('champ-cible-plan').value;
-      const chefDeManœuvre = document.getElementById('champ-meneurs-plan').value;
+      const chefDeManoeuvre = document.getElementById('champ-meneurs-plan').value;
       const description = document.getElementById('champ-description-plan').value;
 
-      const planCree = { code, cible, chefDeManœuvre, description, dateCreation: Date.now() };
-
-      if (liaisonServeurPrete) {
-        baseDeDonnees.collection('plans').add(planCree).then(() => {
-          fermerBoite('boite-nouveau-plan');
-          AudioTactique.validation();
-        });
-      } else {
-        etatGlobal.plans.push({ id: 'plan-' + Date.now(), ...planCree });
+      try {
+        await window.sauvegarderNouveauPlan({ code, cible, chefDeManoeuvre, description, dateCreation: Date.now() });
         fermerBoite('boite-nouveau-plan');
-        AudioTactique.validation();
-        afficherVuePlans();
+        AudioTactique.succes();
+        window.afficherVuePlans();
+      } catch(err) {
+        console.error(err);
       }
     }
 
-    // ==================== 5. AFFICHAGE DES ARCHIVES DE PIRATAGE ====================
-    function afficherVueArchives() {
-      const estTech = etatGlobal.operateurConnecte === 'tech';
+    // ==================== 5. ARCHIVES DE PIRATAGE ====================
+    window.afficherVueArchives = function() {
+      const estTech = window.etatGlobal.operateurConnecte === 'tech';
       const panneauSaisie = document.getElementById('panneau-saisie-piratage-tech');
       if (estTech) {
         panneauSaisie.classList.remove('hidden');
@@ -1573,90 +1817,60 @@
         panneauSaisie.classList.add('hidden');
       }
 
-      document.getElementById('compteur-archives-enregistrees').textContent = `${etatGlobal.archivesPiratees.length} transmission(s) interceptée(s)`;
+      document.getElementById('compteur-archives-enregistrees').textContent = `${window.etatGlobal.archivesPiratees.length} transmission(s) décryptée(s)`;
 
-      const listeElement = document.getElementById('liste-archives-piratees');
-      listeElement.innerHTML = '';
+      const liste = document.getElementById('liste-archives-piratees');
+      liste.innerHTML = '';
 
-      if (etatGlobal.archivesPiratees.length === 0) {
-        listeElement.innerHTML = `<div class="text-xs font-terminal text-gray-500 italic p-4 text-center">Aucune interception décryptée actuellement dans la mémoire tampon.</div>`;
+      if (window.etatGlobal.archivesPiratees.length === 0) {
+        liste.innerHTML = `<div class="text-xs font-terminal text-gray-500 italic p-4 text-center border border-dashed border-bordureMilitaire rounded">Aucune interception décryptée actuellement dans la mémoire tampon.</div>`;
         return;
       }
 
-      etatGlobal.archivesPiratees.forEach(archive => {
-        const boite = document.createElement('div');
-        boite.className = 'bg-panneau/40 border border-cyanHolo/20 p-3.5 rounded text-xs font-terminal space-y-1 hover:border-cyanHolo/60 transition';
-        boite.innerHTML = `
-          <div class="flex flex-wrap items-center justify-between gap-2 text-cyanHolo">
+      window.etatGlobal.archivesPiratees.forEach(a => {
+        const item = document.createElement('div');
+        item.className = 'bg-plaqueSecondaire border border-cyanTech/30 p-3.5 rounded text-xs font-terminal space-y-1';
+        item.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2 text-cyanTech">
             <span class="font-titre font-bold text-xs uppercase flex items-center gap-1.5">
-              <span>▶</span> ${archive.titre}
+              <span>▶</span> ${a.titre}
             </span>
-            <span class="text-[10px] text-gray-400">[ORIGINE : ${archive.source}] // ${archive.horodatage}</span>
+            <span class="text-[10px] text-gray-400">[ORIGINE : ${a.source}] // ${a.horodatage}</span>
           </div>
-          <p class="text-gray-300 text-xs mt-1 leading-relaxed bg-carbone/80 p-2 rounded border border-slate-800">
-            ${archive.contenu}
+          <p class="text-gray-300 text-xs mt-1 leading-relaxed bg-carboneFond p-2 rounded border border-bordureMilitaire">
+            ${a.contenu}
           </p>
         `;
-        listeElement.appendChild(boite);
+        liste.appendChild(item);
       });
-    }
+    };
 
-    function transmettreNouvelleArchive(evenement) {
-      evenement.preventDefault();
-      if (etatGlobal.operateurConnecte !== 'tech') return;
+    async function transmettreNouvelleArchive(e) {
+      e.preventDefault();
+      if (window.etatGlobal.operateurConnecte !== 'tech') return;
 
       const titre = document.getElementById('titre-archive-piratee').value;
       const source = document.getElementById('source-archive-piratee').value;
       const contenu = document.getElementById('contenu-archive-piratee').value;
 
-      const entreeArchive = {
-        titre,
-        source,
-        horodatage: 'Cycles ' + (7930 + Math.floor(Math.random() * 5)),
-        contenu,
-        dateCreation: Date.now()
-      };
-
-      if (liaisonServeurPrete) {
-        const lotArchives = baseDeDonnees.batch();
-        const refArchive = baseDeDonnees.collection('archivesPiratees').doc();
-        lotArchives.set(refArchive, entreeArchive);
-
-        // Incrémentation de la statistique de piratage de Tech
-        const refTech = baseDeDonnees.collection('operateurs').doc('tech');
-        lotArchives.update(refTech, {
-          totalStatistique: firebase.firestore.FieldValue.increment(1)
+      try {
+        await window.sauvegarderNouvelleArchive({
+          titre,
+          source,
+          horodatage: dateAujourdhuiCivil(),
+          contenu,
+          dateCreation: Date.now()
         });
 
-        lotArchives.commit().then(() => {
-          AudioTactique.validation();
-          document.getElementById('titre-archive-piratee').value = '';
-          document.getElementById('source-archive-piratee').value = '';
-          document.getElementById('contenu-archive-piratee').value = '';
-        });
-      } else {
-        etatGlobal.archivesPiratees.unshift({ id: 'arc-' + Date.now(), ...entreeArchive });
-        etatGlobal.operateurs.tech.totalStatistique += 1;
-        AudioTactique.validation();
+        AudioTactique.succes();
         document.getElementById('titre-archive-piratee').value = '';
         document.getElementById('source-archive-piratee').value = '';
         document.getElementById('contenu-archive-piratee').value = '';
-        afficherVueArchives();
+        window.afficherVueArchives();
+      } catch(err) {
+        console.error(err);
       }
     }
-
-    // Déclencheur sonore lors de la saisie au clavier
-    window.addEventListener('keydown', (e) => {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-        AudioTactique.toucheClavier();
-      }
-    });
-
-    // Lancement de l'application au chargement
-    window.onload = function() {
-      initialiserLiaisonsDistant();
-      document.getElementById('fenetre-connexion').classList.remove('hidden');
-    };
   </script>
 </body>
 </html>
