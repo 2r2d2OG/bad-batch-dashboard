@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>FORCE CLONE 99 // DATAPAD TACTIQUE // HAVOC MARAUDER</title>
 
-  <!-- Favicon officiel Clone Force 99 -->
+  <!-- Favicon officiel Clone Force 99 (logobadbatch.png) -->
   <link rel="icon" type="image/png" href="logobadbatch.png">
   <link rel="shortcut icon" href="logobadbatch.png">
 
@@ -139,10 +139,10 @@
   <header class="border-b border-bordureTactique bg-fondCarbone/95 backdrop-blur sticky top-0 z-40 shadow-lg">
     <div class="max-w-7xl mx-auto px-3 sm:px-4 py-2 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2">
       
-      <!-- Gauche : Médaillon Logo Bad Batch & Liaison ComNet -->
+      <!-- Gauche : Médaillon Logo Bad Batch Sécurisé & Liaison ComNet -->
       <div class="flex items-center space-x-2.5 shrink-0">
-        <div class="h-10 w-10 rounded-full border-2 border-rougeAlerte bg-black/60 overflow-hidden shrink-0 flex items-center justify-center shadow-[0_0_10px_rgba(255,46,67,0.4)]">
-          <img id="logo-badbatch-hud" src="logobadbatch.png" alt="Clone Force 99" class="w-full h-full object-cover">
+        <div class="h-10 w-10 rounded-full border-2 border-rougeAlerte bg-black overflow-hidden shrink-0 flex items-center justify-center shadow-[0_0_10px_rgba(255,46,67,0.4)]">
+          <img id="logo-badbatch-hud" alt="Clone Force 99" class="w-full h-full object-cover">
         </div>
         <div>
           <div class="flex items-center space-x-1.5">
@@ -373,10 +373,10 @@
       </div>
     </section>
 
-    <!-- 2. POSTE DE COMMANDEMENT (AVEC GESTION RECRUTEMENT DEPLACÉE ICI ET PDS EXPRESS) -->
+    <!-- 2. POSTE DE COMMANDEMENT (ALERTE RELIÉE AUX PDS + DOUBLE CRÉNEAU 18H / 21H INDÉPENDANT) -->
     <section id="fenetre-poste-commandement" class="hidden space-y-4">
       
-      <!-- MODULE DE GESTION DU RECRUTEMENT (DÉPLACÉ ICI // EXCLUSIF HUNTER) -->
+      <!-- MODULE GESTION DU RECRUTEMENT (POSTE DE COMMANDEMENT HUNTER) -->
       <div id="module-gestion-recrutement-poste" class="hidden panneau-tactique p-3.5 rounded border border-amber-500/50 shadow-md">
         <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
           <div class="space-y-1">
@@ -399,26 +399,26 @@
         </div>
       </div>
 
-      <!-- BANNIÈRE D'ALERTE DE COMMANDEMENT (VISIBLE UNIQUEMENT SUR POSTE DE COMMANDEMENT) -->
+      <!-- BANNIÈRE D'ALERTE DE COMMANDEMENT (RELIÉE EXCLUSIVEMENT AUX PDS HEBDOMADAIRES) -->
       <div id="banniere-alerte-quota" class="hidden p-2.5 bg-red-950/70 border border-rougeAlerte rounded flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs font-terminal text-red-200 shadow-md">
         <div class="flex items-center gap-2 overflow-hidden">
           <span class="text-base shrink-0">⚠️</span>
           <span class="font-bold text-rougeAlerte shrink-0 uppercase">ALERTE COMMANDEMENT :</span>
-          <span id="texte-alerte-quota" class="truncate">Rapports d'escouade incomplets</span>
+          <span id="texte-alerte-quota" class="truncate">Prises de service (PDS) incomplètes</span>
         </div>
         <button data-action-nav="effectif" class="text-[10px] text-amber-400 hover:underline uppercase shrink-0 font-bold ml-auto sm:ml-0">
           Vérifier l'effectif de terrain →
         </button>
       </div>
 
-      <!-- Synthèse hebdomadaire & PDS EXPRESS -->
+      <!-- Synthèse hebdomadaire & Double Bouton PDS (18h & 21h INDÉPENDANTS) -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
         <div class="bg-panneauSombre border border-bordureTactique p-3 rounded biseau-plaque">
-          <span class="text-[10px] font-terminal text-gray-400 uppercase">OBJECTIF FORCES DE TERRAIN</span>
+          <span class="text-[10px] font-terminal text-gray-400 uppercase">OBJECTIF DES FORCES DE TERRAIN</span>
           <div class="text-xl font-titre font-black text-amber-400 mt-0.5">
-            <span id="valeur-quota-affiche">3</span> MISSIONS / SEMAINE
+            <span id="valeur-quota-affiche">3</span> PDS / SEMAINE
           </div>
-          <p class="text-[10px] font-terminal text-gray-500 mt-0.5">Fixé par Hunter pour l'unité.</p>
+          <p class="text-[10px] font-terminal text-gray-500 mt-0.5">Quota fixé par le Sergent Hunter.</p>
         </div>
 
         <div class="bg-panneauSombre border border-bordureTactique p-3 rounded biseau-plaque">
@@ -426,26 +426,34 @@
           <div class="text-xl font-titre font-black text-gray-100 mt-0.5" id="total-rapports-enregistres">
             0
           </div>
-          <p class="text-[10px] font-terminal text-gray-500 mt-0.5">Synchronisés sur le terminal.</p>
+          <p class="text-[10px] font-terminal text-gray-500 mt-0.5">Missions et prises de service cumulées.</p>
         </div>
 
         <div class="bg-panneauSombre border border-bordureTactique p-3 rounded biseau-plaque">
-          <span class="text-[10px] font-terminal text-gray-400 uppercase">CONFORMITÉ ESCOUADE</span>
+          <span class="text-[10px] font-terminal text-gray-400 uppercase">CONFORMITÉ PDS ESCOUADE</span>
           <div class="text-xl font-titre font-black text-vertViseur mt-0.5" id="pourcentage-conformite">
             100%
           </div>
-          <p class="text-[10px] font-terminal text-gray-500 mt-0.5">Calculé sur les 3 subordonnés.</p>
+          <p class="text-[10px] font-terminal text-gray-500 mt-0.5">Calculé sur les 3 subordonnés de terrain.</p>
         </div>
 
-        <!-- BOUTON PDS EXPRESS (PRISE DE SERVICE RAPIDE) -->
-        <div class="bg-panneauSombre border border-emerald-500/50 p-3 rounded biseau-plaque flex flex-col justify-between shadow-[0_0_12px_rgba(16,185,129,0.15)]">
+        <!-- LOG RAPIDE D'ACTIVITÉ : DOUBLE CRÉNEAU 18H ET 21H INDÉPENDANTS -->
+        <div class="bg-panneauSombre border border-emerald-500/50 p-2.5 rounded biseau-plaque flex flex-col justify-between shadow-[0_0_12px_rgba(16,185,129,0.15)]">
           <div>
-            <span class="text-[10px] font-terminal text-emerald-400 uppercase font-bold">LOG RAPIDE D'ACTIVITÉ</span>
-            <div class="text-xs font-titre font-bold text-gray-200 mt-0.5">PRISE DE SERVICE (PDS)</div>
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-terminal text-emerald-400 uppercase font-bold">LOG RAPIDE D'ACTIVITÉ</span>
+              <span class="text-[9px] font-terminal text-gray-400" id="badge-date-pds">06/10/2026</span>
+            </div>
+            <div class="text-[11px] font-titre font-bold text-gray-200 leading-none mt-0.5">PRISE DE SERVICE (PDS)</div>
           </div>
-          <button id="bouton-pds-express" class="mt-2 w-full py-1.5 bg-emerald-950/80 hover:bg-emerald-900 border border-vertViseur text-emerald-300 font-titre font-bold text-[10px] uppercase rounded transition flex items-center justify-center gap-1.5 touch-target">
-            <span>⚡</span> <span id="texte-bouton-pds">PDS DU JOUR</span>
-          </button>
+          <div class="grid grid-cols-2 gap-1.5 mt-2">
+            <button id="bouton-pds-18h" class="py-1.5 px-1 bg-emerald-950/80 hover:bg-emerald-900 border border-vertViseur text-emerald-300 font-titre font-bold text-[9px] uppercase rounded transition flex items-center justify-center gap-1 touch-target">
+              <span>⚡</span> <span id="label-btn-pds-18h">PDS 18H</span>
+            </button>
+            <button id="bouton-pds-21h" class="py-1.5 px-1 bg-emerald-950/80 hover:bg-emerald-900 border border-vertViseur text-emerald-300 font-titre font-bold text-[9px] uppercase rounded transition flex items-center justify-center gap-1 touch-target">
+              <span>⚡</span> <span id="label-btn-pds-21h">PDS 21H</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -461,7 +469,7 @@
       <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5 shadow-lg">
         <div class="flex items-center justify-between border-b border-bordureTactique pb-2 mb-2.5">
           <h3 class="font-titre text-xs uppercase tracking-wider text-gray-200 flex items-center gap-1.5">
-            <span class="text-rougeAlerte">■</span> DERNIERS RAPPORTS TRANSMIS
+            <span class="text-rougeAlerte">■</span> DERNIERS RAPPORTS & PRISES DE SERVICE TRANSMIS
           </h3>
           <button data-action-nav="rapports" class="text-xs font-terminal text-amber-400 hover:underline">
             Consulter tout le registre →
@@ -500,11 +508,11 @@
             </div>
           </div>
 
-          <!-- SECTION VALIDATION COLLECTIVE PAR CASES À COCHER -->
+          <!-- VALIDATION COLLECTIVE PAR CASES À COCHER -->
           <div class="bg-panneauSous p-2.5 rounded border border-bordureLueur space-y-1.5">
             <div class="flex items-center justify-between">
               <span class="text-amber-400 font-bold uppercase text-[11px]">👥 OPÉRATEURS DÉPLOYÉS ENSEMBLE (VALIDATION DE QUOTA COLLECTIVE) :</span>
-              <span class="text-gray-400 text-[10px]">Cochez les frères présents pour incrémenter leur quota</span>
+              <span class="text-gray-400 text-[10px]">Cochez les frères présents pour créditer leur quota</span>
             </div>
             <div class="flex flex-wrap gap-4 pt-1" id="cases-membres-collectif">
               <label class="flex items-center space-x-1.5 cursor-pointer text-gray-200">
@@ -552,7 +560,7 @@
       <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5">
         <div class="flex flex-wrap items-center justify-between gap-2.5 border-b border-bordureTactique pb-2.5 mb-3">
           <h3 class="font-titre text-xs uppercase tracking-wider text-gray-200 flex items-center gap-1.5">
-            <span class="text-amber-400">■</span> REGISTRE OFFICIEL DES RAPPORTS DE L'UNITÉ
+            <span class="text-amber-400">■</span> REGISTRE OFFICIEL DES RAPPORTS & PDS
           </h3>
           <div class="flex items-center space-x-2 font-terminal">
             <span class="text-xs text-gray-400">Filtrer par opérateur :</span>
@@ -591,7 +599,7 @@
               📖 CARNET DES ABSENCES
             </button>
             <button id="bouton-reglage-quota" class="px-3 py-1.5 border border-amber-500/50 hover:border-amber-400 text-amber-300 font-terminal text-xs rounded transition bg-panneauSous touch-target">
-              ⚙️ Quota : <span id="affichage-quota-hunter">3</span> m./sem.
+              ⚙️️ Quota : <span id="affichage-quota-hunter">3</span> PDS/sem.
             </button>
             <button id="bouton-reset-semaine" class="px-3 py-1.5 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold text-xs uppercase biseau-bouton transition shadow touch-target">
               🔄 CLÔTURER SEMAINE & RESET
@@ -611,7 +619,7 @@
             📖 Historique des absences
           </button>
           <button id="bouton-declarer-mon-absence" class="px-3 py-1.5 bg-amber-500/20 border border-amber-500 text-amber-300 hover:bg-amber-500/30 rounded font-bold touch-target">
-            🗓️ DÉCLARER / MODIFIER MON ABSENCE
+            🗓️️ DÉCLARER / MODIFIER MON ABSENCE
           </button>
         </div>
       </div>
@@ -684,7 +692,7 @@
 
   <!-- ==================== MODALES MILITAIRES ==================== -->
 
-  <!-- MODALE : NOTIFICATION DE BLÂME REÇU PAR LE MEMBRE (ACCUSÉ DE RÉCEPTION) -->
+  <!-- MODALE : NOTIFICATION DE BLÂME REÇU PAR LE MEMBRE -->
   <div id="boite-notification-blame" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
     <div class="bg-panneauSombre border-2 border-rougeAlerte biseau-plaque max-w-md w-full p-4 shadow-[0_0_30px_rgba(255,46,67,0.4)] animate-pulse">
       <div class="flex items-center space-x-2 text-rougeAlerte mb-2 border-b border-rougeAlerte/50 pb-2">
@@ -925,7 +933,7 @@
           <textarea id="champ-description-plan" required rows="3" placeholder="Étapes précises de déroulement du plan..." class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none"></textarea>
         </div>
         <div class="flex justify-end space-x-2 pt-1.5">
-          <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-gray-400 rounded" data-modale="boite-nouveau-plan">Annuler</button>
+          <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-xs font-terminal text-gray-400 rounded" data-modale="boite-nouveau-plan">Annuler</button>
           <button type="submit" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold text-xs uppercase rounded">Enregistrer</button>
         </div>
       </form>
@@ -941,11 +949,11 @@
       </div>
       <form id="formulaire-reglage-quota" class="space-y-2.5">
         <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Missions requises / sem. (subordonnés) :</label>
+          <label class="block text-[11px] font-terminal text-gray-300 mb-1">PDS requises / sem. (subordonnés) :</label>
           <input type="number" id="champ-valeur-quota" min="1" max="15" required class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-amber-300 rounded outline-none">
         </div>
         <div class="flex justify-end space-x-2 pt-1.5">
-          <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-gray-400 rounded" data-modale="boite-reglage-quota">Annuler</button>
+          <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-xs font-terminal text-gray-400 rounded" data-modale="boite-reglage-quota">Annuler</button>
           <button type="submit" class="px-4 py-1.5 bg-amber-500 text-fondCarbone font-titre font-bold text-xs uppercase rounded">Appliquer</button>
         </div>
       </form>
@@ -969,7 +977,7 @@
     </div>
   </div>
 
-  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 1.8) -->
+  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 1.9) -->
   <footer class="border-t border-bordureTactique bg-fondCarbone/95 py-2.5 text-xs font-terminal text-gray-500 fixed bottom-0 left-0 right-0 z-30 shadow-2xl backdrop-blur">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5">
       <div class="text-gray-400 flex items-center gap-2">
@@ -979,13 +987,13 @@
       <div class="flex items-center gap-3">
         <span class="text-gray-500 hidden md:inline">GRANDE ARMÉE DE LA RÉPUBLIQUE</span>
         <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/60 text-amber-300 text-[11px] font-titre font-bold rounded tracking-wider shadow-[0_0_10px_rgba(245,158,11,0.25)]">
-          FIRMWARE MARAUDEUR // BUILD 1.8
+          FIRMWARE MARAUDEUR // BUILD 1.9
         </span>
       </div>
     </div>
   </footer>
 
-  <!-- SCRIPT SECURISE : MODULE IIFE, AUTOMATISATION D'EXPIRATION, FIRESTORE ET PROTOCOLES -->
+  <!-- SCRIPT SECURISE : MODULE IIFE, PDS 18H/21H, FIRESTORE ET PROTOCOLES -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { 
@@ -1076,13 +1084,32 @@
         }
       };
 
-      // Sécurisation du logo Bad Batch en haut à gauche
-      const logoHud = document.getElementById('logo-badbatch-hud');
-      if (logoHud) {
-        logoHud.onerror = function() {
-          this.onerror = null;
-          this.src = 'logobadbatch.png'; // repli png si jpg manquant
-        };
+      // CHARGEMENT BLINDÉ DU LOGO BAD BATCH HUD (logobadbatch.png en priorité)
+      function initialiserLogoBadBatch() {
+        const logoHud = document.getElementById('logo-badbatch-hud');
+        if (!logoHud) return;
+
+        const pistes = [
+          'logobadbatch.png',
+          './logobadbatch.png',
+          'logobadbatch.jpg',
+          './logobadbatch.jpg',
+          'LogoBadBatch.png'
+        ];
+        let idx = 0;
+
+        function tenterSuivant() {
+          if (idx < pistes.length) {
+            logoHud.src = pistes[idx++];
+          } else {
+            logoHud.onerror = null;
+            // Repli vectoriel militaire si aucun fichier trouvé
+            logoHud.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="%230c1017" stroke="%23ff2e43" stroke-width="4"/><circle cx="50" cy="50" r="38" fill="%235a1219"/><text x="50" y="58" fill="%23fff" font-family="sans-serif" font-weight="900" font-size="22" text-anchor="middle">99</text></svg>';
+          }
+        }
+
+        logoHud.onerror = tenterSuivant;
+        tenterSuivant();
       }
 
       const VARIANTES_CHEMINS_CASQUES = {
@@ -1140,6 +1167,7 @@
           dernierBlameVu: 0,
           estAbsent: false,
           detailsAbsence: { debut: '', fin: '', motif: '' },
+          pdsEffectuees: {},
           steamId64: '',
           discord: '',
           equipement: [
@@ -1169,6 +1197,7 @@
           dernierBlameVu: 0,
           estAbsent: false,
           detailsAbsence: { debut: '', fin: '', motif: '' },
+          pdsEffectuees: {},
           steamId64: '',
           discord: '',
           equipement: [
@@ -1198,6 +1227,7 @@
           dernierBlameVu: 0,
           estAbsent: false,
           detailsAbsence: { debut: '', fin: '', motif: '' },
+          pdsEffectuees: {},
           steamId64: '',
           discord: '',
           equipement: [
@@ -1227,6 +1257,7 @@
           dernierBlameVu: 0,
           estAbsent: false,
           detailsAbsence: { debut: '', fin: '', motif: '' },
+          pdsEffectuees: {},
           steamId64: '',
           discord: '',
           equipement: [
@@ -1324,7 +1355,6 @@
         console.warn("Liaison Firestore locale de secours :", err);
       }
 
-      // VÉRIFICATION ET LEVÉE AUTOMATIQUE DES ABSENCES EXPIRÉES
       function verifierExpirationsAbsencesAutomatiques() {
         const maintenant = new Date();
         Object.values(etat.operateurs).forEach(async (m) => {
@@ -1337,7 +1367,7 @@
                   const refMembre = doc(baseDeDonnees, 'operateurs', m.id);
                   await updateDoc(refMembre, { estAbsent: false });
                 } catch(e) {
-                  console.warn("Auto-levée absence Firestore :", e);
+                  console.warn("Auto-levée absence :", e);
                 }
               }
             }
@@ -1612,8 +1642,7 @@
           document.getElementById('module-gestion-recrutement-poste').classList.add('hidden');
         }
 
-        // PDS Express libellé
-        document.getElementById('texte-bouton-pds').textContent = `VALIDER PDS [${dateAujourdhuiCivil()}]`;
+        document.getElementById('badge-date-pds').textContent = dateAujourdhuiCivil();
 
         naviguerOnglet('poste-commandement');
         actualiserAffichageRecrutement();
@@ -1756,13 +1785,14 @@
         if (etat.ongletActif === 'archives') afficherVueArchives();
       }
 
-      function membreEstEnRegle(idMembre) {
+      function membreEstEnReglePDS(idMembre) {
         if (idMembre === 'hunter') return true;
         const op = etat.operateurs[idMembre];
         if (!op) return false;
         return (op.compteurSemaine || 0) >= etat.quotaHebdomadaire;
       }
 
+      // ALERTE COMMANDEMENT RELIÉE DIRECTEMENT AUX PDS (ET NON AUX RAPPORTS)
       function verifierAlertesCommandementHunter() {
         const banniere = document.getElementById('banniere-alerte-quota');
         const texteAlerte = document.getElementById('texte-alerte-quota');
@@ -1774,32 +1804,71 @@
 
         const subordonnes = ['wrecker', 'crosshair', 'tech'];
         const subordonnesEnRetard = subordonnes
-          .filter(k => !membreEstEnRegle(k) && !etat.operateurs[k].estAbsent)
+          .filter(k => !membreEstEnReglePDS(k) && !etat.operateurs[k].estAbsent)
           .map(k => etat.operateurs[k].nom);
 
         if (etat.operateurConnecte === 'hunter' && subordonnesEnRetard.length > 0) {
-          texteAlerte.textContent = `Rapports incomplets pour : ${subordonnesEnRetard.join(', ')} (${etat.quotaHebdomadaire} missions requises / sem.)`;
+          texteAlerte.textContent = `Prises de service (PDS) incomplètes pour : ${subordonnesEnRetard.join(', ')} (${etat.quotaHebdomadaire} PDS requises / sem.)`;
           banniere.classList.remove('hidden');
         } else {
           banniere.classList.add('hidden');
         }
       }
 
-      // ==================== PRISE DE SERVICE EXPRESS (PDS) ====================
-      async function executerPdsExpress() {
+      // ==================== SYSTEME PDS RAPIDE (18H & 21H INDÉPENDANTS) ====================
+      function actualiserBoutonsPds() {
         const op = etat.operateurs[etat.operateurConnecte];
         if (!op) return;
 
-        const datePds = dateAujourdhuiCivil();
+        const dateJour = dateAujourdhuiCivil();
+        const pdsJour = op.pdsEffectuees?.[dateJour] || { h18: false, h21: false };
+
+        const btn18 = document.getElementById('bouton-pds-18h');
+        const lbl18 = document.getElementById('label-btn-pds-18h');
+        const btn21 = document.getElementById('bouton-pds-21h');
+        const lbl21 = document.getElementById('label-btn-pds-21h');
+
+        if (pdsJour.h18) {
+          btn18.className = "py-1.5 px-1 bg-emerald-900/60 border border-vertViseur text-vertViseur font-titre font-bold text-[9px] uppercase rounded opacity-90 cursor-default";
+          lbl18.textContent = "✓ 18H VALIDÉE";
+        } else {
+          btn18.className = "py-1.5 px-1 bg-emerald-950/80 hover:bg-emerald-900 border border-vertViseur text-emerald-300 font-titre font-bold text-[9px] uppercase rounded transition flex items-center justify-center gap-1 touch-target";
+          lbl18.textContent = "PDS 18H";
+        }
+
+        if (pdsJour.h21) {
+          btn21.className = "py-1.5 px-1 bg-emerald-900/60 border border-vertViseur text-vertViseur font-titre font-bold text-[9px] uppercase rounded opacity-90 cursor-default";
+          lbl21.textContent = "✓ 21H VALIDÉE";
+        } else {
+          btn21.className = "py-1.5 px-1 bg-emerald-950/80 hover:bg-emerald-900 border border-vertViseur text-emerald-300 font-titre font-bold text-[9px] uppercase rounded transition flex items-center justify-center gap-1 touch-target";
+          lbl21.textContent = "PDS 21H";
+        }
+      }
+
+      async function executerPdsCreneau(creneau) {
+        const op = etat.operateurs[etat.operateurConnecte];
+        if (!op) return;
+
+        const dateJour = dateAujourdhuiCivil();
+        if (!op.pdsEffectuees) op.pdsEffectuees = {};
+        if (!op.pdsEffectuees[dateJour]) op.pdsEffectuees[dateJour] = { h18: false, h21: false };
+
+        if (creneau === '18h' && op.pdsEffectuees[dateJour].h18) return;
+        if (creneau === '21h' && op.pdsEffectuees[dateJour].h21) return;
+
+        if (creneau === '18h') op.pdsEffectuees[dateJour].h18 = true;
+        if (creneau === '21h') op.pdsEffectuees[dateJour].h21 = true;
+
+        const heureLabel = creneau === '18h' ? '18H00' : '21H00';
         const nouveauRapport = {
           idOperateur: op.id,
           nomOperateur: op.nom,
-          nomMission: `PRISE DE SERVICE (PDS)`,
-          secteur: `Havoc Marauder // Secteur Opérationnel`,
-          date: datePds,
+          nomMission: `PRISE DE SERVICE // OPÉRATION ${heureLabel}`,
+          secteur: `Havoc Marauder // Secteur d'engagement`,
+          date: dateJour,
           estPresent: true,
-          description: `Prise de service horodatée de ${op.nom} validée sur le terminal du Maraudeur.`,
-          metriqueSpecifique: `PDS Confirmée`,
+          description: `Prise de service officielle de ${op.nom} validée pour l'opération de ${heureLabel}.`,
+          metriqueSpecifique: `PDS ${heureLabel} Confirmée`,
           dateCreation: Date.now()
         };
 
@@ -1812,17 +1881,16 @@
             const refOp = doc(baseDeDonnees, 'operateurs', op.id);
             batch.update(refOp, {
               compteurSemaine: increment(op.id === 'hunter' ? 0 : 1),
-              totalStatistique: increment(1)
+              totalStatistique: increment(1),
+              [`pdsEffectuees.${dateJour}`]: op.pdsEffectuees[dateJour]
             });
             await batch.commit();
           } catch(err) {
-            console.warn("Écriture PDS Express :", err);
+            console.warn("Écriture PDS :", err);
           }
         }
 
-        if (op.id !== 'hunter') {
-          op.compteurSemaine = (op.compteurSemaine || 0) + 1;
-        }
+        if (op.id !== 'hunter') op.compteurSemaine = (op.compteurSemaine || 0) + 1;
         op.totalStatistique = (op.totalStatistique || 0) + 1;
         etat.rapports.unshift(nouveauRapport);
 
@@ -1838,12 +1906,14 @@
         const subordonnes = ['wrecker', 'crosshair', 'tech'];
         let subordonnesValides = 0;
         subordonnes.forEach(k => {
-          if (membreEstEnRegle(k) || etat.operateurs[k].estAbsent) subordonnesValides++;
+          if (membreEstEnReglePDS(k) || etat.operateurs[k].estAbsent) subordonnesValides++;
         });
         const ratio = Math.round((subordonnesValides / 3) * 100);
         const elemConf = document.getElementById('pourcentage-conformite');
         elemConf.textContent = `${ratio}%`;
         elemConf.className = ratio === 100 ? 'text-xl font-titre font-black text-vertViseur mt-0.5' : 'text-xl font-titre font-black text-rougeAlerte mt-0.5';
+
+        actualiserBoutonsPds();
 
         const conteneurMembres = document.getElementById('cartes-membres-synthese');
         conteneurMembres.innerHTML = '';
@@ -1878,7 +1948,7 @@
                     </span>
                   ` : `
                     <span class="text-[9px] font-terminal px-1.5 py-0.5 rounded font-bold whitespace-nowrap ${estOk ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800 animate-pulse'}">
-                      ${estOk ? '✓ EN RÈGLE' : '✗ NON ATTEINT'}
+                      ${estOk ? '✓ EN RÈGLE' : '✗ PDS INCOMPLÈTES'}
                     </span>
                   `}
                 </div>
@@ -1892,7 +1962,7 @@
 
             <div class="border-t border-bordureTactique pt-1.5 space-y-1">
               <div class="flex items-center justify-between text-xs font-terminal">
-                <span class="text-gray-400">Statut missions :</span>
+                <span class="text-gray-400">Statut PDS :</span>
                 ${estHunter ? `
                   <span class="font-bold text-cyanTech font-titre text-[10px] tracking-wider">COMMANDEMENT SUP.</span>
                 ` : estAbsent ? `
@@ -1926,7 +1996,7 @@
         const recents = etat.rapports.slice(0, 5);
 
         if (recents.length === 0) {
-          fluxRecents.innerHTML = `<p class="text-xs font-terminal text-gray-500 italic p-3 text-center border border-dashed border-bordureTactique rounded">Aucun rapport encodé actuellement.</p>`;
+          fluxRecents.innerHTML = `<p class="text-xs font-terminal text-gray-500 italic p-3 text-center border border-dashed border-bordureTactique rounded">Aucun rapport ou prise de service encodé.</p>`;
         } else {
           recents.forEach(rap => {
             const div = document.createElement('div');
@@ -2030,7 +2100,6 @@
         const description = document.getElementById('champ-description-mission').value.trim();
         const metrique = document.getElementById('champ-metrique-specifique').value.trim();
 
-        // Récupération des membres cochés collectivement
         const membresCoches = [];
         if (document.getElementById('check-membre-wrecker').checked) membresCoches.push('wrecker');
         if (document.getElementById('check-membre-crosshair').checked) membresCoches.push('crosshair');
@@ -2060,14 +2129,12 @@
             const refNouvRapport = doc(collection(baseDeDonnees, 'missions'));
             batch.set(refNouvRapport, nouveauRapport);
 
-            // Mise à jour de l'auteur
             const refAuteur = doc(baseDeDonnees, 'operateurs', op.id);
             batch.update(refAuteur, {
               compteurSemaine: increment(op.id === 'hunter' ? 0 : 1),
               totalStatistique: increment(incrementStat)
             });
 
-            // Validation de quota pour tous les membres cochés
             membresCoches.forEach(idMembre => {
               if (idMembre !== op.id) {
                 const refFrere = doc(baseDeDonnees, 'operateurs', idMembre);
@@ -2194,7 +2261,7 @@
               </div>
 
               <div class="text-right">
-                <div class="text-[8px] font-terminal uppercase text-gray-400">Statut hebdomadaire</div>
+                <div class="text-[8px] font-terminal uppercase text-gray-400">Statut PDS semaine</div>
                 ${estMembreHunter ? `
                   <div class="px-2 py-0.5 text-[9px] font-titre font-black rounded uppercase bg-cyan-950 text-cyanTech border border-cyanTech/60 shadow-[0_0_8px_rgba(56,189,248,0.25)]">
                     SUPERVISION TACTIQUE
@@ -2205,7 +2272,7 @@
                   </div>
                 ` : `
                   <div class="px-1.5 py-0.5 text-[10px] font-terminal font-bold rounded ${estOk ? 'bg-emerald-950 text-emerald-300 border border-emerald-600' : 'bg-red-950 text-red-300 border border-red-700 animate-pulse'}">
-                    ${estOk ? '✓ EN RÈGLE' : '✗ NON ATTEINT'}
+                    ${estOk ? '✓ EN RÈGLE' : '✗ PDS INCOMPLÈTES'}
                   </div>
                 `}
               </div>
@@ -2251,7 +2318,7 @@
 
             <div class="bg-fondCarbone p-2 rounded border border-bordureTactique flex items-center justify-between text-xs font-terminal">
               <div>
-                <span class="text-gray-400">Missions semaine :</span>
+                <span class="text-gray-400">PDS de la semaine :</span>
                 ${estMembreHunter ? `
                   <span class="font-bold text-cyanTech font-titre text-[10px] ml-1">EXEMPTÉ (COMMANDEMENT)</span>
                 ` : estAbsent ? `
@@ -2611,14 +2678,17 @@
 
         afficherBoiteConfirmation(
           "CLÔTURE DU CYCLE HEBDOMADAIRE",
-          "Voulez-vous clôturer la semaine d'engagement ? Les compteurs des subordonnés de terrain seront réinitialisés à 0. Hunter demeure en supervision tactique. Les totaux cumulés, blâmes et dossiers de combat restent intacts.",
+          "Voulez-vous clôturer la semaine ? Les compteurs de prises de service (PDS) des subordonnés seront réinitialisés à 0. Hunter demeure en supervision tactique. Les totaux cumulés, blâmes et dossiers de combat restent intacts.",
           async () => {
             if (estConnecteFirestore) {
               try {
                 const batch = writeBatch(baseDeDonnees);
                 Object.keys(etat.operateurs).forEach(cle => {
                   const ref = doc(baseDeDonnees, 'operateurs', cle);
-                  batch.update(ref, { compteurSemaine: 0 });
+                  batch.update(ref, { 
+                    compteurSemaine: 0,
+                    pdsEffectuees: {}
+                  });
                 });
                 await batch.commit();
               } catch(err) {
@@ -2628,6 +2698,7 @@
 
             Object.keys(etat.operateurs).forEach(cle => {
               etat.operateurs[cle].compteurSemaine = 0;
+              etat.operateurs[cle].pdsEffectuees = {};
             });
 
             AudioTactique.succes();
@@ -2694,7 +2765,7 @@
         afficherVuePlans();
       }
 
-      // ==================== ARCHIVES DE PIRATAGE (TECH : COMPTABILISÉ COMME RAPPORT) ====================
+      // ==================== VUE : ARCHIVES DE PIRATAGE (TECH) ====================
       function afficherVueArchives() {
         const estTech = etat.operateurConnecte === 'tech';
         const panneauSaisie = document.getElementById('panneau-saisie-piratage-tech');
@@ -2749,7 +2820,6 @@
           dateCreation: Date.now()
         };
 
-        // Création simultanée du rapport de mission homologué
         const rapportHomologue = {
           idOperateur: 'tech',
           nomOperateur: 'Tech',
@@ -2859,8 +2929,9 @@
         document.getElementById('formulaire-reglage-quota').addEventListener('submit', executerReglageQuota);
         document.getElementById('bouton-reset-semaine').addEventListener('click', executerResetSemaine);
 
-        // PDS Express
-        document.getElementById('bouton-pds-express').addEventListener('click', executerPdsExpress);
+        // PDS 18H ET 21H INDÉPENDANTS
+        document.getElementById('bouton-pds-18h').addEventListener('click', () => executerPdsCreneau('18h'));
+        document.getElementById('bouton-pds-21h').addEventListener('click', () => executerPdsCreneau('21h'));
 
         // Blâmes
         document.getElementById('formulaire-assigner-blame').addEventListener('submit', executerAttributionBlame);
@@ -2898,6 +2969,7 @@
       }
 
       window.addEventListener('DOMContentLoaded', () => {
+        initialiserLogoBadBatch();
         attacherTousLesEcouteurs();
         initialiserSynchronisationFirestore();
         selectionnerOperateurAccueil('hunter');
