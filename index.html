@@ -8,7 +8,7 @@
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Typographies Star Wars / Militaires -->
+  <!-- Typographies Militaires Star Wars -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -116,7 +116,7 @@
     ::-webkit-scrollbar-thumb:hover { background: var(--teinte-accent); }
   </style>
 </head>
-<body class="arriere-plan-vaisseau flex flex-col justify-between selection:bg-red-800 selection:text-white">
+<body class="arriere-plan-vaisseau flex flex-col justify-between selection:bg-red-800 selection:text-white pb-6">
 
   <!-- Filigrane d'ambiance du Havoc Marauder -->
   <div class="fixed top-2 right-4 w-72 h-72 pointer-events-none opacity-[0.02] -z-0">
@@ -126,29 +126,29 @@
     </svg>
   </div>
 
-  <!-- BANDEAU SUPÉRIEUR HUD ULTRA-OPTIMISÉ ET ALIGNÉ SANS DÉBORDEMENT -->
+  <!-- BANDEAU SUPÉRIEUR HUD ULTRA-COMPACT ET DÉGAGÉ SANS AUCUN DÉBORDEMENT -->
   <header class="border-b border-bordureTactique bg-fondCarbone/95 backdrop-blur sticky top-0 z-40 shadow-lg">
     <div class="max-w-7xl mx-auto px-2 sm:px-4 py-1.5 flex items-center justify-between gap-2">
       
       <!-- Gauche : Insigne Force Clone 99 & État de liaison -->
-      <div class="flex items-center space-x-2.5 shrink-0">
+      <div class="flex items-center space-x-2 shrink-0">
         <div class="h-8 w-8 bg-rougeKamino/25 border border-rougeKamino biseau-bouton flex items-center justify-center font-titre font-black text-rougeAlerte text-base tracking-tighter">
           99
         </div>
         <div>
-          <div class="flex items-center space-x-2">
+          <div class="flex items-center space-x-1.5">
             <span class="font-titre font-bold tracking-wider text-xs sm:text-sm text-gray-100 uppercase">FORCE CLONE 99</span>
-            <span class="hidden sm:inline-block px-1.5 py-0.2 bg-ambreArmement/15 text-ambreArmement text-[9px] font-terminal border border-ambreArmement/30 uppercase rounded-sm">BAD BATCH</span>
+            <span class="hidden sm:inline-block px-1 py-0.2 bg-ambreArmement/15 text-ambreArmement text-[9px] font-terminal border border-ambreArmement/30 uppercase rounded-sm">BAD BATCH</span>
           </div>
           <div class="text-[9px] text-gray-400 font-terminal flex items-center gap-1.5 leading-none mt-0.5">
             <span id="point-liaison" class="inline-block w-2 h-2 rounded-full bg-vertViseur shadow-[0_0_6px_#10b981]"></span>
-            <span id="indicateur-liaison">LIAISON DISTANTE FIRESTORE : CONNECTÉE</span>
+            <span id="indicateur-liaison">LIAISON FIRESTORE : CONNECTÉE</span>
           </div>
         </div>
       </div>
 
       <!-- Centre : Mention sobre du Maraudeur -->
-      <div class="hidden md:flex items-center justify-center text-center">
+      <div class="hidden lg:flex items-center justify-center text-center">
         <span class="px-2 py-0.5 bg-panneauSombre border border-bordureTactique text-gray-400 text-[10px] font-terminal uppercase rounded tracking-widest">
           CONSOLE DU HAVOC MARAUDER
         </span>
@@ -163,19 +163,19 @@
         <!-- Profil compact : Casque miniature + Nom + Bouton Clé + Déconnexion rouge vif -->
         <div id="bloc-profil-actif" class="hidden items-center space-x-2 bg-panneauSombre border border-bordureTactique px-2 py-1 rounded biseau-bouton">
           <div class="w-7 h-7 rounded bg-fondCarbone border border-bordureLueur overflow-hidden shrink-0 flex items-center justify-center p-0.5">
-            <img id="avatar-profil-haut" src="hunter.png" alt="Casque" class="w-full h-full object-contain">
+            <img id="avatar-profil-haut" alt="Casque" class="w-full h-full object-contain">
           </div>
-          <div class="text-left hidden lg:block leading-none">
+          <div class="text-left hidden md:block leading-none">
             <div id="nom-operateur" class="text-[11px] font-titre font-bold text-gray-100 uppercase">Hunter</div>
             <div id="grade-operateur" class="text-[8px] font-terminal text-gray-400 mt-0.5">Sergent</div>
           </div>
 
-          <button id="bouton-cle-mdp" title="Modifier mon mot de passe" class="px-1.5 py-1 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-[10px] font-terminal text-amber-300 rounded flex items-center gap-1 transition">
+          <button id="bouton-cle-mdp" title="Modifier mon mot de passe" class="px-2 py-1 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-[10px] font-terminal text-amber-300 rounded flex items-center gap-1 transition">
             <span>🔑</span>
             <span class="hidden sm:inline">MODIF MDP</span>
           </button>
 
-          <button id="bouton-quitter-session" title="Fermer la session" class="px-2 py-1 bg-red-950 hover:bg-red-800 border border-rougeAlerte text-[10px] font-titre font-bold text-red-200 hover:text-white rounded transition tracking-wider shrink-0">
+          <button id="bouton-quitter-session" title="Fermer la session" class="px-2.5 py-1 bg-red-950 hover:bg-red-800 border border-rougeAlerte text-[10px] font-titre font-bold text-red-200 hover:text-white rounded transition tracking-wider shrink-0">
             [DÉCONNEXION]
           </button>
         </div>
@@ -205,7 +205,7 @@
     </div>
   </nav>
 
-  <!-- BANNIÈRE D'ALERTE DE COMMANDEMENT (DÉPLACÉE SOUS LA NAVIGATION POUR ÉVITER TOUT DÉBORDEMENT) -->
+  <!-- BANNIÈRE D'ALERTE DE COMMANDEMENT (SOUS LA NAVIGATION POUR NE PAS GÊNER LE HAUT) -->
   <div id="banniere-alerte-quota" class="hidden max-w-7xl mx-auto px-3 sm:px-4 pt-3 w-full">
     <div class="p-2.5 bg-red-950/70 border border-rougeAlerte rounded flex items-center justify-between gap-3 text-xs font-terminal text-red-200 shadow-md">
       <div class="flex items-center gap-2 overflow-hidden">
@@ -294,11 +294,11 @@
 
           <div class="pt-3 border-t border-bordureTactique text-[10px] font-terminal text-gray-500 mt-3 flex items-center justify-between">
             <span>RÉSEAU SÉCURISÉ GAR // PROTOCOLE 99</span>
-            <span>CYPHER SHA-256 V1.4</span>
+            <span>CYPHER SHA-256 V1.5</span>
           </div>
         </div>
 
-        <!-- Colonne Droite : Fiche Tactique Officielle avec Casque HD -->
+        <!-- Colonne Droite : Fiche Tactique Holographique avec Casque HD -->
         <div class="lg:col-span-7 bg-panneauSombre border border-bordureTactique biseau-plaque p-4 sm:p-5 shadow-xl relative overflow-hidden flex flex-col justify-between">
           <div>
             <div class="flex flex-wrap items-center justify-between border-b border-bordureTactique pb-2.5 mb-3 gap-2">
@@ -314,8 +314,8 @@
             <!-- Casque Officiel & Caractéristiques -->
             <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center mb-4">
               <div class="sm:col-span-4 flex justify-center">
-                <div class="w-32 h-32 rounded border-2 border-bordureLueur overflow-hidden bg-fondCarbone relative shadow-inner p-1.5 flex items-center justify-center">
-                  <img id="dossier-photo-operateur" src="hunter.png" alt="Casque de l'opérateur" class="w-full h-full object-contain">
+                <div class="w-36 h-36 rounded-lg border-2 border-bordureLueur overflow-hidden bg-fondCarbone relative shadow-inner p-2 flex items-center justify-center">
+                  <img id="dossier-photo-operateur" alt="Casque de l'opérateur" class="w-full h-full object-contain filter drop-shadow-md">
                 </div>
               </div>
 
@@ -551,7 +551,7 @@
       </div>
     </section>
 
-    <!-- 5. PLANS TACTIQUES (AVEC LE PLAN 0/0) -->
+    <!-- 5. PLANS TACTIQUES (AVEC LE PLAN 0/0 TOUJOURS PRÉSENT) -->
     <section id="fenetre-plans" class="hidden space-y-4">
       <div class="bg-panneauSombre border border-bordureTactique p-3.5 rounded flex flex-wrap items-center justify-between gap-3">
         <div>
@@ -749,15 +749,24 @@
     </div>
   </div>
 
-  <!-- Pied de page -->
-  <footer class="border-t border-bordureTactique bg-fondCarbone py-2 text-center text-xs font-terminal text-gray-500 relative z-20">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1">
-      <div>FORCE CLONE 99 // UNITÉ BAD BATCH // CONSOLE DU MARAUDEUR</div>
-      <div class="text-gray-400">GRANDE ARMÉE DE LA RÉPUBLIQUE // GUERRE DES CLONES</div>
+  <!-- Pied de page avec Affichage Permanent du Numéro de Version en bas à droite -->
+  <footer class="border-t border-bordureTactique bg-fondCarbone/95 py-2.5 text-xs font-terminal text-gray-500 fixed bottom-0 left-0 right-0 z-30 shadow-2xl backdrop-blur">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5">
+      <div class="text-gray-400 flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-rougeKamino animate-ping"></span>
+        <span>FORCE CLONE 99 // UNITÉ BAD BATCH // CONSOLE DU MARAUDEUR</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-gray-500 hidden md:inline">GRANDE ARMÉE DE LA RÉPUBLIQUE</span>
+        <!-- Mention de version bien visible demandée -->
+        <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/50 text-amber-300 text-[11px] font-titre font-bold rounded tracking-wider shadow-[0_0_8px_rgba(245,158,11,0.2)]">
+          VERSION // PATCH BUG 1.5
+        </span>
+      </div>
     </div>
   </footer>
 
-  <!-- SCRIPT SÉCURISÉ : MODULE IIFE FERMÉ, GESTION PRÉCISE DES IMAGES ET SYNC FIRESTORE -->
+  <!-- SCRIPT SÉCURISÉ : MODULE IIFE, GESTION MULTI-CASSE DES CASQUES & VECTORIELS DÉDIÉS BAD BATCH -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { 
@@ -839,31 +848,49 @@
         }
       };
 
-      // Fichiers d'images exacts fournis par l'utilisateur
-      const FICHIERS_CASQUES = {
-        hunter: 'hunter.png',
-        wrecker: 'Wrecker.png',
-        crosshair: 'Crosshair.png',
-        tech: 'Tech.png'
+      // Candidats de chemins pour gérer à 100% la casse sur Linux/GitHub Pages
+      const VARIANTES_CHEMINS_CASQUES = {
+        hunter: ['hunter.png', 'Hunter.png', './hunter.png', './Hunter.png'],
+        wrecker: ['Wrecker.png', 'wrecker.png', './Wrecker.png', './wrecker.png'],
+        crosshair: ['Crosshair.png', 'crosshair.png', './Crosshair.png', './crosshair.png'],
+        tech: ['Tech.png', 'tech.png', './Tech.png', './tech.png']
       };
 
-      // Replis SVG propres et nets sans texte cassé (en cas de problème de chemin)
-      const REPLI_SVG_CASQUES = {
-        hunter: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230d1117"/><circle cx="50" cy="50" r="42" fill="%23131822" stroke="%23dc2626" stroke-width="3"/><path d="M50 18 L50 48" stroke="%23dc2626" stroke-width="7"/><path d="M30 48 Q50 68 70 48" stroke="%23ffffff" stroke-width="5" fill="none"/></svg>',
-        wrecker: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230d1117"/><circle cx="50" cy="50" r="42" fill="%23131822" stroke="%23f59e0b" stroke-width="3"/><text x="50" y="44" fill="%23f59e0b" font-family="sans-serif" font-weight="900" font-size="22" text-anchor="middle">99</text><path d="M28 54 Q50 72 72 54" stroke="%23ffffff" stroke-width="5" fill="none"/></svg>',
-        crosshair: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230d1117"/><circle cx="50" cy="50" r="42" fill="%23131822" stroke="%2310b981" stroke-width="3"/><circle cx="50" cy="46" r="15" stroke="%2310b981" stroke-width="3.5" fill="none"/><line x1="50" y1="22" x2="50" y2="70" stroke="%2310b981" stroke-width="2.5"/><line x1="26" y1="46" x2="74" y2="46" stroke="%2310b981" stroke-width="2.5"/></svg>',
-        tech: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230d1117"/><circle cx="50" cy="50" r="42" fill="%23131822" stroke="%2306b6d4" stroke-width="3"/><rect x="30" y="36" width="40" height="22" fill="%23f59e0b" rx="3"/><circle cx="40" cy="47" r="4" fill="%230d1117"/><circle cx="60" cy="47" r="4" fill="%230d1117"/></svg>'
+      // REPLI SVG HAUTE FIDÉLITÉ DÉDIÉ PAR CASQUE (JAMAIS D'ICÔNE ROUGE DE REPOS CASSÉE)
+      const REPLI_SVG_SPECIFIQUES = {
+        // HUNTER : Casque Katarn sombre avec bande rouge centrale, visière T et marquage crâne stylisé
+        hunter: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="12" fill="%230d1117"/><path d="M22 36 C22 18, 78 18, 78 36 L78 68 C78 84, 22 84, 22 68 Z" fill="%231e2430" stroke="%23374151" stroke-width="2"/><path d="M46 19 L54 19 L54 44 L46 44 Z" fill="%23dc2626"/><path d="M38 45 L62 45 L58 55 L42 55 Z" fill="%23dc2626"/><path d="M26 44 L74 44 L70 54 L54 54 L54 70 L46 70 L46 54 L30 54 Z" fill="%2307090e" stroke="%23dc2626" stroke-width="1.5"/><circle cx="34" cy="74" r="5" fill="%2307090e" stroke="%234b5563" stroke-width="2"/><circle cx="66" cy="74" r="5" fill="%2307090e" stroke="%234b5563" stroke-width="2"/></svg>',
+        
+        // WRECKER : Casque d'assaut lourd blanc/carbone avec le « 99 » rouge sur le front et mâchoire dentée
+        wrecker: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="12" fill="%230d1117"/><path d="M20 38 C20 16, 80 16, 80 38 L80 66 C80 86, 20 86, 20 66 Z" fill="%232b3442" stroke="%23f59e0b" stroke-width="2"/><path d="M30 24 C36 20, 64 20, 70 24 L72 44 L28 44 Z" fill="%23e2e8f0"/><text x="50" y="38" fill="%23dc2626" font-family="sans-serif" font-weight="900" font-size="16" text-anchor="middle" letter-spacing="2">99</text><path d="M26 48 L74 48 L70 55 L30 55 Z" fill="%2307090e" stroke="%23f59e0b" stroke-width="1.5"/><path d="M36 64 L42 74 L50 66 L58 74 L64 64" stroke="%23e2e8f0" stroke-width="3" fill="none"/></svg>',
+
+        // CROSSHAIR : Casque profilé furtif, viseur vert oculaire circulaire et antenne télémétrique
+        crosshair: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="12" fill="%230d1117"/><path d="M25 36 C25 18, 75 18, 75 36 L75 68 C75 84, 25 84, 25 68 Z" fill="%231a202c" stroke="%2310b981" stroke-width="2"/><line x1="20" y1="14" x2="20" y2="46" stroke="%239ca3af" stroke-width="2.5"/><rect x="16" y="10" width="12" height="6" fill="%239ca3af" rx="1"/><path d="M28 48 L72 48 L68 56 L32 56 Z" fill="%2307090e" stroke="%2310b981" stroke-width="1.5"/><circle cx="43" cy="52" r="10" fill="none" stroke="%2310b981" stroke-width="2.5"/><circle cx="43" cy="52" r="3" fill="%2310b981"/><line x1="43" y1="38" x2="43" y2="66" stroke="%2310b981" stroke-width="1.5"/><line x1="29" y1="52" x2="57" y2="52" stroke="%2310b981" stroke-width="1.5"/></svg>',
+
+        // TECH : Casque d'ingénieur blanc avec visière rectangulaire dorée et protège-oreilles à capteurs
+        tech: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="12" fill="%230d1117"/><path d="M26 38 C26 18, 74 18, 74 38 L74 68 C74 84, 26 84, 26 68 Z" fill="%23e2e8f0" stroke="%2306b6d4" stroke-width="2"/><rect x="14" y="36" width="10" height="30" rx="4" fill="%234b5563" stroke="%2306b6d4" stroke-width="1.5"/><rect x="76" y="36" width="10" height="30" rx="4" fill="%234b5563" stroke="%2306b6d4" stroke-width="1.5"/><rect x="30" y="44" width="40" height="16" rx="3" fill="%23f59e0b" stroke="%23d97706" stroke-width="2"/><line x1="30" y1="52" x2="70" y2="52" stroke="%23b45309" stroke-width="1"/><line x1="43" y1="44" x2="43" y2="60" stroke="%23b45309" stroke-width="1"/><line x1="57" y1="44" x2="57" y2="60" stroke="%23b45309" stroke-width="1"/></svg>'
       };
 
-      // Attachement sécurisé d'image avec repli
+      // Attachement résilient de l'image avec recherche multi-casse puis fallback vectoriel
       function attacherImageCasque(elementImg, idOperateur) {
         if (!elementImg) return;
-        const cheminImage = FICHIERS_CASQUES[idOperateur] || 'hunter.png';
-        elementImg.src = cheminImage;
-        elementImg.onerror = () => {
-          elementImg.onerror = null;
-          elementImg.src = REPLI_SVG_CASQUES[idOperateur] || REPLI_SVG_CASQUES.hunter;
-        };
+        const listeChemins = VARIANTES_CHEMINS_CASQUES[idOperateur] || ['hunter.png'];
+        let indexActuel = 0;
+
+        function essayerSuivant() {
+          if (indexActuel < listeChemins.length) {
+            const tentativeChemin = listeChemins[indexActuel];
+            indexActuel++;
+            elementImg.src = tentativeChemin;
+          } else {
+            // Aucun fichier PNG trouvé sur le serveur : chargement du vecteur Bad Batch sur-mesure
+            elementImg.onerror = null;
+            elementImg.src = REPLI_SVG_SPECIFIQUES[idOperateur] || REPLI_SVG_SPECIFIQUES.hunter;
+          }
+        }
+
+        elementImg.onerror = essayerSuivant;
+        essayerSuivant();
       }
 
       const EFFECTIF_CANONIQUE = {
@@ -883,7 +910,7 @@
           libelleStatistique: 'Missions coordonnées',
           totalStatistique: 48,
           equipement: [
-            { nom: 'Carabine Blaster DC-17m', desc: 'Arme principale compacte et polyvalente' },
+            { nom: 'Carabine Blaster DC-17m', desc: 'Arme principale polyvalente à haute vélocité' },
             { nom: 'Couteau Vibro Tactique', desc: 'Lame d\'assaut au corps-à-corps en beskar trempé' },
             { nom: 'Gants à Récepteurs EM', desc: 'Localisation des circuits et flux énergétiques ennemis' },
             { nom: 'Balise de Ralliement 99', desc: 'Fréquence chiffrée prioritaire de commandement' }
@@ -905,7 +932,7 @@
           libelleStatistique: 'Chars MTT & blindés détruits',
           totalStatistique: 89,
           equipement: [
-            { nom: 'Canon Blaster Répéteur DC-17m', desc: 'Configuration de saturation à cadence maximale' },
+            { nom: 'Canon Blaster Répéteur DC-17m', desc: 'Configuration de saturation à cadence de tir maximale' },
             { nom: 'Détonateurs Thermiques Classe IV', desc: 'Charges explosives de brèche pour blindages denses' },
             { nom: 'Gantelets de Percée Renforcés', desc: 'Capables de soulever des épaves blindées de transport' },
             { nom: 'Dague de Survie Wrecker', desc: 'Lame surdimensionnée pour trancher l\'acier droïde' }
@@ -916,7 +943,7 @@
           nom: 'Crosshair',
           matricule: 'FC-99-03',
           grade: 'Tireur d\'Élite',
-          specialite: 'Tir de précision & Neutralisation',
+          specialite: 'Tir de haute précision & Neutralisation',
           dateEntree: '15/01/2024',
           symbole: '🦅',
           couleur: '#10b981',
@@ -957,7 +984,7 @@
         }
       };
 
-      // PLANS TACTIQUES INCLUANT LE PLAN 0/0
+      // PLANS TACTIQUES INCLUANT IMPÉRATIVEMENT LE PLAN 0/0 EN POSITION INITIALE
       const PLANS_CANONIQUES = [
         { 
           id: 'p0', 
@@ -1015,7 +1042,7 @@
         motsDePasseHashes: {}
       };
 
-      // Hash de base SHA-256 pour "1234"
+      // Hash de base SHA-256 pour le code d'accès par défaut "1234"
       const HASH_DEFAUT = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4";
       ['hunter', 'wrecker', 'crosshair', 'tech'].forEach(id => {
         etat.motsDePasseHashes[id] = HASH_DEFAUT;
@@ -1102,6 +1129,10 @@
           } else {
             const listePlans = [];
             snap.forEach(d => listePlans.push({ id: d.id, ...d.data() }));
+            // S'assurer que le Plan 0/0 reste présent en tête
+            if (!listePlans.some(p => p.code === 'PLAN 0/0')) {
+              listePlans.unshift(PLANS_CANONIQUES[0]);
+            }
             etat.plans = listePlans;
             if (etat.operateurConnecte) afficherVuePlans();
           }
@@ -1202,7 +1233,7 @@
         document.getElementById('grade-operateur').textContent = op.grade;
         attacherImageCasque(document.getElementById('avatar-profil-haut'), etat.operateurConnecte);
 
-        document.body.className = `arriere-plan-vaisseau flex flex-col justify-between theme-${etat.operateurConnecte}`;
+        document.body.className = `arriere-plan-vaisseau flex flex-col justify-between pb-6 theme-${etat.operateurConnecte}`;
 
         const boutonPlan = document.getElementById('bouton-ajouter-plan-hunter');
         if (etat.operateurConnecte === 'hunter') {
@@ -1221,7 +1252,7 @@
           "Voulez-vous fermer la session de commandement et retourner à l'écran de veille ?",
           () => {
             etat.operateurConnecte = null;
-            document.body.className = "arriere-plan-vaisseau flex flex-col justify-between";
+            document.body.className = "arriere-plan-vaisseau flex flex-col justify-between pb-6";
             document.getElementById('fenetre-connexion').classList.remove('hidden');
             document.getElementById('barre-navigation').classList.add('hidden');
             document.getElementById('bloc-profil-actif').classList.add('hidden');
@@ -1435,7 +1466,7 @@
         elemConf.textContent = `${ratio}%`;
         elemConf.className = ratio === 100 ? 'text-xl font-titre font-black text-vertViseur mt-0.5' : 'text-xl font-titre font-black text-rougeAlerte mt-0.5';
 
-        // 4 CARTES D'ÉTAT OPÉRATIONNEL AVEC CASQUES CLAIREMENT POSITIONNÉS
+        // 4 CARTES D'ÉTAT OPÉRATIONNEL AVEC CASQUES CLAIREMENT VISIBLES
         const conteneurMembres = document.getElementById('cartes-membres-synthese');
         conteneurMembres.innerHTML = '';
 
@@ -1447,8 +1478,8 @@
           carte.innerHTML = `
             <div>
               <div class="flex items-center justify-between gap-2 mb-2 pb-1.5 border-b border-bordureTactique/60">
-                <div class="w-12 h-12 rounded border-2 border-bordureLueur bg-fondCarbone overflow-hidden shrink-0 flex items-center justify-center p-1 shadow-inner">
-                  <img id="casque-carte-${m.id}" src="${FICHIERS_CASQUES[m.id]}" alt="Casque de ${m.nom}" class="w-full h-full object-contain">
+                <div class="w-14 h-14 rounded border-2 border-bordureLueur bg-fondCarbone overflow-hidden shrink-0 flex items-center justify-center p-1 shadow-inner">
+                  <img id="casque-carte-${m.id}" alt="Casque de ${m.nom}" class="w-full h-full object-contain">
                 </div>
                 <span class="text-[9px] font-terminal px-1.5 py-0.5 rounded font-bold whitespace-nowrap ${estOk ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800 animate-pulse'}">
                   ${estOk ? '✓ EN RÈGLE' : '✗ NON ATTEINT'}
@@ -1471,7 +1502,7 @@
           `;
           conteneurMembres.appendChild(carte);
 
-          // Attacher l'image avec fallback sécurisé
+          // Attacher l'image avec logique de secours
           const imgElem = carte.querySelector(`#casque-carte-${m.id}`);
           attacherImageCasque(imgElem, m.id);
         });
@@ -1503,7 +1534,7 @@
           });
         }
 
-        // Aperçu des 3 premiers plans
+        // Aperçu des plans (incluant le plan 0/0)
         const conteneurPlans = document.getElementById('apercu-plans-tactiques');
         conteneurPlans.innerHTML = '';
         etat.plans.slice(0, 3).forEach(p => {
@@ -1511,7 +1542,7 @@
           item.className = 'p-2 bg-panneauSous border border-bordureTactique rounded text-xs font-terminal';
           item.innerHTML = `
             <div class="flex justify-between text-amber-400 font-titre text-[10px]">
-              <span>${echapperTexteHTML(p.code)}</span>
+              <span class="${p.code === 'PLAN 0/0' ? 'text-rougeAlerte font-bold' : ''}">${echapperTexteHTML(p.code)}</span>
               <span class="text-gray-400 font-terminal text-[9px] truncate max-w-[120px]">${echapperTexteHTML(p.chefDeManoeuvre)}</span>
             </div>
             <p class="text-gray-300 text-[11px] mt-0.5 line-clamp-1">${echapperTexteHTML(p.cible)}</p>
@@ -1695,8 +1726,8 @@
           carte.innerHTML = `
             <div class="flex items-start justify-between border-b border-bordureTactique pb-2">
               <div class="flex items-center space-x-2.5">
-                <div class="w-12 h-12 rounded border border-bordureLueur bg-fondCarbone overflow-hidden shrink-0 flex items-center justify-center p-1">
-                  <img id="casque-effectif-${m.id}" src="${FICHIERS_CASQUES[m.id]}" alt="Casque de ${m.nom}" class="w-full h-full object-contain">
+                <div class="w-14 h-14 rounded-lg border border-bordureLueur bg-fondCarbone overflow-hidden shrink-0 flex items-center justify-center p-1 shadow-inner">
+                  <img id="casque-effectif-${m.id}" alt="Casque de ${m.nom}" class="w-full h-full object-contain">
                 </div>
                 <div>
                   <div class="font-titre font-black text-xs sm:text-sm text-gray-100 uppercase">${echapperTexteHTML(m.nom)}</div>
@@ -1707,7 +1738,7 @@
               <div class="text-right">
                 <div class="text-[8px] font-terminal uppercase text-gray-400">Statut hebdomadaire</div>
                 <div class="px-1.5 py-0.5 text-[10px] font-terminal font-bold rounded ${estOk ? 'bg-emerald-950 text-emerald-300 border border-emerald-600' : 'bg-red-950 text-red-300 border border-red-700 animate-pulse'}">
-                  ${estOk ? '✓ EN RÈGLE' : '✗ NON ENCODÉ'}
+                  ${estOk ? '✓ EN RÈGLE' : '✗ NON ATTEINT'}
                 </div>
               </div>
             </div>
@@ -1864,14 +1895,15 @@
         const conteneur = document.getElementById('conteneur-plans-tactiques');
         conteneur.innerHTML = '';
 
+        // Le Plan 0/0 est systématiquement conservé en tête
         etat.plans.forEach(p => {
           const estPlanZero = p.code === 'PLAN 0/0';
           const div = document.createElement('div');
-          div.className = `bg-panneauSombre border ${estPlanZero ? 'border-red-600/70 shadow-[0_0_12px_rgba(220,38,38,0.2)]' : 'border-bordureTactique'} biseau-plaque p-3.5 space-y-2 relative hover:border-amber-500/40 transition`;
+          div.className = `bg-panneauSombre border ${estPlanZero ? 'border-red-600/70 shadow-[0_0_12px_rgba(220,38,38,0.25)]' : 'border-bordureTactique'} biseau-plaque p-3.5 space-y-2 relative hover:border-amber-500/40 transition`;
           div.innerHTML = `
             <div class="flex items-center justify-between border-b border-bordureTactique pb-1.5">
-              <span class="font-titre font-bold text-xs ${estPlanZero ? 'text-rougeAlerte' : 'text-amber-400'} tracking-wider">${echapperTexteHTML(p.code)}</span>
-              <span class="text-[8px] font-terminal px-1.5 py-0.5 bg-panneauSous ${estPlanZero ? 'text-red-300 border-red-700' : 'text-gray-300 border-bordureTactique'} rounded border">
+              <span class="font-titre font-bold text-xs ${estPlanZero ? 'text-rougeAlerte font-black' : 'text-amber-400'} tracking-wider">${echapperTexteHTML(p.code)}</span>
+              <span class="text-[8px] font-terminal px-1.5 py-0.5 bg-panneauSous ${estPlanZero ? 'text-red-300 border-red-700 bg-red-950/40' : 'text-gray-300 border-bordureTactique'} rounded border">
                 ${estPlanZero ? 'URGENCE ABSOLUE' : 'HOMOLOGUÉ 99'}
               </span>
             </div>
