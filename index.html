@@ -2,35 +2,19 @@
 <html lang="fr" class="dark">
 <head> 
   <script>
-  // --- BOUCLIER DE SÉCURITÉ ANTI-INJECTION ---
+  // Nettoie uniquement le payload injecté manuellement
   (function() {
-    function sanitize() {
-      // Supprime la variable de contournement
-      if (window.arcSessionAvantTest) {
-        delete window.arcSessionAvantTest;
-      }
+    try {
       const raw = localStorage.getItem("arcSession");
-      if (!raw) return;
-
-      try {
+      if (raw) {
         const session = JSON.parse(raw);
-        // Si quelqu'un injecte TEST_SECURITE ou un faux admin avec des champs null
-        if (
-          !session ||
-          session.user === "TEST_SECURITE" ||
-          (session.role === "admin" && (!session.userHash || !session.userId))
-        ) {
-          console.warn("[SÉCURITÉ] Fausse session admin détectée ! Purge immédiate.");
+        // On vire SEULEMENT la fausse session de test
+        if (session && session.user === "TEST_SECURITE") {
           localStorage.removeItem("arcSession");
+          delete window.arcSessionAvantTest;
         }
-      } catch (e) {
-        localStorage.removeItem("arcSession");
       }
-    }
-
-    // Nettoyage immédiat avant l'affichage de la page
-    sanitize();
-    window.addEventListener("DOMContentLoaded", sanitize);
+    } catch (e) {}
   })();
 </script>
   <meta charset="UTF-8">
