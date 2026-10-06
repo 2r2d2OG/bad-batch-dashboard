@@ -2,13 +2,13 @@
 <html lang="fr" class="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FORCE CLONE 99 // UNITÉ BAD BATCH // CONSOLE DU MARAUDEUR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>FORCE CLONE 99 // DATAPAD TACTIQUE // HAVOC MARAUDER</title>
 
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Typographies Militaires Star Wars -->
+  <!-- Typographies Militaires Star Wars / SF -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -20,15 +20,15 @@
         extend: {
           colors: {
             fondCarbone: '#07090e',
-            panneauSombre: '#0d1117',
-            panneauSous: '#131822',
-            bordureTactique: '#1e2634',
-            bordureLueur: '#2a3548',
+            panneauSombre: '#0c1017',
+            panneauSous: '#121722',
+            bordureTactique: '#1f2737',
+            bordureLueur: '#2b374c',
             rougeKamino: '#b91c1c',
-            rougeAlerte: '#ef4444',
+            rougeAlerte: '#ff2e43',
             ambreArmement: '#f59e0b',
             vertViseur: '#10b981',
-            cyanTech: '#06b6d4',
+            cyanTech: '#38bdf8',
             bleuRepublique: '#3b82f6'
           },
           fontFamily: {
@@ -43,9 +43,9 @@
 
   <style>
     :root {
-      --teinte-accent: #b91c1c;
-      --teinte-lueur: rgba(185, 28, 28, 0.15);
-      --teinte-bordure: rgba(185, 28, 28, 0.35);
+      --teinte-accent: #ff2e43;
+      --teinte-lueur: rgba(255, 46, 67, 0.2);
+      --teinte-bordure: rgba(255, 46, 67, 0.4);
     }
 
     body {
@@ -55,68 +55,78 @@
       min-height: 100vh;
       overflow-x: hidden;
       letter-spacing: 0.02em;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .arriere-plan-vaisseau {
+    .grille-tactique-bg {
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(19, 24, 34, 0.6) 0%, rgba(7, 9, 14, 0.98) 75%),
-        linear-gradient(rgba(30, 38, 52, 0.12) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(30, 38, 52, 0.12) 1px, transparent 1px);
-      background-size: 100% 100%, 40px 40px, 40px 40px;
+        radial-gradient(circle at 50% 0%, rgba(18, 23, 34, 0.8) 0%, rgba(7, 9, 14, 0.98) 80%),
+        linear-gradient(rgba(31, 39, 55, 0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31, 39, 55, 0.15) 1px, transparent 1px);
+      background-size: 100% 100%, 30px 30px, 30px 30px;
     }
 
     .biseau-plaque {
       clip-path: polygon(
-        0 6px, 6px 0,
-        calc(100% - 6px) 0, 100% 6px,
-        100% calc(100% - 6px), calc(100% - 6px) 100%,
-        6px 100%, 0 calc(100% - 6px)
+        0 8px, 8px 0,
+        calc(100% - 8px) 0, 100% 8px,
+        100% calc(100% - 8px), calc(100% - 8px) 100%,
+        8px 100%, 0 calc(100% - 8px)
       );
     }
 
     .biseau-bouton {
       clip-path: polygon(
-        0 3px, 3px 0,
-        calc(100% - 3px) 0, 100% 3px,
-        100% calc(100% - 3px), calc(100% - 3px) 100%,
-        3px 100%, 0 calc(100% - 3px)
+        0 4px, 4px 0,
+        calc(100% - 4px) 0, 100% 4px,
+        100% calc(100% - 4px), calc(100% - 4px) 100%,
+        4px 100%, 0 calc(100% - 4px)
       );
     }
 
     .panneau-tactique {
-      background-color: #0d1117;
+      background-color: #0c1017;
       border: 1px solid var(--teinte-bordure);
-      box-shadow: 0 4px 18px -2px rgba(0, 0, 0, 0.8), 0 0 10px -2px var(--teinte-lueur);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.85), 0 0 12px -2px var(--teinte-lueur);
     }
 
+    /* Thèmes dynamiques selon l'opérateur connecté */
     body.theme-hunter {
-      --teinte-accent: #dc2626;
-      --teinte-lueur: rgba(220, 38, 38, 0.2);
-      --teinte-bordure: rgba(220, 38, 38, 0.4);
+      --teinte-accent: #ff2e43;
+      --teinte-lueur: rgba(255, 46, 67, 0.25);
+      --teinte-bordure: rgba(255, 46, 67, 0.45);
     }
     body.theme-wrecker {
       --teinte-accent: #f59e0b;
-      --teinte-lueur: rgba(245, 158, 11, 0.2);
-      --teinte-bordure: rgba(245, 158, 11, 0.4);
+      --teinte-lueur: rgba(245, 158, 11, 0.25);
+      --teinte-bordure: rgba(245, 158, 11, 0.45);
     }
     body.theme-crosshair {
       --teinte-accent: #10b981;
-      --teinte-lueur: rgba(16, 185, 129, 0.2);
-      --teinte-bordure: rgba(16, 185, 129, 0.4);
+      --teinte-lueur: rgba(16, 185, 129, 0.25);
+      --teinte-bordure: rgba(16, 185, 129, 0.45);
     }
     body.theme-tech {
-      --teinte-accent: #06b6d4;
-      --teinte-lueur: rgba(6, 182, 212, 0.2);
-      --teinte-bordure: rgba(6, 182, 212, 0.4);
+      --teinte-accent: #38bdf8;
+      --teinte-lueur: rgba(56, 189, 248, 0.25);
+      --teinte-bordure: rgba(56, 189, 248, 0.45);
     }
 
+    /* Défilement personnalisé */
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: #07090e; }
-    ::-webkit-scrollbar-thumb { background: #1e2634; border-radius: 2px; }
+    ::-webkit-scrollbar-thumb { background: #1f2737; border-radius: 2px; }
     ::-webkit-scrollbar-thumb:hover { background: var(--teinte-accent); }
+
+    /* Adaptations mobiles strictes */
+    @media (max-width: 640px) {
+      .touch-target {
+        min-height: 44px;
+      }
+    }
   </style>
 </head>
-<body class="arriere-plan-vaisseau flex flex-col justify-between selection:bg-red-800 selection:text-white pb-6">
+<body class="grille-tactique-bg flex flex-col justify-between min-h-screen pb-16 sm:pb-12 text-sm select-none">
 
   <!-- Filigrane d'ambiance du Havoc Marauder -->
   <div class="fixed top-2 right-4 w-72 h-72 pointer-events-none opacity-[0.02] -z-0">
@@ -126,19 +136,19 @@
     </svg>
   </div>
 
-  <!-- BANDEAU SUPÉRIEUR HUD ULTRA-COMPACT ET DÉGAGÉ SANS AUCUN DÉBORDEMENT -->
+  <!-- BANDEAU SUPÉRIEUR HUD ULTRA-OPTIMISÉ ET RESPONSIVE SANS DÉBORDEMENT -->
   <header class="border-b border-bordureTactique bg-fondCarbone/95 backdrop-blur sticky top-0 z-40 shadow-lg">
-    <div class="max-w-7xl mx-auto px-2 sm:px-4 py-1.5 flex items-center justify-between gap-2">
+    <div class="max-w-7xl mx-auto px-3 sm:px-4 py-2 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2">
       
-      <!-- Gauche : Insigne Force Clone 99 & État de liaison -->
-      <div class="flex items-center space-x-2 shrink-0">
-        <div class="h-8 w-8 bg-rougeKamino/25 border border-rougeKamino biseau-bouton flex items-center justify-center font-titre font-black text-rougeAlerte text-base tracking-tighter">
+      <!-- Gauche : Badge Clone Force 99 & Indicateur de Liaison -->
+      <div class="flex items-center space-x-2.5 shrink-0">
+        <div class="h-9 w-9 bg-rougeKamino/25 border border-rougeAlerte biseau-bouton flex items-center justify-center font-titre font-black text-rougeAlerte text-base tracking-tighter shadow-[0_0_8px_rgba(255,46,67,0.3)]">
           99
         </div>
         <div>
           <div class="flex items-center space-x-1.5">
             <span class="font-titre font-bold tracking-wider text-xs sm:text-sm text-gray-100 uppercase">FORCE CLONE 99</span>
-            <span class="hidden sm:inline-block px-1 py-0.2 bg-ambreArmement/15 text-ambreArmement text-[9px] font-terminal border border-ambreArmement/30 uppercase rounded-sm">BAD BATCH</span>
+            <span class="px-1.5 py-0.2 bg-ambreArmement/15 text-ambreArmement text-[9px] font-terminal border border-ambreArmement/30 uppercase rounded-sm">BAD BATCH</span>
           </div>
           <div class="text-[9px] text-gray-400 font-terminal flex items-center gap-1.5 leading-none mt-0.5">
             <span id="point-liaison" class="inline-block w-2 h-2 rounded-full bg-vertViseur shadow-[0_0_6px_#10b981]"></span>
@@ -147,35 +157,35 @@
         </div>
       </div>
 
-      <!-- Centre : Mention sobre du Maraudeur -->
-      <div class="hidden lg:flex items-center justify-center text-center">
-        <span class="px-2 py-0.5 bg-panneauSombre border border-bordureTactique text-gray-400 text-[10px] font-terminal uppercase rounded tracking-widest">
-          CONSOLE DU HAVOC MARAUDER
+      <!-- Centre : Mention Marauder (masquée sur très petits écrans pour gagner de la place) -->
+      <div class="hidden md:flex items-center justify-center text-center">
+        <span class="px-2.5 py-1 bg-panneauSombre border border-bordureTactique text-gray-400 text-[10px] font-terminal uppercase rounded tracking-widest">
+          CONSOLE DU HAVOC MARAUDER // SEC-NET 99
         </span>
       </div>
 
       <!-- Droite : Commandes audio et profil opérateur compact sécurisé -->
-      <div class="flex items-center space-x-2 shrink-0">
-        <button id="bouton-audio" class="px-2 py-1 border border-bordureTactique hover:border-bordureLueur bg-panneauSombre text-gray-300 hover:text-white rounded text-[10px] font-terminal transition">
-          🔊 SONS : ACTIVÉS
+      <div class="flex items-center space-x-2 shrink-0 ml-auto sm:ml-0">
+        <button id="bouton-audio" class="px-2 py-1.5 border border-bordureTactique hover:border-bordureLueur bg-panneauSombre text-gray-300 hover:text-white rounded text-[10px] font-terminal transition">
+          🔊 <span class="hidden sm:inline">SONS :</span> ACTIVÉS
         </button>
 
-        <!-- Profil compact : Casque miniature + Nom + Bouton Clé + Déconnexion rouge vif -->
-        <div id="bloc-profil-actif" class="hidden items-center space-x-2 bg-panneauSombre border border-bordureTactique px-2 py-1 rounded biseau-bouton">
+        <!-- Profil compact : Casque miniature + Nom + Bouton Clé + Déconnexion -->
+        <div id="bloc-profil-actif" class="hidden items-center space-x-1.5 sm:space-x-2 bg-panneauSombre border border-bordureTactique px-2 py-1 rounded biseau-bouton">
           <div class="w-7 h-7 rounded bg-fondCarbone border border-bordureLueur overflow-hidden shrink-0 flex items-center justify-center p-0.5">
             <img id="avatar-profil-haut" alt="Casque" class="w-full h-full object-contain">
           </div>
-          <div class="text-left hidden md:block leading-none">
+          <div class="text-left hidden sm:block leading-none pr-1">
             <div id="nom-operateur" class="text-[11px] font-titre font-bold text-gray-100 uppercase">Hunter</div>
             <div id="grade-operateur" class="text-[8px] font-terminal text-gray-400 mt-0.5">Sergent</div>
           </div>
 
           <button id="bouton-cle-mdp" title="Modifier mon mot de passe" class="px-2 py-1 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-[10px] font-terminal text-amber-300 rounded flex items-center gap-1 transition">
             <span>🔑</span>
-            <span class="hidden sm:inline">MODIF MDP</span>
+            <span class="hidden md:inline">MODIF MDP</span>
           </button>
 
-          <button id="bouton-quitter-session" title="Fermer la session" class="px-2.5 py-1 bg-red-950 hover:bg-red-800 border border-rougeAlerte text-[10px] font-titre font-bold text-red-200 hover:text-white rounded transition tracking-wider shrink-0">
+          <button id="bouton-quitter-session" title="Fermer la session" class="px-2 sm:px-2.5 py-1 bg-red-950 hover:bg-red-800 border border-rougeAlerte text-[10px] font-titre font-bold text-red-200 hover:text-white rounded transition tracking-wider shrink-0">
             [DÉCONNEXION]
           </button>
         </div>
@@ -184,54 +194,86 @@
     </div>
   </header>
 
-  <!-- Navigation Principale -->
-  <nav id="barre-navigation" class="hidden bg-fondCarbone/90 border-b border-bordureTactique">
-    <div class="max-w-7xl mx-auto px-3 sm:px-4 flex overflow-x-auto space-x-2 py-1.5">
-      <button data-onglet="poste-commandement" class="nav-bouton px-3 py-1 font-titre text-xs tracking-wider border-b-2 border-rougeAlerte text-white bg-panneauSombre biseau-bouton transition flex items-center gap-1.5 shrink-0">
+  <!-- Navigation Principale défilable sur mobile -->
+  <nav id="barre-navigation" class="hidden bg-fondCarbone/95 border-b border-bordureTactique sticky top-[53px] z-30 overflow-x-auto shadow-md">
+    <div class="max-w-7xl mx-auto px-3 sm:px-4 flex space-x-2 py-1.5 whitespace-nowrap">
+      <button data-onglet="poste-commandement" class="nav-bouton px-3 py-1.5 font-titre text-xs tracking-wider border-b-2 border-rougeAlerte text-white bg-panneauSombre biseau-bouton transition flex items-center gap-1.5 shrink-0 touch-target">
         <span>📊</span> POSTE DE COMMANDEMENT
       </button>
-      <button data-onglet="rapports" class="nav-bouton px-3 py-1 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-1.5 shrink-0">
+      <button data-onglet="rapports" class="nav-bouton px-3 py-1.5 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-1.5 shrink-0 touch-target">
         <span>📝</span> RAPPORTS DE MISSION
       </button>
-      <button data-onglet="effectif" class="nav-bouton px-3 py-1 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-1.5 shrink-0">
+      <button data-onglet="effectif" class="nav-bouton px-3 py-1.5 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-1.5 shrink-0 touch-target">
         <span>👥</span> EFFECTIF DE L'ESCOUADE
       </button>
-      <button data-onglet="plans" class="nav-bouton px-3 py-1 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-1.5 shrink-0">
+      <button data-onglet="plans" class="nav-bouton px-3 py-1.5 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-1.5 shrink-0 touch-target">
         <span>📋</span> PLANS TACTIQUES
       </button>
-      <button data-onglet="archives" class="nav-bouton px-3 py-1 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-1.5 shrink-0">
+      <button data-onglet="archives" class="nav-bouton px-3 py-1.5 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-1.5 shrink-0 touch-target">
         <span>💾</span> ARCHIVES DE PIRATAGE
       </button>
     </div>
   </nav>
 
-  <!-- BANNIÈRE D'ALERTE DE COMMANDEMENT (SOUS LA NAVIGATION POUR NE PAS GÊNER LE HAUT) -->
+  <!-- BANNIÈRE D'ALERTE DE COMMANDEMENT (HUNTER EST EXCLU - SURVEILLE WRECKER, CROSSHAIR, TECH) -->
   <div id="banniere-alerte-quota" class="hidden max-w-7xl mx-auto px-3 sm:px-4 pt-3 w-full">
-    <div class="p-2.5 bg-red-950/70 border border-rougeAlerte rounded flex items-center justify-between gap-3 text-xs font-terminal text-red-200 shadow-md">
+    <div class="p-2.5 bg-red-950/70 border border-rougeAlerte rounded flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs font-terminal text-red-200 shadow-md">
       <div class="flex items-center gap-2 overflow-hidden">
         <span class="text-base shrink-0">⚠️</span>
         <span class="font-bold text-rougeAlerte shrink-0 uppercase">ALERTE COMMANDEMENT :</span>
         <span id="texte-alerte-quota" class="truncate">Rapports d'escouade incomplets</span>
       </div>
-      <button data-action-nav="effectif" class="text-[10px] text-amber-400 hover:underline uppercase shrink-0 font-bold">
-        Vérifier l'effectif →
+      <button data-action-nav="effectif" class="text-[10px] text-amber-400 hover:underline uppercase shrink-0 font-bold ml-auto sm:ml-0">
+        Vérifier l'effectif de terrain →
       </button>
     </div>
   </div>
 
-  <!-- Contenu Principal -->
+  <!-- CONTENU PRINCIPAL ADAPTATIF -->
   <main class="max-w-7xl mx-auto px-3 sm:px-4 py-3 flex-grow w-full relative z-10">
 
-    <!-- 1. AUTHENTIFICATION & FICHE TACTIQUE HOLOGRAPHIQUE (ACCUEIL) -->
-    <section id="fenetre-connexion" class="my-2">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+    <!-- 1. ÉCRAN D'ACCUEIL / AUTHENTIFICATION & RECRUTEMENT DE L'ESCOUADE -->
+    <section id="fenetre-connexion" class="my-2 space-y-4">
+      
+      <!-- MODULE DYNAMIQUE DE RECRUTEMENT DE L'ESCOUADE (SYNCHRO FIRESTORE) -->
+      <div id="encadre-recrutement-accueil" class="panneau-tactique p-3.5 sm:p-4 rounded-lg biseau-plaque transition-all duration-300">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 border-b border-bordureTactique pb-2.5">
+          <div class="flex items-center space-x-2">
+            <span id="icone-recrutement" class="text-lg">📢</span>
+            <div>
+              <h2 class="font-titre font-bold text-xs sm:text-sm text-gray-100 uppercase tracking-wider">
+                BUREAU DE RECRUTEMENT // FORCE CLONE 99
+              </h2>
+              <p class="text-[10px] font-terminal text-gray-400">
+                Protocole d'intégration opérationnelle du Havoc Marauder
+              </p>
+            </div>
+          </div>
+          <!-- Badge d'état dynamique -->
+          <div id="badge-statut-recrutement" class="px-2.5 py-1 rounded text-xs font-titre font-bold uppercase tracking-wider border">
+            <!-- Injecté par JS -->
+          </div>
+        </div>
+
+        <div class="mt-2.5 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+          <p id="description-statut-recrutement" class="text-xs font-terminal text-gray-300 leading-relaxed">
+            <!-- Injecté par JS -->
+          </p>
+          <div id="instruction-recrutement-contact" class="hidden shrink-0 px-3 py-1.5 bg-panneauSous border border-bordureTactique rounded text-[11px] font-terminal text-amber-300">
+            📡 FRÉQUENCE COMNET : CANAL PRIVÉ 99-DELTA
+          </div>
+        </div>
+      </div>
+
+      <!-- Double Colonne : Accès console à gauche / Fiche Tactique & Équipement à droite -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
         
-        <!-- Colonne Gauche : Formulaire d'accès -->
+        <!-- Colonne Gauche : Formulaire de connexion -->
         <div class="lg:col-span-5 bg-panneauSombre border border-bordureTactique biseau-plaque p-4 sm:p-5 shadow-xl flex flex-col justify-between">
           <div>
             <div class="border-b border-bordureTactique pb-3 mb-3">
-              <span class="inline-block px-2 py-0.5 bg-rougeKamino/25 border border-rougeKamino text-rougeAlerte font-titre text-[9px] font-bold tracking-widest uppercase rounded mb-1.5">
-                ACCÈS SÉCURISÉ // UNITÉ BAD BATCH
+              <span class="inline-block px-2 py-0.5 bg-rougeKamino/25 border border-rougeAlerte text-rougeAlerte font-titre text-[9px] font-bold tracking-widest uppercase rounded mb-1.5">
+                ACCÈS SÉCURISÉ // OPÉRATEURS CLONE FORCE 99
               </span>
               <h1 class="text-lg sm:text-xl font-titre font-black text-gray-100 tracking-wider">
                 TERMINAL DU MARAUDEUR
@@ -244,30 +286,31 @@
             <form id="formulaire-connexion" class="space-y-3.5">
               <div>
                 <label class="block text-xs font-terminal uppercase text-gray-300 mb-1.5">Opérateur de bord :</label>
+                <!-- Grille d'opérateurs avec LOGOS INVERSÉS : Hunter = 🦅 (Aigle), Crosshair = 🎯 (Cible) -->
                 <div class="grid grid-cols-2 gap-2">
-                  <button type="button" data-op="hunter" class="bouton-choix-op p-2 border-2 border-rougeAlerte bg-red-950/30 text-white rounded biseau-bouton text-left flex items-center space-x-2 transition">
-                    <span class="text-base">🎯</span>
+                  <button type="button" data-op="hunter" class="bouton-choix-op p-2 border-2 border-rougeAlerte bg-red-950/30 text-white rounded biseau-bouton text-left flex items-center space-x-2 transition touch-target">
+                    <span class="text-lg">🦅</span>
                     <div>
                       <div class="text-xs font-titre font-bold leading-none">HUNTER</div>
                       <div class="text-[8px] font-terminal text-gray-400 leading-none mt-1">Commandement</div>
                     </div>
                   </button>
-                  <button type="button" data-op="wrecker" class="bouton-choix-op p-2 border border-bordureTactique bg-panneauSous text-gray-300 rounded biseau-bouton text-left flex items-center space-x-2 transition">
-                    <span class="text-base">💥</span>
+                  <button type="button" data-op="wrecker" class="bouton-choix-op p-2 border border-bordureTactique bg-panneauSous text-gray-300 rounded biseau-bouton text-left flex items-center space-x-2 transition touch-target">
+                    <span class="text-lg">💥</span>
                     <div>
                       <div class="text-xs font-titre font-bold leading-none">WRECKER</div>
                       <div class="text-[8px] font-terminal text-gray-400 leading-none mt-1">Démolition</div>
                     </div>
                   </button>
-                  <button type="button" data-op="crosshair" class="bouton-choix-op p-2 border border-bordureTactique bg-panneauSous text-gray-300 rounded biseau-bouton text-left flex items-center space-x-2 transition">
-                    <span class="text-base">🦅</span>
+                  <button type="button" data-op="crosshair" class="bouton-choix-op p-2 border border-bordureTactique bg-panneauSous text-gray-300 rounded biseau-bouton text-left flex items-center space-x-2 transition touch-target">
+                    <span class="text-lg">🎯</span>
                     <div>
                       <div class="text-xs font-titre font-bold leading-none">CROSSHAIR</div>
                       <div class="text-[8px] font-terminal text-gray-400 leading-none mt-1">Tir de précision</div>
                     </div>
                   </button>
-                  <button type="button" data-op="tech" class="bouton-choix-op p-2 border border-bordureTactique bg-panneauSous text-gray-300 rounded biseau-bouton text-left flex items-center space-x-2 transition">
-                    <span class="text-base">💻</span>
+                  <button type="button" data-op="tech" class="bouton-choix-op p-2 border border-bordureTactique bg-panneauSous text-gray-300 rounded biseau-bouton text-left flex items-center space-x-2 transition touch-target">
+                    <span class="text-lg">💻</span>
                     <div>
                       <div class="text-xs font-titre font-bold leading-none">TECH</div>
                       <div class="text-[8px] font-terminal text-gray-400 leading-none mt-1">Piratage & Données</div>
@@ -279,14 +322,14 @@
 
               <div>
                 <label for="saisie-mot-de-passe" class="block text-xs font-terminal uppercase text-gray-300 mb-1">Mot de passe chiffré :</label>
-                <input type="password" id="saisie-mot-de-passe" required placeholder="Saisissez votre code d'accès" class="w-full bg-fondCarbone border border-bordureTactique focus:border-amber-400 px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none transition">
+                <input type="password" id="saisie-mot-de-passe" required placeholder="Saisissez votre code d'accès" class="w-full bg-fondCarbone border border-bordureTactique focus:border-amber-400 px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none transition touch-target">
               </div>
 
-              <div id="erreur-connexion" class="hidden text-xs font-terminal text-red-400 bg-red-950/70 p-2 rounded border border-red-800">
+              <div id="erreur-connexion" class="hidden text-xs font-terminal text-red-400 bg-red-950/70 p-2.5 rounded border border-red-800">
                 Code d'accès incorrect pour cet opérateur.
               </div>
 
-              <button type="submit" class="w-full py-2 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold tracking-wider text-xs uppercase biseau-bouton transition shadow-md">
+              <button type="submit" class="w-full py-2.5 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold tracking-wider text-xs uppercase biseau-bouton transition shadow-md touch-target">
                 AUTHENTIFICATION & OUVERTURE DE SESSION
               </button>
             </form>
@@ -294,11 +337,11 @@
 
           <div class="pt-3 border-t border-bordureTactique text-[10px] font-terminal text-gray-500 mt-3 flex items-center justify-between">
             <span>RÉSEAU SÉCURISÉ GAR // PROTOCOLE 99</span>
-            <span>CYPHER SHA-256 V1.5</span>
+            <span>CYPHER SHA-256</span>
           </div>
         </div>
 
-        <!-- Colonne Droite : Fiche Tactique Holographique avec Casque HD -->
+        <!-- Colonne Droite : Fiche Tactique Holographique avec Casque HD Réel / Repli Spécifique -->
         <div class="lg:col-span-7 bg-panneauSombre border border-bordureTactique biseau-plaque p-4 sm:p-5 shadow-xl relative overflow-hidden flex flex-col justify-between">
           <div>
             <div class="flex flex-wrap items-center justify-between border-b border-bordureTactique pb-2.5 mb-3 gap-2">
@@ -314,7 +357,7 @@
             <!-- Casque Officiel & Caractéristiques -->
             <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center mb-4">
               <div class="sm:col-span-4 flex justify-center">
-                <div class="w-36 h-36 rounded-lg border-2 border-bordureLueur overflow-hidden bg-fondCarbone relative shadow-inner p-2 flex items-center justify-center">
+                <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-lg border-2 border-bordureLueur overflow-hidden bg-fondCarbone relative shadow-inner p-2 flex items-center justify-center">
                   <img id="dossier-photo-operateur" alt="Casque de l'opérateur" class="w-full h-full object-contain filter drop-shadow-md">
                 </div>
               </div>
@@ -333,7 +376,7 @@
                   <span id="dossier-armure" class="text-gray-200 ml-1">Armure Katarn modifiée avec capteurs thermiques</span>
                 </div>
                 <p id="dossier-description-lore" class="text-[11px] text-gray-300 leading-relaxed bg-fondCarbone p-2 rounded border border-bordureTactique mt-1.5">
-                  Perception des fréquences et flux électromagnétiques. Maîtrise tactique absolue et coordination de toute l'escouade.
+                  Perception sensorielle des fréquences et flux électromagnétiques. Maîtrise tactique absolue et coordination de toute l'escouade.
                 </p>
               </div>
             </div>
@@ -351,7 +394,7 @@
 
           <div class="pt-2.5 border-t border-bordureTactique text-[9px] font-terminal text-gray-500 mt-3 flex justify-between">
             <span>Dossier issu des archives de Kamino</span>
-            <span>Sélectionnez un opérateur pour charger son arsenal</span>
+            <span>Sélectionnez un opérateur pour charger son profil</span>
           </div>
         </div>
 
@@ -360,18 +403,18 @@
 
     <!-- 2. POSTE DE COMMANDEMENT -->
     <section id="fenetre-poste-commandement" class="hidden space-y-4">
-      <div id="banniere-lore-personnage" class="panneau-tactique p-3 rounded flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+      <div id="banniere-lore-personnage" class="panneau-tactique p-3.5 rounded flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
         <!-- Rempli par JavaScript -->
       </div>
 
       <!-- Synthèse hebdomadaire -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
         <div class="bg-panneauSombre border border-bordureTactique p-3 rounded biseau-plaque">
-          <span class="text-[10px] font-terminal text-gray-400 uppercase">OBJECTIF DU CYCLE EN COURS</span>
+          <span class="text-[10px] font-terminal text-gray-400 uppercase">OBJECTIF DES FORCES DE TERRAIN</span>
           <div class="text-xl font-titre font-black text-amber-400 mt-0.5">
             <span id="valeur-quota-affiche">3</span> MISSIONS / SEMAINE
           </div>
-          <p class="text-[10px] font-terminal text-gray-500 mt-0.5">Quota réglementaire fixé par le Sergent Hunter.</p>
+          <p class="text-[10px] font-terminal text-gray-500 mt-0.5">Quota réglementaire fixé par le Sergent Hunter pour l'unité.</p>
         </div>
 
         <div class="bg-panneauSombre border border-bordureTactique p-3 rounded biseau-plaque">
@@ -383,15 +426,15 @@
         </div>
 
         <div class="bg-panneauSombre border border-bordureTactique p-3 rounded biseau-plaque">
-          <span class="text-[10px] font-terminal text-gray-400 uppercase">CONFORMITÉ HEBDOMADAIRE</span>
+          <span class="text-[10px] font-terminal text-gray-400 uppercase">CONFORMITÉ DU RESTE DE L'ESCOUADE</span>
           <div class="text-xl font-titre font-black text-vertViseur mt-0.5" id="pourcentage-conformite">
             100%
           </div>
-          <p class="text-[10px] font-terminal text-gray-500 mt-0.5">Pourcentage de membres à jour de leurs quotas.</p>
+          <p class="text-[10px] font-terminal text-gray-500 mt-0.5">Calculé sur les 3 opérateurs de terrain (Hunter exempté).</p>
         </div>
       </div>
 
-      <!-- STATUT OPÉRATIONNEL DE L'UNITÉ (CARTES DES 4 MEMBRES AVEC CASQUES VISIBLES) -->
+      <!-- STATUT OPÉRATIONNEL DE L'UNITÉ (HUNTER = SUPERVISION TACTIQUE // AUTRES = 0/3) -->
       <div>
         <h3 class="font-titre text-[11px] uppercase tracking-wider text-gray-400 mb-2 flex items-center gap-1.5">
           <span class="text-rougeAlerte">■</span> STATUT OPÉRATIONNEL DE L'UNITÉ
@@ -421,14 +464,14 @@
           <div>
             <div class="flex items-center justify-between border-b border-bordureTactique pb-2 mb-2.5">
               <h3 class="font-titre text-xs uppercase tracking-wider text-gray-200 flex items-center gap-1.5">
-                <span class="text-amber-400">■</span> PLANS DE BATAILLE RECONNUS
+                <span class="text-amber-400">■</span> PLANS DE BATAILLE HOMOLOGUÉS
               </h3>
               <button data-action-nav="plans" class="text-xs font-terminal text-amber-400 hover:underline">
                 Tous les plans →
               </button>
             </div>
             <div id="apercu-plans-tactiques" class="space-y-2">
-              <!-- Rempli par JavaScript -->
+              <!-- Rempli par JavaScript avec Plan 0/0 en tête -->
             </div>
           </div>
           <div class="mt-3 pt-2 border-t border-bordureTactique text-[10px] font-terminal text-gray-400">
@@ -455,22 +498,22 @@
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div>
               <label class="block text-xs font-terminal uppercase text-gray-300 mb-1">Désignation de la mission *</label>
-              <input type="text" id="champ-nom-mission" required placeholder="Exemple : BATAILLE D'ANAXES" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-gray-100 rounded focus:border-red-500 outline-none">
+              <input type="text" id="champ-nom-mission" required placeholder="Exemple : BATAILLE D'ANAXES" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded focus:border-red-500 outline-none touch-target">
             </div>
             <div>
               <label class="block text-xs font-terminal uppercase text-gray-300 mb-1">Secteur / Planète d'intervention *</label>
-              <input type="text" id="champ-secteur-mission" required placeholder="Exemple : Anaxes // Complexe de communication" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-gray-100 rounded focus:border-red-500 outline-none">
+              <input type="text" id="champ-secteur-mission" required placeholder="Exemple : Anaxes // Complexe de communication" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded focus:border-red-500 outline-none touch-target">
             </div>
             <div>
-              <label class="block text-xs font-terminal uppercase text-gray-300 mb-1">Date calendaire (JJ/MM/AAAA) *</label>
-              <input type="text" id="champ-date-mission" required class="w-full bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-amber-300 rounded focus:border-red-500 outline-none">
+              <label class="block text-xs font-terminal uppercase text-gray-300 mb-1">Date civile (JJ/MM/AAAA) *</label>
+              <input type="text" id="champ-date-mission" required class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-amber-300 rounded focus:border-red-500 outline-none touch-target">
             </div>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
               <label class="block text-xs font-terminal uppercase text-gray-300 mb-1">Présence opérationnelle</label>
-              <select id="champ-presence-mission" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-gray-100 rounded focus:border-red-500 outline-none">
+              <select id="champ-presence-mission" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded focus:border-red-500 outline-none touch-target">
                 <option value="present">PRÉSENT AU COMBAT [CONFIRMÉ]</option>
                 <option value="absent">ABSENT / MISSION SÉPARÉE</option>
               </select>
@@ -482,14 +525,14 @@
 
           <div>
             <label class="block text-xs font-terminal uppercase text-gray-300 mb-1">Compte-rendu tactique des opérations *</label>
-            <textarea id="champ-description-mission" required rows="3" placeholder="Détaillez les manœuvres exécutées, la résistance adverse et les résultats obtenus..." class="w-full bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-gray-100 rounded focus:border-red-500 outline-none"></textarea>
+            <textarea id="champ-description-mission" required rows="3" placeholder="Détaillez les manœuvres exécutées, la résistance adverse et les résultats obtenus..." class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded focus:border-red-500 outline-none"></textarea>
           </div>
 
           <div class="flex items-center justify-end space-x-2 pt-1">
-            <button type="reset" class="px-3 py-1.5 border border-bordureTactique hover:border-bordureLueur text-xs font-terminal text-gray-400 hover:text-white rounded">
+            <button type="reset" class="px-3 py-2 border border-bordureTactique hover:border-bordureLueur text-xs font-terminal text-gray-400 hover:text-white rounded touch-target">
               Réinitialiser
             </button>
-            <button type="submit" class="px-4 py-2 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold text-xs uppercase biseau-bouton transition shadow">
+            <button type="submit" class="px-4 py-2 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold text-xs uppercase biseau-bouton transition shadow touch-target">
               ENREGISTRER LE RAPPORT
             </button>
           </div>
@@ -519,39 +562,70 @@
       </div>
     </section>
 
-    <!-- 4. EFFECTIF DE L'ESCOUADE -->
+    <!-- 4. EFFECTIF DE L'ESCOUADE (PANNEAU COMMANDEMENT HUNTER AVEC GESTION DU RECRUTEMENT) -->
     <section id="fenetre-effectif" class="hidden space-y-4">
-      <div id="panneau-commandement-hunter" class="panneau-tactique p-3.5 rounded flex flex-col md:flex-row items-start md:items-center justify-between gap-3 border-2 border-red-600/50">
-        <div>
-          <div class="flex items-center space-x-2">
-            <span class="px-2 py-0.5 bg-rougeKamino text-white text-[9px] font-titre font-black uppercase rounded">COMMANDEMENT SUPÉRIEUR</span>
-            <span class="text-xs font-titre font-bold text-gray-100">AUTORITÉ DU SERGENT HUNTER</span>
+      
+      <!-- PANNEAU EXCLUSIF DE COMMANDEMENT POUR LE SERGENT HUNTER -->
+      <div id="panneau-commandement-hunter" class="panneau-tactique p-4 rounded-lg flex flex-col space-y-3 border-2 border-red-600/60 shadow-xl">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 border-b border-bordureTactique pb-2.5">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="px-2 py-0.5 bg-rougeKamino text-white text-[9px] font-titre font-black uppercase rounded">COMMANDEMENT SUPÉRIEUR</span>
+              <span class="text-xs font-titre font-bold text-gray-100">AUTORITÉ DIRECTE DU SERGENT HUNTER</span>
+            </div>
+            <p class="text-xs font-terminal text-gray-300 mt-1">
+              Supervision tactique, contrôle du recrutement, quotas de terrain et clôture hebdomadaire.
+            </p>
           </div>
-          <p class="text-xs font-terminal text-gray-300 mt-1">
-            Gestion des incorporations, statistiques de combat et clôture du cycle hebdomadaire.
-          </p>
+
+          <!-- Commandes Quota & Reset -->
+          <div class="flex flex-wrap items-center gap-2">
+            <button id="bouton-reglage-quota" class="px-3 py-1.5 border border-amber-500/50 hover:border-amber-400 text-amber-300 font-terminal text-xs rounded transition bg-panneauSous touch-target">
+              ⚙️ Quota subordonnés : <span id="affichage-quota-hunter">3</span> m./sem.
+            </button>
+            <button id="bouton-reset-semaine" class="px-3 py-1.5 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold text-xs uppercase biseau-bouton transition shadow touch-target">
+              🔄 CLÔTURER SEMAINE & RESET QUOTAS
+            </button>
+          </div>
         </div>
 
-        <div class="flex flex-wrap items-center gap-2">
-          <button id="bouton-reglage-quota" class="px-2.5 py-1.5 border border-amber-500/50 hover:border-amber-400 text-amber-300 font-terminal text-xs rounded transition bg-panneauSous">
-            ⚙️ Quota : <span id="affichage-quota-hunter">3</span> missions / sem.
-          </button>
-          <button id="bouton-reset-semaine" class="px-3 py-1.5 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold text-xs uppercase biseau-bouton transition shadow">
-            🔄 CLÔTURER SEMAINE & RESET QUOTAS
-          </button>
+        <!-- CONTRÔLEUR EXCLUSIF DU RECRUTEMENT (HUNTER SEULEMENT) -->
+        <div class="bg-fondCarbone p-3 rounded border border-bordureTactique flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+          <div class="space-y-1">
+            <div class="flex items-center space-x-2">
+              <span class="text-xs font-titre font-bold text-amber-400 uppercase">GESTION DES RECRUTEMENTS DE L'UNITÉ :</span>
+              <span id="indicateur-recrutement-hunter" class="px-2 py-0.5 text-[9px] font-terminal font-bold rounded uppercase">
+                <!-- Dynamique -->
+              </span>
+            </div>
+            <div class="text-[11px] font-terminal text-gray-300 flex items-center gap-2">
+              <span>Note publique :</span>
+              <span id="texte-note-recrutement-hunter" class="italic text-gray-400">...</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-end">
+            <button id="bouton-editer-note-recrutement" class="px-2.5 py-1.5 border border-bordureLueur bg-panneauSous hover:bg-bordureTactique text-xs font-terminal text-gray-200 rounded touch-target">
+              ✏️ Modifier la note
+            </button>
+            <button id="bouton-basculer-recrutement" class="px-3 py-1.5 font-titre font-bold text-xs uppercase rounded transition touch-target">
+              <!-- Dynamique : OUVRIR / FERMER -->
+            </button>
+          </div>
         </div>
       </div>
 
       <div id="avis-lecture-seule" class="hidden bg-panneauSombre border border-bordureTactique p-2.5 rounded text-xs font-terminal text-gray-400">
-        ℹ️ Consultation des dossiers en mode lecture. Seul le Sergent Hunter dispose des autorisations pour modifier les fiches de combat.
+        ℹ️ Consultation des dossiers en mode lecture. Seul le Sergent Hunter dispose des autorisations de commandement pour éditer les fiches, modifier les quotas et gérer les recrutements.
       </div>
 
+      <!-- GRILLE DES 4 OPÉRATEURS (HUNTER AFFICHÉ EN SUPERVISION TACTIQUE) -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4" id="conteneur-fiches-effectif">
         <!-- Rempli par JavaScript -->
       </div>
     </section>
 
-    <!-- 5. PLANS TACTIQUES (AVEC LE PLAN 0/0 TOUJOURS PRÉSENT) -->
+    <!-- 5. PLANS TACTIQUES (PLAN 0/0 TOUJOURS PRÉSENT EN POSITION STRATÉGIQUE MAÎTRESSE) -->
     <section id="fenetre-plans" class="hidden space-y-4">
       <div class="bg-panneauSombre border border-bordureTactique p-3.5 rounded flex flex-wrap items-center justify-between gap-3">
         <div>
@@ -563,17 +637,17 @@
           </p>
         </div>
 
-        <button id="bouton-ajouter-plan-hunter" class="hidden px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold text-xs uppercase biseau-bouton transition shadow">
+        <button id="bouton-ajouter-plan-hunter" class="hidden px-3 py-2 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold text-xs uppercase biseau-bouton transition shadow touch-target">
           + ENREGISTRER UN NOUVEAU PLAN
         </button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5" id="conteneur-plans-tactiques">
-        <!-- Rempli par JavaScript -->
+        <!-- Rempli par JavaScript avec Plan 0/0 garanti en tête -->
       </div>
     </section>
 
-    <!-- 6. ARCHIVES DE PIRATAGE -->
+    <!-- 6. ARCHIVES DE PIRATAGE (MODULE TECH) -->
     <section id="fenetre-archives" class="hidden space-y-4">
       <div class="panneau-tactique p-3.5 rounded border-cyan-500/40">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-bordureTactique pb-2.5 mb-2.5">
@@ -593,13 +667,13 @@
       <div id="panneau-saisie-piratage-tech" class="hidden bg-panneauSombre border border-cyan-500/40 p-3.5 rounded">
         <h3 class="font-titre text-xs text-cyanTech uppercase mb-2">Injecter une transmission piratée dans la mémoire centrale</h3>
         <form id="formulaire-archive-tech" class="grid grid-cols-1 md:grid-cols-3 gap-2.5">
-          <input type="text" id="titre-archive-piratee" required placeholder="Désignation (ex: Fréquence des droïdes B1)" class="bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none focus:border-cyanTech">
-          <input type="text" id="source-archive-piratee" required placeholder="Origine ennemie (ex: Frégate CIS Munificent)" class="bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none focus:border-cyanTech">
-          <button type="submit" class="bg-cyanTech/20 hover:bg-cyanTech/30 border border-cyanTech text-cyanTech font-titre text-xs font-bold py-1.5 rounded transition">
+          <input type="text" id="titre-archive-piratee" required placeholder="Désignation (ex: Fréquence des droïdes B1)" class="bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none focus:border-cyanTech touch-target">
+          <input type="text" id="source-archive-piratee" required placeholder="Origine ennemie (ex: Frégate CIS Munificent)" class="bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none focus:border-cyanTech touch-target">
+          <button type="submit" class="bg-cyanTech/20 hover:bg-cyanTech/30 border border-cyanTech text-cyanTech font-titre text-xs font-bold py-2 rounded transition touch-target">
             INJECTER LES DONNÉES
           </button>
           <div class="md:col-span-3">
-            <textarea id="contenu-archive-piratee" required rows="2" placeholder="Contenu du déchiffrement, faiblesses des boucliers déflecteurs, fréquences..." class="w-full bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none focus:border-cyanTech"></textarea>
+            <textarea id="contenu-archive-piratee" required rows="2" placeholder="Contenu du déchiffrement, faiblesses des boucliers déflecteurs, fréquences..." class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none focus:border-cyanTech"></textarea>
           </div>
         </form>
       </div>
@@ -619,6 +693,26 @@
 
   <!-- ==================== MODALES MILITAIRES ==================== -->
 
+  <!-- ÉDITION DE LA NOTE DE RECRUTEMENT (HUNTER UNIQUEMENT) -->
+  <div id="boite-editer-note-recrutement" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-panneauSombre border-2 border-amber-500 biseau-plaque max-w-md w-full p-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-bordureTactique pb-2 mb-3">
+        <h3 class="font-titre text-xs font-bold text-amber-400 uppercase">NOTE PUBLIQUE DE RECRUTEMENT</h3>
+        <button type="button" class="btn-fermer-modale text-gray-400 hover:text-white" data-modale="boite-editer-note-recrutement">✕</button>
+      </div>
+      <form id="formulaire-note-recrutement" class="space-y-2.5">
+        <div>
+          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Message affiché sur le terminal d'accueil :</label>
+          <textarea id="champ-note-recrutement-texte" rows="3" required class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none focus:border-amber-400" placeholder="Spécifiez les prérequis, spécialité recherchée ou instructions d'intégration..."></textarea>
+        </div>
+        <div class="flex justify-end space-x-2 pt-1.5">
+          <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-xs font-terminal text-gray-400 rounded" data-modale="boite-editer-note-recrutement">Annuler</button>
+          <button type="submit" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold text-xs uppercase rounded">Mettre à jour</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- MODIFIER MOT DE PASSE -->
   <div id="boite-changer-mot-de-passe" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-panneauSombre border-2 border-amber-500 biseau-plaque max-w-sm w-full p-4 shadow-2xl">
@@ -629,11 +723,11 @@
       <form id="formulaire-nouveau-mdp" class="space-y-2.5">
         <div>
           <label class="block text-[11px] font-terminal text-gray-300 mb-1">Mot de passe actuel :</label>
-          <input type="password" id="champ-mot-de-passe-actuel" required class="w-full bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none focus:border-amber-400">
+          <input type="password" id="champ-mot-de-passe-actuel" required class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none focus:border-amber-400">
         </div>
         <div>
           <label class="block text-[11px] font-terminal text-gray-300 mb-1">Nouveau mot de passe de sécurité :</label>
-          <input type="password" id="champ-nouveau-mot-de-passe" required class="w-full bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-amber-300 rounded outline-none focus:border-amber-400">
+          <input type="password" id="champ-nouveau-mot-de-passe" required class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-amber-300 rounded outline-none focus:border-amber-400">
         </div>
         <div id="erreur-changement-mot-de-passe" class="hidden text-[10px] font-terminal text-red-400 bg-red-950/70 p-2 rounded border border-red-800"></div>
         <div class="flex justify-end space-x-2 pt-1.5">
@@ -654,19 +748,19 @@
       <form id="formulaire-nouveau-plan" class="space-y-2.5">
         <div>
           <label class="block text-[11px] font-terminal text-gray-300 mb-1">Code tactique (ex: PLAN 33)</label>
-          <input type="text" id="champ-code-plan" required placeholder="PLAN XX" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-amber-300 rounded outline-none uppercase">
+          <input type="text" id="champ-code-plan" required placeholder="PLAN XX" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-amber-300 rounded outline-none uppercase">
         </div>
         <div>
           <label class="block text-[11px] font-terminal text-gray-300 mb-1">Objectif tactique principal</label>
-          <input type="text" id="champ-cible-plan" required placeholder="Exemple : Neutralisation de générateur à distance" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none">
+          <input type="text" id="champ-cible-plan" required placeholder="Exemple : Neutralisation de générateur à distance" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none">
         </div>
         <div>
           <label class="block text-[11px] font-terminal text-gray-300 mb-1">Opérateurs engagés</label>
-          <input type="text" id="champ-meneurs-plan" required placeholder="Exemple : Crosshair & Tech" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none">
+          <input type="text" id="champ-meneurs-plan" required placeholder="Exemple : Crosshair & Tech" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none">
         </div>
         <div>
           <label class="block text-[11px] font-terminal text-gray-300 mb-1">Description de la manœuvre</label>
-          <textarea id="champ-description-plan" required rows="3" placeholder="Étapes précises de déroulement du plan..." class="w-full bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none"></textarea>
+          <textarea id="champ-description-plan" required rows="3" placeholder="Étapes précises de déroulement du plan..." class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none"></textarea>
         </div>
         <div class="flex justify-end space-x-2 pt-1.5">
           <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-xs font-terminal text-gray-400 rounded" data-modale="boite-nouveau-plan">Annuler</button>
@@ -687,14 +781,14 @@
         <input type="hidden" id="identifiant-membre-edite">
         <div>
           <label class="block text-[11px] font-terminal text-gray-300 mb-1">Date d'incorporation dans l'unité (JJ/MM/AAAA) :</label>
-          <input type="text" id="champ-date-incorporation" required placeholder="Exemple : 15/01/2024" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-amber-300 rounded outline-none">
+          <input type="text" id="champ-date-incorporation" required placeholder="Exemple : 15/01/2024" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-amber-300 rounded outline-none">
         </div>
         
         <div class="bg-fondCarbone p-2.5 rounded border border-bordureTactique">
           <label class="block text-[11px] font-terminal text-amber-400 mb-1" id="libelle-stat-edition">Compteur statistique global :</label>
           <div class="flex items-center space-x-2">
-            <input type="number" id="champ-stat-globale" min="0" required class="flex-grow bg-panneauSombre border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-white rounded outline-none">
-            <button type="button" id="bouton-reset-stat-unique" class="px-2.5 py-1.5 bg-red-950/70 border border-rougeAlerte text-rougeAlerte hover:bg-rougeKamino hover:text-white text-xs font-terminal rounded transition">
+            <input type="number" id="champ-stat-globale" min="0" required class="flex-grow bg-panneauSombre border border-bordureTactique px-3 py-2 text-xs font-terminal text-white rounded outline-none">
+            <button type="button" id="bouton-reset-stat-unique" class="px-2.5 py-2 bg-red-950/70 border border-rougeAlerte text-rougeAlerte hover:bg-rougeKamino hover:text-white text-xs font-terminal rounded transition">
               Remettre à 0
             </button>
           </div>
@@ -702,7 +796,7 @@
 
         <div>
           <label class="block text-[11px] font-terminal text-gray-300 mb-1">Notes de commandement & évaluation tactique :</label>
-          <textarea id="champ-notes-commandement" rows="3" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none"></textarea>
+          <textarea id="champ-notes-commandement" rows="3" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none"></textarea>
         </div>
         <div class="flex justify-end space-x-2 pt-1.5">
           <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-xs font-terminal text-gray-400 rounded" data-modale="boite-modifier-dossier">Annuler</button>
@@ -716,13 +810,13 @@
   <div id="boite-reglage-quota" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-panneauSombre border-2 border-amber-500 biseau-plaque max-w-xs w-full p-4 shadow-2xl">
       <div class="flex items-center justify-between border-b border-bordureTactique pb-2 mb-3">
-        <h3 class="font-titre text-xs font-bold text-amber-400 uppercase">RÉGLAGE DU QUOTA HEBDOMADAIRE</h3>
+        <h3 class="font-titre text-xs font-bold text-amber-400 uppercase">RÉGLAGE DU QUOTA DE TERRAIN</h3>
         <button type="button" class="btn-fermer-modale text-gray-400 hover:text-white" data-modale="boite-reglage-quota">✕</button>
       </div>
       <form id="formulaire-reglage-quota" class="space-y-2.5">
         <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Missions requises par semaine :</label>
-          <input type="number" id="champ-valeur-quota" min="1" max="15" required class="w-full bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-amber-300 rounded outline-none">
+          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Missions requises / sem. (subordonnés) :</label>
+          <input type="number" id="champ-valeur-quota" min="1" max="15" required class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-amber-300 rounded outline-none">
         </div>
         <div class="flex justify-end space-x-2 pt-1.5">
           <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-xs font-terminal text-gray-400 rounded" data-modale="boite-reglage-quota">Annuler</button>
@@ -749,24 +843,24 @@
     </div>
   </div>
 
-  <!-- Pied de page avec Affichage Permanent du Numéro de Version en bas à droite -->
+  <!-- PIED DE PAGE PERMANENT AVEC LE BADGE AMBRÉ MILITAIRE DEMANDÉ -->
   <footer class="border-t border-bordureTactique bg-fondCarbone/95 py-2.5 text-xs font-terminal text-gray-500 fixed bottom-0 left-0 right-0 z-30 shadow-2xl backdrop-blur">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5">
       <div class="text-gray-400 flex items-center gap-2">
-        <span class="inline-block w-2 h-2 rounded-full bg-rougeKamino animate-ping"></span>
-        <span>FORCE CLONE 99 // UNITÉ BAD BATCH // CONSOLE DU MARAUDEUR</span>
+        <span class="inline-block w-2 h-2 rounded-full bg-rougeAlerte animate-ping"></span>
+        <span class="truncate">FORCE CLONE 99 // UNITÉ BAD BATCH // CONSOLE DU MARAUDEUR</span>
       </div>
       <div class="flex items-center gap-3">
         <span class="text-gray-500 hidden md:inline">GRANDE ARMÉE DE LA RÉPUBLIQUE</span>
-        <!-- Mention de version bien visible demandée -->
-        <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/50 text-amber-300 text-[11px] font-titre font-bold rounded tracking-wider shadow-[0_0_8px_rgba(245,158,11,0.2)]">
-          VERSION // PATCH BUG 1.5
+        <!-- Badge officiel Star Wars demandé -->
+        <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/60 text-amber-300 text-[11px] font-titre font-bold rounded tracking-wider shadow-[0_0_10px_rgba(245,158,11,0.25)]">
+          FIRMWARE MARAUDEUR // BUILD 1.6
         </span>
       </div>
     </div>
   </footer>
 
-  <!-- SCRIPT SÉCURISÉ : MODULE IIFE, GESTION MULTI-CASSE DES CASQUES & VECTORIELS DÉDIÉS BAD BATCH -->
+  <!-- SCRIPT SECURISE : MODULE IIFE, GESTION MULTI-CASSE DES CASQUES & VECTORIELS SPÉCIFIQUES -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { 
@@ -810,7 +904,7 @@
         return `${jour}/${mois}/${annee}`;
       }
 
-      // ==================== MODULE AUDIO WEB CONTEXT ====================
+      // ==================== MODULE AUDIO SFX VIA WEB CONTEXT ====================
       const AudioTactique = {
         contexte: null,
         actif: true,
@@ -837,10 +931,10 @@
             osc.stop(this.contexte.currentTime + duree);
           } catch(e) {}
         },
-        clic() { this.bip(1000, 'triangle', 0.02, 0.02); },
+        clic() { this.bip(1050, 'triangle', 0.025, 0.02); },
         succes() {
           this.bip(800, 'sine', 0.04, 0.025);
-          setTimeout(() => this.bip(1350, 'sine', 0.06, 0.025), 40);
+          setTimeout(() => this.bip(1350, 'sine', 0.06, 0.025), 45);
         },
         alerte() {
           this.bip(380, 'sawtooth', 0.09, 0.035);
@@ -848,7 +942,7 @@
         }
       };
 
-      // Candidats de chemins pour gérer à 100% la casse sur Linux/GitHub Pages
+      // Fichiers locaux prioritaires avec gestion multi-casse pour Linux/GitHub Pages
       const VARIANTES_CHEMINS_CASQUES = {
         hunter: ['hunter.png', 'Hunter.png', './hunter.png', './Hunter.png'],
         wrecker: ['Wrecker.png', 'wrecker.png', './Wrecker.png', './wrecker.png'],
@@ -856,22 +950,21 @@
         tech: ['Tech.png', 'tech.png', './Tech.png', './tech.png']
       };
 
-      // REPLI SVG HAUTE FIDÉLITÉ DÉDIÉ PAR CASQUE (JAMAIS D'ICÔNE ROUGE DE REPOS CASSÉE)
+      // REPLIS VECTORIELS SVG ULTRA-DÉTAILLÉS (AUCUNE ICÔNE GÉNÉRIQUE BRISÉE)
       const REPLI_SVG_SPECIFIQUES = {
-        // HUNTER : Casque Katarn sombre avec bande rouge centrale, visière T et marquage crâne stylisé
-        hunter: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="12" fill="%230d1117"/><path d="M22 36 C22 18, 78 18, 78 36 L78 68 C78 84, 22 84, 22 68 Z" fill="%231e2430" stroke="%23374151" stroke-width="2"/><path d="M46 19 L54 19 L54 44 L46 44 Z" fill="%23dc2626"/><path d="M38 45 L62 45 L58 55 L42 55 Z" fill="%23dc2626"/><path d="M26 44 L74 44 L70 54 L54 54 L54 70 L46 70 L46 54 L30 54 Z" fill="%2307090e" stroke="%23dc2626" stroke-width="1.5"/><circle cx="34" cy="74" r="5" fill="%2307090e" stroke="%234b5563" stroke-width="2"/><circle cx="66" cy="74" r="5" fill="%2307090e" stroke="%234b5563" stroke-width="2"/></svg>',
+        // HUNTER : Casque Katarn sombre avec bande rouge centrale, visière T et demi-motif crâne
+        hunter: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="12" fill="%230c1017"/><path d="M22 36 C22 18, 78 18, 78 36 L78 68 C78 84, 22 84, 22 68 Z" fill="%231e2430" stroke="%23374151" stroke-width="2"/><path d="M46 19 L54 19 L54 44 L46 44 Z" fill="%23ff2e43"/><path d="M38 45 L62 45 L58 55 L42 55 Z" fill="%23ff2e43"/><path d="M26 44 L74 44 L70 54 L54 54 L54 70 L46 70 L46 54 L30 54 Z" fill="%2307090e" stroke="%23ff2e43" stroke-width="1.5"/><circle cx="34" cy="74" r="5" fill="%2307090e" stroke="%234b5563" stroke-width="2"/><circle cx="66" cy="74" r="5" fill="%2307090e" stroke="%234b5563" stroke-width="2"/></svg>',
         
         // WRECKER : Casque d'assaut lourd blanc/carbone avec le « 99 » rouge sur le front et mâchoire dentée
-        wrecker: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="12" fill="%230d1117"/><path d="M20 38 C20 16, 80 16, 80 38 L80 66 C80 86, 20 86, 20 66 Z" fill="%232b3442" stroke="%23f59e0b" stroke-width="2"/><path d="M30 24 C36 20, 64 20, 70 24 L72 44 L28 44 Z" fill="%23e2e8f0"/><text x="50" y="38" fill="%23dc2626" font-family="sans-serif" font-weight="900" font-size="16" text-anchor="middle" letter-spacing="2">99</text><path d="M26 48 L74 48 L70 55 L30 55 Z" fill="%2307090e" stroke="%23f59e0b" stroke-width="1.5"/><path d="M36 64 L42 74 L50 66 L58 74 L64 64" stroke="%23e2e8f0" stroke-width="3" fill="none"/></svg>',
+        wrecker: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="12" fill="%230c1017"/><path d="M20 38 C20 16, 80 16, 80 38 L80 66 C80 86, 20 86, 20 66 Z" fill="%232b3442" stroke="%23f59e0b" stroke-width="2"/><path d="M30 24 C36 20, 64 20, 70 24 L72 44 L28 44 Z" fill="%23e2e8f0"/><text x="50" y="38" fill="%23ff2e43" font-family="sans-serif" font-weight="900" font-size="16" text-anchor="middle" letter-spacing="2">99</text><path d="M26 48 L74 48 L70 55 L30 55 Z" fill="%2307090e" stroke="%23f59e0b" stroke-width="1.5"/><path d="M36 64 L42 74 L50 66 L58 74 L64 64" stroke="%23e2e8f0" stroke-width="3" fill="none"/></svg>',
 
         // CROSSHAIR : Casque profilé furtif, viseur vert oculaire circulaire et antenne télémétrique
-        crosshair: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="12" fill="%230d1117"/><path d="M25 36 C25 18, 75 18, 75 36 L75 68 C75 84, 25 84, 25 68 Z" fill="%231a202c" stroke="%2310b981" stroke-width="2"/><line x1="20" y1="14" x2="20" y2="46" stroke="%239ca3af" stroke-width="2.5"/><rect x="16" y="10" width="12" height="6" fill="%239ca3af" rx="1"/><path d="M28 48 L72 48 L68 56 L32 56 Z" fill="%2307090e" stroke="%2310b981" stroke-width="1.5"/><circle cx="43" cy="52" r="10" fill="none" stroke="%2310b981" stroke-width="2.5"/><circle cx="43" cy="52" r="3" fill="%2310b981"/><line x1="43" y1="38" x2="43" y2="66" stroke="%2310b981" stroke-width="1.5"/><line x1="29" y1="52" x2="57" y2="52" stroke="%2310b981" stroke-width="1.5"/></svg>',
+        crosshair: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="12" fill="%230c1017"/><path d="M25 36 C25 18, 75 18, 75 36 L75 68 C75 84, 25 84, 25 68 Z" fill="%231a202c" stroke="%2310b981" stroke-width="2"/><line x1="20" y1="14" x2="20" y2="46" stroke="%239ca3af" stroke-width="2.5"/><rect x="16" y="10" width="12" height="6" fill="%239ca3af" rx="1"/><path d="M28 48 L72 48 L68 56 L32 56 Z" fill="%2307090e" stroke="%2310b981" stroke-width="1.5"/><circle cx="43" cy="52" r="10" fill="none" stroke="%2310b981" stroke-width="2.5"/><circle cx="43" cy="52" r="3" fill="%2310b981"/><line x1="43" y1="38" x2="43" y2="66" stroke="%2310b981" stroke-width="1.5"/><line x1="29" y1="52" x2="57" y2="52" stroke="%2310b981" stroke-width="1.5"/></svg>',
 
         // TECH : Casque d'ingénieur blanc avec visière rectangulaire dorée et protège-oreilles à capteurs
-        tech: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="12" fill="%230d1117"/><path d="M26 38 C26 18, 74 18, 74 38 L74 68 C74 84, 26 84, 26 68 Z" fill="%23e2e8f0" stroke="%2306b6d4" stroke-width="2"/><rect x="14" y="36" width="10" height="30" rx="4" fill="%234b5563" stroke="%2306b6d4" stroke-width="1.5"/><rect x="76" y="36" width="10" height="30" rx="4" fill="%234b5563" stroke="%2306b6d4" stroke-width="1.5"/><rect x="30" y="44" width="40" height="16" rx="3" fill="%23f59e0b" stroke="%23d97706" stroke-width="2"/><line x1="30" y1="52" x2="70" y2="52" stroke="%23b45309" stroke-width="1"/><line x1="43" y1="44" x2="43" y2="60" stroke="%23b45309" stroke-width="1"/><line x1="57" y1="44" x2="57" y2="60" stroke="%23b45309" stroke-width="1"/></svg>'
+        tech: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="12" fill="%230c1017"/><path d="M26 38 C26 18, 74 18, 74 38 L74 68 C74 84, 26 84, 26 68 Z" fill="%23e2e8f0" stroke="%2338bdf8" stroke-width="2"/><rect x="14" y="36" width="10" height="30" rx="4" fill="%234b5563" stroke="%2338bdf8" stroke-width="1.5"/><rect x="76" y="36" width="10" height="30" rx="4" fill="%234b5563" stroke="%2338bdf8" stroke-width="1.5"/><rect x="30" y="44" width="40" height="16" rx="3" fill="%23f59e0b" stroke="%23d97706" stroke-width="2"/><line x1="30" y1="52" x2="70" y2="52" stroke="%23b45309" stroke-width="1"/><line x1="43" y1="44" x2="43" y2="60" stroke="%23b45309" stroke-width="1"/><line x1="57" y1="44" x2="57" y2="60" stroke="%23b45309" stroke-width="1"/></svg>'
       };
 
-      // Attachement résilient de l'image avec recherche multi-casse puis fallback vectoriel
       function attacherImageCasque(elementImg, idOperateur) {
         if (!elementImg) return;
         const listeChemins = VARIANTES_CHEMINS_CASQUES[idOperateur] || ['hunter.png'];
@@ -879,11 +972,10 @@
 
         function essayerSuivant() {
           if (indexActuel < listeChemins.length) {
-            const tentativeChemin = listeChemins[indexActuel];
+            const tentative = listeChemins[indexActuel];
             indexActuel++;
-            elementImg.src = tentativeChemin;
+            elementImg.src = tentative;
           } else {
-            // Aucun fichier PNG trouvé sur le serveur : chargement du vecteur Bad Batch sur-mesure
             elementImg.onerror = null;
             elementImg.src = REPLI_SVG_SPECIFIQUES[idOperateur] || REPLI_SVG_SPECIFIQUES.hunter;
           }
@@ -893,6 +985,7 @@
         essayerSuivant();
       }
 
+      // DONNÉES OFFICIELLES DE L'ESCOUADE AVEC SYMBOLES INVERSÉS (HUNTER: 🦅, CROSSHAIR: 🎯)
       const EFFECTIF_CANONIQUE = {
         hunter: {
           id: 'hunter',
@@ -901,11 +994,11 @@
           grade: 'Sergent // Chef d\'escouade',
           specialite: 'Pisteur & Commandement tactique',
           dateEntree: '15/01/2024',
-          symbole: '🎯',
-          couleur: '#dc2626',
+          symbole: '🦅', // Logo inversé conforme à la demande
+          couleur: '#ff2e43',
           mutation: 'Sensibilité spectrale et fréquences électromagnétiques',
           armure: 'Armure Katarn modifiée avec capteurs thermiques',
-          notes: 'Perception des fréquences et flux électromagnétiques. Maîtrise tactique absolue et coordination de toute l\'escouade.',
+          notes: 'Perception sensorielle des fréquences électromagnétiques. Maîtrise tactique absolue, autorité de commandement et coordination de toute l\'escouade.',
           compteurSemaine: 0,
           libelleStatistique: 'Missions coordonnées',
           totalStatistique: 48,
@@ -945,7 +1038,7 @@
           grade: 'Tireur d\'Élite',
           specialite: 'Tir de haute précision & Neutralisation',
           dateEntree: '15/01/2024',
-          symbole: '🦅',
+          symbole: '🎯', // Logo inversé conforme à la demande
           couleur: '#10b981',
           mutation: 'Acuité visuelle millimétrique et réflexes de visée décuplés',
           armure: 'Armure furtive profilée noire mate anti-reflets',
@@ -968,7 +1061,7 @@
           specialite: 'Piratage informatique & Ingénierie de bord',
           dateEntree: '15/01/2024',
           symbole: '💻',
-          couleur: '#06b6d4',
+          couleur: '#38bdf8',
           mutation: 'Vitesse d\'analyse synaptique et mémoire eidétique totale',
           armure: 'Combinaison tactique légère intégrant un processeur de calcul',
           notes: 'Traitement analytique ultrarapide. Neutralisation et dérivation des systèmes ennemis. Surveillance du réseau central du Maraudeur.',
@@ -1035,6 +1128,8 @@
         operateurSelectionneAccueil: 'hunter',
         ongletActif: 'poste-commandement',
         quotaHebdomadaire: 3,
+        recrutementOuvert: false,
+        recrutementNote: "Aucun slot de mutation clone ouvert actuellement par le Sergent Hunter.",
         operateurs: JSON.parse(JSON.stringify(EFFECTIF_CANONIQUE)),
         rapports: [],
         plans: JSON.parse(JSON.stringify(PLANS_CANONIQUES)),
@@ -1042,8 +1137,7 @@
         motsDePasseHashes: {}
       };
 
-      // Hash de base SHA-256 pour le code d'accès par défaut "1234"
-      const HASH_DEFAUT = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4";
+      const HASH_DEFAUT = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4"; // 1234
       ['hunter', 'wrecker', 'crosshair', 'tech'].forEach(id => {
         etat.motsDePasseHashes[id] = HASH_DEFAUT;
       });
@@ -1071,28 +1165,38 @@
 
       function initialiserSynchronisationFirestore() {
         if (!estConnecteFirestore) {
-          document.getElementById('indicateur-liaison').textContent = "LIAISON LOCALE (HORS LIGNE)";
+          document.getElementById('indicateur-liaison').textContent = "LIAISON LOCALE (OFFLINE)";
           document.getElementById('point-liaison').className = "inline-block w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_6px_#f59e0b]";
+          actualiserAffichageRecrutement();
           return;
         }
 
-        // 1. Config escouade (quotas et mots de passe)
+        // 1. Config escouade (quotas, mots de passe et RECRUTEMENT)
         const refConfigEscouade = doc(baseDeDonnees, 'config', 'escouade');
         onSnapshot(refConfigEscouade, snap => {
           if (snap.exists()) {
             const donnees = snap.data();
             if (donnees.quotaHebdomadaire) etat.quotaHebdomadaire = donnees.quotaHebdomadaire;
+            if (typeof donnees.recrutementOuvert === 'boolean') etat.recrutementOuvert = donnees.recrutementOuvert;
+            if (donnees.recrutementNote) etat.recrutementNote = donnees.recrutementNote;
             if (donnees.motsDePasseHashes) {
               etat.motsDePasseHashes = { ...etat.motsDePasseHashes, ...donnees.motsDePasseHashes };
             }
+            actualiserAffichageRecrutement();
             if (etat.operateurConnecte) actualiserVueEnCours();
           } else {
             setDoc(refConfigEscouade, {
               quotaHebdomadaire: 3,
+              recrutementOuvert: false,
+              recrutementNote: "Aucun slot de mutation clone ouvert actuellement par le Sergent Hunter.",
               motsDePasseHashes: etat.motsDePasseHashes
             });
+            actualiserAffichageRecrutement();
           }
-        }, err => console.warn(err));
+        }, err => {
+          console.warn("Erreur config :", err);
+          actualiserAffichageRecrutement();
+        });
 
         // 2. Fiches opérateurs
         const refOperateurs = collection(baseDeDonnees, 'operateurs');
@@ -1129,7 +1233,6 @@
           } else {
             const listePlans = [];
             snap.forEach(d => listePlans.push({ id: d.id, ...d.data() }));
-            // S'assurer que le Plan 0/0 reste présent en tête
             if (!listePlans.some(p => p.code === 'PLAN 0/0')) {
               listePlans.unshift(PLANS_CANONIQUES[0]);
             }
@@ -1149,6 +1252,88 @@
         }, err => console.warn(err));
       }
 
+      // ==================== GESTION DU MODULE DE RECRUTEMENT ====================
+      function actualiserAffichageRecrutement() {
+        const badge = document.getElementById('badge-statut-recrutement');
+        const desc = document.getElementById('description-statut-recrutement');
+        const contact = document.getElementById('instruction-recrutement-contact');
+        const icone = document.getElementById('icone-recrutement');
+        const encadre = document.getElementById('encadre-recrutement-accueil');
+
+        if (etat.recrutementOuvert) {
+          badge.className = "px-2.5 py-1 rounded text-xs font-titre font-bold uppercase tracking-wider bg-emerald-950/80 text-emerald-300 border border-vertViseur shadow-[0_0_10px_rgba(16,185,129,0.3)] animate-pulse";
+          badge.textContent = "RECRUTEMENT ESCOUADE : OUVERT";
+          icone.textContent = "🟢";
+          encadre.className = "panneau-tactique p-3.5 sm:p-4 rounded-lg biseau-plaque border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.2)]";
+          contact.classList.remove('hidden');
+        } else {
+          badge.className = "px-2.5 py-1 rounded text-xs font-titre font-bold uppercase tracking-wider bg-red-950/80 text-red-300 border border-rougeAlerte";
+          badge.textContent = "RECRUTEMENT ESCOUADE : FERMÉ";
+          icone.textContent = "🔴";
+          encadre.className = "panneau-tactique p-3.5 sm:p-4 rounded-lg biseau-plaque border-bordureTactique";
+          contact.classList.add('hidden');
+        }
+
+        desc.textContent = etat.recrutementNote || "Aucun slot de mutation clone ouvert actuellement par le Sergent Hunter.";
+
+        // Mise à jour de la section Hunter si connectée
+        const indHunter = document.getElementById('indicateur-recrutement-hunter');
+        const btnBascule = document.getElementById('bouton-basculer-recrutement');
+        const txtHunter = document.getElementById('texte-note-recrutement-hunter');
+
+        if (indHunter && btnBascule && txtHunter) {
+          if (etat.recrutementOuvert) {
+            indHunter.className = "px-2 py-0.5 text-[9px] font-terminal font-bold rounded uppercase bg-emerald-950 text-emerald-300 border border-emerald-700";
+            indHunter.textContent = "STATUT ACTUEL : OUVERT";
+            btnBascule.className = "px-3 py-1.5 font-titre font-bold text-xs uppercase rounded transition bg-red-950 hover:bg-red-800 text-red-200 border border-rougeAlerte touch-target";
+            btnBascule.textContent = "⛔ FERMER LES RECRUTEMENTS";
+          } else {
+            indHunter.className = "px-2 py-0.5 text-[9px] font-terminal font-bold rounded uppercase bg-red-950 text-red-300 border border-red-800";
+            indHunter.textContent = "STATUT ACTUEL : FERMÉ";
+            btnBascule.className = "px-3 py-1.5 font-titre font-bold text-xs uppercase rounded transition bg-emerald-900 hover:bg-emerald-700 text-emerald-200 border border-vertViseur touch-target";
+            btnBascule.textContent = "✅ OUVRIR LES RECRUTEMENTS";
+          }
+          txtHunter.textContent = etat.recrutementNote;
+        }
+      }
+
+      async function basculerEtatRecrutementHunter() {
+        if (etat.operateurConnecte !== 'hunter') return;
+        const nouvelEtat = !etat.recrutementOuvert;
+        etat.recrutementOuvert = nouvelEtat;
+
+        if (estConnecteFirestore) {
+          try {
+            const refConfig = doc(baseDeDonnees, 'config', 'escouade');
+            await updateDoc(refConfig, { recrutementOuvert: nouvelEtat });
+          } catch(err) {
+            console.warn("Écriture recrutement :", err);
+          }
+        }
+        AudioTactique.succes();
+        actualiserAffichageRecrutement();
+      }
+
+      async function sauvegarderNoteRecrutement(e) {
+        e.preventDefault();
+        if (etat.operateurConnecte !== 'hunter') return;
+        const texte = document.getElementById('champ-note-recrutement-texte').value.trim();
+        etat.recrutementNote = texte;
+
+        if (estConnecteFirestore) {
+          try {
+            const refConfig = doc(baseDeDonnees, 'config', 'escouade');
+            await updateDoc(refConfig, { recrutementNote: texte });
+          } catch(err) {
+            console.warn("Écriture note recrutement :", err);
+          }
+        }
+        fermerBoite('boite-editer-note-recrutement');
+        AudioTactique.succes();
+        actualiserAffichageRecrutement();
+      }
+
+      // ==================== INTERFACE D'ACCUEIL & AUTHENTIFICATION ====================
       function selectionnerOperateurAccueil(id) {
         if (!etat.operateurs[id]) return;
         AudioTactique.clic();
@@ -1233,7 +1418,7 @@
         document.getElementById('grade-operateur').textContent = op.grade;
         attacherImageCasque(document.getElementById('avatar-profil-haut'), etat.operateurConnecte);
 
-        document.body.className = `arriere-plan-vaisseau flex flex-col justify-between pb-6 theme-${etat.operateurConnecte}`;
+        document.body.className = `grille-tactique-bg flex flex-col justify-between min-h-screen pb-16 sm:pb-12 text-sm select-none theme-${etat.operateurConnecte}`;
 
         const boutonPlan = document.getElementById('bouton-ajouter-plan-hunter');
         if (etat.operateurConnecte === 'hunter') {
@@ -1244,15 +1429,16 @@
 
         naviguerOnglet('poste-commandement');
         verifierAlertesCommandementHunter();
+        actualiserAffichageRecrutement();
       }
 
       function demanderDeconnexion() {
         afficherBoiteConfirmation(
           "DÉCONNEXION DE LA CONSOLE",
-          "Voulez-vous fermer la session de commandement et retourner à l'écran de veille ?",
+          "Voulez-vous fermer la session de bord et verrouiller le terminal du Havoc Marauder ?",
           () => {
             etat.operateurConnecte = null;
-            document.body.className = "arriere-plan-vaisseau flex flex-col justify-between pb-6";
+            document.body.className = "grille-tactique-bg flex flex-col justify-between min-h-screen pb-16 sm:pb-12 text-sm select-none";
             document.getElementById('fenetre-connexion').classList.remove('hidden');
             document.getElementById('barre-navigation').classList.add('hidden');
             document.getElementById('bloc-profil-actif').classList.add('hidden');
@@ -1260,6 +1446,7 @@
             document.getElementById('banniere-alerte-quota').classList.add('hidden');
             masquerToutesLesFenetres();
             selectionnerOperateurAccueil('hunter');
+            actualiserAffichageRecrutement();
           }
         );
       }
@@ -1374,7 +1561,9 @@
         verifierAlertesCommandementHunter();
       }
 
+      // ==================== STATUT OPÉRATIONNEL & EXEMPTION DE HUNTER ====================
       function membreEstEnRegle(idMembre) {
+        if (idMembre === 'hunter') return true; // Exemption totale de Hunter
         const op = etat.operateurs[idMembre];
         if (!op) return false;
         return (op.compteurSemaine || 0) >= etat.quotaHebdomadaire;
@@ -1384,13 +1573,12 @@
         const banniere = document.getElementById('banniere-alerte-quota');
         const texteAlerte = document.getElementById('texte-alerte-quota');
 
-        const membresEnRetard = [];
-        Object.keys(etat.operateurs).forEach(k => {
-          if (!membreEstEnRegle(k)) membresEnRetard.push(etat.operateurs[k].nom);
-        });
+        // Exclure Hunter de la liste des manquements
+        const subordonnes = ['wrecker', 'crosshair', 'tech'];
+        const subordonnesEnRetard = subordonnes.filter(k => !membreEstEnRegle(k)).map(k => etat.operateurs[k].nom);
 
-        if (etat.operateurConnecte === 'hunter' && membresEnRetard.length > 0) {
-          texteAlerte.textContent = `Rapports incomplets pour : ${membresEnRetard.join(', ')} (${etat.quotaHebdomadaire} missions requises / sem.)`;
+        if (etat.operateurConnecte === 'hunter' && subordonnesEnRetard.length > 0) {
+          texteAlerte.textContent = `Rapports incomplets pour : ${subordonnesEnRetard.join(', ')} (${etat.quotaHebdomadaire} missions requises / sem.)`;
           banniere.classList.remove('hidden');
         } else {
           banniere.classList.add('hidden');
@@ -1404,7 +1592,7 @@
           banniereLore.innerHTML = `
             <div>
               <div class="flex items-center gap-2">
-                <span class="text-lg">🎯</span>
+                <span class="text-lg">🦅</span>
                 <h2 class="font-titre font-bold text-xs sm:text-sm text-rougeAlerte uppercase">INTERFACE DE COMMANDEMENT // RADAR TACTIQUE HUNTER</h2>
               </div>
               <p class="text-xs font-terminal text-gray-300 mt-0.5">
@@ -1430,7 +1618,7 @@
           banniereLore.innerHTML = `
             <div>
               <div class="flex items-center gap-2">
-                <span class="text-lg">🦅</span>
+                <span class="text-lg">🎯</span>
                 <h2 class="font-titre font-bold text-xs sm:text-sm text-vertViseur uppercase">VISÉE TÉLÉMÉTRIQUE // RÉTICULE CROSSHAIR</h2>
               </div>
               <p class="text-xs font-terminal text-gray-300 mt-0.5">
@@ -1457,42 +1645,61 @@
         document.getElementById('valeur-quota-affiche').textContent = etat.quotaHebdomadaire;
         document.getElementById('total-rapports-enregistres').textContent = etat.rapports.length;
 
-        let valides = 0;
-        Object.keys(etat.operateurs).forEach(k => {
-          if (membreEstEnRegle(k)) valides++;
+        // Calcul de conformité calé sur les 3 subordonnés soumis au quota (Wrecker, Crosshair, Tech)
+        const subordonnes = ['wrecker', 'crosshair', 'tech'];
+        let subordonnesValides = 0;
+        subordonnes.forEach(k => {
+          if (membreEstEnRegle(k)) subordonnesValides++;
         });
-        const ratio = Math.round((valides / 4) * 100);
+        const ratio = Math.round((subordonnesValides / 3) * 100);
         const elemConf = document.getElementById('pourcentage-conformite');
         elemConf.textContent = `${ratio}%`;
         elemConf.className = ratio === 100 ? 'text-xl font-titre font-black text-vertViseur mt-0.5' : 'text-xl font-titre font-black text-rougeAlerte mt-0.5';
 
-        // 4 CARTES D'ÉTAT OPÉRATIONNEL AVEC CASQUES CLAIREMENT VISIBLES
+        // 4 CARTES D'ÉTAT OPÉRATIONNEL (HUNTER REÇOIT SON BADGE OFFICIEL SUPERVISION TACTIQUE)
         const conteneurMembres = document.getElementById('cartes-membres-synthese');
         conteneurMembres.innerHTML = '';
 
         Object.values(etat.operateurs).forEach(m => {
-          const estOk = (m.compteurSemaine || 0) >= etat.quotaHebdomadaire;
+          const estHunter = m.id === 'hunter';
+          const estOk = estHunter ? true : (m.compteurSemaine || 0) >= etat.quotaHebdomadaire;
+          
           const carte = document.createElement('div');
-          carte.className = `bg-panneauSombre border-l-4 ${estOk ? 'border-vertViseur' : 'border-rougeAlerte'} border border-bordureTactique p-3 rounded biseau-plaque flex flex-col justify-between`;
+          carte.className = `bg-panneauSombre border-l-4 ${estHunter ? 'border-cyanTech' : (estOk ? 'border-vertViseur' : 'border-rougeAlerte')} border border-bordureTactique p-3 rounded biseau-plaque flex flex-col justify-between shadow-md`;
           
           carte.innerHTML = `
             <div>
               <div class="flex items-center justify-between gap-2 mb-2 pb-1.5 border-b border-bordureTactique/60">
-                <div class="w-14 h-14 rounded border-2 border-bordureLueur bg-fondCarbone overflow-hidden shrink-0 flex items-center justify-center p-1 shadow-inner">
+                <div class="w-12 h-12 rounded border-2 border-bordureLueur bg-fondCarbone overflow-hidden shrink-0 flex items-center justify-center p-1 shadow-inner">
                   <img id="casque-carte-${m.id}" alt="Casque de ${m.nom}" class="w-full h-full object-contain">
                 </div>
-                <span class="text-[9px] font-terminal px-1.5 py-0.5 rounded font-bold whitespace-nowrap ${estOk ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800 animate-pulse'}">
-                  ${estOk ? '✓ EN RÈGLE' : '✗ NON ATTEINT'}
-                </span>
+                <div class="text-right">
+                  ${estHunter ? `
+                    <span class="text-[9px] font-titre px-2 py-0.5 rounded font-black tracking-wider bg-cyan-950 text-cyanTech border border-cyanTech/60 shadow-[0_0_8px_rgba(56,189,248,0.25)]">
+                      SUPERVISION TACTIQUE
+                    </span>
+                  ` : `
+                    <span class="text-[9px] font-terminal px-1.5 py-0.5 rounded font-bold whitespace-nowrap ${estOk ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800 animate-pulse'}">
+                      ${estOk ? '✓ EN RÈGLE' : '✗ NON ATTEINT'}
+                    </span>
+                  `}
+                </div>
               </div>
-              <div class="font-titre font-bold text-xs text-gray-100 uppercase">${echapperTexteHTML(m.nom)}</div>
+              <div class="font-titre font-bold text-xs text-gray-100 uppercase flex items-center gap-1.5">
+                <span>${m.symbole}</span>
+                <span>${echapperTexteHTML(m.nom)}</span>
+              </div>
               <div class="text-[10px] font-terminal text-gray-400 mb-2 truncate">${echapperTexteHTML(m.specialite)}</div>
             </div>
 
             <div class="border-t border-bordureTactique pt-1.5 space-y-1">
               <div class="flex items-center justify-between text-xs font-terminal">
-                <span class="text-gray-400">Missions semaine :</span>
-                <span class="font-bold ${estOk ? 'text-vertViseur' : 'text-rougeAlerte'}">${m.compteurSemaine || 0} / ${etat.quotaHebdomadaire}</span>
+                <span class="text-gray-400">Statut missions :</span>
+                ${estHunter ? `
+                  <span class="font-bold text-cyanTech font-titre text-[10px] tracking-wider">COMMANDEMENT SUP.</span>
+                ` : `
+                  <span class="font-bold ${estOk ? 'text-vertViseur' : 'text-rougeAlerte'}">${m.compteurSemaine || 0} / ${etat.quotaHebdomadaire}</span>
+                `}
               </div>
               <div class="flex items-center justify-between text-[11px] font-terminal text-amber-400">
                 <span class="truncate pr-1">${echapperTexteHTML(m.libelleStatistique)} :</span>
@@ -1502,7 +1709,6 @@
           `;
           conteneurMembres.appendChild(carte);
 
-          // Attacher l'image avec logique de secours
           const imgElem = carte.querySelector(`#casque-carte-${m.id}`);
           attacherImageCasque(imgElem, m.id);
         });
@@ -1534,7 +1740,7 @@
           });
         }
 
-        // Aperçu des plans (incluant le plan 0/0)
+        // Aperçu des plans (avec PLAN 0/0)
         const conteneurPlans = document.getElementById('apercu-plans-tactiques');
         conteneurPlans.innerHTML = '';
         etat.plans.slice(0, 3).forEach(p => {
@@ -1542,7 +1748,7 @@
           item.className = 'p-2 bg-panneauSous border border-bordureTactique rounded text-xs font-terminal';
           item.innerHTML = `
             <div class="flex justify-between text-amber-400 font-titre text-[10px]">
-              <span class="${p.code === 'PLAN 0/0' ? 'text-rougeAlerte font-bold' : ''}">${echapperTexteHTML(p.code)}</span>
+              <span class="${p.code === 'PLAN 0/0' ? 'text-rougeAlerte font-black' : ''}">${echapperTexteHTML(p.code)}</span>
               <span class="text-gray-400 font-terminal text-[9px] truncate max-w-[120px]">${echapperTexteHTML(p.chefDeManoeuvre)}</span>
             </div>
             <p class="text-gray-300 text-[11px] mt-0.5 line-clamp-1">${echapperTexteHTML(p.cible)}</p>
@@ -1560,22 +1766,22 @@
         if (etat.operateurConnecte === 'wrecker') {
           conteneurMetrique.innerHTML = `
             <label class="block text-xs font-terminal uppercase text-amber-400 mb-1">💥 Chars MTT & Blindés Détruits *</label>
-            <input type="number" id="champ-metrique-specifique" min="0" required value="1" class="w-full bg-fondCarbone border border-amber-500/60 px-3 py-1.5 text-xs font-terminal text-amber-300 rounded outline-none">
+            <input type="number" id="champ-metrique-specifique" min="0" required value="1" class="w-full bg-fondCarbone border border-amber-500/60 px-3 py-2 text-xs font-terminal text-amber-300 rounded outline-none touch-target">
           `;
         } else if (etat.operateurConnecte === 'crosshair') {
           conteneurMetrique.innerHTML = `
             <label class="block text-xs font-terminal uppercase text-vertViseur mb-1">🎯 Tirs de Précision Confirmés *</label>
-            <input type="number" id="champ-metrique-specifique" min="0" required value="5" class="w-full bg-fondCarbone border border-vertViseur/60 px-3 py-1.5 text-xs font-terminal text-vertViseur rounded outline-none">
+            <input type="number" id="champ-metrique-specifique" min="0" required value="5" class="w-full bg-fondCarbone border border-vertViseur/60 px-3 py-2 text-xs font-terminal text-vertViseur rounded outline-none touch-target">
           `;
         } else if (etat.operateurConnecte === 'tech') {
           conteneurMetrique.innerHTML = `
             <label class="block text-xs font-terminal uppercase text-cyanTech mb-1">💻 Données et Schémas Piratés (Injectés aux Archives) *</label>
-            <input type="text" id="champ-metrique-specifique" required placeholder="Ex: Clés de chiffrement séparatistes" class="w-full bg-fondCarbone border border-cyanTech/60 px-3 py-1.5 text-xs font-terminal text-cyanTech rounded outline-none">
+            <input type="text" id="champ-metrique-specifique" required placeholder="Ex: Clés de chiffrement séparatistes" class="w-full bg-fondCarbone border border-cyanTech/60 px-3 py-2 text-xs font-terminal text-cyanTech rounded outline-none touch-target">
           `;
         } else {
           conteneurMetrique.innerHTML = `
             <label class="block text-xs font-terminal uppercase text-rougeAlerte mb-1">🧭 Relevé Électromagnétique & Commandement</label>
-            <input type="text" id="champ-metrique-specifique" required placeholder="Ex: Failles de défense et réseaux détectés" class="w-full bg-fondCarbone border border-red-500/60 px-3 py-1.5 text-xs font-terminal text-gray-100 rounded outline-none">
+            <input type="text" id="champ-metrique-specifique" required placeholder="Ex: Failles de défense et réseaux détectés" class="w-full bg-fondCarbone border border-red-500/60 px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none touch-target">
           `;
         }
 
@@ -1655,8 +1861,9 @@
             batch.set(refNouvRapport, nouveauRapport);
 
             const refMembre = doc(baseDeDonnees, 'operateurs', op.id);
+            // Si Hunter transmet, on incrémente ses stats sans impacter un quelconque quota
             batch.update(refMembre, {
-              compteurSemaine: increment(1),
+              compteurSemaine: increment(op.id === 'hunter' ? 0 : 1),
               totalStatistique: increment(incrementStat)
             });
 
@@ -1677,7 +1884,9 @@
           }
         }
 
-        op.compteurSemaine = (op.compteurSemaine || 0) + 1;
+        if (op.id !== 'hunter') {
+          op.compteurSemaine = (op.compteurSemaine || 0) + 1;
+        }
         op.totalStatistique = (op.totalStatistique || 0) + incrementStat;
         etat.rapports.unshift(nouveauRapport);
 
@@ -1708,11 +1917,10 @@
 
         if (estHunter) {
           panneauHunter.classList.remove('hidden');
-          panneauHunter.classList.add('flex');
           avisLecture.classList.add('hidden');
+          actualiserAffichageRecrutement();
         } else {
           panneauHunter.classList.add('hidden');
-          panneauHunter.classList.remove('flex');
           avisLecture.classList.remove('hidden');
         }
 
@@ -1720,9 +1928,11 @@
         conteneur.innerHTML = '';
 
         Object.values(etat.operateurs).forEach(m => {
-          const estOk = (m.compteurSemaine || 0) >= etat.quotaHebdomadaire;
+          const estMembreHunter = m.id === 'hunter';
+          const estOk = estMembreHunter ? true : (m.compteurSemaine || 0) >= etat.quotaHebdomadaire;
+
           const carte = document.createElement('div');
-          carte.className = 'bg-panneauSombre border border-bordureTactique biseau-plaque p-3.5 space-y-2.5';
+          carte.className = 'bg-panneauSombre border border-bordureTactique biseau-plaque p-3.5 space-y-2.5 shadow-md';
           carte.innerHTML = `
             <div class="flex items-start justify-between border-b border-bordureTactique pb-2">
               <div class="flex items-center space-x-2.5">
@@ -1730,23 +1940,36 @@
                   <img id="casque-effectif-${m.id}" alt="Casque de ${m.nom}" class="w-full h-full object-contain">
                 </div>
                 <div>
-                  <div class="font-titre font-black text-xs sm:text-sm text-gray-100 uppercase">${echapperTexteHTML(m.nom)}</div>
+                  <div class="font-titre font-black text-xs sm:text-sm text-gray-100 uppercase flex items-center gap-1.5">
+                    <span>${m.symbole}</span>
+                    <span>${echapperTexteHTML(m.nom)}</span>
+                  </div>
                   <div class="text-[10px] font-terminal text-amber-400">${echapperTexteHTML(m.matricule)} // ${echapperTexteHTML(m.grade)}</div>
                 </div>
               </div>
 
               <div class="text-right">
                 <div class="text-[8px] font-terminal uppercase text-gray-400">Statut hebdomadaire</div>
-                <div class="px-1.5 py-0.5 text-[10px] font-terminal font-bold rounded ${estOk ? 'bg-emerald-950 text-emerald-300 border border-emerald-600' : 'bg-red-950 text-red-300 border border-red-700 animate-pulse'}">
-                  ${estOk ? '✓ EN RÈGLE' : '✗ NON ATTEINT'}
-                </div>
+                ${estMembreHunter ? `
+                  <div class="px-2 py-0.5 text-[9px] font-titre font-black rounded uppercase bg-cyan-950 text-cyanTech border border-cyanTech/60 shadow-[0_0_8px_rgba(56,189,248,0.25)]">
+                    SUPERVISION TACTIQUE
+                  </div>
+                ` : `
+                  <div class="px-1.5 py-0.5 text-[10px] font-terminal font-bold rounded ${estOk ? 'bg-emerald-950 text-emerald-300 border border-emerald-600' : 'bg-red-950 text-red-300 border border-red-700 animate-pulse'}">
+                    ${estOk ? '✓ EN RÈGLE' : '✗ NON ATTEINT'}
+                  </div>
+                `}
               </div>
             </div>
 
             <div class="bg-fondCarbone p-2 rounded border border-bordureTactique flex items-center justify-between text-xs font-terminal">
               <div>
                 <span class="text-gray-400">Missions semaine :</span>
-                <span class="font-bold ml-1 ${estOk ? 'text-vertViseur' : 'text-rougeAlerte'}">${m.compteurSemaine || 0} / ${etat.quotaHebdomadaire}</span>
+                ${estMembreHunter ? `
+                  <span class="font-bold text-cyanTech font-titre text-[10px] ml-1">EXEMPTÉ (COMMANDEMENT)</span>
+                ` : `
+                  <span class="font-bold ml-1 ${estOk ? 'text-vertViseur' : 'text-rougeAlerte'}">${m.compteurSemaine || 0} / ${etat.quotaHebdomadaire}</span>
+                `}
               </div>
               <div>
                 <span class="text-gray-400">${echapperTexteHTML(m.libelleStatistique)} :</span>
@@ -1773,7 +1996,7 @@
 
             ${estHunter ? `
               <div class="pt-2 border-t border-bordureTactique flex justify-end">
-                <button data-editer-membre="${m.id}" class="btn-editer-dossier px-2.5 py-1 bg-panneauSous hover:bg-bordureTactique border border-bordureLueur text-xs font-terminal text-gray-200 rounded flex items-center gap-1.5 transition">
+                <button data-editer-membre="${m.id}" class="btn-editer-dossier px-2.5 py-1.5 bg-panneauSous hover:bg-bordureTactique border border-bordureLueur text-xs font-terminal text-gray-200 rounded flex items-center gap-1.5 transition touch-target">
                   ✏️ Modifier Date, Stats & Notes
                 </button>
               </div>
@@ -1865,7 +2088,7 @@
 
         afficherBoiteConfirmation(
           "CLÔTURE DU CYCLE HEBDOMADAIRE",
-          "Voulez-vous clôturer la semaine d'engagement ? Les compteurs hebdomadaires de missions de tous les membres seront remis à zéro. Les totaux cumulés et dossiers sont préservés.",
+          "Voulez-vous clôturer la semaine d'engagement ? Les compteurs des subordonnés de terrain seront réinitialisés à 0. Hunter demeure en supervision tactique. Les totaux cumulés et dossiers de combat restent intacts.",
           async () => {
             if (estConnecteFirestore) {
               try {
@@ -1895,15 +2118,14 @@
         const conteneur = document.getElementById('conteneur-plans-tactiques');
         conteneur.innerHTML = '';
 
-        // Le Plan 0/0 est systématiquement conservé en tête
         etat.plans.forEach(p => {
           const estPlanZero = p.code === 'PLAN 0/0';
           const div = document.createElement('div');
-          div.className = `bg-panneauSombre border ${estPlanZero ? 'border-red-600/70 shadow-[0_0_12px_rgba(220,38,38,0.25)]' : 'border-bordureTactique'} biseau-plaque p-3.5 space-y-2 relative hover:border-amber-500/40 transition`;
+          div.className = `bg-panneauSombre border ${estPlanZero ? 'border-red-600/80 shadow-[0_0_15px_rgba(255,46,67,0.3)]' : 'border-bordureTactique'} biseau-plaque p-3.5 space-y-2 relative hover:border-amber-500/40 transition`;
           div.innerHTML = `
             <div class="flex items-center justify-between border-b border-bordureTactique pb-1.5">
               <span class="font-titre font-bold text-xs ${estPlanZero ? 'text-rougeAlerte font-black' : 'text-amber-400'} tracking-wider">${echapperTexteHTML(p.code)}</span>
-              <span class="text-[8px] font-terminal px-1.5 py-0.5 bg-panneauSous ${estPlanZero ? 'text-red-300 border-red-700 bg-red-950/40' : 'text-gray-300 border-bordureTactique'} rounded border">
+              <span class="text-[8px] font-terminal px-1.5 py-0.5 ${estPlanZero ? 'text-red-300 border-red-700 bg-red-950/60' : 'text-gray-300 border-bordureTactique bg-panneauSous'} rounded border">
                 ${estPlanZero ? 'URGENCE ABSOLUE' : 'HOMOLOGUÉ 99'}
               </span>
             </div>
@@ -2025,7 +2247,9 @@
         afficherVueArchives();
       }
 
+      // ==================== INITIALISATION DES ÉCOUTEURS D'ÉVÉNEMENTS ====================
       function attacherTousLesEcouteurs() {
+        // Sélection d'opérateur sur l'écran d'accueil
         document.querySelectorAll('.bouton-choix-op').forEach(btn => {
           btn.addEventListener('click', () => {
             const opId = btn.getAttribute('data-op');
@@ -2033,8 +2257,10 @@
           });
         });
 
+        // Connexion
         document.getElementById('formulaire-connexion').addEventListener('submit', executerConnexion);
 
+        // Navigation principale
         document.querySelectorAll('.nav-bouton').forEach(btn => {
           btn.addEventListener('click', () => {
             const onglet = btn.getAttribute('data-onglet');
@@ -2042,6 +2268,7 @@
           });
         });
 
+        // Liens internes de redirection
         document.querySelectorAll('[data-action-nav]').forEach(el => {
           el.addEventListener('click', () => {
             const onglet = el.getAttribute('data-action-nav');
@@ -2049,13 +2276,15 @@
           });
         });
 
+        // Audio
         document.getElementById('bouton-audio').addEventListener('click', () => {
           AudioTactique.actif = !AudioTactique.actif;
           const b = document.getElementById('bouton-audio');
-          b.textContent = AudioTactique.actif ? '🔊 SONS : ACTIVÉS' : '🔇 SONS : COUPÉS';
+          b.innerHTML = AudioTactique.actif ? '🔊 <span class="hidden sm:inline">SONS :</span> ACTIVÉS' : '🔇 <span class="hidden sm:inline">SONS :</span> COUPÉS';
           if (AudioTactique.actif) AudioTactique.succes();
         });
 
+        // Profil & Déconnexion
         document.getElementById('bouton-cle-mdp').addEventListener('click', () => {
           document.getElementById('champ-mot-de-passe-actuel').value = '';
           document.getElementById('champ-nouveau-mot-de-passe').value = '';
@@ -2065,6 +2294,7 @@
 
         document.getElementById('bouton-quitter-session').addEventListener('click', demanderDeconnexion);
 
+        // Fermeture des modales
         document.querySelectorAll('.btn-fermer-modale').forEach(btn => {
           btn.addEventListener('click', () => {
             const idModale = btn.getAttribute('data-modale');
@@ -2072,9 +2302,14 @@
           });
         });
 
+        // Mots de passe
         document.getElementById('formulaire-nouveau-mdp').addEventListener('submit', executerModificationMotDePasse);
+
+        // Missions & Rapports
         document.getElementById('formulaire-rapport-mission').addEventListener('submit', executerTransmissionRapport);
         document.getElementById('filtre-operateurs-rapports').addEventListener('change', afficherListeRapports);
+
+        // Commandement & Effectif
         document.getElementById('formulaire-dossier-militaire').addEventListener('submit', executerSauvegardeDossierMilitaire);
         document.getElementById('bouton-reset-stat-unique').addEventListener('click', () => {
           document.getElementById('champ-stat-globale').value = 0;
@@ -2088,6 +2323,15 @@
         document.getElementById('formulaire-reglage-quota').addEventListener('submit', executerReglageQuota);
         document.getElementById('bouton-reset-semaine').addEventListener('click', executerResetSemaine);
 
+        // Recrutement (Hunter)
+        document.getElementById('bouton-basculer-recrutement').addEventListener('click', basculerEtatRecrutementHunter);
+        document.getElementById('bouton-editer-note-recrutement').addEventListener('click', () => {
+          document.getElementById('champ-note-recrutement-texte').value = etat.recrutementNote;
+          ouvrirBoite('boite-editer-note-recrutement');
+        });
+        document.getElementById('formulaire-note-recrutement').addEventListener('submit', sauvegarderNoteRecrutement);
+
+        // Plans d'engagement
         document.getElementById('bouton-ajouter-plan-hunter').addEventListener('click', () => {
           if (etat.operateurConnecte !== 'hunter') return;
           document.getElementById('champ-code-plan').value = '';
@@ -2098,6 +2342,7 @@
         });
         document.getElementById('formulaire-nouveau-plan').addEventListener('submit', executerCreationPlan);
 
+        // Archives de piratage (Tech)
         document.getElementById('formulaire-archive-tech').addEventListener('submit', executerTransmissionArchiveTech);
       }
 
@@ -2105,6 +2350,7 @@
         attacherTousLesEcouteurs();
         initialiserSynchronisationFirestore();
         selectionnerOperateurAccueil('hunter');
+        actualiserAffichageRecrutement();
       });
 
     })();
