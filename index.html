@@ -1,22 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr" class="dark">
-<head> 
-  <script>
-  // Nettoie uniquement le payload injecté manuellement
-  (function() {
-    try {
-      const raw = localStorage.getItem("arcSession");
-      if (raw) {
-        const session = JSON.parse(raw);
-        // On vire SEULEMENT la fausse session de test
-        if (session && session.user === "TEST_SECURITE") {
-          localStorage.removeItem("arcSession");
-          delete window.arcSessionAvantTest;
-        }
-      }
-    } catch (e) {}
-  })();
-</script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Clone Force 99 - Tactical Terminal // GAR Archives</title>
