@@ -1471,23 +1471,17 @@
           }
         }, err => console.warn(err));
 
-        const refOperateurs = collection(baseDeDonnees, 'operateurs');
+       const refOperateurs = collection(baseDeDonnees, 'operateurs');
         onSnapshot(refOperateurs, snap => {
-          if (snap.empty) {
-            Object.keys(EFFECTIF_CANONIQUE).forEach(cle => {
-              setDoc(doc(baseDeDonnees, 'operateurs', cle), EFFECTIF_CANONIQUE[cle]);
-            });
-          } else {
-            snap.forEach(d => {
-              if (etat.operateurs[d.id]) {
-                etat.operateurs[d.id] = { ...etat.operateurs[d.id], ...d.data() };
-              }
-            });
-            verifierExpirationsAbsencesAutomatiques();
-            if (etat.operateurConnecte) {
-              actualiserVueEnCours();
-              verifierNotificationBlamePourMembre();
+          snap.forEach(d => {
+            if (etat.operateurs[d.id]) {
+              etat.operateurs[d.id] = { ...etat.operateurs[d.id], ...d.data() };
             }
+          });
+          verifierExpirationsAbsencesAutomatiques();
+          if (etat.operateurConnecte) {
+            actualiserVueEnCours();
+            verifierNotificationBlamePourMembre();
           }
         }, err => console.warn(err));
 
