@@ -1448,7 +1448,7 @@
           return;
         }
 
-        const refConfigEscouade = doc(baseDeDonnees, 'config', 'escouade');
+const refConfigEscouade = doc(baseDeDonnees, 'config', 'escouade');
         onSnapshot(refConfigEscouade, snap => {
           if (snap.exists()) {
             const donnees = snap.data();
@@ -1460,14 +1460,6 @@
             }
             actualiserAffichageRecrutement();
             if (etat.operateurConnecte) actualiserVueEnCours();
-          } else {
-            setDoc(refConfigEscouade, {
-              quotaHebdomadaire: 3,
-              recrutementOuvert: false,
-              recrutementNote: "Aucun slot de mutation clone ouvert actuellement par le Sergent Hunter.",
-              motsDePasseHashes: etat.motsDePasseHashes
-            });
-            actualiserAffichageRecrutement();
           }
         }, err => console.warn(err));
 
