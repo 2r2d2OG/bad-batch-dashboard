@@ -33,7 +33,8 @@
             ambreArmement: '#f59e0b',
             vertViseur: '#10b981',
             cyanTech: '#38bdf8',
-            bleuRepublique: '#3b82f6'
+            bleuRepublique: '#3b82f6',
+            orEtatMajor: '#fbbf24'
           },
           fontFamily: {
             titre: ['Orbitron', 'sans-serif'],
@@ -114,6 +115,11 @@
       --teinte-lueur: rgba(56, 189, 248, 0.25);
       --teinte-bordure: rgba(56, 189, 248, 0.45);
     }
+    body.theme-bos {
+      --teinte-accent: #fbbf24;
+      --teinte-lueur: rgba(251, 191, 36, 0.25);
+      --teinte-bordure: rgba(251, 191, 36, 0.5);
+    }
 
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: #07090e; }
@@ -139,15 +145,15 @@
   <header class="border-b border-bordureTactique bg-fondCarbone/95 backdrop-blur sticky top-0 z-40 shadow-lg">
     <div class="max-w-7xl mx-auto px-3 sm:px-4 py-2 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2">
       
-      <!-- Gauche : Médaillon Logo Bad Batch Sécurisé & Liaison ComNet -->
+      <!-- Gauche : Médaillon Logo Bad Batch & Liaison ComNet -->
       <div class="flex items-center space-x-2.5 shrink-0">
         <div class="h-10 w-10 rounded-full border-2 border-rougeAlerte bg-black overflow-hidden shrink-0 flex items-center justify-center shadow-[0_0_10px_rgba(255,46,67,0.4)]">
           <img id="logo-badbatch-hud" alt="Clone Force 99" class="w-full h-full object-cover">
         </div>
         <div>
           <div class="flex items-center space-x-1.5">
-            <span class="font-titre font-bold tracking-wider text-xs sm:text-sm text-gray-100 uppercase">FORCE CLONE 99</span>
-            <span class="px-1.5 py-0.2 bg-ambreArmement/15 text-ambreArmement text-[9px] font-terminal border border-ambreArmement/30 uppercase rounded-sm">BAD BATCH</span>
+            <span class="font-titre font-bold tracking-wider text-xs sm:text-sm text-gray-100 uppercase" id="titre-unite-hud">FORCE CLONE 99</span>
+            <span class="px-1.5 py-0.2 bg-ambreArmement/15 text-ambreArmement text-[9px] font-terminal border border-ambreArmement/30 uppercase rounded-sm" id="badge-statut-hud">BAD BATCH</span>
           </div>
           <div class="text-[9px] text-gray-400 font-terminal flex items-center gap-1.5 leading-none mt-0.5">
             <span id="point-liaison" class="inline-block w-2 h-2 rounded-full bg-vertViseur shadow-[0_0_6px_#10b981]"></span>
@@ -156,9 +162,9 @@
         </div>
       </div>
 
-      <!-- Centre : Mention Marauder -->
+      <!-- Centre : Mention Marauder / BOS -->
       <div class="hidden md:flex items-center justify-center text-center">
-        <span class="px-2.5 py-1 bg-panneauSombre border border-bordureTactique text-gray-400 text-[10px] font-terminal uppercase rounded tracking-widest">
+        <span id="mention-terminal-centre" class="px-2.5 py-1 bg-panneauSombre border border-bordureTactique text-gray-400 text-[10px] font-terminal uppercase rounded tracking-widest">
           CONSOLE DU HAVOC MARAUDER // SEC-NET 99
         </span>
       </div>
@@ -171,7 +177,7 @@
 
         <div id="bloc-profil-actif" class="hidden items-center space-x-1.5 sm:space-x-2 bg-panneauSombre border border-bordureTactique px-2 py-1 rounded biseau-bouton">
           <div class="w-7 h-7 rounded bg-fondCarbone border border-bordureLueur overflow-hidden shrink-0 flex items-center justify-center p-0.5">
-            <img id="avatar-profil-haut" alt="Casque" class="w-full h-full object-contain">
+            <img id="avatar-profil-haut" alt="Insigne" class="w-full h-full object-contain">
           </div>
           <div class="text-left hidden sm:block leading-none pr-1">
             <div id="nom-operateur" class="text-[11px] font-titre font-bold text-gray-100 uppercase">Hunter</div>
@@ -312,8 +318,11 @@
             </form>
           </div>
 
+          <!-- BAS DE FICHE : LIEN DISCRET B.O.S INTÉGRÉ ICI -->
           <div class="pt-3 border-t border-bordureTactique text-[10px] font-terminal text-gray-500 mt-3 flex items-center justify-between">
-            <span>RÉSEAU SÉCURISÉ GAR // PROTOCOLE 99</span>
+            <button type="button" id="lien-connexion-bos-discret" class="text-gray-500 hover:text-amber-400 uppercase tracking-wider transition underline decoration-dotted">
+              [LIAISON HIÉRARCHIQUE B.O.S]
+            </button>
             <span>CYPHER SHA-256</span>
           </div>
         </div>
@@ -373,10 +382,24 @@
       </div>
     </section>
 
-    <!-- 2. POSTE DE COMMANDEMENT (ALERTE RELIÉE AUX PDS + DOUBLE CRÉNEAU 18H / 21H INDÉPENDANT) -->
+    <!-- 2. POSTE DE COMMANDEMENT -->
     <section id="fenetre-poste-commandement" class="hidden space-y-4">
       
-      <!-- MODULE GESTION DU RECRUTEMENT (POSTE DE COMMANDEMENT HUNTER) -->
+      <!-- BANNIÈRE D'INSPECTION B.O.S (VISIBLE UNIQUEMENT LORSQUE B.O.S EST CONNECTÉ) -->
+      <div id="banniere-audit-bos" class="hidden p-3 bg-amber-950/60 border-2 border-orEtatMajor rounded flex items-center justify-between gap-3 text-xs font-terminal text-amber-200 shadow-[0_0_15px_rgba(251,191,36,0.2)]">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xl">🏛️</span>
+          <div>
+            <div class="font-titre font-bold text-orEtatMajor uppercase tracking-wider">CANAL D'AUDIT HIÉRARCHIQUE // BUREAU DES OPÉRATIONS SPÉCIALES</div>
+            <div class="text-[11px] text-gray-300">Session de supervision externe en lecture seule. Surveillance de l'unité Clone Force 99.</div>
+          </div>
+        </div>
+        <span class="px-2 py-0.5 bg-amber-500/20 border border-orEtatMajor text-orEtatMajor text-[10px] font-titre font-bold uppercase rounded shrink-0">
+          MODE INSPECTION
+        </span>
+      </div>
+
+      <!-- MODULE GESTION DU RECRUTEMENT (POSTE DE COMMANDEMENT HUNTER UNIQUEMENT) -->
       <div id="module-gestion-recrutement-poste" class="hidden panneau-tactique p-3.5 rounded border border-amber-500/50 shadow-md">
         <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
           <div class="space-y-1">
@@ -399,7 +422,7 @@
         </div>
       </div>
 
-      <!-- BANNIÈRE D'ALERTE DE COMMANDEMENT (RELIÉE EXCLUSIVEMENT AUX PDS HEBDOMADAIRES) -->
+      <!-- BANNIÈRE D'ALERTE DE COMMANDEMENT (RELIÉE AUX PDS) -->
       <div id="banniere-alerte-quota" class="hidden p-2.5 bg-red-950/70 border border-rougeAlerte rounded flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs font-terminal text-red-200 shadow-md">
         <div class="flex items-center gap-2 overflow-hidden">
           <span class="text-base shrink-0">⚠️</span>
@@ -437,12 +460,12 @@
           <p class="text-[10px] font-terminal text-gray-500 mt-0.5">Calculé sur les 3 subordonnés de terrain.</p>
         </div>
 
-        <!-- LOG RAPIDE D'ACTIVITÉ : DOUBLE CRÉNEAU 18H ET 21H INDÉPENDANTS -->
-        <div class="bg-panneauSombre border border-emerald-500/50 p-2.5 rounded biseau-plaque flex flex-col justify-between shadow-[0_0_12px_rgba(16,185,129,0.15)]">
+        <!-- LOG RAPIDE D'ACTIVITÉ : DOUBLE CRÉNEAU 18H ET 21H INDÉPENDANTS (MASQUÉ POUR BOS) -->
+        <div id="bloc-log-rapide-pds" class="bg-panneauSombre border border-emerald-500/50 p-2.5 rounded biseau-plaque flex flex-col justify-between shadow-[0_0_12px_rgba(16,185,129,0.15)]">
           <div>
             <div class="flex items-center justify-between">
               <span class="text-[10px] font-terminal text-emerald-400 uppercase font-bold">LOG RAPIDE D'ACTIVITÉ</span>
-              <span class="text-[9px] font-terminal text-gray-400" id="badge-date-pds">06/10/2026</span>
+              <span class="text-[9px] font-terminal text-gray-400" id="badge-date-pds">07/10/2026</span>
             </div>
             <div class="text-[11px] font-titre font-bold text-gray-200 leading-none mt-0.5">PRISE DE SERVICE (PDS)</div>
           </div>
@@ -454,6 +477,13 @@
               <span>⚡</span> <span id="label-btn-pds-21h">PDS 21H</span>
             </button>
           </div>
+        </div>
+
+        <!-- REMPLACEMENT EN MODE BOS -->
+        <div id="bloc-log-pds-bos" class="hidden bg-panneauSombre border border-orEtatMajor/50 p-2.5 rounded biseau-plaque flex flex-col justify-between">
+          <span class="text-[10px] font-terminal text-orEtatMajor uppercase font-bold">CONTRÔLE DES ÉMARGEMENTS</span>
+          <div class="text-xs font-titre font-bold text-gray-200">STATUT BOS : INSPECTION SEULE</div>
+          <p class="text-[10px] font-terminal text-gray-400 mt-1">Émargements opérationnels réservés aux effectifs déployés.</p>
         </div>
       </div>
 
@@ -479,9 +509,9 @@
       </div>
     </section>
 
-    <!-- 3. RAPPORTS DE MISSION (AVEC VALIDATION COLLECTIVE PAR CASES À COCHER) -->
+    <!-- 3. RAPPORTS DE MISSION (FORMULAIRE MASQUÉ EN MODE B.O.S) -->
     <section id="fenetre-rapports" class="hidden space-y-4">
-      <div class="panneau-tactique p-4 rounded">
+      <div id="bloc-formulaire-rapport" class="panneau-tactique p-4 rounded">
         <div class="flex flex-wrap items-center justify-between border-b border-bordureTactique pb-2.5 mb-3 gap-2">
           <div class="flex items-center space-x-2">
             <span class="text-base">📝</span>
@@ -578,7 +608,7 @@
       </div>
     </section>
 
-    <!-- 4. EFFECTIF DE L'ESCOUADE (GESTION DES ABSENCES, BLÂMES, STEAM & DISCORD) -->
+    <!-- 4. EFFECTIF DE L'ESCOUADE -->
     <section id="fenetre-effectif" class="hidden space-y-4">
       
       <!-- PANNEAU EXCLUSIF COMMANDEMENT HUNTER -->
@@ -599,7 +629,7 @@
               📖 CARNET DES ABSENCES
             </button>
             <button id="bouton-reglage-quota" class="px-3 py-1.5 border border-amber-500/50 hover:border-amber-400 text-amber-300 font-terminal text-xs rounded transition bg-panneauSous touch-target">
-              ⚙️️ Quota : <span id="affichage-quota-hunter">3</span> PDS/sem.
+              ⚙ Quota : <span id="affichage-quota-hunter">3</span> PDS/sem.
             </button>
             <button id="bouton-reset-semaine" class="px-3 py-1.5 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold text-xs uppercase biseau-bouton transition shadow touch-target">
               🔄 CLÔTURER SEMAINE & RESET
@@ -608,10 +638,10 @@
         </div>
       </div>
 
-      <!-- BOUTONS ACTION POUR LES AUTRES MEMBRES -->
+      <!-- BOUTONS ACTION POUR LES MEMBRES OU OBSERVATION BOS -->
       <div id="barre-actions-membre-effectif" class="flex flex-wrap items-center justify-between gap-2 p-2.5 bg-panneauSombre border border-bordureTactique rounded text-xs font-terminal">
         <div class="text-gray-300">
-          <span>STATUT OPÉRATEUR PERSONNEL :</span>
+          <span id="label-statut-effectif-barre">STATUT OPÉRATEUR PERSONNEL :</span>
           <span id="badge-statut-personnel-absence" class="ml-1 font-bold"></span>
         </div>
         <div class="flex items-center gap-2">
@@ -619,7 +649,7 @@
             📖 Historique des absences
           </button>
           <button id="bouton-declarer-mon-absence" class="px-3 py-1.5 bg-amber-500/20 border border-amber-500 text-amber-300 hover:bg-amber-500/30 rounded font-bold touch-target">
-            🗓️️ DÉCLARER / MODIFIER MON ABSENCE
+            🗓 DÉCLARER / MODIFIER MON ABSENCE
           </button>
         </div>
       </div>
@@ -648,7 +678,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5" id="conteneur-plans-tactiques"></div>
     </section>
 
-    <!-- 6. ARCHIVES DE PIRATAGE (TECH : SYNCHRONISÉ AVEC LE REGISTRE DE MISSIONS) -->
+    <!-- 6. ARCHIVES DE PIRATAGE -->
     <section id="fenetre-archives" class="hidden space-y-4">
       <div class="panneau-tactique p-3.5 rounded border-cyan-500/40">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-bordureTactique pb-2.5 mb-2.5">
@@ -691,6 +721,36 @@
   </main>
 
   <!-- ==================== MODALES MILITAIRES ==================== -->
+
+  <!-- MODALE DISCRÈTE : CONNEXION HIÉRARCHIQUE B.O.S -->
+  <div id="boite-connexion-bos" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-panneauSombre border-2 border-orEtatMajor biseau-plaque max-w-sm w-full p-4 shadow-[0_0_25px_rgba(251,191,36,0.3)]">
+      <div class="flex items-center justify-between border-b border-orEtatMajor/50 pb-2 mb-3">
+        <div class="flex items-center space-x-2 text-orEtatMajor">
+          <span class="text-xl">🏛️</span>
+          <h3 class="font-titre text-xs font-bold uppercase tracking-wider">LIAISON B.O.S // ÉTAT-MAJOR</h3>
+        </div>
+        <button type="button" class="btn-fermer-modale text-gray-400 hover:text-white" data-modale="boite-connexion-bos">✕</button>
+      </div>
+      <form id="formulaire-connexion-bos" class="space-y-3 font-terminal text-xs">
+        <div>
+          <label class="block text-[11px] text-gray-300 mb-1">Identifiant d'inspection :</label>
+          <input type="text" id="saisie-bos-id" required placeholder="Identifiant B.O.S" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-orEtatMajor uppercase rounded outline-none focus:border-orEtatMajor">
+        </div>
+        <div>
+          <label class="block text-[11px] text-gray-300 mb-1">Mot de passe de sécurité B.O.S :</label>
+          <input type="password" id="saisie-bos-mdp" required placeholder="Mot de passe" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded outline-none focus:border-orEtatMajor">
+        </div>
+        <div id="erreur-connexion-bos" class="hidden text-[10px] text-red-400 bg-red-950/70 p-2 rounded border border-red-800">
+          Accès refusé. Identifiant ou clé B.O.S non valide.
+        </div>
+        <div class="flex justify-end space-x-2 pt-2 border-t border-bordureTactique">
+          <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-gray-400 rounded" data-modale="boite-connexion-bos">Annuler</button>
+          <button type="submit" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold text-xs uppercase rounded">ÉTABLIR LIAISON</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- MODALE : NOTIFICATION DE BLÂME REÇU PAR LE MEMBRE -->
   <div id="boite-notification-blame" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
@@ -977,7 +1037,7 @@
     </div>
   </div>
 
-  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 1.9) -->
+  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 2.0) -->
   <footer class="border-t border-bordureTactique bg-fondCarbone/95 py-2.5 text-xs font-terminal text-gray-500 fixed bottom-0 left-0 right-0 z-30 shadow-2xl backdrop-blur">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5">
       <div class="text-gray-400 flex items-center gap-2">
@@ -987,13 +1047,13 @@
       <div class="flex items-center gap-3">
         <span class="text-gray-500 hidden md:inline">GRANDE ARMÉE DE LA RÉPUBLIQUE</span>
         <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/60 text-amber-300 text-[11px] font-titre font-bold rounded tracking-wider shadow-[0_0_10px_rgba(245,158,11,0.25)]">
-          FIRMWARE MARAUDEUR // BUILD 1.9
+          FIRMWARE MARAUDEUR // BUILD 2.0
         </span>
       </div>
     </div>
   </footer>
 
-  <!-- SCRIPT SECURISE : MODULE IIFE, PDS 18H/21H, FIRESTORE ET PROTOCOLES -->
+  <!-- SCRIPT SECURISE : MODULE IIFE, ACCÈS B.O.S DISCRET, LECTURE SEULE, PDS 18H/21H -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { 
@@ -1084,7 +1144,7 @@
         }
       };
 
-      // CHARGEMENT BLINDÉ DU LOGO BAD BATCH HUD (logobadbatch.png en priorité)
+      // CHARGEMENT DU LOGO BAD BATCH HUD (logobadbatch.png en priorité)
       function initialiserLogoBadBatch() {
         const logoHud = document.getElementById('logo-badbatch-hud');
         if (!logoHud) return;
@@ -1103,7 +1163,6 @@
             logoHud.src = pistes[idx++];
           } else {
             logoHud.onerror = null;
-            // Repli vectoriel militaire si aucun fichier trouvé
             logoHud.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="%230c1017" stroke="%23ff2e43" stroke-width="4"/><circle cx="50" cy="50" r="38" fill="%235a1219"/><text x="50" y="58" fill="%23fff" font-family="sans-serif" font-weight="900" font-size="22" text-anchor="middle">99</text></svg>';
           }
         }
@@ -1123,11 +1182,16 @@
         hunter: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="12" fill="%230c1017"/><path d="M22 36 C22 18, 78 18, 78 36 L78 68 C78 84, 22 84, 22 68 Z" fill="%231e2430" stroke="%23374151" stroke-width="2"/><path d="M46 19 L54 19 L54 44 L46 44 Z" fill="%23ff2e43"/><path d="M38 45 L62 45 L58 55 L42 55 Z" fill="%23ff2e43"/><path d="M26 44 L74 44 L70 54 L54 54 L54 70 L46 70 L46 54 L30 54 Z" fill="%2307090e" stroke="%23ff2e43" stroke-width="1.5"/><circle cx="34" cy="74" r="5" fill="%2307090e" stroke="%234b5563" stroke-width="2"/><circle cx="66" cy="74" r="5" fill="%2307090e" stroke="%234b5563" stroke-width="2"/></svg>',
         wrecker: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="12" fill="%230c1017"/><path d="M20 38 C20 16, 80 16, 80 38 L80 66 C80 86, 20 86, 20 66 Z" fill="%232b3442" stroke="%23f59e0b" stroke-width="2"/><path d="M30 24 C36 20, 64 20, 70 24 L72 44 L28 44 Z" fill="%23e2e8f0"/><text x="50" y="38" fill="%23ff2e43" font-family="sans-serif" font-weight="900" font-size="16" text-anchor="middle" letter-spacing="2">99</text><path d="M26 48 L74 48 L70 55 L30 55 Z" fill="%2307090e" stroke="%23f59e0b" stroke-width="1.5"/><path d="M36 64 L42 74 L50 66 L58 74 L64 64" stroke="%23e2e8f0" stroke-width="3" fill="none"/></svg>',
         crosshair: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="12" fill="%230c1017"/><path d="M25 36 C25 18, 75 18, 75 36 L75 68 C75 84, 25 84, 25 68 Z" fill="%231a202c" stroke="%2310b981" stroke-width="2"/><line x1="20" y1="14" x2="20" y2="46" stroke="%239ca3af" stroke-width="2.5"/><rect x="16" y="10" width="12" height="6" fill="%239ca3af" rx="1"/><path d="M28 48 L72 48 L68 56 L32 56 Z" fill="%2307090e" stroke="%2310b981" stroke-width="1.5"/><circle cx="43" cy="52" r="10" fill="none" stroke="%2310b981" stroke-width="2.5"/><circle cx="43" cy="52" r="3" fill="%2310b981"/><line x1="43" y1="38" x2="43" y2="66" stroke="%2310b981" stroke-width="1.5"/><line x1="29" y1="52" x2="57" y2="52" stroke="%2310b981" stroke-width="1.5"/></svg>',
-        tech: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="12" fill="%230c1017"/><path d="M26 38 C26 18, 74 18, 74 38 L74 68 C74 84, 26 84, 26 68 Z" fill="%23e2e8f0" stroke="%2338bdf8" stroke-width="2"/><rect x="14" y="36" width="10" height="30" rx="4" fill="%234b5563" stroke="%2338bdf8" stroke-width="1.5"/><rect x="76" y="36" width="10" height="30" rx="4" fill="%234b5563" stroke="%2338bdf8" stroke-width="1.5"/><rect x="30" y="44" width="40" height="16" rx="3" fill="%23f59e0b" stroke="%23d97706" stroke-width="2"/><line x1="30" y1="52" x2="70" y2="52" stroke="%23b45309" stroke-width="1"/><line x1="43" y1="44" x2="43" y2="60" stroke="%23b45309" stroke-width="1"/><line x1="57" y1="44" x2="57" y2="60" stroke="%23b45309" stroke-width="1"/></svg>'
+        tech: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="12" fill="%230c1017"/><path d="M26 38 C26 18, 74 18, 74 38 L74 68 C74 84, 26 84, 26 68 Z" fill="%23e2e8f0" stroke="%2338bdf8" stroke-width="2"/><rect x="14" y="36" width="10" height="30" rx="4" fill="%234b5563" stroke="%2338bdf8" stroke-width="1.5"/><rect x="76" y="36" width="10" height="30" rx="4" fill="%234b5563" stroke="%2338bdf8" stroke-width="1.5"/><rect x="30" y="44" width="40" height="16" rx="3" fill="%23f59e0b" stroke="%23d97706" stroke-width="2"/><line x1="30" y1="52" x2="70" y2="52" stroke="%23b45309" stroke-width="1"/><line x1="43" y1="44" x2="43" y2="60" stroke="%23b45309" stroke-width="1"/><line x1="57" y1="44" x2="57" y2="60" stroke="%23b45309" stroke-width="1"/></svg>',
+        bos: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="12" fill="%230c1017"/><circle cx="50" cy="50" r="38" fill="%231e2430" stroke="%23fbbf24" stroke-width="3"/><path d="M50 22 L72 34 L72 66 L50 78 L28 66 L28 34 Z" fill="none" stroke="%23fbbf24" stroke-width="2.5"/><text x="50" y="56" fill="%23fbbf24" font-family="sans-serif" font-weight="900" font-size="18" text-anchor="middle">BOS</text></svg>'
       };
 
       function attacherImageCasque(elementImg, idOperateur) {
         if (!elementImg) return;
+        if (idOperateur === 'bos') {
+          elementImg.src = REPLI_SVG_SPECIFIQUES.bos;
+          return;
+        }
         const listeChemins = VARIANTES_CHEMINS_CASQUES[idOperateur] || ['hunter.png'];
         let indexActuel = 0;
 
@@ -1316,6 +1380,7 @@
 
       const etat = {
         operateurConnecte: null,
+        estCompteBOS: false, // Indicateur d'audit B.O.S
         operateurSelectionneAccueil: 'hunter',
         ongletActif: 'poste-commandement',
         quotaHebdomadaire: 3,
@@ -1512,7 +1577,7 @@
       }
 
       async function basculerEtatRecrutementHunter() {
-        if (etat.operateurConnecte !== 'hunter') return;
+        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
         const nouvelEtat = !etat.recrutementOuvert;
         etat.recrutementOuvert = nouvelEtat;
 
@@ -1530,7 +1595,7 @@
 
       async function sauvegarderNoteRecrutement(e) {
         e.preventDefault();
-        if (etat.operateurConnecte !== 'hunter') return;
+        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
         const texte = document.getElementById('champ-note-recrutement-texte').value.trim();
         etat.recrutementNote = texte;
 
@@ -1610,6 +1675,7 @@
 
         if (estValide) {
           etat.operateurConnecte = id;
+          etat.estCompteBOS = false;
           blocErreur.classList.add('hidden');
           document.getElementById('saisie-mot-de-passe').value = '';
           AudioTactique.succes();
@@ -1620,26 +1686,92 @@
         }
       }
 
+      // AUTHENTIFICATION DISCRÈTE B.O.S (BOS / BOSACCESSAUTO)
+      function executerConnexionBOS(e) {
+        e.preventDefault();
+        const saisieId = document.getElementById('saisie-bos-id').value.trim().toUpperCase();
+        const saisieMdp = document.getElementById('saisie-bos-mdp').value.trim();
+        const blocErr = document.getElementById('erreur-connexion-bos');
+
+        if (saisieId === 'BOS' && saisieMdp === 'BOSACCESSAUTO') {
+          etat.operateurConnecte = 'bos';
+          etat.estCompteBOS = true;
+          blocErr.classList.add('hidden');
+          document.getElementById('saisie-bos-id').value = '';
+          document.getElementById('saisie-bos-mdp').value = '';
+          fermerBoite('boite-connexion-bos');
+          AudioTactique.succes();
+          demarrerSession();
+        } else {
+          blocErr.classList.remove('hidden');
+          AudioTactique.alerte();
+        }
+      }
+
       function demarrerSession() {
         document.getElementById('fenetre-connexion').classList.add('hidden');
         document.getElementById('barre-navigation').classList.remove('hidden');
         document.getElementById('bloc-profil-actif').classList.remove('hidden');
         document.getElementById('bloc-profil-actif').classList.add('flex');
 
-        const op = etat.operateurs[etat.operateurConnecte];
-        document.getElementById('nom-operateur').textContent = op.nom;
-        document.getElementById('grade-operateur').textContent = op.grade;
-        attacherImageCasque(document.getElementById('avatar-profil-haut'), etat.operateurConnecte);
-
-        document.body.className = `grille-tactique-bg flex flex-col justify-between min-h-screen pb-16 sm:pb-12 text-sm select-none theme-${etat.operateurConnecte}`;
-
+        const boutonMdp = document.getElementById('bouton-cle-mdp');
         const boutonPlan = document.getElementById('bouton-ajouter-plan-hunter');
-        if (etat.operateurConnecte === 'hunter') {
-          boutonPlan.classList.remove('hidden');
-          document.getElementById('module-gestion-recrutement-poste').classList.remove('hidden');
-        } else {
+        const modRecrutementPoste = document.getElementById('module-gestion-recrutement-poste');
+        const blocLogPds = document.getElementById('bloc-log-rapide-pds');
+        const blocLogBos = document.getElementById('bloc-log-pds-bos');
+        const banniereAuditBos = document.getElementById('banniere-audit-bos');
+        const blocFormRapport = document.getElementById('bloc-formulaire-rapport');
+        const mentionCentre = document.getElementById('mention-terminal-centre');
+        const titreHud = document.getElementById('titre-unite-hud');
+        const badgeHud = document.getElementById('badge-statut-hud');
+
+        if (etat.estCompteBOS) {
+          // Configuration environnement B.O.S (Lecture seule & Audit)
+          document.getElementById('nom-operateur').textContent = "GÉRANCE B.O.S";
+          document.getElementById('grade-operateur').textContent = "HAUT COMMANDEMENT";
+          attacherImageCasque(document.getElementById('avatar-profil-haut'), 'bos');
+          document.body.className = `grille-tactique-bg flex flex-col justify-between min-h-screen pb-16 sm:pb-12 text-sm select-none theme-bos`;
+
+          boutonMdp.classList.add('hidden');
           boutonPlan.classList.add('hidden');
-          document.getElementById('module-gestion-recrutement-poste').classList.add('hidden');
+          modRecrutementPoste.classList.add('hidden');
+          blocLogPds.classList.add('hidden');
+          blocLogBos.classList.remove('hidden');
+          banniereAuditBos.classList.remove('hidden');
+          blocFormRapport.classList.add('hidden'); // Lecture seule
+
+          mentionCentre.textContent = "INSPECTION SPÉCIALE // ÉTAT-MAJOR B.O.S";
+          mentionCentre.className = "px-2.5 py-1 bg-panneauSombre border border-orEtatMajor text-orEtatMajor text-[10px] font-terminal uppercase rounded tracking-widest";
+          titreHud.textContent = "BUREAU OPS SPÉCIALES";
+          badgeHud.textContent = "SUPERVISION B.O.S";
+          badgeHud.className = "px-1.5 py-0.2 bg-amber-500/15 text-orEtatMajor text-[9px] font-terminal border border-orEtatMajor/40 uppercase rounded-sm";
+        } else {
+          // Opérateur Clone Force 99 standard
+          const op = etat.operateurs[etat.operateurConnecte];
+          document.getElementById('nom-operateur').textContent = op.nom;
+          document.getElementById('grade-operateur').textContent = op.grade;
+          attacherImageCasque(document.getElementById('avatar-profil-haut'), etat.operateurConnecte);
+          document.body.className = `grille-tactique-bg flex flex-col justify-between min-h-screen pb-16 sm:pb-12 text-sm select-none theme-${etat.operateurConnecte}`;
+
+          boutonMdp.classList.remove('hidden');
+          blocLogPds.classList.remove('hidden');
+          blocLogBos.classList.add('hidden');
+          banniereAuditBos.classList.add('hidden');
+          blocFormRapport.classList.remove('hidden');
+
+          mentionCentre.textContent = "CONSOLE DU HAVOC MARAUDER // SEC-NET 99";
+          mentionCentre.className = "px-2.5 py-1 bg-panneauSombre border border-bordureTactique text-gray-400 text-[10px] font-terminal uppercase rounded tracking-widest";
+          titreHud.textContent = "FORCE CLONE 99";
+          badgeHud.textContent = "BAD BATCH";
+          badgeHud.className = "px-1.5 py-0.2 bg-ambreArmement/15 text-ambreArmement text-[9px] font-terminal border border-ambreArmement/30 uppercase rounded-sm";
+
+          if (etat.operateurConnecte === 'hunter') {
+            boutonPlan.classList.remove('hidden');
+            modRecrutementPoste.classList.remove('hidden');
+          } else {
+            boutonPlan.classList.add('hidden');
+            modRecrutementPoste.classList.add('hidden');
+          }
         }
 
         document.getElementById('badge-date-pds').textContent = dateAujourdhuiCivil();
@@ -1655,12 +1787,14 @@
           "Voulez-vous fermer la session de bord et verrouiller le terminal du Havoc Marauder ?",
           () => {
             etat.operateurConnecte = null;
+            etat.estCompteBOS = false;
             document.body.className = "grille-tactique-bg flex flex-col justify-between min-h-screen pb-16 sm:pb-12 text-sm select-none";
             document.getElementById('fenetre-connexion').classList.remove('hidden');
             document.getElementById('barre-navigation').classList.add('hidden');
             document.getElementById('bloc-profil-actif').classList.add('hidden');
             document.getElementById('bloc-profil-actif').classList.remove('flex');
             document.getElementById('banniere-alerte-quota').classList.add('hidden');
+            document.getElementById('banniere-audit-bos').classList.add('hidden');
             masquerToutesLesFenetres();
             selectionnerOperateurAccueil('hunter');
             actualiserAffichageRecrutement();
@@ -1709,6 +1843,7 @@
 
       async function executerModificationMotDePasse(e) {
         e.preventDefault();
+        if (etat.estCompteBOS) return; // Non modifiable par BOS
         const actuel = document.getElementById('champ-mot-de-passe-actuel').value;
         const nouveau = document.getElementById('champ-nouveau-mot-de-passe').value;
         const blocErreur = document.getElementById('erreur-changement-mot-de-passe');
@@ -1734,7 +1869,7 @@
               [`motsDePasseHashes.${etat.operateurConnecte}`]: nouveauHash
             });
           } catch(err) {
-            console.warn("Écriture distante du mot de passe :", err);
+            console.warn("Écriture distante mot de passe :", err);
           }
         }
 
@@ -1755,14 +1890,14 @@
         masquerToutesLesFenetres();
 
         document.querySelectorAll('.nav-bouton').forEach(btn => {
-          btn.classList.remove('border-rougeAlerte', 'text-white', 'bg-panneauSombre');
+          btn.classList.remove('border-rougeAlerte', 'border-orEtatMajor', 'text-white', 'bg-panneauSombre');
           btn.classList.add('border-transparent', 'text-gray-400');
         });
 
         const btnActif = document.querySelector(`.nav-bouton[data-onglet="${onglet}"]`);
         if (btnActif) {
           btnActif.classList.remove('border-transparent', 'text-gray-400');
-          btnActif.classList.add('border-rougeAlerte', 'text-white', 'bg-panneauSombre');
+          btnActif.classList.add(etat.estCompteBOS ? 'border-orEtatMajor' : 'border-rougeAlerte', 'text-white', 'bg-panneauSombre');
         }
 
         document.getElementById(`fenetre-${onglet}`).classList.remove('hidden');
@@ -1792,7 +1927,6 @@
         return (op.compteurSemaine || 0) >= etat.quotaHebdomadaire;
       }
 
-      // ALERTE COMMANDEMENT RELIÉE DIRECTEMENT AUX PDS (ET NON AUX RAPPORTS)
       function verifierAlertesCommandementHunter() {
         const banniere = document.getElementById('banniere-alerte-quota');
         const texteAlerte = document.getElementById('texte-alerte-quota');
@@ -1807,7 +1941,7 @@
           .filter(k => !membreEstEnReglePDS(k) && !etat.operateurs[k].estAbsent)
           .map(k => etat.operateurs[k].nom);
 
-        if (etat.operateurConnecte === 'hunter' && subordonnesEnRetard.length > 0) {
+        if ((etat.operateurConnecte === 'hunter' || etat.estCompteBOS) && subordonnesEnRetard.length > 0) {
           texteAlerte.textContent = `Prises de service (PDS) incomplètes pour : ${subordonnesEnRetard.join(', ')} (${etat.quotaHebdomadaire} PDS requises / sem.)`;
           banniere.classList.remove('hidden');
         } else {
@@ -1815,8 +1949,8 @@
         }
       }
 
-      // ==================== SYSTEME PDS RAPIDE (18H & 21H INDÉPENDANTS) ====================
       function actualiserBoutonsPds() {
+        if (etat.estCompteBOS) return;
         const op = etat.operateurs[etat.operateurConnecte];
         if (!op) return;
 
@@ -1846,6 +1980,7 @@
       }
 
       async function executerPdsCreneau(creneau) {
+        if (etat.estCompteBOS) return; // Lecture seule
         const op = etat.operateurs[etat.operateurConnecte];
         if (!op) return;
 
@@ -2021,31 +2156,33 @@
 
       // ==================== VUE : RAPPORTS DE MISSION ====================
       function afficherVueRapports() {
-        const op = etat.operateurs[etat.operateurConnecte];
-        document.getElementById('nom-auteur-rapport').textContent = `${op.nom} [${op.grade}]`;
-        document.getElementById('champ-date-mission').value = dateAujourdhuiCivil();
+        if (!etat.estCompteBOS) {
+          const op = etat.operateurs[etat.operateurConnecte];
+          document.getElementById('nom-auteur-rapport').textContent = `${op.nom} [${op.grade}]`;
+          document.getElementById('champ-date-mission').value = dateAujourdhuiCivil();
 
-        const conteneurMetrique = document.getElementById('champ-specialiste-conteneur');
-        if (etat.operateurConnecte === 'wrecker') {
-          conteneurMetrique.innerHTML = `
-            <label class="block uppercase text-amber-400 mb-1">💥 Chars MTT & Blindés Détruits *</label>
-            <input type="number" id="champ-metrique-specifique" min="0" required value="1" class="w-full bg-fondCarbone border border-amber-500/60 px-3 py-2 text-amber-300 rounded outline-none touch-target">
-          `;
-        } else if (etat.operateurConnecte === 'crosshair') {
-          conteneurMetrique.innerHTML = `
-            <label class="block uppercase text-vertViseur mb-1">🎯 Tirs de Précision Confirmés *</label>
-            <input type="number" id="champ-metrique-specifique" min="0" required value="5" class="w-full bg-fondCarbone border border-vertViseur/60 px-3 py-2 text-vertViseur rounded outline-none touch-target">
-          `;
-        } else if (etat.operateurConnecte === 'tech') {
-          conteneurMetrique.innerHTML = `
-            <label class="block uppercase text-cyanTech mb-1">💻 Données et Schémas Piratés *</label>
-            <input type="text" id="champ-metrique-specifique" required placeholder="Ex: Clés de chiffrement séparatistes" class="w-full bg-fondCarbone border border-cyanTech/60 px-3 py-2 text-cyanTech rounded outline-none touch-target">
-          `;
-        } else {
-          conteneurMetrique.innerHTML = `
-            <label class="block uppercase text-rougeAlerte mb-1">🧭 Relevé Électromagnétique & Commandement</label>
-            <input type="text" id="champ-metrique-specifique" required placeholder="Ex: Failles de défense et réseaux détectés" class="w-full bg-fondCarbone border border-red-500/60 px-3 py-2 text-gray-100 rounded outline-none touch-target">
-          `;
+          const conteneurMetrique = document.getElementById('champ-specialiste-conteneur');
+          if (etat.operateurConnecte === 'wrecker') {
+            conteneurMetrique.innerHTML = `
+              <label class="block uppercase text-amber-400 mb-1">💥 Chars MTT & Blindés Détruits *</label>
+              <input type="number" id="champ-metrique-specifique" min="0" required value="1" class="w-full bg-fondCarbone border border-amber-500/60 px-3 py-2 text-amber-300 rounded outline-none touch-target">
+            `;
+          } else if (etat.operateurConnecte === 'crosshair') {
+            conteneurMetrique.innerHTML = `
+              <label class="block uppercase text-vertViseur mb-1">🎯 Tirs de Précision Confirmés *</label>
+              <input type="number" id="champ-metrique-specifique" min="0" required value="5" class="w-full bg-fondCarbone border border-vertViseur/60 px-3 py-2 text-vertViseur rounded outline-none touch-target">
+            `;
+          } else if (etat.operateurConnecte === 'tech') {
+            conteneurMetrique.innerHTML = `
+              <label class="block uppercase text-cyanTech mb-1">💻 Données et Schémas Piratés *</label>
+              <input type="text" id="champ-metrique-specifique" required placeholder="Ex: Clés de chiffrement séparatistes" class="w-full bg-fondCarbone border border-cyanTech/60 px-3 py-2 text-cyanTech rounded outline-none touch-target">
+            `;
+          } else {
+            conteneurMetrique.innerHTML = `
+              <label class="block uppercase text-rougeAlerte mb-1">🧭 Relevé Électromagnétique & Commandement</label>
+              <input type="text" id="champ-metrique-specifique" required placeholder="Ex: Failles de défense et réseaux détectés" class="w-full bg-fondCarbone border border-red-500/60 px-3 py-2 text-gray-100 rounded outline-none touch-target">
+            `;
+          }
         }
 
         afficherListeRapports();
@@ -2092,6 +2229,8 @@
 
       async function executerTransmissionRapport(e) {
         e.preventDefault();
+        if (etat.estCompteBOS) return; // Lecture seule
+
         const op = etat.operateurs[etat.operateurConnecte];
         const nomMission = document.getElementById('champ-nom-mission').value.trim();
         const secteur = document.getElementById('champ-secteur-mission').value.trim();
@@ -2158,7 +2297,7 @@
 
             await batch.commit();
           } catch(err) {
-            console.warn("Écriture du rapport :", err);
+            console.warn("Écriture rapport :", err);
           }
         }
 
@@ -2199,6 +2338,7 @@
       // ==================== VUE : EFFECTIF ====================
       function afficherVueEffectif() {
         const estHunter = etat.operateurConnecte === 'hunter';
+        const estBOS = etat.estCompteBOS;
         const panneauHunter = document.getElementById('panneau-commandement-hunter');
         const barreMembre = document.getElementById('barre-actions-membre-effectif');
         document.getElementById('affichage-quota-hunter').textContent = etat.quotaHebdomadaire;
@@ -2207,12 +2347,22 @@
           panneauHunter.classList.remove('hidden');
           barreMembre.classList.add('hidden');
           actualiserAffichageRecrutement();
+        } else if (estBOS) {
+          panneauHunter.classList.add('hidden');
+          barreMembre.classList.remove('hidden');
+          document.getElementById('label-statut-effectif-barre').textContent = "AUDIT GLOBAL DE L'ESCOUADE :";
+          const badgePerso = document.getElementById('badge-statut-personnel-absence');
+          badgePerso.className = "ml-1 text-orEtatMajor font-bold";
+          badgePerso.textContent = "INSPECTION HAUT COMMANDEMENT (LECTURE SEULE)";
+          document.getElementById('bouton-declarer-mon-absence').classList.add('hidden');
         } else {
           panneauHunter.classList.add('hidden');
           barreMembre.classList.remove('hidden');
+          document.getElementById('label-statut-effectif-barre').textContent = "STATUT OPÉRATEUR PERSONNEL :";
+          document.getElementById('bouton-declarer-mon-absence').classList.remove('hidden');
           const me = etat.operateurs[etat.operateurConnecte];
           const badgePerso = document.getElementById('badge-statut-personnel-absence');
-          if (me.estAbsent) {
+          if (me && me.estAbsent) {
             badgePerso.className = "ml-1 text-amber-400 font-bold";
             badgePerso.textContent = `🟠 EN ABSENCE (${me.detailsAbsence?.debut || '...'} au ${me.detailsAbsence?.fin || '...'})`;
           } else {
@@ -2300,10 +2450,11 @@
               </div>
             ` : ''}
 
-            ${estHunter ? `
+            <!-- DONNÉES PRIVÉES VISIBLES PAR HUNTER ET PAR BOS EN AUDIT -->
+            ${(estHunter || estBOS) ? `
               <div class="bg-panneauSous p-2 rounded border border-bordureLueur/80 font-terminal text-xs space-y-1">
-                <div class="text-[9px] text-amber-400 uppercase font-bold flex items-center gap-1">
-                  <span>🔒</span> IDENTIFIANTS PRIVÉS (ACCÈS RÉSERVÉ SERGENT HUNTER) :
+                <div class="text-[9px] ${estBOS ? 'text-orEtatMajor' : 'text-amber-400'} uppercase font-bold flex items-center gap-1">
+                  <span>🔒</span> IDENTIFIANTS DE COMMUNICATION (${estBOS ? 'AUDIT B.O.S' : 'PRIVÉ HUNTER'}) :
                 </div>
                 <div class="flex justify-between items-center text-[11px]">
                   <span class="text-gray-400">Steam ID 64 :</span>
@@ -2350,16 +2501,16 @@
               </div>
             </div>
 
-            <div class="pt-2 border-t border-bordureTactique flex flex-wrap justify-end gap-2">
-              ${estHunter ? `
+            ${estHunter ? `
+              <div class="pt-2 border-t border-bordureTactique flex flex-wrap justify-end gap-2">
                 <button data-gerer-absence-id="${m.id}" class="btn-ouvrir-absence-hunter px-2.5 py-1 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500 text-amber-300 text-xs font-terminal rounded touch-target">
                   🗓️ Gérer Absence
                 </button>
                 <button data-editer-membre="${m.id}" class="btn-editer-dossier px-2.5 py-1 bg-panneauSous hover:bg-bordureTactique border border-bordureLueur text-xs font-terminal text-gray-200 rounded flex items-center gap-1.5 transition touch-target">
                   ✏ Modifier Dossier
                 </button>
-              ` : ''}
-            </div>
+              </div>
+            ` : ''}
           `;
           conteneur.appendChild(carte);
 
@@ -2397,7 +2548,7 @@
       }
 
       function ouvrirFicheAttributionBlame(id) {
-        if (etat.operateurConnecte !== 'hunter') return;
+        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
         const m = etat.operateurs[id];
         if (!m) return;
 
@@ -2409,7 +2560,7 @@
 
       async function executerAttributionBlame(e) {
         e.preventDefault();
-        if (etat.operateurConnecte !== 'hunter') return;
+        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
 
         const id = document.getElementById('blame-membre-cible-id').value;
         const motif = document.getElementById('blame-motif-texte').value.trim();
@@ -2435,7 +2586,7 @@
               blamesHistorique: historique
             });
           } catch(err) {
-            console.warn("Écriture du blâme :", err);
+            console.warn("Écriture blâme :", err);
           }
         }
 
@@ -2448,7 +2599,7 @@
       }
 
       async function retirerUnBlame(id) {
-        if (etat.operateurConnecte !== 'hunter') return;
+        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
         const m = etat.operateurs[id];
         if (!m || (m.blames || 0) <= 0) return;
 
@@ -2459,7 +2610,7 @@
             const refMembre = doc(baseDeDonnees, 'operateurs', id);
             await updateDoc(refMembre, { blames: nouveauTotal });
           } catch(err) {
-            console.warn("Retrait du blâme :", err);
+            console.warn("Retrait blâme :", err);
           }
         }
 
@@ -2469,7 +2620,7 @@
       }
 
       function verifierNotificationBlamePourMembre() {
-        if (!etat.operateurConnecte || etat.operateurConnecte === 'hunter') return;
+        if (!etat.operateurConnecte || etat.operateurConnecte === 'hunter' || etat.estCompteBOS) return;
         const me = etat.operateurs[etat.operateurConnecte];
         if (!me || (me.blames || 0) === 0) return;
 
@@ -2485,6 +2636,7 @@
       }
 
       async function accuserReceptionBlame() {
+        if (etat.estCompteBOS) return;
         const me = etat.operateurs[etat.operateurConnecte];
         if (me) {
           me.dernierBlameVu = me.blames;
@@ -2502,6 +2654,7 @@
       }
 
       function ouvrirFicheAbsence(id) {
+        if (etat.estCompteBOS) return; // Lecture seule
         const m = etat.operateurs[id];
         if (!m) return;
 
@@ -2517,6 +2670,8 @@
 
       async function executerSauvegardeAbsence(e) {
         e.preventDefault();
+        if (etat.estCompteBOS) return;
+
         const id = document.getElementById('absence-membre-id').value;
         const estAbsent = document.getElementById('absence-statut-select').value === 'absent';
         const debut = document.getElementById('absence-date-debut').value.trim();
@@ -2544,7 +2699,7 @@
               const refEntree = doc(collection(baseDeDonnees, 'carnetAbsences'));
               await setDoc(refEntree, entreeCarnet);
             } catch(err) {
-              console.warn("Écriture carnet absences :", err);
+              console.warn("Écriture carnet :", err);
             }
           }
           etat.registreAbsencesHistorique.unshift(entreeCarnet);
@@ -2558,7 +2713,7 @@
               detailsAbsence: details
             });
           } catch(err) {
-            console.warn("Mise à jour statut absence :", err);
+            console.warn("Mise à jour absence :", err);
           }
         }
 
@@ -2598,7 +2753,7 @@
       }
 
       function ouvrirFicheModificationDossier(id) {
-        if (etat.operateurConnecte !== 'hunter') return;
+        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
         const m = etat.operateurs[id];
         if (!m) return;
 
@@ -2616,7 +2771,7 @@
 
       async function executerSauvegardeDossierMilitaire(e) {
         e.preventDefault();
-        if (etat.operateurConnecte !== 'hunter') return;
+        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
 
         const id = document.getElementById('identifiant-membre-edite').value;
         const dateEntree = document.getElementById('champ-date-incorporation').value.trim();
@@ -2636,7 +2791,7 @@
               discord: discord
             });
           } catch(err) {
-            console.warn("Écriture du dossier :", err);
+            console.warn("Écriture dossier :", err);
           }
         }
 
@@ -2653,7 +2808,7 @@
 
       async function executerReglageQuota(e) {
         e.preventDefault();
-        if (etat.operateurConnecte !== 'hunter') return;
+        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
 
         const val = parseInt(document.getElementById('champ-valeur-quota').value, 10);
         if (val > 0) {
@@ -2663,7 +2818,7 @@
               const refConfig = doc(baseDeDonnees, 'config', 'escouade');
               await updateDoc(refConfig, { quotaHebdomadaire: val });
             } catch(err) {
-              console.warn("Écriture du quota :", err);
+              console.warn("Écriture quota :", err);
             }
           }
           fermerBoite('boite-reglage-quota');
@@ -2674,7 +2829,7 @@
       }
 
       function executerResetSemaine() {
-        if (etat.operateurConnecte !== 'hunter') return;
+        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
 
         afficherBoiteConfirmation(
           "CLÔTURE DU CYCLE HEBDOMADAIRE",
@@ -2741,7 +2896,7 @@
 
       async function executerCreationPlan(e) {
         e.preventDefault();
-        if (etat.operateurConnecte !== 'hunter') return;
+        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
 
         const code = document.getElementById('champ-code-plan').value.trim().toUpperCase();
         const cible = document.getElementById('champ-cible-plan').value.trim();
@@ -2765,9 +2920,9 @@
         afficherVuePlans();
       }
 
-      // ==================== VUE : ARCHIVES DE PIRATAGE (TECH) ====================
+      // ==================== VUE : ARCHIVES DE PIRATAGE ====================
       function afficherVueArchives() {
-        const estTech = etat.operateurConnecte === 'tech';
+        const estTech = etat.operateurConnecte === 'tech' && !etat.estCompteBOS;
         const panneauSaisie = document.getElementById('panneau-saisie-piratage-tech');
         if (estTech) {
           panneauSaisie.classList.remove('hidden');
@@ -2805,7 +2960,7 @@
 
       async function executerTransmissionArchiveTech(e) {
         e.preventDefault();
-        if (etat.operateurConnecte !== 'tech') return;
+        if (etat.operateurConnecte !== 'tech' || etat.estCompteBOS) return;
 
         const titre = document.getElementById('titre-archive-piratee').value.trim();
         const source = document.getElementById('source-archive-piratee').value.trim();
@@ -2848,7 +3003,7 @@
             });
             await batch.commit();
           } catch(err) {
-            console.warn("Écriture archive & rapport :", err);
+            console.warn("Écriture archive :", err);
           }
         }
 
@@ -2874,6 +3029,15 @@
         });
 
         document.getElementById('formulaire-connexion').addEventListener('submit', executerConnexion);
+
+        // Connexion discrète BOS
+        document.getElementById('lien-connexion-bos-discret').addEventListener('click', () => {
+          document.getElementById('saisie-bos-id').value = '';
+          document.getElementById('saisie-bos-mdp').value = '';
+          document.getElementById('erreur-connexion-bos').classList.add('hidden');
+          ouvrirBoite('boite-connexion-bos');
+        });
+        document.getElementById('formulaire-connexion-bos').addEventListener('submit', executerConnexionBOS);
 
         document.querySelectorAll('.nav-bouton').forEach(btn => {
           btn.addEventListener('click', () => {
@@ -2929,7 +3093,7 @@
         document.getElementById('formulaire-reglage-quota').addEventListener('submit', executerReglageQuota);
         document.getElementById('bouton-reset-semaine').addEventListener('click', executerResetSemaine);
 
-        // PDS 18H ET 21H INDÉPENDANTS
+        // PDS 18H ET 21H
         document.getElementById('bouton-pds-18h').addEventListener('click', () => executerPdsCreneau('18h'));
         document.getElementById('bouton-pds-21h').addEventListener('click', () => executerPdsCreneau('21h'));
 
@@ -2939,13 +3103,13 @@
 
         // Absences & Carnet
         document.getElementById('bouton-declarer-mon-absence').addEventListener('click', () => {
-          if (etat.operateurConnecte) ouvrirFicheAbsence(etat.operateurConnecte);
+          if (etat.operateurConnecte && !etat.estCompteBOS) ouvrirFicheAbsence(etat.operateurConnecte);
         });
         document.getElementById('formulaire-gerer-absence').addEventListener('submit', executerSauvegardeAbsence);
         document.getElementById('bouton-ouvrir-carnet-absences').addEventListener('click', ouvrirCarnetAbsences);
         document.getElementById('bouton-consulter-carnet-membre').addEventListener('click', ouvrirCarnetAbsences);
 
-        // Recrutement (Poste de commandement Hunter)
+        // Recrutement (Hunter)
         document.getElementById('bouton-basculer-recrutement').addEventListener('click', basculerEtatRecrutementHunter);
         document.getElementById('bouton-editer-note-recrutement').addEventListener('click', () => {
           document.getElementById('champ-note-recrutement-texte').value = etat.recrutementNote;
@@ -2955,7 +3119,7 @@
 
         // Plans d'engagement
         document.getElementById('bouton-ajouter-plan-hunter').addEventListener('click', () => {
-          if (etat.operateurConnecte !== 'hunter') return;
+          if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
           document.getElementById('champ-code-plan').value = '';
           document.getElementById('champ-cible-plan').value = '';
           document.getElementById('champ-meneurs-plan').value = '';
