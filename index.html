@@ -2,7 +2,7 @@
 <html lang="fr" class="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FORCE CLONE 99 // DATAPAD TACTIQUE // HAVOC MARAUDER</title>
 
   <!-- Favicon officiel Clone Force 99 (logobadbatch.png) -->
@@ -153,7 +153,7 @@
         <div>
           <div class="flex items-center space-x-1.5">
             <span class="font-titre font-bold tracking-wider text-xs sm:text-sm text-gray-100 uppercase" id="titre-unite-hud">FORCE CLONE 99</span>
-            <span class="px-1.5 py-0.2 bg-ambreArmement/15 text-ambreArmement text-[9px] font-terminal border border-ambreArmement/30 uppercase rounded-sm" id="badge-statut-hud">BAD BATCH</span>
+            <span class="px-1.5 py-px bg-ambreArmement/15 text-ambreArmement text-[9px] font-terminal border border-ambreArmement/30 uppercase rounded-sm" id="badge-statut-hud">BAD BATCH</span>
           </div>
           <div class="text-[9px] text-gray-400 font-terminal flex items-center gap-1.5 leading-none mt-0.5">
             <span id="point-liaison" class="inline-block w-2 h-2 rounded-full bg-vertViseur shadow-[0_0_6px_#10b981]"></span>
@@ -296,7 +296,7 @@
                     <span class="text-lg">💻</span>
                     <div>
                       <div class="text-xs font-titre font-bold leading-none">TECH</div>
-                      <div class="text-[8px] font-terminal text-gray-400 leading-none mt-1">Piratage & Données</div>
+                      <div class="text-[8px] font-terminal text-gray-400 leading-none mt-1">Piratage &amp; Données</div>
                     </div>
                   </button>
                 </div>
@@ -313,7 +313,7 @@
               </div>
 
               <button type="submit" class="w-full py-2.5 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold tracking-wider text-xs uppercase biseau-bouton transition shadow-md touch-target">
-                AUTHENTIFICATION & OUVERTURE DE SESSION
+                AUTHENTIFICATION &amp; OUVERTURE DE SESSION
               </button>
             </form>
           </div>
@@ -367,7 +367,7 @@
 
             <div>
               <h3 class="font-titre text-[10px] uppercase tracking-wider text-gray-400 mb-1.5 flex items-center gap-1.5">
-                <span class="text-amber-400">■</span> ARMEMENT RÉGLEMENTAIRE & ÉQUIPEMENT DE COMBAT
+                <span class="text-amber-400">■</span> ARMEMENT RÉGLEMENTAIRE &amp; ÉQUIPEMENT DE COMBAT
               </h3>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="dossier-liste-equipement"></div>
             </div>
@@ -499,7 +499,7 @@
       <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5 shadow-lg">
         <div class="flex items-center justify-between border-b border-bordureTactique pb-2 mb-2.5">
           <h3 class="font-titre text-xs uppercase tracking-wider text-gray-200 flex items-center gap-1.5">
-            <span class="text-rougeAlerte">■</span> DERNIERS RAPPORTS & PRISES DE SERVICE TRANSMIS
+            <span class="text-rougeAlerte">■</span> DERNIERS RAPPORTS &amp; PRISES DE SERVICE TRANSMIS
           </h3>
           <button data-action-nav="rapports" class="text-xs font-terminal text-amber-400 hover:underline">
             Consulter tout le registre →
@@ -525,16 +525,16 @@
         <form id="formulaire-rapport-mission" class="space-y-3 font-terminal text-xs">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div>
-              <label class="block uppercase text-gray-300 mb-1">Désignation de la mission *</label>
-              <input type="text" id="champ-nom-mission" required placeholder="Exemple : BATAILLE D'ANAXES" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none touch-target">
+              <label class="block uppercase text-gray-300 mb-1">Désignation de la mission</label>
+              <input type="text" id="champ-nom-mission" placeholder="Exemple : BATAILLE D'ANAXES" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none touch-target">
             </div>
             <div>
-              <label class="block uppercase text-gray-300 mb-1">Secteur / Planète d'intervention *</label>
-              <input type="text" id="champ-secteur-mission" required placeholder="Exemple : Anaxes // Complexe de communication" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none touch-target">
+              <label class="block uppercase text-gray-300 mb-1">Secteur / Planète d'intervention</label>
+              <input type="text" id="champ-secteur-mission" placeholder="Exemple : Anaxes // Complexe de communication" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none touch-target">
             </div>
             <div>
-              <label class="block uppercase text-gray-300 mb-1">Date civile (JJ/MM/AAAA) *</label>
-              <input type="text" id="champ-date-mission" required class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-amber-300 rounded focus:border-red-500 outline-none touch-target">
+              <label class="block uppercase text-gray-300 mb-1">Date civile (JJ/MM/AAAA)</label>
+              <input type="text" id="champ-date-mission" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-amber-300 rounded focus:border-red-500 outline-none touch-target">
             </div>
           </div>
 
@@ -572,8 +572,8 @@
           </div>
 
           <div>
-            <label class="block uppercase text-gray-300 mb-1">Compte-rendu tactique des opérations *</label>
-            <textarea id="champ-description-mission" required rows="3" placeholder="Détaillez les manœuvres exécutées, la résistance adverse et les résultats obtenus..." class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none"></textarea>
+            <label class="block uppercase text-gray-300 mb-1">Compte-rendu tactique des opérations</label>
+            <textarea id="champ-description-mission" rows="3" placeholder="Détaillez les manœuvres exécutées, la résistance adverse et les résultats obtenus..." class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none"></textarea>
           </div>
 
           <div class="flex items-center justify-end space-x-2 pt-1">
@@ -585,12 +585,12 @@
             </button>
           </div>
         </form>
-      </div>
+      </div><!-- CORRECTION : fermeture de #bloc-formulaire-rapport -->
 
       <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5">
         <div class="flex flex-wrap items-center justify-between gap-2.5 border-b border-bordureTactique pb-2.5 mb-3">
           <h3 class="font-titre text-xs uppercase tracking-wider text-gray-200 flex items-center gap-1.5">
-            <span class="text-amber-400">■</span> REGISTRE OFFICIEL DES RAPPORTS & PDS
+            <span class="text-amber-400">■</span> REGISTRE OFFICIEL DES RAPPORTS &amp; PDS
           </h3>
           <div class="flex items-center space-x-2 font-terminal">
             <span class="text-xs text-gray-400">Filtrer par opérateur :</span>
@@ -632,7 +632,7 @@
               ⚙ Quota : <span id="affichage-quota-hunter">3</span> PDS/sem.
             </button>
             <button id="bouton-reset-semaine" class="px-3 py-1.5 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold text-xs uppercase biseau-bouton transition shadow touch-target">
-              🔄 CLÔTURER SEMAINE & RESET
+              🔄 CLÔTURER SEMAINE &amp; RESET
             </button>
           </div>
         </div>
@@ -779,7 +779,7 @@
       </div>
       <div class="flex justify-end pt-3 border-t border-bordureTactique mt-3">
         <button id="bouton-accuser-reception-blame" class="w-full py-2 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold text-xs uppercase biseau-bouton transition">
-          RECONNAÎTRE L'ORDRE TACTIQUE & ACCUSER RÉCEPTION
+          RECONNAÎTRE L'ORDRE TACTIQUE &amp; ACCUSER RÉCEPTION
         </button>
       </div>
     </div>
@@ -957,7 +957,7 @@
         </div>
 
         <div>
-          <label class="block text-[11px] text-gray-300 mb-1">Notes de commandement & évaluation tactique :</label>
+          <label class="block text-[11px] text-gray-300 mb-1">Notes de commandement &amp; évaluation tactique :</label>
           <textarea id="champ-notes-commandement" rows="2" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded outline-none"></textarea>
         </div>
         <div class="flex justify-end space-x-2 pt-1.5">
@@ -986,7 +986,7 @@
         </div>
         <div>
           <label class="block text-[11px] font-terminal text-gray-300 mb-1">Opérateurs engagés</label>
-          <input type="text" id="champ-meneurs-plan" required placeholder="Exemple : Crosshair & Tech" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none">
+          <input type="text" id="champ-meneurs-plan" required placeholder="Exemple : Crosshair &amp; Tech" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none">
         </div>
         <div>
           <label class="block text-[11px] font-terminal text-gray-300 mb-1">Description de la manœuvre</label>
@@ -1065,7 +1065,8 @@
       collection, 
       writeBatch, 
       deleteDoc,
-      increment 
+      increment,
+      FieldPath
     } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     (function initialiserDatapadBadBatch() {
@@ -1468,21 +1469,43 @@
 
         const refConfigEscouade = doc(baseDeDonnees, 'config', 'escouade');
         onSnapshot(refConfigEscouade, snap => {
-          if (snap.exists()) {
-            const donnees = snap.data();
-            if (donnees.quotaHebdomadaire) etat.quotaHebdomadaire = donnees.quotaHebdomadaire;
-            if (typeof donnees.recrutementOuvert === 'boolean') etat.recrutementOuvert = donnees.recrutementOuvert;
-            if (donnees.recrutementNote) etat.recrutementNote = donnees.recrutementNote;
-            if (donnees.motsDePasseHashes) {
-              etat.motsDePasseHashes = { ...etat.motsDePasseHashes, ...donnees.motsDePasseHashes };
+          if (!snap.exists()) {
+            // CORRECTION : création du document de configuration s'il n'existe pas encore
+            if (!snap.metadata.fromCache) {
+              setDoc(refConfigEscouade, {
+                quotaHebdomadaire: etat.quotaHebdomadaire,
+                recrutementOuvert: etat.recrutementOuvert,
+                recrutementNote: etat.recrutementNote,
+                motsDePasseHashes: etat.motsDePasseHashes
+              }).catch(err => console.warn("Création config :", err));
             }
-            actualiserAffichageRecrutement();
-            if (etat.operateurConnecte) actualiserVueEnCours();
+            return;
           }
+          const donnees = snap.data();
+          if (donnees.quotaHebdomadaire) etat.quotaHebdomadaire = donnees.quotaHebdomadaire;
+          if (typeof donnees.recrutementOuvert === 'boolean') etat.recrutementOuvert = donnees.recrutementOuvert;
+          if (donnees.recrutementNote) etat.recrutementNote = donnees.recrutementNote;
+          if (donnees.motsDePasseHashes) {
+            etat.motsDePasseHashes = { ...etat.motsDePasseHashes, ...donnees.motsDePasseHashes };
+          }
+          actualiserAffichageRecrutement();
+          if (etat.operateurConnecte) actualiserVueEnCours();
         }, err => console.warn(err));
 
         const refOperateurs = collection(baseDeDonnees, 'operateurs');
         onSnapshot(refOperateurs, snap => {
+          // CORRECTION : création des documents opérateurs manquants (sinon updateDoc / batch.update échouent)
+          if (!snap.metadata.fromCache) {
+            const existants = new Set();
+            snap.forEach(d => existants.add(d.id));
+            Object.values(EFFECTIF_CANONIQUE).forEach(m => {
+              if (!existants.has(m.id)) {
+                setDoc(doc(baseDeDonnees, 'operateurs', m.id), m)
+                  .catch(err => console.warn("Création opérateur :", err));
+              }
+            });
+          }
+
           snap.forEach(d => {
             if (etat.operateurs[d.id]) {
               etat.operateurs[d.id] = { ...etat.operateurs[d.id], ...d.data() };
@@ -1507,7 +1530,9 @@
         const refPlans = collection(baseDeDonnees, 'plans');
         onSnapshot(refPlans, snap => {
           if (snap.empty) {
-            PLANS_CANONIQUES.forEach(p => setDoc(doc(baseDeDonnees, 'plans', p.id), p));
+            if (!snap.metadata.fromCache) {
+              PLANS_CANONIQUES.forEach(p => setDoc(doc(baseDeDonnees, 'plans', p.id), p));
+            }
           } else {
             const listePlans = [];
             snap.forEach(d => listePlans.push({ id: d.id, ...d.data() }));
@@ -1675,7 +1700,8 @@
         const empreinteSaisie = await calculerEmpreinteSHA256(saisieMDP);
         const empreinteAttendue = etat.motsDePasseHashes[id] || HASH_DEFAUT;
 
-        const estValide = (empreinteSaisie === empreinteAttendue) || (saisieMDP === empreinteAttendue);
+        // CORRECTION SÉCURITÉ : seule l'empreinte est comparée (on ne peut plus se connecter en saisissant le hash)
+        const estValide = (empreinteSaisie === empreinteAttendue);
 
         if (estValide) {
           etat.operateurConnecte = id;
@@ -1750,7 +1776,7 @@
           mentionCentre.className = "px-2.5 py-1 bg-panneauSombre border border-orEtatMajor text-orEtatMajor text-[10px] font-terminal uppercase rounded tracking-widest";
           titreHud.textContent = "BUREAU OPS SPÉCIALES";
           badgeHud.textContent = "SUPERVISION B.O.S";
-          badgeHud.className = "px-1.5 py-0.2 bg-amber-500/15 text-orEtatMajor text-[9px] font-terminal border border-orEtatMajor/40 uppercase rounded-sm";
+          badgeHud.className = "px-1.5 py-px bg-amber-500/15 text-orEtatMajor text-[9px] font-terminal border border-orEtatMajor/40 uppercase rounded-sm";
         } else {
           // Opérateur Clone Force 99 standard
           const op = etat.operateurs[etat.operateurConnecte];
@@ -1769,7 +1795,7 @@
           mentionCentre.className = "px-2.5 py-1 bg-panneauSombre border border-bordureTactique text-gray-400 text-[10px] font-terminal uppercase rounded tracking-widest";
           titreHud.textContent = "FORCE CLONE 99";
           badgeHud.textContent = "BAD BATCH";
-          badgeHud.className = "px-1.5 py-0.2 bg-ambreArmement/15 text-ambreArmement text-[9px] font-terminal border border-ambreArmement/30 uppercase rounded-sm";
+          badgeHud.className = "px-1.5 py-px bg-ambreArmement/15 text-ambreArmement text-[9px] font-terminal border border-ambreArmement/30 uppercase rounded-sm";
 
           if (etat.operateurConnecte === 'hunter') {
             boutonPlan.classList.remove('hidden');
@@ -1857,7 +1883,7 @@
         const hashActuel = await calculerEmpreinteSHA256(actuel);
         const attendu = etat.motsDePasseHashes[etat.operateurConnecte] || HASH_DEFAUT;
 
-        const estValide = (hashActuel === attendu) || (actuel === attendu);
+        const estValide = (hashActuel === attendu);
         if (!estValide) {
           blocErreur.textContent = "Le mot de passe actuel saisi est incorrect.";
           blocErreur.classList.remove('hidden');
@@ -2013,6 +2039,7 @@
           dateCreation: Date.now()
         };
 
+        let ecritureReussie = false;
         if (estConnecteFirestore) {
           try {
             const batch = writeBatch(baseDeDonnees);
@@ -2020,20 +2047,25 @@
             batch.set(refNouv, nouveauRapport);
 
             const refOp = doc(baseDeDonnees, 'operateurs', op.id);
-            batch.update(refOp, {
-              compteurSemaine: increment(op.id === 'hunter' ? 0 : 1),
-              totalStatistique: increment(1),
-              [`pdsEffectuees.${dateJour}`]: op.pdsEffectuees[dateJour]
-            });
+            // CORRECTION : la date contient des "/" → chemin de champ via FieldPath
+            batch.update(refOp,
+              'compteurSemaine', increment(op.id === 'hunter' ? 0 : 1),
+              'totalStatistique', increment(1),
+              new FieldPath('pdsEffectuees', dateJour), op.pdsEffectuees[dateJour]
+            );
             await batch.commit();
+            ecritureReussie = true;
           } catch(err) {
             console.warn("Écriture PDS :", err);
           }
         }
 
-        if (op.id !== 'hunter') op.compteurSemaine = (op.compteurSemaine || 0) + 1;
-        op.totalStatistique = (op.totalStatistique || 0) + 1;
-        etat.rapports.unshift(nouveauRapport);
+        // CORRECTION : mise à jour locale uniquement hors Firestore (sinon doublons via onSnapshot)
+        if (!ecritureReussie) {
+          if (op.id !== 'hunter') op.compteurSemaine = (op.compteurSemaine || 0) + 1;
+          op.totalStatistique = (op.totalStatistique || 0) + 1;
+          etat.rapports.unshift(nouveauRapport);
+        }
 
         AudioTactique.succes();
         actualiserVueEnCours();
@@ -2148,7 +2180,7 @@
                   <span class="text-rougeAlerte font-bold uppercase">${echapperTexteHTML(rap.nomOperateur)}</span>
                   <span class="text-gray-100 font-bold">${echapperTexteHTML(rap.nomMission)}</span>
                   <span class="text-[10px] text-gray-400">[${echapperTexteHTML(rap.secteur)}]</span>
-                  <span class="px-1 py-0.2 text-[8px] rounded ${rap.estPresent ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800'}">${rap.estPresent ? 'PRÉSENT' : 'ABSENT'}</span>
+                  <span class="px-1 py-px text-[8px] rounded ${rap.estPresent ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800'}">${rap.estPresent ? 'PRÉSENT' : 'ABSENT'}</span>
                 </div>
                 <p class="text-gray-300 text-[11px] mt-0.5 line-clamp-1">${echapperTexteHTML(rap.description)}</p>
                 ${rap.metriqueSpecifique ? `<div class="text-[10px] text-amber-400 mt-0.5">⚡ ${echapperTexteHTML(rap.metriqueSpecifique)}</div>` : ''}
@@ -2170,26 +2202,26 @@
           const conteneurMetrique = document.getElementById('champ-specialiste-conteneur');
           if (etat.operateurConnecte === 'wrecker') {
             conteneurMetrique.innerHTML = `
-              <label class="block uppercase text-amber-400 mb-1">💥 Chars MTT & Blindés Détruits *</label>
-              <input type="number" id="champ-metrique-specifique" min="0" required value="1" class="w-full bg-fondCarbone border border-amber-500/60 px-3 py-2 text-amber-300 rounded outline-none touch-target">
+              <label class="block uppercase text-amber-400 mb-1">💥 Chars MTT & Blindés Détruits</label>
+              <input type="number" id="champ-metrique-specifique" min="0" value="1" class="w-full bg-fondCarbone border border-amber-500/60 px-3 py-2 text-amber-300 rounded outline-none touch-target">
             `;
           } else if (etat.operateurConnecte === 'crosshair') {
             conteneurMetrique.innerHTML = `
-              <label class="block uppercase text-vertViseur mb-1">🎯 Tirs de Précision Confirmés *</label>
-              <input type="number" id="champ-metrique-specifique" min="0" required value="5" class="w-full bg-fondCarbone border border-vertViseur/60 px-3 py-2 text-vertViseur rounded outline-none touch-target">
+              <label class="block uppercase text-vertViseur mb-1">🎯 Tirs de Précision Confirmés</label>
+              <input type="number" id="champ-metrique-specifique" min="0" value="5" class="w-full bg-fondCarbone border border-vertViseur/60 px-3 py-2 text-vertViseur rounded outline-none touch-target">
             `;
           } else if (etat.operateurConnecte === 'tech') {
             conteneurMetrique.innerHTML = `
-              <label class="block uppercase text-cyanTech mb-1">💻 Données et Schémas Piratés *</label>
-              <input type="text" id="champ-metrique-specifique" required placeholder="Ex: Clés de chiffrement séparatistes" class="w-full bg-fondCarbone border border-cyanTech/60 px-3 py-2 text-cyanTech rounded outline-none touch-target">
+              <label class="block uppercase text-cyanTech mb-1">💻 Données et Schémas Piratés</label>
+              <input type="text" id="champ-metrique-specifique" placeholder="Ex: Clés de chiffrement séparatistes" class="w-full bg-fondCarbone border border-cyanTech/60 px-3 py-2 text-cyanTech rounded outline-none touch-target">
             `;
           } else {
             conteneurMetrique.innerHTML = `
               <label class="block uppercase text-rougeAlerte mb-1">🧭 Relevé Électromagnétique & Commandement</label>
-              <input type="text" id="champ-metrique-specifique" required placeholder="Ex: Failles de défense et réseaux détectés" class="w-full bg-fondCarbone border border-red-500/60 px-3 py-2 text-gray-100 rounded outline-none touch-target">
+              <input type="text" id="champ-metrique-specifique" placeholder="Ex: Failles de défense et réseaux détectés" class="w-full bg-fondCarbone border border-red-500/60 px-3 py-2 text-gray-100 rounded outline-none touch-target">
             `;
           }
-        }
+        } // CORRECTION : fermeture du if (!etat.estCompteBOS)
 
         afficherListeRapports();
       }
@@ -2198,6 +2230,7 @@
         const conteneur = document.getElementById('liste-des-rapports');
         conteneur.innerHTML = '';
         const filtre = document.getElementById('filtre-operateurs-rapports').value;
+        const estHunter = etat.operateurConnecte === 'hunter';
 
         const liste = filtre === 'tous'
           ? etat.rapports
@@ -2214,23 +2247,63 @@
           div.innerHTML = `
             <div class="flex flex-wrap items-center justify-between gap-2 border-b border-bordureTactique pb-1.5">
               <div class="flex items-center space-x-2">
-                <span class="font-titre font-bold text-gray-100 uppercase">${echapperTexteHTML(rap.nomMission)}</span>
+                <span class="font-titre font-bold text-gray-100 uppercase">${echapperTexteHTML(rap.nomMission || 'MISSION SANS TITRE')}</span>
                 <span class="px-1.5 py-0.5 rounded text-[8px] font-bold ${rap.estPresent ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800'}">
                   ${rap.estPresent ? '✓ PRÉSENT' : '✗ ABSENT'}
                 </span>
               </div>
               <div class="text-gray-400 text-[10px]">
-                Secteur : <span class="text-gray-200 font-bold">${echapperTexteHTML(rap.secteur)}</span> // Date : <span class="text-amber-400">${echapperTexteHTML(rap.date)}</span>
+                Secteur : <span class="text-gray-200 font-bold">${echapperTexteHTML(rap.secteur || 'Non précisé')}</span> // Date : <span class="text-amber-400">${echapperTexteHTML(rap.date)}</span>
               </div>
             </div>
-            <p class="text-gray-300 text-xs leading-relaxed">${echapperTexteHTML(rap.description)}</p>
+            <p class="text-gray-300 text-xs leading-relaxed whitespace-pre-wrap">${echapperTexteHTML(rap.description || 'Aucun détail rédigé.')}</p>
             <div class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-bordureTactique text-[10px]">
-              <div class="text-amber-400"><span class="font-bold">MÉTRIQUE :</span> ${echapperTexteHTML(rap.metriqueSpecifique)}</div>
-              <div class="text-gray-400">Auteur : <span class="text-rougeAlerte font-bold uppercase">${echapperTexteHTML(rap.nomOperateur)}</span></div>
+              <div class="text-amber-400"><span class="font-bold">MÉTRIQUE :</span> ${echapperTexteHTML(rap.metriqueSpecifique || 'N/A')}</div>
+              <div class="flex items-center gap-3">
+                <div class="text-gray-400">Auteur : <span class="text-rougeAlerte font-bold uppercase">${echapperTexteHTML(rap.nomOperateur)}</span></div>
+                ${estHunter && rap.id ? `
+                  <button data-supprimer-rapport="${echapperTexteHTML(rap.id)}" class="btn-supprimer-rapport px-2 py-0.5 bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 font-bold rounded text-[10px] flex items-center gap-1 transition touch-target">
+                    🗑️ Supprimer
+                  </button>
+                ` : ''}
+              </div>
             </div>
           `;
           conteneur.appendChild(div);
         });
+
+        if (estHunter) {
+          conteneur.querySelectorAll('.btn-supprimer-rapport').forEach(btn => {
+            btn.addEventListener('click', () => {
+              const idRap = btn.getAttribute('data-supprimer-rapport');
+              supprimerRapportMission(idRap);
+            });
+          });
+        }
+      }
+
+      async function supprimerRapportMission(idRapport) {
+        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
+
+        afficherBoiteConfirmation(
+          "PURGE DE RAPPORT DE MISSION",
+          "Voulez-vous supprimer définitivement ce rapport du registre officiel ?",
+          async () => {
+            if (estConnecteFirestore && idRapport) {
+              try {
+                const refDoc = doc(baseDeDonnees, 'missions', idRapport);
+                await deleteDoc(refDoc);
+              } catch (err) {
+                console.warn("Erreur suppression rapport :", err);
+              }
+            }
+
+            etat.rapports = etat.rapports.filter(r => r.id !== idRapport);
+            AudioTactique.succes();
+            afficherListeRapports();
+            if (etat.ongletActif === 'poste-commandement') afficherVuePosteCommandement();
+          }
+        );
       }
 
       async function executerTransmissionRapport(e) {
@@ -2268,6 +2341,7 @@
           incrementStat = parseInt(metrique, 10) || 1;
         }
 
+        let ecritureReussie = false;
         if (estConnecteFirestore) {
           try {
             const batch = writeBatch(baseDeDonnees);
@@ -2302,32 +2376,36 @@
             }
 
             await batch.commit();
+            ecritureReussie = true;
           } catch(err) {
             console.warn("Écriture rapport :", err);
           }
         }
 
-        if (op.id !== 'hunter') op.compteurSemaine = (op.compteurSemaine || 0) + 1;
-        op.totalStatistique = (op.totalStatistique || 0) + incrementStat;
+        // CORRECTION : mises à jour locales uniquement si Firestore n'a pas pris le relais (évite les doublons)
+        if (!ecritureReussie) {
+          if (op.id !== 'hunter') op.compteurSemaine = (op.compteurSemaine || 0) + 1;
+          op.totalStatistique = (op.totalStatistique || 0) + incrementStat;
 
-        membresCoches.forEach(idMembre => {
-          if (idMembre !== op.id && etat.operateurs[idMembre]) {
-            etat.operateurs[idMembre].compteurSemaine = (etat.operateurs[idMembre].compteurSemaine || 0) + 1;
-            etat.operateurs[idMembre].totalStatistique = (etat.operateurs[idMembre].totalStatistique || 0) + 1;
-          }
-        });
-
-        etat.rapports.unshift(nouveauRapport);
-
-        if (op.id === 'tech') {
-          etat.archivesPiratees.unshift({
-            id: 'arc-' + Date.now(),
-            titre: `Interception : ${nomMission}`,
-            source: secteur,
-            horodatage: date,
-            contenu: `${metrique} - ${description}`,
-            dateCreation: Date.now()
+          membresCoches.forEach(idMembre => {
+            if (idMembre !== op.id && etat.operateurs[idMembre]) {
+              etat.operateurs[idMembre].compteurSemaine = (etat.operateurs[idMembre].compteurSemaine || 0) + 1;
+              etat.operateurs[idMembre].totalStatistique = (etat.operateurs[idMembre].totalStatistique || 0) + 1;
+            }
           });
+
+          etat.rapports.unshift(nouveauRapport);
+
+          if (op.id === 'tech') {
+            etat.archivesPiratees.unshift({
+              id: 'arc-' + Date.now(),
+              titre: `Interception : ${nomMission}`,
+              source: secteur,
+              horodatage: date,
+              contenu: `${metrique} - ${description}`,
+              dateCreation: Date.now()
+            });
+          }
         }
 
         AudioTactique.succes();
@@ -2404,11 +2482,11 @@
                   <div class="text-[10px] font-terminal text-amber-400">${echapperTexteHTML(m.matricule)} // ${echapperTexteHTML(m.grade)}</div>
                   <div class="text-[10px] font-terminal mt-0.5">
                     ${estAbsent ? `
-                      <span class="px-1.5 py-0.2 rounded bg-amber-950 text-amber-300 border border-amber-600 font-bold">
+                      <span class="px-1.5 py-px rounded bg-amber-950 text-amber-300 border border-amber-600 font-bold">
                         🟠 EN ABSENCE (${echapperTexteHTML(m.detailsAbsence?.debut || '')} ➔ ${echapperTexteHTML(m.detailsAbsence?.fin || '')})
                       </span>
                     ` : `
-                      <span class="px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-700 font-bold">
+                      <span class="px-1.5 py-px rounded bg-emerald-950 text-emerald-300 border border-emerald-700 font-bold">
                         🟢 PRÉSENT AU COMBAT
                       </span>
                     `}
@@ -2601,8 +2679,10 @@
           }
         }
 
-        m.blames = nouveauTotal;
-        m.blamesHistorique = historique;
+        // Valeurs absolues : pas de risque de doublon avec onSnapshot
+        const cible = etat.operateurs[id];
+        cible.blames = nouveauTotal;
+        cible.blamesHistorique = historique;
 
         fermerBoite('boite-assigner-blame');
         AudioTactique.succes();
@@ -2625,7 +2705,7 @@
           }
         }
 
-        m.blames = nouveauTotal;
+        etat.operateurs[id].blames = nouveauTotal;
         AudioTactique.succes();
         afficherVueEffectif();
       }
@@ -2705,15 +2785,18 @@
             dateCreation: Date.now()
           };
 
+          let carnetEcrit = false;
           if (estConnecteFirestore) {
             try {
               const refEntree = doc(collection(baseDeDonnees, 'carnetAbsences'));
               await setDoc(refEntree, entreeCarnet);
+              carnetEcrit = true;
             } catch(err) {
               console.warn("Écriture carnet :", err);
             }
           }
-          etat.registreAbsencesHistorique.unshift(entreeCarnet);
+          // CORRECTION : évite le doublon avec le onSnapshot du carnet
+          if (!carnetEcrit) etat.registreAbsencesHistorique.unshift(entreeCarnet);
         }
 
         if (estConnecteFirestore) {
@@ -2728,8 +2811,9 @@
           }
         }
 
-        m.estAbsent = estAbsent;
-        m.detailsAbsence = details;
+        const cible = etat.operateurs[id];
+        cible.estAbsent = estAbsent;
+        cible.detailsAbsence = details;
 
         fermerBoite('boite-gerer-absence');
         AudioTactique.succes();
@@ -2916,16 +3000,19 @@
 
         const nouvPlan = { code, cible, chefDeManoeuvre, description, dateCreation: Date.now() };
 
+        let ecrit = false;
         if (estConnecteFirestore) {
           try {
             const refNouv = doc(collection(baseDeDonnees, 'plans'));
             await setDoc(refNouv, nouvPlan);
+            ecrit = true;
           } catch(err) {
             console.warn("Écriture plan :", err);
           }
         }
 
-        etat.plans.push(nouvPlan);
+        // CORRECTION : évite le doublon avec le onSnapshot des plans
+        if (!ecrit) etat.plans.push(nouvPlan);
         fermerBoite('boite-nouveau-plan');
         AudioTactique.succes();
         afficherVuePlans();
@@ -2963,9 +3050,9 @@
               <span class="text-[9px] text-gray-400">[ORIGINE : ${echapperTexteHTML(a.source)}] // ${echapperTexteHTML(a.horodatage)}</span>
             </div>
             <p class="text-gray-300 text-xs mt-1 leading-relaxed bg-fondCarbone p-2 rounded border border-bordureTactique whitespace-pre-wrap">${echapperTexteHTML(a.contenu)}</p>
-            ${estHunter ? `
+            ${estHunter && a.id ? `
               <div class="flex justify-end pt-1">
-                <button data-supprimer-archive="${a.id}" class="btn-supprimer-archive px-2 py-0.5 bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 font-bold rounded text-[10px] flex items-center gap-1 transition touch-target">
+                <button data-supprimer-archive="${echapperTexteHTML(a.id)}" class="btn-supprimer-archive px-2 py-0.5 bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 font-bold rounded text-[10px] flex items-center gap-1 transition touch-target">
                   🗑️ Purger transmission
                 </button>
               </div>
@@ -3036,6 +3123,7 @@
           dateCreation: Date.now()
         };
 
+        let ecritureReussie = false;
         if (estConnecteFirestore) {
           try {
             const batch = writeBatch(baseDeDonnees);
@@ -3050,14 +3138,18 @@
               totalStatistique: increment(1)
             });
             await batch.commit();
+            ecritureReussie = true;
           } catch(err) {
             console.warn("Écriture archive :", err);
           }
         }
 
-        etat.archivesPiratees.unshift(archive);
-        etat.rapports.unshift(rapportHomologue);
-        etat.operateurs.tech.totalStatistique += 1;
+        // CORRECTION : évite les doublons avec les onSnapshot
+        if (!ecritureReussie) {
+          etat.archivesPiratees.unshift({ id: 'arc-' + Date.now(), ...archive });
+          etat.rapports.unshift(rapportHomologue);
+          etat.operateurs.tech.totalStatistique = (etat.operateurs.tech.totalStatistique || 0) + 1;
+        }
 
         AudioTactique.succes();
         document.getElementById('titre-archive-piratee').value = '';
