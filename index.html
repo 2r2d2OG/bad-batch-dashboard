@@ -1064,8 +1064,10 @@
       onSnapshot, 
       collection, 
       writeBatch, 
+      deleteDoc,
       increment 
     } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
 
     (function initialiserDatapadBadBatch() {
       'use strict';
@@ -2930,42 +2932,80 @@ async function executerConnexionBOS(e) {
       }
 
       // ==================== VUE : ARCHIVES DE PIRATAGE ====================
-      function afficherVueArchives() {
-        const estTech = etat.operateurConnecte === 'tech' && !etat.estCompteBOS;
-        const panneauSaisie = document.getElementById('panneau-saisie-piratage-tech');
-        if (estTech) {
-          panneauSaisie.classList.remove('hidden');
-        } else {
-          panneauSaisie.classList.add('hidden');
+      ffunction afficherVueArchives() {
+  const estTech = etat.operateurConnecte === 'tech' && !etat.estCompteBOS;
+  const estHunter = etat.operateurConnecte === 'hunter';
+  const panneauSaisie = document.getElementById('panneau-saisie-piratage-tech');
+  if (estTech) {
+    panneauSaisie.classList.remove('hidden');
+  } else {
+    panneauSaisie.classList.add('hidden');
+  }
+
+  document.getElementById('compteur-archives-enregistrees').textContent = `${etat.archivesPiratees.length} transmission(s) décryptée(s)`;
+
+  const conteneur = document.getElementById('liste-archives-piratees');
+  conteneur.innerHTML = '';
+
+  if (etat.archivesPiratees.length === 0) {
+    conteneur.innerHTML = `<div class="text-xs font-terminal text-gray-500 italic p-3 text-center border border-dashed border-bordureTactique rounded">Aucune transmission interceptée enregistrée.</div>`;
+    return;
+  }
+
+  etat.archivesPiratees.forEach(a => {
+    const item = document.createElement('div');
+    item.className = 'bg-panneauSous border border-cyanTech/30 p-2.5 rounded text-xs font-terminal space-y-1';
+    item.innerHTML = `
+      <div class="flex flex-wrap items-center justify-between gap-2 text-cyanTech">
+        <span class="font-titre font-bold text-xs uppercase flex items-center gap-1.5">
+          <span>▶</span> ${echapperTexteHTML(a.titre)}
+        </span>
+        <span class="text-[9px] text-gray-400">[ORIGINE : ${echapperTexteHTML(a.source)}] // ${echapperTexteHTML(a.horodatage)}</span>
+      </div>
+      <p class="text-gray-300 text-xs mt-1 leading-relaxed bg-fondCarbone p-2 rounded border border-bordureTactique whitespace-pre-wrap">${echapperTexteHTML(a.contenu)}</p>
+      ${estHunter ? `
+        <div class="flex justify-end pt-1">
+          <button data-supprimer-archive="${a.id}" class="btn-supprimer-archive px-2 py-0.5 bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 font-bold rounded text-[10px] flex items-center gap-1 transition touch-target">
+            🗑️ Purger transmission
+          </button>
+        </div>
+      ` : ''}
+    `;
+    conteneur.appendChild(item);
+  });
+
+  if (estHunter) {
+    conteneur.querySelectorAll('.btn-supprimer-archive').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idArchive = btn.getAttribute('data-supprimer-archive');
+        supprimerArchivePiratee(idArchive);
+      });
+    });
+  }
+}
+
+async function supprimerArchivePiratee(idArchive) {
+  if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
+
+  afficherBoiteConfirmation(
+    "PURGE DE TRANSMISSION PIRATÉE",
+    "Voulez-vous supprimer définitivement ce rapport d'interception des banques de données du Maraudeur ?",
+    async () => {
+      if (estConnecteFirestore && idArchive) {
+        try {
+          const refDoc = doc(baseDeDonnees, 'archivesPiratees', idArchive);
+          await deleteDoc(refDoc);
+        } catch (err) {
+          console.warn("Erreur suppression archive :", err);
         }
-
-        document.getElementById('compteur-archives-enregistrees').textContent = `${etat.archivesPiratees.length} transmission(s) décryptée(s)`;
-
-        const conteneur = document.getElementById('liste-archives-piratees');
-        conteneur.innerHTML = '';
-
-        if (etat.archivesPiratees.length === 0) {
-          conteneur.innerHTML = `<div class="text-xs font-terminal text-gray-500 italic p-3 text-center border border-dashed border-bordureTactique rounded">Aucune transmission interceptée enregistrée.</div>`;
-          return;
-        }
-
-        etat.archivesPiratees.forEach(a => {
-          const item = document.createElement('div');
-          item.className = 'bg-panneauSous border border-cyanTech/30 p-2.5 rounded text-xs font-terminal space-y-1';
-          item.innerHTML = `
-            <div class="flex flex-wrap items-center justify-between gap-2 text-cyanTech">
-              <span class="font-titre font-bold text-xs uppercase flex items-center gap-1.5">
-                <span>▶</span> ${echapperTexteHTML(a.titre)}
-              </span>
-              <span class="text-[9px] text-gray-400">[ORIGINE : ${echapperTexteHTML(a.source)}] // ${echapperTexteHTML(a.horodatage)}</span>
-            </div>
-            <p class="text-gray-300 text-xs mt-1 leading-relaxed bg-fondCarbone p-2 rounded border border-bordureTactique">
-              ${echapperTexteHTML(a.contenu)}
-            </p>
-          `;
-          conteneur.appendChild(item);
-        });
       }
+
+      etat.archivesPiratees = etat.archivesPiratees.filter(a => a.id !== idArchive);
+      AudioTactique.succes();
+      afficherVueArchives();
+    }
+  );
+}
 
       async function executerTransmissionArchiveTech(e) {
         e.preventDefault();
