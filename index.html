@@ -1064,6 +1064,7 @@
       onSnapshot, 
       collection, 
       writeBatch, 
+      deleteDoc,
       increment 
     } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
@@ -1080,7 +1081,7 @@
           .replace(/'/g, '&#039;');
       }
 
-function calculerJoursAnciennete(dateStr) {
+      function calculerJoursAnciennete(dateStr) {
         if (!dateStr) return null;
         let dateObj = null;
         if (dateStr.includes('/')) {
@@ -1261,7 +1262,7 @@ function calculerJoursAnciennete(dateStr) {
         wrecker: {
           id: 'wrecker',
           nom: 'Wrecker',
-          matricule: 'FC-99-03',
+          matricule: 'CF99-003',
           grade: 'Spécialiste d\'Assaut Lourd',
           specialite: 'Démolition lourde & Percée frontale',
           dateEntree: '15/01/2024',
@@ -1291,7 +1292,7 @@ function calculerJoursAnciennete(dateStr) {
         crosshair: {
           id: 'crosshair',
           nom: 'Crosshair',
-          matricule: 'FC-99-04',
+          matricule: 'CF99-004',
           grade: 'Tireur d\'Élite',
           specialite: 'Tir de haute précision & Neutralisation',
           dateEntree: '15/01/2024',
@@ -1321,7 +1322,7 @@ function calculerJoursAnciennete(dateStr) {
         tech: {
           id: 'tech',
           nom: 'Tech',
-          matricule: 'FC-99-02',
+          matricule: 'CF99-002',
           grade: 'Spécialiste Données',
           specialite: 'Piratage informatique & Ingénierie de bord',
           dateEntree: '15/01/2024',
@@ -1465,7 +1466,7 @@ function calculerJoursAnciennete(dateStr) {
           return;
         }
 
-const refConfigEscouade = doc(baseDeDonnees, 'config', 'escouade');
+        const refConfigEscouade = doc(baseDeDonnees, 'config', 'escouade');
         onSnapshot(refConfigEscouade, snap => {
           if (snap.exists()) {
             const donnees = snap.data();
@@ -1480,7 +1481,7 @@ const refConfigEscouade = doc(baseDeDonnees, 'config', 'escouade');
           }
         }, err => console.warn(err));
 
-       const refOperateurs = collection(baseDeDonnees, 'operateurs');
+        const refOperateurs = collection(baseDeDonnees, 'operateurs');
         onSnapshot(refOperateurs, snap => {
           snap.forEach(d => {
             if (etat.operateurs[d.id]) {
@@ -1690,28 +1691,28 @@ const refConfigEscouade = doc(baseDeDonnees, 'config', 'escouade');
       }
 
       // AUTHENTIFICATION DISCRÈTE B.O.S (BOS / BOSACCESSAUTO)
-async function executerConnexionBOS(e) {
-     e.preventDefault();
-     const saisieId = document.getElementById('saisie-bos-id').value.trim().toUpperCase();
-     const saisieMdp = document.getElementById('saisie-bos-mdp').value.trim();
-     const blocErr = document.getElementById('erreur-connexion-bos');
-     const hashSaisi = await calculerEmpreinteSHA256(saisieMdp);
-     const HASH_BOS = "8bc4bbaf5901614948ba42ca36502feeb492f1ae7b2fcfa62f1ff5b4f65215d8";
+      async function executerConnexionBOS(e) {
+        e.preventDefault();
+        const saisieId = document.getElementById('saisie-bos-id').value.trim().toUpperCase();
+        const saisieMdp = document.getElementById('saisie-bos-mdp').value.trim();
+        const blocErr = document.getElementById('erreur-connexion-bos');
+        const hashSaisi = await calculerEmpreinteSHA256(saisieMdp);
+        const HASH_BOS = "8bc4bbaf5901614948ba42ca36502feeb492f1ae7b2fcfa62f1ff5b4f65215d8";
 
-     if (saisieId === 'BOS' && hashSaisi === HASH_BOS) {
-       etat.operateurConnecte = 'bos';
-       etat.estCompteBOS = true;
-       blocErr.classList.add('hidden');
-       document.getElementById('saisie-bos-id').value = '';
-       document.getElementById('saisie-bos-mdp').value = '';
-       fermerBoite('boite-connexion-bos');
-       AudioTactique.succes();
-       demarrerSession();
-     } else {
-       blocErr.classList.remove('hidden');
-       AudioTactique.alerte();
-     }
-   }
+        if (saisieId === 'BOS' && hashSaisi === HASH_BOS) {
+          etat.operateurConnecte = 'bos';
+          etat.estCompteBOS = true;
+          blocErr.classList.add('hidden');
+          document.getElementById('saisie-bos-id').value = '';
+          document.getElementById('saisie-bos-mdp').value = '';
+          fermerBoite('boite-connexion-bos');
+          AudioTactique.succes();
+          demarrerSession();
+        } else {
+          blocErr.classList.remove('hidden');
+          AudioTactique.alerte();
+        }
+      }
 
       function demarrerSession() {
         document.getElementById('fenetre-connexion').classList.add('hidden');
@@ -2496,7 +2497,8 @@ async function executerConnexionBOS(e) {
               </div>
               <div class="flex items-center gap-2 flex-wrap">
                 <span class="text-gray-400 uppercase">Incorporation (civil) :</span>
-                <span class="text-amber-300 font-bold">${echapperTexteHTML(m.dateEntree)}</span>${(() => {
+                <span class="text-amber-300 font-bold">${echapperTexteHTML(m.dateEntree)}</span>
+                ${(() => {
                   const jours = calculerJoursAnciennete(m.dateEntree);
                   if (jours === null) return '';
                   return `<span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-amber-500/10 text-amber-300 border border-amber-500/30">🎖 ${jours} ${jours > 1 ? 'jours' : 'jour'}</span>`;
@@ -2932,6 +2934,7 @@ async function executerConnexionBOS(e) {
       // ==================== VUE : ARCHIVES DE PIRATAGE ====================
       function afficherVueArchives() {
         const estTech = etat.operateurConnecte === 'tech' && !etat.estCompteBOS;
+        const estHunter = etat.operateurConnecte === 'hunter';
         const panneauSaisie = document.getElementById('panneau-saisie-piratage-tech');
         if (estTech) {
           panneauSaisie.classList.remove('hidden');
@@ -2959,12 +2962,49 @@ async function executerConnexionBOS(e) {
               </span>
               <span class="text-[9px] text-gray-400">[ORIGINE : ${echapperTexteHTML(a.source)}] // ${echapperTexteHTML(a.horodatage)}</span>
             </div>
-            <p class="text-gray-300 text-xs mt-1 leading-relaxed bg-fondCarbone p-2 rounded border border-bordureTactique">
-              ${echapperTexteHTML(a.contenu)}
-            </p>
+            <p class="text-gray-300 text-xs mt-1 leading-relaxed bg-fondCarbone p-2 rounded border border-bordureTactique whitespace-pre-wrap">${echapperTexteHTML(a.contenu)}</p>
+            ${estHunter ? `
+              <div class="flex justify-end pt-1">
+                <button data-supprimer-archive="${a.id}" class="btn-supprimer-archive px-2 py-0.5 bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 font-bold rounded text-[10px] flex items-center gap-1 transition touch-target">
+                  🗑️ Purger transmission
+                </button>
+              </div>
+            ` : ''}
           `;
           conteneur.appendChild(item);
         });
+
+        if (estHunter) {
+          conteneur.querySelectorAll('.btn-supprimer-archive').forEach(btn => {
+            btn.addEventListener('click', () => {
+              const idArchive = btn.getAttribute('data-supprimer-archive');
+              supprimerArchivePiratee(idArchive);
+            });
+          });
+        }
+      }
+
+      async function supprimerArchivePiratee(idArchive) {
+        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
+
+        afficherBoiteConfirmation(
+          "PURGE DE TRANSMISSION PIRATÉE",
+          "Voulez-vous supprimer définitivement ce rapport d'interception des banques de données du Maraudeur ?",
+          async () => {
+            if (estConnecteFirestore && idArchive) {
+              try {
+                const refDoc = doc(baseDeDonnees, 'archivesPiratees', idArchive);
+                await deleteDoc(refDoc);
+              } catch (err) {
+                console.warn("Erreur suppression archive :", err);
+              }
+            }
+
+            etat.archivesPiratees = etat.archivesPiratees.filter(a => a.id !== idArchive);
+            AudioTactique.succes();
+            afficherVueArchives();
+          }
+        );
       }
 
       async function executerTransmissionArchiveTech(e) {
