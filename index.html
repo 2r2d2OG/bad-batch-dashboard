@@ -1080,6 +1080,23 @@
           .replace(/'/g, '&#039;');
       }
 
+function calculerJoursAnciennete(dateStr) {
+        if (!dateStr) return null;
+        let dateObj = null;
+        if (dateStr.includes('/')) {
+          const parties = dateStr.split('/');
+          if (parties.length === 3) {
+            dateObj = new Date(parseInt(parties[2], 10), parseInt(parties[1], 10) - 1, parseInt(parties[0], 10));
+          }
+        } else if (dateStr.includes('-')) {
+          dateObj = new Date(dateStr);
+        }
+        if (!dateObj || isNaN(dateObj.getTime())) return null;
+        const diffMs = new Date().setHours(0,0,0,0) - dateObj.setHours(0,0,0,0);
+        const jours = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+        return Math.max(0, jours);
+      }
+      
       async function calculerEmpreinteSHA256(texte) {
         const encodeur = new TextEncoder();
         const donnees = encodeur.encode(texte);
@@ -2477,9 +2494,13 @@ async function executerConnexionBOS(e) {
                 <span class="text-gray-400 uppercase">Spécialité :</span>
                 <span class="text-gray-200 ml-1 font-bold">${echapperTexteHTML(m.specialite)}</span>
               </div>
-              <div>
+              <div class="flex items-center gap-2 flex-wrap">
                 <span class="text-gray-400 uppercase">Incorporation (civil) :</span>
-                <span class="text-amber-300 ml-1 font-bold">${echapperTexteHTML(m.dateEntree)}</span>
+                <span class="text-amber-300 font-bold">${echapperTexteHTML(m.dateEntree)}</span>${(() => {
+                  const jours = calculerJoursAnciennete(m.dateEntree);
+                  if (jours === null) return '';
+                  return `<span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-amber-500/10 text-amber-300 border border-amber-500/30">🎖 ${jours} ${jours > 1 ? 'jours' : 'jour'}</span>`;
+                })()}
               </div>
               <div>
                 <span class="text-gray-400 uppercase block">Notes de commandement :</span>
