@@ -525,16 +525,16 @@
         <form id="formulaire-rapport-mission" class="space-y-3 font-terminal text-xs">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div>
-              <label class="block uppercase text-gray-300 mb-1">Désignation de la mission *</label>
-              <input type="text" id="champ-nom-mission" required placeholder="Exemple : BATAILLE D'ANAXES" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none touch-target">
+              <label class="block uppercase text-gray-300 mb-1">Désignation de la mission</label>
+              <input type="text" id="champ-nom-mission" placeholder="Exemple : BATAILLE D'ANAXES" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none touch-target">
             </div>
             <div>
-              <label class="block uppercase text-gray-300 mb-1">Secteur / Planète d'intervention *</label>
-              <input type="text" id="champ-secteur-mission" required placeholder="Exemple : Anaxes // Complexe de communication" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none touch-target">
+              <label class="block uppercase text-gray-300 mb-1">Secteur / Planète d'intervention</label>
+              <input type="text" id="champ-secteur-mission" placeholder="Exemple : Anaxes // Complexe de communication" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none touch-target">
             </div>
             <div>
-              <label class="block uppercase text-gray-300 mb-1">Date civile (JJ/MM/AAAA) *</label>
-              <input type="text" id="champ-date-mission" required class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-amber-300 rounded focus:border-red-500 outline-none touch-target">
+              <label class="block uppercase text-gray-300 mb-1">Date civile (JJ/MM/AAAA)</label>
+              <input type="text" id="champ-date-mission" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-amber-300 rounded focus:border-red-500 outline-none touch-target">
             </div>
           </div>
 
@@ -572,8 +572,8 @@
           </div>
 
           <div>
-            <label class="block uppercase text-gray-300 mb-1">Compte-rendu tactique des opérations *</label>
-            <textarea id="champ-description-mission" required rows="3" placeholder="Détaillez les manœuvres exécutées, la résistance adverse et les résultats obtenus..." class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none"></textarea>
+            <label class="block uppercase text-gray-300 mb-1">Compte-rendu tactique des opérations</label>
+            <textarea id="champ-description-mission" rows="3" placeholder="Détaillez les manœuvres exécutées, la résistance adverse et les résultats obtenus..." class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none"></textarea>
           </div>
 
           <div class="flex items-center justify-end space-x-2 pt-1">
@@ -585,7 +585,6 @@
             </button>
           </div>
         </form>
-      </div>
 
       <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5">
         <div class="flex flex-wrap items-center justify-between gap-2.5 border-b border-bordureTactique pb-2.5 mb-3">
@@ -2170,26 +2169,25 @@
           const conteneurMetrique = document.getElementById('champ-specialiste-conteneur');
           if (etat.operateurConnecte === 'wrecker') {
             conteneurMetrique.innerHTML = `
-              <label class="block uppercase text-amber-400 mb-1">💥 Chars MTT & Blindés Détruits *</label>
-              <input type="number" id="champ-metrique-specifique" min="0" required value="1" class="w-full bg-fondCarbone border border-amber-500/60 px-3 py-2 text-amber-300 rounded outline-none touch-target">
+              <label class="block uppercase text-amber-400 mb-1">💥 Chars MTT & Blindés Détruits</label>
+              <input type="number" id="champ-metrique-specifique" min="0" value="1" class="w-full bg-fondCarbone border border-amber-500/60 px-3 py-2 text-amber-300 rounded outline-none touch-target">
             `;
           } else if (etat.operateurConnecte === 'crosshair') {
             conteneurMetrique.innerHTML = `
-              <label class="block uppercase text-vertViseur mb-1">🎯 Tirs de Précision Confirmés *</label>
-              <input type="number" id="champ-metrique-specifique" min="0" required value="5" class="w-full bg-fondCarbone border border-vertViseur/60 px-3 py-2 text-vertViseur rounded outline-none touch-target">
+              <label class="block uppercase text-vertViseur mb-1">🎯 Tirs de Précision Confirmés</label>
+              <input type="number" id="champ-metrique-specifique" min="0" value="5" class="w-full bg-fondCarbone border border-vertViseur/60 px-3 py-2 text-vertViseur rounded outline-none touch-target">
             `;
           } else if (etat.operateurConnecte === 'tech') {
             conteneurMetrique.innerHTML = `
-              <label class="block uppercase text-cyanTech mb-1">💻 Données et Schémas Piratés *</label>
-              <input type="text" id="champ-metrique-specifique" required placeholder="Ex: Clés de chiffrement séparatistes" class="w-full bg-fondCarbone border border-cyanTech/60 px-3 py-2 text-cyanTech rounded outline-none touch-target">
+              <label class="block uppercase text-cyanTech mb-1">💻 Données et Schémas Piratés</label>
+              <input type="text" id="champ-metrique-specifique" placeholder="Ex: Clés de chiffrement séparatistes" class="w-full bg-fondCarbone border border-cyanTech/60 px-3 py-2 text-cyanTech rounded outline-none touch-target">
             `;
           } else {
             conteneurMetrique.innerHTML = `
               <label class="block uppercase text-rougeAlerte mb-1">🧭 Relevé Électromagnétique & Commandement</label>
-              <input type="text" id="champ-metrique-specifique" required placeholder="Ex: Failles de défense et réseaux détectés" class="w-full bg-fondCarbone border border-red-500/60 px-3 py-2 text-gray-100 rounded outline-none touch-target">
+              <input type="text" id="champ-metrique-specifique" placeholder="Ex: Failles de défense et réseaux détectés" class="w-full bg-fondCarbone border border-red-500/60 px-3 py-2 text-gray-100 rounded outline-none touch-target">
             `;
           }
-        }
 
         afficherListeRapports();
       }
@@ -2198,6 +2196,7 @@
         const conteneur = document.getElementById('liste-des-rapports');
         conteneur.innerHTML = '';
         const filtre = document.getElementById('filtre-operateurs-rapports').value;
+        const estHunter = etat.operateurConnecte === 'hunter';
 
         const liste = filtre === 'tous'
           ? etat.rapports
@@ -2214,23 +2213,63 @@
           div.innerHTML = `
             <div class="flex flex-wrap items-center justify-between gap-2 border-b border-bordureTactique pb-1.5">
               <div class="flex items-center space-x-2">
-                <span class="font-titre font-bold text-gray-100 uppercase">${echapperTexteHTML(rap.nomMission)}</span>
+                <span class="font-titre font-bold text-gray-100 uppercase">${echapperTexteHTML(rap.nomMission || 'MISSION SANS TITRE')}</span>
                 <span class="px-1.5 py-0.5 rounded text-[8px] font-bold ${rap.estPresent ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800'}">
                   ${rap.estPresent ? '✓ PRÉSENT' : '✗ ABSENT'}
                 </span>
               </div>
               <div class="text-gray-400 text-[10px]">
-                Secteur : <span class="text-gray-200 font-bold">${echapperTexteHTML(rap.secteur)}</span> // Date : <span class="text-amber-400">${echapperTexteHTML(rap.date)}</span>
+                Secteur : <span class="text-gray-200 font-bold">${echapperTexteHTML(rap.secteur || 'Non précisé')}</span> // Date : <span class="text-amber-400">${echapperTexteHTML(rap.date)}</span>
               </div>
             </div>
-            <p class="text-gray-300 text-xs leading-relaxed">${echapperTexteHTML(rap.description)}</p>
+            <p class="text-gray-300 text-xs leading-relaxed whitespace-pre-wrap">${echapperTexteHTML(rap.description || 'Aucun détail rédigé.')}</p>
             <div class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-bordureTactique text-[10px]">
-              <div class="text-amber-400"><span class="font-bold">MÉTRIQUE :</span> ${echapperTexteHTML(rap.metriqueSpecifique)}</div>
-              <div class="text-gray-400">Auteur : <span class="text-rougeAlerte font-bold uppercase">${echapperTexteHTML(rap.nomOperateur)}</span></div>
+              <div class="text-amber-400"><span class="font-bold">MÉTRIQUE :</span> ${echapperTexteHTML(rap.metriqueSpecifique || 'N/A')}</div>
+              <div class="flex items-center gap-3">
+                <div class="text-gray-400">Auteur : <span class="text-rougeAlerte font-bold uppercase">${echapperTexteHTML(rap.nomOperateur)}</span></div>
+                ${estHunter ? `
+                  <button data-supprimer-rapport="${rap.id}" class="btn-supprimer-rapport px-2 py-0.5 bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 font-bold rounded text-[10px] flex items-center gap-1 transition touch-target">
+                    🗑️ Supprimer
+                  </button>
+                ` : ''}
+              </div>
             </div>
           `;
           conteneur.appendChild(div);
         });
+
+        if (estHunter) {
+          conteneur.querySelectorAll('.btn-supprimer-rapport').forEach(btn => {
+            btn.addEventListener('click', () => {
+              const idRap = btn.getAttribute('data-supprimer-rapport');
+              supprimerRapportMission(idRap);
+            });
+          });
+        }
+      }
+
+      async function supprimerRapportMission(idRapport) {
+        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
+
+        afficherBoiteConfirmation(
+          "PURGE DE RAPPORT DE MISSION",
+          "Voulez-vous supprimer définitivement ce rapport du registre officiel ?",
+          async () => {
+            if (estConnecteFirestore && idRapport) {
+              try {
+                const refDoc = doc(baseDeDonnees, 'missions', idRapport);
+                await deleteDoc(refDoc);
+              } catch (err) {
+                console.warn("Erreur suppression rapport :", err);
+              }
+            }
+
+            etat.rapports = etat.rapports.filter(r => r.id !== idRapport);
+            AudioTactique.succes();
+            afficherListeRapports();
+            if (etat.ongletActif === 'poste-commandement') afficherVuePosteCommandement();
+          }
+        );
       }
 
       async function executerTransmissionRapport(e) {
