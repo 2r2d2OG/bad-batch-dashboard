@@ -2986,7 +2986,6 @@ async function executerConnexionBOS(e) {
 
             const refTech = doc(baseDeDonnees, 'operateurs', 'tech');
             batch.update(refTech, {
-              compteurSemaine: increment(1),
               totalStatistique: increment(1)
             });
             await batch.commit();
@@ -2997,7 +2996,6 @@ async function executerConnexionBOS(e) {
 
         etat.archivesPiratees.unshift(archive);
         etat.rapports.unshift(rapportHomologue);
-        etat.operateurs.tech.compteurSemaine = (etat.operateurs.tech.compteurSemaine || 0) + 1;
         etat.operateurs.tech.totalStatistique += 1;
 
         AudioTactique.succes();
