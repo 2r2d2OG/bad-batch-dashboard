@@ -1673,26 +1673,28 @@ const refConfigEscouade = doc(baseDeDonnees, 'config', 'escouade');
       }
 
       // AUTHENTIFICATION DISCRÈTE B.O.S (BOS / BOSACCESSAUTO)
-      function executerConnexionBOS(e) {
-        e.preventDefault();
-        const saisieId = document.getElementById('saisie-bos-id').value.trim().toUpperCase();
-        const saisieMdp = document.getElementById('saisie-bos-mdp').value.trim();
-        const blocErr = document.getElementById('erreur-connexion-bos');
+async function executerConnexionBOS(e) {
+     e.preventDefault();
+     const saisieId = document.getElementById('saisie-bos-id').value.trim().toUpperCase();
+     const saisieMdp = document.getElementById('saisie-bos-mdp').value.trim();
+     const blocErr = document.getElementById('erreur-connexion-bos');
+     const hashSaisi = await calculerEmpreinteSHA256(saisieMdp);
+     const HASH_BOS = "8bc4bbaf5901614948ba42ca36502feeb492f1ae7b2fcfa62f1ff5b4f65215d8";
 
-        if (saisieId === 'BOS' && saisieMdp === 'BOSACCESSAUTO') {
-          etat.operateurConnecte = 'bos';
-          etat.estCompteBOS = true;
-          blocErr.classList.add('hidden');
-          document.getElementById('saisie-bos-id').value = '';
-          document.getElementById('saisie-bos-mdp').value = '';
-          fermerBoite('boite-connexion-bos');
-          AudioTactique.succes();
-          demarrerSession();
-        } else {
-          blocErr.classList.remove('hidden');
-          AudioTactique.alerte();
-        }
-      }
+     if (saisieId === 'BOS' && hashSaisi === HASH_BOS) {
+       etat.operateurConnecte = 'bos';
+       etat.estCompteBOS = true;
+       blocErr.classList.add('hidden');
+       document.getElementById('saisie-bos-id').value = '';
+       document.getElementById('saisie-bos-mdp').value = '';
+       fermerBoite('boite-connexion-bos');
+       AudioTactique.succes();
+       demarrerSession();
+     } else {
+       blocErr.classList.remove('hidden');
+       AudioTactique.alerte();
+     }
+   }
 
       function demarrerSession() {
         document.getElementById('fenetre-connexion').classList.add('hidden');
