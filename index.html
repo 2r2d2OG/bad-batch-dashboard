@@ -495,6 +495,17 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" id="cartes-membres-synthese"></div>
       </div>
 
+      <!-- BILAN HEBDOMADAIRE DES PDS (HUNTER ET B.O.S) -->
+      <div id="bloc-bilans-pds" class="hidden bg-panneauSombre border border-bordureTactique rounded p-3.5 shadow-lg">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-bordureTactique pb-2 mb-2.5">
+          <h3 class="font-titre text-xs uppercase tracking-wider text-gray-200 flex items-center gap-1.5">
+            <span class="text-amber-400">■</span> BILAN HEBDOMADAIRE DES PDS // CONTRÔLE DISCIPLINAIRE
+          </h3>
+          <span class="text-[10px] font-terminal text-gray-500">1re semaine non conforme : avertissement // récidive : blâme automatique // absences exemptées</span>
+        </div>
+        <div id="liste-bilans-pds" class="space-y-2"></div>
+      </div>
+
       <!-- DERNIERS RAPPORTS EN PLEINE LARGEUR -->
       <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5 shadow-lg">
         <div class="flex items-center justify-between border-b border-bordureTactique pb-2 mb-2.5">
@@ -1046,6 +1057,55 @@
     </div>
   </div>
 
+  <!-- MODALE : AVERTISSEMENT PDS REÇU PAR LE MEMBRE -->
+  <div id="boite-notification-avertissement-pds" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-panneauSombre border-2 border-amber-500 biseau-plaque max-w-md w-full p-4 shadow-[0_0_30px_rgba(245,158,11,0.4)]">
+      <div class="flex items-center space-x-2 text-amber-400 mb-2 border-b border-amber-500/50 pb-2">
+        <span class="text-2xl">⚠️</span>
+        <div>
+          <h3 class="font-titre text-xs sm:text-sm font-black uppercase tracking-wider">AVERTISSEMENT DU COMMANDEMENT // PDS</h3>
+          <div class="text-[10px] font-terminal text-gray-300">SERGENT HUNTER // CONTRÔLE HEBDOMADAIRE</div>
+        </div>
+      </div>
+      <div class="space-y-2 font-terminal text-xs">
+        <div class="flex justify-between items-center bg-amber-950/50 p-2 rounded border border-amber-700">
+          <span class="text-gray-300">PDS EFFECTUÉES (<span id="avert-pds-semaine">S--</span>) :</span>
+          <span id="avert-pds-score" class="font-titre font-black text-amber-400 text-sm">0 / 3</span>
+        </div>
+        <p class="bg-fondCarbone border border-bordureTactique p-2.5 rounded text-gray-100 leading-relaxed">
+          Votre quota de prises de service n'a pas été atteint la semaine dernière. Ceci est un <strong class="text-amber-400">avertissement</strong>.
+          Si la situation se reproduit la semaine prochaine, un <strong class="text-rougeAlerte">blâme sera enregistré automatiquement</strong>.
+          Une absence déclarée dans le carnet vous exempte.
+        </p>
+        <div class="text-[10px] text-gray-400 text-right">Date de l'avertissement : <span id="avert-pds-date" class="text-amber-300">...</span></div>
+      </div>
+      <div class="flex justify-end pt-3 border-t border-bordureTactique mt-3">
+        <button id="bouton-accuser-avertissement-pds" class="w-full py-2 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold text-xs uppercase biseau-bouton transition">
+          PRIS EN COMPTE &amp; ACCUSER RÉCEPTION
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALE : BILAN HEBDOMADAIRE DES PDS POUR HUNTER -->
+  <div id="boite-bilan-pds-hunter" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-panneauSombre border-2 border-rougeAlerte biseau-plaque max-w-lg w-full p-4 shadow-[0_0_30px_rgba(255,46,67,0.35)] max-h-[85vh] flex flex-col">
+      <div class="flex items-center space-x-2 text-rougeAlerte mb-2 border-b border-rougeAlerte/50 pb-2">
+        <span class="text-2xl">📋</span>
+        <div>
+          <h3 class="font-titre text-xs sm:text-sm font-black uppercase tracking-wider">RAPPORT DISCIPLINAIRE AUTOMATIQUE // PDS</h3>
+          <div class="text-[10px] font-terminal text-gray-300">Sanctions appliquées à la clôture de semaine</div>
+        </div>
+      </div>
+      <div id="bilan-hunter-liste" class="overflow-y-auto flex-grow space-y-2 font-terminal text-xs pr-1"></div>
+      <div class="flex justify-end pt-3 border-t border-bordureTactique mt-3">
+        <button id="bouton-accuser-bilan-hunter" class="w-full py-2 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold text-xs uppercase biseau-bouton transition">
+          PRIS EN COMPTE
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODALE DE CONFIRMATION -->
   <div id="boite-confirmation" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-panneauSombre border-2 border-rougeKamino biseau-plaque max-w-sm w-full p-4 shadow-2xl">
@@ -1092,7 +1152,8 @@
       writeBatch, 
       deleteDoc,
       increment,
-      FieldPath
+      FieldPath,
+      runTransaction
     } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     (function initialiserDatapadBadBatch() {
@@ -1436,6 +1497,8 @@
         plans: JSON.parse(JSON.stringify(PLANS_CANONIQUES)),
         archivesPiratees: [],
         registreAbsencesHistorique: [],
+        bilansPDS: [],
+        carnetCharge: false,
         motsDePasseHashes: {}
       };
 
@@ -1485,6 +1548,300 @@
         });
       }
 
+      // Clé de semaine ISO (la semaine commence le lundi), ex. "2026-S42"
+      function cleSemaineCourante() {
+        const d = new Date();
+        d.setHours(0, 0, 0, 0);
+        d.setDate(d.getDate() + 3 - ((d.getDay() + 6) % 7)); // jeudi de la semaine courante
+        const premierJeudi = new Date(d.getFullYear(), 0, 4);
+        const numero = 1 + Math.round(((d - premierJeudi) / 86400000 - 3 + ((premierJeudi.getDay() + 6) % 7)) / 7);
+        return `${d.getFullYear()}-S${String(numero).padStart(2, '0')}`;
+      }
+
+      let resetHebdoEnCours = false;
+
+      // Lundi 00:00 → dimanche 23:59 de la semaine ISO "AAAA-Sww"
+      function plageSemaine(cle) {
+        const [annee, numero] = cle.split('-S').map(Number);
+        const quatreJanv = new Date(annee, 0, 4);
+        const lundiSemaine1 = new Date(annee, 0, 4 - ((quatreJanv.getDay() + 6) % 7));
+        const debut = new Date(lundiSemaine1);
+        debut.setDate(lundiSemaine1.getDate() + (numero - 1) * 7);
+        debut.setHours(0, 0, 0, 0);
+        const fin = new Date(debut);
+        fin.setDate(debut.getDate() + 6);
+        fin.setHours(23, 59, 59, 999);
+        return { debut, fin };
+      }
+
+      // Une absence chevauche-t-elle la semaine ? (date de fin vide = absence indéterminée)
+      function absenceChevauche(debutStr, finStr, plage) {
+        const debut = analyserDateCivile(debutStr);
+        if (!debut) return false;
+        debut.setHours(0, 0, 0, 0);
+        const fin = finStr ? analyserDateCivile(finStr) : null;
+        if (debut > plage.fin) return false;
+        if (fin && fin < plage.debut) return false;
+        return true;
+      }
+
+      // Exempté si une absence déclarée (en cours ou archivée au carnet) touche la semaine évaluée
+      function estExempteSemaine(m, idMembre, plage, carnet) {
+        if (m.estAbsent) {
+          if (!m.detailsAbsence || !m.detailsAbsence.debut) return true;
+          if (absenceChevauche(m.detailsAbsence.debut, m.detailsAbsence.fin, plage)) return true;
+        }
+        return carnet.some(a => a.idMembre === idMembre && absenceChevauche(a.debut, a.fin, plage));
+      }
+
+      // Clôture automatique de la semaine : évaluation des PDS, avertissement / blâme, remise à zéro.
+      // Transaction : même avec plusieurs appareils ouverts, une seule clôture est appliquée.
+      async function verifierResetHebdomadaireAutomatique() {
+        if (!estConnecteFirestore || resetHebdoEnCours) return;
+        if (!etat.carnetCharge) return; // on attend le chargement du carnet des absences
+        const semaine = cleSemaineCourante();
+        if (etat.semaineActive === semaine) return;
+
+        resetHebdoEnCours = true;
+        try {
+          const refConfig = doc(baseDeDonnees, 'config', 'escouade');
+          const carnet = etat.registreAbsencesHistorique.slice();
+          const ids = Object.keys(etat.operateurs);
+
+          await runTransaction(baseDeDonnees, async (tx) => {
+            const snapConfig = await tx.get(refConfig);
+            const cfg = snapConfig.exists() ? snapConfig.data() : {};
+            const enBase = cfg.semaineActive;
+            if (enBase === semaine) return;
+
+            // Première initialisation : on enregistre la semaine sans rien effacer ni sanctionner
+            if (enBase === undefined) {
+              tx.set(refConfig, { semaineActive: semaine }, { merge: true });
+              return;
+            }
+
+            const quota = cfg.quotaHebdomadaire || etat.quotaHebdomadaire;
+            const refBilan = doc(baseDeDonnees, 'bilansPDS', enBase);
+            const snapBilan = await tx.get(refBilan);
+            const snapsOp = {};
+            for (const id of ids) snapsOp[id] = await tx.get(doc(baseDeDonnees, 'operateurs', id));
+
+            // Pas de sanction si la semaine a été clôturée à la main par Hunter ou déjà évaluée
+            const ignorerSanctions = cfg.semaineSansSanction === enBase || snapBilan.exists();
+            const plage = plageSemaine(enBase);
+            const resultats = [];
+
+            for (const id of ids) {
+              const snapOp = snapsOp[id];
+              if (!snapOp.exists()) continue;
+              const m = snapOp.data();
+              const maj = { compteurSemaine: 0, pdsEffectuees: {} };
+
+              if (id !== 'hunter' && !ignorerSanctions) {
+                const effectuees = m.compteurSemaine || 0;
+                let statut;
+                let blamesApres = null;
+
+                if (effectuees >= quota) {
+                  statut = 'ok';
+                  maj.strikesPDS = 0;
+                  maj.avertissementPds = null;
+                } else if (estExempteSemaine(m, id, plage, carnet)) {
+                  statut = 'exempte'; // la série de semaines non conformes n'évolue pas
+                } else {
+                  const strikes = (m.strikesPDS || 0) + 1;
+                  maj.strikesPDS = strikes;
+                  if (strikes === 1) {
+                    statut = 'avertissement';
+                    maj.avertissementPds = { semaine: enBase, effectuees, quota, date: dateAujourdhuiCivil(), vu: false };
+                  } else if ((m.blames || 0) >= 3) {
+                    statut = 'seuil';
+                    maj.avertissementPds = null;
+                  } else {
+                    statut = 'blame';
+                    blamesApres = (m.blames || 0) + 1;
+                    const historique = Array.isArray(m.blamesHistorique) ? [...m.blamesHistorique] : [];
+                    historique.unshift({
+                      niveau: blamesApres,
+                      motif: `Blâme automatique : ${effectuees}/${quota} PDS sur la semaine ${enBase} (${strikes}e semaine consécutive non conforme).`,
+                      date: dateAujourdhuiCivil(),
+                      dateCreation: Date.now(),
+                      auto: true
+                    });
+                    maj.blames = blamesApres;
+                    maj.blamesHistorique = historique;
+                    maj.avertissementPds = null;
+                  }
+                }
+                resultats.push({ id, nom: m.nom || id, effectuees, quota, statut, blamesApres });
+              }
+              tx.update(doc(baseDeDonnees, 'operateurs', id), maj);
+            }
+
+            if (!ignorerSanctions && resultats.length > 0) {
+              const sanctions = resultats.filter(r => ['avertissement', 'blame', 'seuil'].includes(r.statut)).length;
+              tx.set(refBilan, {
+                semaine: enBase,
+                quota,
+                resultats,
+                sanctions,
+                vuParHunter: sanctions === 0,
+                dateCreation: Date.now()
+              });
+            }
+            tx.set(refConfig, { semaineActive: semaine }, { merge: true });
+          });
+        } catch (err) {
+          console.warn("Clôture hebdomadaire automatique :", err);
+        } finally {
+          resetHebdoEnCours = false;
+        }
+      }
+
+      const STYLES_STATUT_PDS = {
+        ok:            { texte: '✓ CONFORME',           classes: 'bg-emerald-950 text-emerald-300 border-emerald-700' },
+        exempte:       { texte: '🟠 ABSENCE (EXEMPTÉ)', classes: 'bg-amber-950 text-amber-300 border-amber-600' },
+        avertissement: { texte: '⚠ AVERTISSEMENT',      classes: 'bg-amber-900/70 text-amber-200 border-amber-500' },
+        blame:         { texte: '⛔ BLÂME AUTOMATIQUE', classes: 'bg-red-950 text-red-300 border-rougeAlerte' },
+        seuil:         { texte: '⛔ SEUIL DÉJÀ ATTEINT', classes: 'bg-red-950 text-red-300 border-rougeAlerte' }
+      };
+
+      function libelleSemaine(cle) {
+        try {
+          const p = plageSemaine(cle);
+          const f = d => d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
+          return `${cle.replace('-', ' ')} (${f(p.debut)} → ${f(p.fin)})`;
+        } catch (e) {
+          return cle;
+        }
+      }
+
+      function badgeStrikePDS(m) {
+        const n = m.strikesPDS || 0;
+        if (!n) return '';
+        const texte = n === 1 ? '⚠ AVERTISSEMENT PDS EN COURS' : `⚠ ${n} SEMAINES PDS NON CONFORMES D'AFFILÉE`;
+        return `<div class="px-2 py-1 rounded border border-amber-600 bg-amber-950/70 text-amber-300 font-terminal text-[10px] font-bold">${texte}</div>`;
+      }
+
+      function afficherBilansPds() {
+        const bloc = document.getElementById('bloc-bilans-pds');
+        const liste = document.getElementById('liste-bilans-pds');
+        if (!bloc || !liste) return;
+        const visible = etat.operateurConnecte === 'hunter' || etat.estCompteBOS;
+        bloc.classList.toggle('hidden', !visible);
+        if (!visible) return;
+
+        liste.innerHTML = '';
+        if (etat.bilansPDS.length === 0) {
+          liste.innerHTML = `<p class="text-xs font-terminal text-gray-500 italic p-3 text-center border border-dashed border-bordureTactique rounded">Aucun bilan hebdomadaire pour l'instant. Le premier sera généré à la prochaine clôture de semaine.</p>`;
+          return;
+        }
+
+        etat.bilansPDS.slice(0, 6).forEach(b => {
+          const div = document.createElement('div');
+          div.className = 'bg-panneauSous border border-bordureTactique p-2.5 rounded text-xs font-terminal';
+          const puces = (b.resultats || []).map(r => {
+            const st = STYLES_STATUT_PDS[r.statut] || STYLES_STATUT_PDS.ok;
+            return `<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded border ${st.classes} text-[10px] font-bold">
+              ${echapperTexteHTML(r.nom)} : ${r.effectuees} / ${r.quota} — ${st.texte}${r.statut === 'blame' ? ` (n°${r.blamesApres})` : ''}
+            </span>`;
+          }).join('');
+          div.innerHTML = `
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-gray-200 font-bold uppercase">Semaine ${echapperTexteHTML(libelleSemaine(b.semaine))}</span>
+              <span class="text-[10px] ${b.sanctions > 0 ? 'text-amber-400' : 'text-vertViseur'}">${b.sanctions > 0 ? `${b.sanctions} sanction(s)` : 'Aucune sanction'}</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5">${puces}</div>
+          `;
+          liste.appendChild(div);
+        });
+      }
+
+      // Notification d'avertissement PDS pour le membre concerné
+      function verifierNotificationAvertissementPds() {
+        if (!etat.operateurConnecte || etat.operateurConnecte === 'hunter' || etat.estCompteBOS) return;
+        const me = etat.operateurs[etat.operateurConnecte];
+        const av = me && me.avertissementPds;
+        if (!av || av.vu) return;
+        const modale = document.getElementById('boite-notification-avertissement-pds');
+        if (!modale.classList.contains('hidden')) return;
+
+        document.getElementById('avert-pds-semaine').textContent = (av.semaine || '').replace('-', ' ');
+        document.getElementById('avert-pds-score').textContent = `${av.effectuees || 0} / ${av.quota || etat.quotaHebdomadaire}`;
+        document.getElementById('avert-pds-date').textContent = av.date || dateAujourdhuiCivil();
+        ouvrirBoite('boite-notification-avertissement-pds');
+        AudioTactique.alerte();
+      }
+
+      async function accuserReceptionAvertissementPds() {
+        if (etat.estCompteBOS) return;
+        const me = etat.operateurs[etat.operateurConnecte];
+        if (me && me.avertissementPds) {
+          me.avertissementPds = { ...me.avertissementPds, vu: true };
+          if (estConnecteFirestore) {
+            try {
+              await updateDoc(doc(baseDeDonnees, 'operateurs', me.id), { 'avertissementPds.vu': true });
+            } catch (err) {
+              console.warn("Accusé avertissement PDS :", err);
+            }
+          }
+        }
+        fermerBoite('boite-notification-avertissement-pds');
+        AudioTactique.succes();
+      }
+
+      // Notification des sanctions automatiques pour Hunter
+      function verifierBilanPourHunter() {
+        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
+        const nonLus = etat.bilansPDS.filter(b => (b.sanctions || 0) > 0 && !b.vuParHunter);
+        if (nonLus.length === 0) return;
+        const modale = document.getElementById('boite-bilan-pds-hunter');
+        if (!modale.classList.contains('hidden')) return;
+
+        const conteneur = document.getElementById('bilan-hunter-liste');
+        conteneur.innerHTML = '';
+        nonLus.forEach(b => {
+          const bloc = document.createElement('div');
+          bloc.className = 'bg-panneauSous border border-bordureTactique p-2.5 rounded space-y-1';
+          const lignes = (b.resultats || [])
+            .filter(r => ['avertissement', 'blame', 'seuil'].includes(r.statut))
+            .map(r => {
+              const st = STYLES_STATUT_PDS[r.statut];
+              return `<div class="flex items-center justify-between gap-2">
+                <span class="text-gray-100 font-bold uppercase">${echapperTexteHTML(r.nom)} <span class="text-gray-400 font-normal">(${r.effectuees} / ${r.quota} PDS)</span></span>
+                <span class="px-1.5 py-0.5 rounded border ${st.classes} text-[10px] font-bold">${st.texte}${r.statut === 'blame' ? ` — blâme n°${r.blamesApres}/3` : ''}</span>
+              </div>`;
+            }).join('');
+          bloc.innerHTML = `<div class="text-amber-400 font-bold uppercase text-[11px]">Semaine ${echapperTexteHTML(libelleSemaine(b.semaine))}</div>${lignes}`;
+          conteneur.appendChild(bloc);
+        });
+
+        ouvrirBoite('boite-bilan-pds-hunter');
+        AudioTactique.alerte();
+      }
+
+      async function accuserReceptionBilanHunter() {
+        if (etat.operateurConnecte !== 'hunter') return;
+        const nonLus = etat.bilansPDS.filter(b => (b.sanctions || 0) > 0 && !b.vuParHunter);
+        nonLus.forEach(b => { b.vuParHunter = true; });
+        fermerBoite('boite-bilan-pds-hunter');
+        AudioTactique.succes();
+        if (estConnecteFirestore) {
+          for (const b of nonLus) {
+            try {
+              await updateDoc(doc(baseDeDonnees, 'bilansPDS', b.id), { vuParHunter: true });
+            } catch (err) {
+              console.warn("Accusé bilan PDS :", err);
+            }
+          }
+        }
+      }
+
+      function verifierNotificationsPds() {
+        verifierNotificationAvertissementPds();
+        verifierBilanPourHunter();
+      }
+
       function initialiserSynchronisationFirestore() {
         if (!estConnecteFirestore) {
           document.getElementById('indicateur-liaison').textContent = "LIAISON LOCALE (OFFLINE)";
@@ -1511,11 +1868,13 @@
           if (donnees.quotaHebdomadaire) etat.quotaHebdomadaire = donnees.quotaHebdomadaire;
           if (typeof donnees.recrutementOuvert === 'boolean') etat.recrutementOuvert = donnees.recrutementOuvert;
           if (donnees.recrutementNote) etat.recrutementNote = donnees.recrutementNote;
+          etat.semaineActive = donnees.semaineActive || null;
           if (donnees.motsDePasseHashes) {
             etat.motsDePasseHashes = { ...etat.motsDePasseHashes, ...donnees.motsDePasseHashes };
           }
           actualiserAffichageRecrutement();
           if (etat.operateurConnecte) actualiserVueEnCours();
+          verifierResetHebdomadaireAutomatique();
         }, err => console.warn(err));
 
         const refOperateurs = collection(baseDeDonnees, 'operateurs');
@@ -1541,6 +1900,7 @@
           if (etat.operateurConnecte) {
             actualiserVueEnCours();
             verifierNotificationBlamePourMembre();
+        verifierNotificationsPds();
           }
         }, err => console.warn(err));
 
@@ -1579,12 +1939,26 @@
           if (etat.operateurConnecte) afficherVueArchives();
         }, err => console.warn(err));
 
+        const refBilans = collection(baseDeDonnees, 'bilansPDS');
+        onSnapshot(refBilans, snap => {
+          const liste = [];
+          snap.forEach(d => liste.push({ id: d.id, ...d.data() }));
+          liste.sort((a, b) => (b.dateCreation || 0) - (a.dateCreation || 0));
+          etat.bilansPDS = liste;
+          if (etat.operateurConnecte) {
+            actualiserVueEnCours();
+            verifierNotificationsPds();
+          }
+        }, err => console.warn(err));
+
         const refCarnet = collection(baseDeDonnees, 'carnetAbsences');
         onSnapshot(refCarnet, snap => {
           const liste = [];
           snap.forEach(d => liste.push({ id: d.id, ...d.data() }));
           liste.sort((a, b) => (b.dateCreation || 0) - (a.dateCreation || 0));
           etat.registreAbsencesHistorique = liste;
+          etat.carnetCharge = true;
+          verifierResetHebdomadaireAutomatique();
         }, err => console.warn(err));
       }
 
@@ -1842,6 +2216,7 @@
         naviguerOnglet('poste-commandement');
         actualiserAffichageRecrutement();
         verifierNotificationBlamePourMembre();
+        verifierNotificationsPds();
       }
 
       function demanderDeconnexion() {
@@ -1972,6 +2347,7 @@
 
         if (etat.ongletActif === 'poste-commandement') {
           afficherVuePosteCommandement();
+          afficherBilansPds();
           verifierAlertesCommandementHunter();
         } else {
           document.getElementById('banniere-alerte-quota').classList.add('hidden');
@@ -2180,6 +2556,7 @@
                 <span class="font-bold">${m.totalStatistique || 0}</span>
               </div>
               ${!estHunter ? `
+                ${badgeStrikePDS(m)}
                 <div class="flex items-center justify-between text-[10px] font-terminal text-gray-400 pt-0.5 border-t border-bordureTactique/40">
                   <span>Blâmes :</span>
                   <span class="font-bold ${(m.blames || 0) >= 3 ? 'text-rougeAlerte animate-pulse' : (m.blames || 0) > 0 ? 'text-amber-400' : 'text-gray-300'}">
@@ -2544,6 +2921,7 @@
             </div>
 
             ${!estMembreHunter ? `
+              ${badgeStrikePDS(m)}
               <div class="p-2 rounded border ${seuilCritique ? 'bg-red-950/80 border-rougeAlerte animate-pulse' : 'bg-panneauSous border-bordureTactique'} flex items-center justify-between font-terminal text-xs">
                 <div>
                   <span class="font-bold uppercase ${seuilCritique ? 'text-rougeAlerte' : 'text-gray-300'}">BLÂMES DISCIPLINAIRES :</span>
@@ -3026,7 +3404,7 @@
 
         afficherBoiteConfirmation(
           "CLÔTURE DU CYCLE HEBDOMADAIRE",
-          "Voulez-vous clôturer la semaine ? Les compteurs de prises de service (PDS) des subordonnés seront réinitialisés à 0. Hunter demeure en supervision tactique. Les totaux cumulés, blâmes et dossiers de combat restent intacts.",
+          "Voulez-vous clôturer la semaine ? Les compteurs de prises de service (PDS) des subordonnés seront réinitialisés à 0. Hunter demeure en supervision tactique. Les totaux cumulés, blâmes et dossiers de combat restent intacts. Ce reset manuel n'applique aucune sanction PDS pour la semaine en cours.",
           async () => {
             if (estConnecteFirestore) {
               try {
@@ -3038,12 +3416,14 @@
                     pdsEffectuees: {}
                   });
                 });
+                batch.set(doc(baseDeDonnees, 'config', 'escouade'), { semaineActive: cleSemaineCourante(), semaineSansSanction: cleSemaineCourante() }, { merge: true });
                 await batch.commit();
               } catch(err) {
                 console.warn("Reset hebdomadaire :", err);
               }
             }
 
+            etat.semaineActive = cleSemaineCourante();
             Object.keys(etat.operateurs).forEach(cle => {
               etat.operateurs[cle].compteurSemaine = 0;
               etat.operateurs[cle].pdsEffectuees = {};
@@ -3338,6 +3718,8 @@
         // Blâmes
         document.getElementById('formulaire-assigner-blame').addEventListener('submit', executerAttributionBlame);
         document.getElementById('bouton-accuser-reception-blame').addEventListener('click', accuserReceptionBlame);
+        document.getElementById('bouton-accuser-avertissement-pds').addEventListener('click', accuserReceptionAvertissementPds);
+        document.getElementById('bouton-accuser-bilan-hunter').addEventListener('click', accuserReceptionBilanHunter);
 
         // Absences & Carnet
         document.getElementById('bouton-declarer-mon-absence').addEventListener('click', () => {
