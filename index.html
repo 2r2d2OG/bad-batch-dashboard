@@ -580,6 +580,15 @@
               </select>
             </div>
             <div id="champ-specialiste-conteneur"></div>
+            <div class="md:col-span-2">
+              <label class="block uppercase text-gray-300 mb-1">PDS validée par ce rapport</label>
+              <select id="champ-creneau-pds" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none touch-target">
+                <option value="18h">PDS 18H</option>
+                <option value="21h">PDS 21H</option>
+                <option value="aucune">AUCUNE (ce rapport ne compte pas comme PDS)</option>
+              </select>
+              <p id="aide-creneau-pds" class="text-[10px] text-gray-500 mt-1"></p>
+            </div>
           </div>
 
           <div>
@@ -1123,7 +1132,7 @@
     </div>
   </div>
 
-  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 2.3) -->
+  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 2.6) -->
   <footer class="border-t border-bordureTactique bg-fondCarbone/95 py-2.5 text-xs font-terminal text-gray-500 fixed bottom-0 left-0 right-0 z-30 shadow-2xl backdrop-blur">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5">
       <div class="text-gray-400 flex items-center gap-2">
@@ -1133,7 +1142,7 @@
       <div class="flex items-center gap-3">
         <span class="text-gray-500 hidden md:inline">GRANDE ARMÉE DE LA RÉPUBLIQUE</span>
         <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/60 text-amber-300 text-[11px] font-titre font-bold rounded tracking-wider shadow-[0_0_10px_rgba(245,158,11,0.25)]">
-          FIRMWARE MARAUDEUR // BUILD 2.3
+          FIRMWARE MARAUDEUR // BUILD 2.6
         </span>
       </div>
     </div>
@@ -2629,6 +2638,17 @@
               <input type="text" id="champ-metrique-specifique" placeholder="Ex: Failles de défense et réseaux détectés" class="w-full bg-fondCarbone border border-red-500/60 px-3 py-2 text-gray-100 rounded outline-none touch-target">
             `;
           }
+        
+          // Créneau de PDS proposé par défaut : le premier créneau pas encore validé aujourd'hui
+          const selCreneau = document.getElementById('champ-creneau-pds');
+          const jourPds = (op.pdsEffectuees || {})[dateAujourdhuiCivil()] || {};
+          if (selCreneau && selCreneau.dataset.manuel !== '1') {
+            selCreneau.value = !jourPds.h18 ? '18h' : (!jourPds.h21 ? '21h' : 'aucune');
+          }
+          const aideCreneau = document.getElementById('aide-creneau-pds');
+          if (aideCreneau) {
+            aideCreneau.textContent = `Un créneau n'est compté qu'une seule fois par jour (bouton PDS ou rapport). Aujourd'hui : PDS 18H ${jourPds.h18 ? '✓ validée' : 'non validée'} · PDS 21H ${jourPds.h21 ? '✓ validée' : 'non validée'}.`;
+          }
         } // CORRECTION : fermeture du if (!etat.estCompteBOS)
 
         afficherListeRapports();
@@ -2714,6 +2734,24 @@
         );
       }
 
+      // Clé de date normalisée (JJ/MM/AAAA) pour les créneaux de PDS
+      function cleDateCivile(chaine) {
+        const d = analyserDateCivile(chaine);
+        if (!d) return dateAujourdhuiCivil();
+        return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+      }
+
+      function creneauDejaValide(membre, dateCle, creneau) {
+        const jour = membre && membre.pdsEffectuees ? membre.pdsEffectuees[dateCle] : null;
+        if (!jour) return false;
+        return creneau === '18h' ? !!jour.h18 : !!jour.h21;
+      }
+
+      function jourPdsApresValidation(membre, dateCle, creneau) {
+        const jour = (membre && membre.pdsEffectuees && membre.pdsEffectuees[dateCle]) || {};
+        return { h18: !!jour.h18 || creneau === '18h', h21: !!jour.h21 || creneau === '21h' };
+      }
+
       async function executerTransmissionRapport(e) {
         e.preventDefault();
         if (etat.estCompteBOS) return; // Lecture seule
@@ -2725,11 +2763,22 @@
         const presence = document.getElementById('champ-presence-mission').value === 'present';
         const description = document.getElementById('champ-description-mission').value.trim();
         const metrique = document.getElementById('champ-metrique-specifique').value.trim();
+        const creneau = document.getElementById('champ-creneau-pds').value; // '18h' | '21h' | 'aucune'
+        const dateCle = cleDateCivile(date);
 
         const membresCoches = [];
+        if (document.getElementById('check-membre-tech').checked) membresCoches.push('tech');
         if (document.getElementById('check-membre-wrecker').checked) membresCoches.push('wrecker');
         if (document.getElementById('check-membre-crosshair').checked) membresCoches.push('crosshair');
-        if (document.getElementById('check-membre-tech').checked) membresCoches.push('tech');
+
+        // Un créneau de PDS (18h / 21h) ne peut être crédité qu'UNE fois par jour et par opérateur,
+        // que ce soit via le bouton PDS ou via un rapport : plus de double comptage.
+        const beneficiaires = [op.id, ...membresCoches.filter(id => id !== op.id)];
+        const credites = creneau === 'aucune'
+          ? []
+          : beneficiaires.filter(id => etat.operateurs[id] && !creneauDejaValide(etat.operateurs[id], dateCle, creneau));
+        const joursApres = {};
+        credites.forEach(id => { joursApres[id] = jourPdsApresValidation(etat.operateurs[id], dateCle, creneau); });
 
         const nouveauRapport = {
           idOperateur: op.id,
@@ -2741,6 +2790,7 @@
           description,
           metriqueSpecifique: metrique,
           membresDeploies: membresCoches,
+          creneauPds: creneau,
           dateCreation: Date.now()
         };
 
@@ -2756,20 +2806,16 @@
             const refNouvRapport = doc(collection(baseDeDonnees, 'missions'));
             batch.set(refNouvRapport, nouveauRapport);
 
-            const refAuteur = doc(baseDeDonnees, 'operateurs', op.id);
-            batch.update(refAuteur, {
-              compteurSemaine: increment(op.id === 'hunter' ? 0 : 1),
-              totalStatistique: increment(incrementStat)
-            });
-
-            membresCoches.forEach(idMembre => {
-              if (idMembre !== op.id) {
-                const refFrere = doc(baseDeDonnees, 'operateurs', idMembre);
-                batch.update(refFrere, {
-                  compteurSemaine: increment(1),
-                  totalStatistique: increment(1)
-                });
+            beneficiaires.forEach(id => {
+              const refMembre = doc(baseDeDonnees, 'operateurs', id);
+              const args = ['totalStatistique', increment(id === op.id ? incrementStat : 1)];
+              if (credites.includes(id)) {
+                args.push(
+                  'compteurSemaine', increment(id === 'hunter' ? 0 : 1),
+                  new FieldPath('pdsEffectuees', dateCle), joursApres[id]
+                );
               }
+              batch.update(refMembre, ...args);
             });
 
             if (op.id === 'tech') {
@@ -2790,15 +2836,16 @@
           }
         }
 
-        // CORRECTION : mises à jour locales uniquement si Firestore n'a pas pris le relais (évite les doublons)
+        // Mises à jour locales uniquement si Firestore n'a pas pris le relais (évite les doublons)
         if (!ecritureReussie) {
-          if (op.id !== 'hunter') op.compteurSemaine = (op.compteurSemaine || 0) + 1;
-          op.totalStatistique = (op.totalStatistique || 0) + incrementStat;
-
-          membresCoches.forEach(idMembre => {
-            if (idMembre !== op.id && etat.operateurs[idMembre]) {
-              etat.operateurs[idMembre].compteurSemaine = (etat.operateurs[idMembre].compteurSemaine || 0) + 1;
-              etat.operateurs[idMembre].totalStatistique = (etat.operateurs[idMembre].totalStatistique || 0) + 1;
+          beneficiaires.forEach(id => {
+            const m = etat.operateurs[id];
+            if (!m) return;
+            m.totalStatistique = (m.totalStatistique || 0) + (id === op.id ? incrementStat : 1);
+            if (credites.includes(id)) {
+              if (id !== 'hunter') m.compteurSemaine = (m.compteurSemaine || 0) + 1;
+              if (!m.pdsEffectuees) m.pdsEffectuees = {};
+              m.pdsEffectuees[dateCle] = joursApres[id];
             }
           });
 
@@ -2817,13 +2864,23 @@
         }
 
         AudioTactique.succes();
+        const libelleCreneau = creneau === '18h' ? '18H' : '21H';
+        if (creneau === 'aucune') {
+          afficherNotificationTactique("Rapport enregistré (sans PDS).");
+        } else if (credites.includes(op.id)) {
+          afficherNotificationTactique(`Rapport enregistré — PDS ${libelleCreneau} validée.`);
+        } else {
+          afficherNotificationTactique(`Rapport enregistré — PDS ${libelleCreneau} déjà validée aujourd'hui : aucun doublon.`);
+        }
+
         document.getElementById('champ-nom-mission').value = '';
         document.getElementById('champ-secteur-mission').value = '';
         document.getElementById('champ-description-mission').value = '';
+        document.getElementById('check-membre-tech').checked = false;
         document.getElementById('check-membre-wrecker').checked = false;
         document.getElementById('check-membre-crosshair').checked = false;
-        document.getElementById('check-membre-tech').checked = false;
         document.getElementById('champ-date-mission').value = dateAujourdhuiCivil();
+        document.getElementById('champ-creneau-pds').dataset.manuel = '';
         afficherVueRapports();
       }
 
@@ -3696,6 +3753,10 @@
         document.getElementById('formulaire-nouveau-mdp').addEventListener('submit', executerModificationMotDePasse);
         document.getElementById('formulaire-reset-mdp-membre').addEventListener('submit', executerResetMdpMembre);
         document.getElementById('formulaire-rapport-mission').addEventListener('submit', executerTransmissionRapport);
+        document.getElementById('champ-creneau-pds').addEventListener('change', (ev) => { ev.target.dataset.manuel = '1'; });
+        document.getElementById('formulaire-rapport-mission').addEventListener('reset', () => {
+          document.getElementById('champ-creneau-pds').dataset.manuel = '';
+        });
         document.getElementById('filtre-operateurs-rapports').addEventListener('change', afficherListeRapports);
 
         document.getElementById('formulaire-dossier-militaire').addEventListener('submit', executerSauvegardeDossierMilitaire);
