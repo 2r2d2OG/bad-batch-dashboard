@@ -589,6 +589,13 @@
               </select>
               <p id="aide-creneau-pds" class="text-[10px] text-gray-500 mt-1"></p>
             </div>
+            <div id="bloc-option-archive-tech" class="hidden md:col-span-2 bg-panneauSous p-2.5 rounded border border-cyan-500/40">
+              <label class="flex items-center space-x-2 cursor-pointer text-cyanTech">
+                <input type="checkbox" id="check-ajouter-archive" class="rounded bg-fondCarbone border-bordureTactique text-cyanTech focus:ring-0">
+                <span>💻 Ajouter ce rapport aux Archives de piratage</span>
+              </label>
+              <p class="text-[10px] text-gray-500 mt-1">À cocher uniquement pour une interception ou un piratage. Sinon, le rapport reste seulement dans le registre des missions.</p>
+            </div>
           </div>
 
           <div>
@@ -976,6 +983,12 @@
           </div>
         </div>
 
+        <div id="bloc-edition-pds" class="bg-fondCarbone p-2.5 rounded border border-bordureTactique">
+          <label class="block text-[11px] text-amber-400 mb-1">PDS de la semaine en cours :</label>
+          <input type="number" id="champ-pds-semaine" min="0" max="99" class="w-full bg-panneauSombre border border-bordureTactique px-3 py-2 text-white rounded outline-none">
+          <p class="text-[10px] text-gray-500 mt-1">Corrige le compteur hebdomadaire (ex. : doublon ou oubli). Il est remis à 0 à la clôture de semaine.</p>
+        </div>
+
         <div>
           <label class="block text-[11px] text-gray-300 mb-1">Notes de commandement &amp; évaluation tactique :</label>
           <textarea id="champ-notes-commandement" rows="2" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded outline-none"></textarea>
@@ -1132,7 +1145,7 @@
     </div>
   </div>
 
-  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 2.6) -->
+  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 2.7) -->
   <footer class="border-t border-bordureTactique bg-fondCarbone/95 py-2.5 text-xs font-terminal text-gray-500 fixed bottom-0 left-0 right-0 z-30 shadow-2xl backdrop-blur">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5">
       <div class="text-gray-400 flex items-center gap-2">
@@ -1142,7 +1155,7 @@
       <div class="flex items-center gap-3">
         <span class="text-gray-500 hidden md:inline">GRANDE ARMÉE DE LA RÉPUBLIQUE</span>
         <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/60 text-amber-300 text-[11px] font-titre font-bold rounded tracking-wider shadow-[0_0_10px_rgba(245,158,11,0.25)]">
-          FIRMWARE MARAUDEUR // BUILD 2.6
+          FIRMWARE MARAUDEUR // BUILD 2.7
         </span>
       </div>
     </div>
@@ -2645,6 +2658,8 @@
           if (selCreneau && selCreneau.dataset.manuel !== '1') {
             selCreneau.value = !jourPds.h18 ? '18h' : (!jourPds.h21 ? '21h' : 'aucune');
           }
+          const blocArchive = document.getElementById('bloc-option-archive-tech');
+          if (blocArchive) blocArchive.classList.toggle('hidden', etat.operateurConnecte !== 'tech');
           const aideCreneau = document.getElementById('aide-creneau-pds');
           if (aideCreneau) {
             aideCreneau.textContent = `Un créneau n'est compté qu'une seule fois par jour (bouton PDS ou rapport). Aujourd'hui : PDS 18H ${jourPds.h18 ? '✓ validée' : 'non validée'} · PDS 21H ${jourPds.h21 ? '✓ validée' : 'non validée'}.`;
@@ -2764,6 +2779,7 @@
         const description = document.getElementById('champ-description-mission').value.trim();
         const metrique = document.getElementById('champ-metrique-specifique').value.trim();
         const creneau = document.getElementById('champ-creneau-pds').value; // '18h' | '21h' | 'aucune'
+        const ajouterArchive = op.id === 'tech' && document.getElementById('check-ajouter-archive').checked;
         const dateCle = cleDateCivile(date);
 
         const membresCoches = [];
@@ -2818,7 +2834,7 @@
               batch.update(refMembre, ...args);
             });
 
-            if (op.id === 'tech') {
+            if (ajouterArchive) {
               const refArchive = doc(collection(baseDeDonnees, 'archivesPiratees'));
               batch.set(refArchive, {
                 titre: `Interception : ${nomMission}`,
@@ -2851,7 +2867,7 @@
 
           etat.rapports.unshift(nouveauRapport);
 
-          if (op.id === 'tech') {
+          if (ajouterArchive) {
             etat.archivesPiratees.unshift({
               id: 'arc-' + Date.now(),
               titre: `Interception : ${nomMission}`,
@@ -2880,6 +2896,7 @@
         document.getElementById('check-membre-wrecker').checked = false;
         document.getElementById('check-membre-crosshair').checked = false;
         document.getElementById('champ-date-mission').value = dateAujourdhuiCivil();
+        document.getElementById('check-ajouter-archive').checked = false;
         document.getElementById('champ-creneau-pds').dataset.manuel = '';
         afficherVueRapports();
       }
@@ -3393,6 +3410,8 @@
         document.getElementById('champ-notes-commandement').value = m.notes || '';
         document.getElementById('champ-steam-id-64').value = m.steamId64 || '';
         document.getElementById('champ-compte-discord').value = m.discord || '';
+        document.getElementById('champ-pds-semaine').value = m.compteurSemaine || 0;
+        document.getElementById('bloc-edition-pds').classList.toggle('hidden', id === 'hunter'); // Hunter est exempté de quota
 
         ouvrirBoite('boite-modifier-dossier');
       }
@@ -3407,6 +3426,8 @@
         const notes = document.getElementById('champ-notes-commandement').value.trim();
         const steamId64 = document.getElementById('champ-steam-id-64').value.trim();
         const discord = document.getElementById('champ-compte-discord').value.trim();
+        const pdsBrut = parseInt(document.getElementById('champ-pds-semaine').value, 10);
+        const pdsSemaine = (id !== 'hunter' && Number.isInteger(pdsBrut) && pdsBrut >= 0) ? pdsBrut : null;
 
         if (estConnecteFirestore) {
           try {
@@ -3416,7 +3437,8 @@
               totalStatistique: stat,
               notes: notes,
               steamId64: steamId64,
-              discord: discord
+              discord: discord,
+              ...(pdsSemaine !== null ? { compteurSemaine: pdsSemaine } : {})
             });
           } catch(err) {
             console.warn("Écriture dossier :", err);
@@ -3428,6 +3450,7 @@
         etat.operateurs[id].notes = notes;
         etat.operateurs[id].steamId64 = steamId64;
         etat.operateurs[id].discord = discord;
+        if (pdsSemaine !== null) etat.operateurs[id].compteurSemaine = pdsSemaine;
 
         fermerBoite('boite-modifier-dossier');
         AudioTactique.succes();
