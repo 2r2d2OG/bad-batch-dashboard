@@ -216,6 +216,9 @@
       <button data-onglet="archives" class="nav-bouton px-3 py-1.5 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-1.5 shrink-0 touch-target">
         <span>💾</span> ARCHIVES DE PIRATAGE
       </button>
+      <button data-onglet="registre" class="nav-bouton hidden px-3 py-1.5 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-1.5 shrink-0 touch-target">
+        <span>📈</span> REGISTRE &amp; STATS
+      </button>
     </div>
   </nav>
 
@@ -225,31 +228,6 @@
     <!-- 1. ÉCRAN D'ACCUEIL / AUTHENTIFICATION & RECRUTEMENT -->
     <section id="fenetre-connexion" class="my-2 space-y-4">
       
-      <!-- Module Recrutement Accueil -->
-      <div id="encadre-recrutement-accueil" class="panneau-tactique p-3.5 sm:p-4 rounded-lg biseau-plaque transition-all duration-300">
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 border-b border-bordureTactique pb-2.5">
-          <div class="flex items-center space-x-2">
-            <span id="icone-recrutement" class="text-lg">📢</span>
-            <div>
-              <h2 class="font-titre font-bold text-xs sm:text-sm text-gray-100 uppercase tracking-wider">
-                BUREAU DE RECRUTEMENT // FORCE CLONE 99
-              </h2>
-              <p class="text-[10px] font-terminal text-gray-400">
-                Protocole d'intégration opérationnelle du Havoc Marauder
-              </p>
-            </div>
-          </div>
-          <div id="badge-statut-recrutement" class="px-2.5 py-1 rounded text-xs font-titre font-bold uppercase tracking-wider border"></div>
-        </div>
-
-        <div class="mt-2.5 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-          <p id="description-statut-recrutement" class="text-xs font-terminal text-gray-300 leading-relaxed"></p>
-          <div id="instruction-recrutement-contact" class="hidden shrink-0 px-3 py-1.5 bg-panneauSous border border-bordureTactique rounded text-[11px] font-terminal text-amber-300">
-            📡 FRÉQUENCE COMNET : CANAL PRIVÉ 99-DELTA
-          </div>
-        </div>
-      </div>
-
       <!-- Connexion & Fiche tactique -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
         
@@ -399,29 +377,6 @@
         </span>
       </div>
 
-      <!-- MODULE GESTION DU RECRUTEMENT (POSTE DE COMMANDEMENT HUNTER UNIQUEMENT) -->
-      <div id="module-gestion-recrutement-poste" class="hidden panneau-tactique p-3.5 rounded border border-amber-500/50 shadow-md">
-        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-          <div class="space-y-1">
-            <div class="flex items-center space-x-2">
-              <span class="text-xs font-titre font-bold text-amber-400 uppercase">GESTION DES RECRUTEMENTS :</span>
-              <span id="indicateur-recrutement-hunter" class="px-2 py-0.5 text-[9px] font-terminal font-bold rounded uppercase"></span>
-            </div>
-            <div class="text-[11px] font-terminal text-gray-300 flex items-center gap-2">
-              <span>Note publique :</span>
-              <span id="texte-note-recrutement-hunter" class="italic text-gray-400">...</span>
-            </div>
-          </div>
-
-          <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-end">
-            <button id="bouton-editer-note-recrutement" class="px-2.5 py-1.5 border border-bordureLueur bg-panneauSous hover:bg-bordureTactique text-xs font-terminal text-gray-200 rounded touch-target">
-              ✏️ Modifier note
-            </button>
-            <button id="bouton-basculer-recrutement" class="px-3 py-1.5 font-titre font-bold text-xs uppercase rounded transition touch-target"></button>
-          </div>
-        </div>
-      </div>
-
       <!-- BANNIÈRE D'ALERTE DE COMMANDEMENT (RELIÉE AUX PDS) -->
       <div id="banniere-alerte-quota" class="hidden p-2.5 bg-red-950/70 border border-rougeAlerte rounded flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs font-terminal text-red-200 shadow-md">
         <div class="flex items-center gap-2 overflow-hidden">
@@ -449,7 +404,7 @@
           <div class="text-xl font-titre font-black text-gray-100 mt-0.5" id="total-rapports-enregistres">
             0
           </div>
-          <p class="text-[10px] font-terminal text-gray-500 mt-0.5">Missions et prises de service cumulées.</p>
+          <p class="text-[10px] font-terminal text-gray-500 mt-0.5">Rapports de mission (supprimés après 1 mois).</p>
         </div>
 
         <div class="bg-panneauSombre border border-bordureTactique p-3 rounded biseau-plaque">
@@ -510,7 +465,7 @@
       <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5 shadow-lg">
         <div class="flex items-center justify-between border-b border-bordureTactique pb-2 mb-2.5">
           <h3 class="font-titre text-xs uppercase tracking-wider text-gray-200 flex items-center gap-1.5">
-            <span class="text-rougeAlerte">■</span> DERNIERS RAPPORTS &amp; PRISES DE SERVICE TRANSMIS
+            <span class="text-rougeAlerte">■</span> DERNIERS RAPPORTS DE MISSION
           </h3>
           <button data-action-nav="rapports" class="text-xs font-terminal text-amber-400 hover:underline">
             Consulter tout le registre →
@@ -617,7 +572,7 @@
       <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5">
         <div class="flex flex-wrap items-center justify-between gap-2.5 border-b border-bordureTactique pb-2.5 mb-3">
           <h3 class="font-titre text-xs uppercase tracking-wider text-gray-200 flex items-center gap-1.5">
-            <span class="text-amber-400">■</span> REGISTRE OFFICIEL DES RAPPORTS &amp; PDS
+            <span class="text-amber-400">■</span> REGISTRE OFFICIEL DES RAPPORTS DE MISSION <span class="text-[10px] text-gray-500 normal-case font-terminal">(supprimés après 1 mois)</span>
           </h3>
           <div class="flex items-center space-x-2 font-terminal">
             <span class="text-xs text-gray-400">Filtrer par opérateur :</span>
@@ -742,6 +697,67 @@
           <span id="compteur-archives-enregistrees">0 transmission interceptée</span>
         </div>
         <div id="liste-archives-piratees" class="space-y-2.5"></div>
+      </div>
+    </section>
+
+    <!-- 7. REGISTRE D'ACTIVITÉ (HUNTER UNIQUEMENT) -->
+    <section id="fenetre-registre" class="hidden space-y-4">
+      <div class="panneau-tactique p-3.5 rounded">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 class="font-titre font-bold text-xs sm:text-sm text-gray-100 uppercase tracking-wider">📈 REGISTRE D'ACTIVITÉ // PDS &amp; RAPPORTS</h2>
+            <p class="text-[10px] font-terminal text-gray-400">Historique conservé même après la suppression mensuelle des rapports de mission.</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 font-terminal text-xs">
+            <select id="filtre-periode-registre" class="bg-fondCarbone border border-bordureTactique text-gray-200 px-2 py-1.5 rounded">
+              <option value="7">7 derniers jours</option>
+              <option value="30" selected>30 derniers jours</option>
+              <option value="90">90 derniers jours</option>
+              <option value="tout">Tout l'historique</option>
+            </select>
+            <select id="filtre-operateur-registre" class="bg-fondCarbone border border-bordureTactique text-gray-200 px-2 py-1.5 rounded">
+              <option value="tous">Toute la Bad Batch</option>
+              <option value="hunter">Hunter</option>
+              <option value="tech">Tech</option>
+              <option value="wrecker">Wrecker</option>
+              <option value="crosshair">Crosshair</option>
+            </select>
+            <select id="filtre-type-registre" class="bg-fondCarbone border border-bordureTactique text-gray-200 px-2 py-1.5 rounded">
+              <option value="tous">PDS et rapports</option>
+              <option value="pds">PDS uniquement</option>
+              <option value="rapport">Rapports uniquement</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div id="cartes-stats-registre" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3"></div>
+
+      <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-bordureTactique pb-2 mb-2">
+          <h3 class="font-titre text-xs uppercase tracking-wider text-gray-200 flex items-center gap-1.5">
+            <span class="text-vertViseur">■</span> COURBE DES PDS VALIDÉES
+          </h3>
+          <div id="legende-registre" class="flex flex-wrap gap-3 text-[10px] font-terminal text-gray-300"></div>
+        </div>
+        <div id="courbe-pds-registre"></div>
+      </div>
+
+      <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5">
+        <div class="border-b border-bordureTactique pb-2 mb-2">
+          <h3 class="font-titre text-xs uppercase tracking-wider text-gray-200 flex items-center gap-1.5">
+            <span class="text-amber-400">■</span> COURBE DES RAPPORTS RÉDIGÉS
+          </h3>
+        </div>
+        <div id="courbe-rapports-registre"></div>
+      </div>
+
+      <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5 font-terminal">
+        <div class="flex items-center justify-between text-xs text-gray-400 border-b border-bordureTactique pb-2 mb-2.5">
+          <span>JOURNAL DÉTAILLÉ : DATE, HEURE ET OPÉRATEUR</span>
+          <span id="compteur-registre-activite">0 entrée</span>
+        </div>
+        <div id="table-registre-activite" class="max-h-96 overflow-y-auto overflow-x-auto"></div>
       </div>
     </section>
 
@@ -898,26 +914,6 @@
       <div class="flex justify-end pt-3 border-t border-bordureTactique mt-3">
         <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-xs font-terminal text-gray-400 rounded" data-modale="boite-carnet-absences">Fermer</button>
       </div>
-    </div>
-  </div>
-
-  <!-- MODALE : ÉDITION DU RECRUTEMENT -->
-  <div id="boite-editer-note-recrutement" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-panneauSombre border-2 border-amber-500 biseau-plaque max-w-md w-full p-4 shadow-2xl">
-      <div class="flex items-center justify-between border-b border-bordureTactique pb-2 mb-3">
-        <h3 class="font-titre text-xs font-bold text-amber-400 uppercase">NOTE PUBLIQUE DE RECRUTEMENT</h3>
-        <button type="button" class="btn-fermer-modale text-gray-400 hover:text-white" data-modale="boite-editer-note-recrutement">✕</button>
-      </div>
-      <form id="formulaire-note-recrutement" class="space-y-2.5">
-        <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Message affiché sur le terminal d'accueil :</label>
-          <textarea id="champ-note-recrutement-texte" rows="3" required class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none focus:border-amber-400"></textarea>
-        </div>
-        <div class="flex justify-end space-x-2 pt-1.5">
-          <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-xs font-terminal text-gray-400 rounded" data-modale="boite-editer-note-recrutement">Annuler</button>
-          <button type="submit" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold text-xs uppercase rounded">Mettre à jour</button>
-        </div>
-      </form>
     </div>
   </div>
 
@@ -1145,7 +1141,7 @@
     </div>
   </div>
 
-  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 2.7) -->
+  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 2.8) -->
   <footer class="border-t border-bordureTactique bg-fondCarbone/95 py-2.5 text-xs font-terminal text-gray-500 fixed bottom-0 left-0 right-0 z-30 shadow-2xl backdrop-blur">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5">
       <div class="text-gray-400 flex items-center gap-2">
@@ -1155,7 +1151,7 @@
       <div class="flex items-center gap-3">
         <span class="text-gray-500 hidden md:inline">GRANDE ARMÉE DE LA RÉPUBLIQUE</span>
         <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/60 text-amber-300 text-[11px] font-titre font-bold rounded tracking-wider shadow-[0_0_10px_rgba(245,158,11,0.25)]">
-          FIRMWARE MARAUDEUR // BUILD 2.7
+          FIRMWARE MARAUDEUR // BUILD 2.8
         </span>
       </div>
     </div>
@@ -1512,13 +1508,12 @@
         operateurSelectionneAccueil: 'hunter',
         ongletActif: 'poste-commandement',
         quotaHebdomadaire: 3,
-        recrutementOuvert: false,
-        recrutementNote: "Aucun slot de mutation clone ouvert actuellement par le Sergent Hunter.",
         operateurs: JSON.parse(JSON.stringify(EFFECTIF_CANONIQUE)),
         rapports: [],
         plans: JSON.parse(JSON.stringify(PLANS_CANONIQUES)),
         archivesPiratees: [],
         registreAbsencesHistorique: [],
+        registreActivite: [],
         bilansPDS: [],
         carnetCharge: false,
         motsDePasseHashes: {}
@@ -1868,7 +1863,6 @@
         if (!estConnecteFirestore) {
           document.getElementById('indicateur-liaison').textContent = "LIAISON LOCALE (OFFLINE)";
           document.getElementById('point-liaison').className = "inline-block w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_6px_#f59e0b]";
-          actualiserAffichageRecrutement();
           return;
         }
 
@@ -1879,8 +1873,6 @@
             if (!snap.metadata.fromCache) {
               setDoc(refConfigEscouade, {
                 quotaHebdomadaire: etat.quotaHebdomadaire,
-                recrutementOuvert: etat.recrutementOuvert,
-                recrutementNote: etat.recrutementNote,
                 motsDePasseHashes: etat.motsDePasseHashes
               }).catch(err => console.warn("Création config :", err));
             }
@@ -1888,13 +1880,10 @@
           }
           const donnees = snap.data();
           if (donnees.quotaHebdomadaire) etat.quotaHebdomadaire = donnees.quotaHebdomadaire;
-          if (typeof donnees.recrutementOuvert === 'boolean') etat.recrutementOuvert = donnees.recrutementOuvert;
-          if (donnees.recrutementNote) etat.recrutementNote = donnees.recrutementNote;
           etat.semaineActive = donnees.semaineActive || null;
           if (donnees.motsDePasseHashes) {
             etat.motsDePasseHashes = { ...etat.motsDePasseHashes, ...donnees.motsDePasseHashes };
           }
-          actualiserAffichageRecrutement();
           if (etat.operateurConnecte) actualiserVueEnCours();
           verifierResetHebdomadaireAutomatique();
         }, err => console.warn(err));
@@ -1932,6 +1921,7 @@
           snap.forEach(d => liste.push({ id: d.id, ...d.data() }));
           liste.sort((a, b) => (b.dateCreation || 0) - (a.dateCreation || 0));
           etat.rapports = liste;
+          purgerRapportsAnciens();
           if (etat.operateurConnecte) actualiserVueEnCours();
         }, err => console.warn(err));
 
@@ -1982,85 +1972,6 @@
           etat.carnetCharge = true;
           verifierResetHebdomadaireAutomatique();
         }, err => console.warn(err));
-      }
-
-      function actualiserAffichageRecrutement() {
-        const badge = document.getElementById('badge-statut-recrutement');
-        const desc = document.getElementById('description-statut-recrutement');
-        const contact = document.getElementById('instruction-recrutement-contact');
-        const icone = document.getElementById('icone-recrutement');
-        const encadre = document.getElementById('encadre-recrutement-accueil');
-
-        if (etat.recrutementOuvert) {
-          badge.className = "px-2.5 py-1 rounded text-xs font-titre font-bold uppercase tracking-wider bg-emerald-950/80 text-emerald-300 border border-vertViseur shadow-[0_0_10px_rgba(16,185,129,0.3)] animate-pulse";
-          badge.textContent = "RECRUTEMENT ESCOUADE : OUVERT";
-          icone.textContent = "🟢";
-          encadre.className = "panneau-tactique p-3.5 sm:p-4 rounded-lg biseau-plaque border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.2)]";
-          contact.classList.remove('hidden');
-        } else {
-          badge.className = "px-2.5 py-1 rounded text-xs font-titre font-bold uppercase tracking-wider bg-red-950/80 text-red-300 border border-rougeAlerte";
-          badge.textContent = "RECRUTEMENT ESCOUADE : FERMÉ";
-          icone.textContent = "🔴";
-          encadre.className = "panneau-tactique p-3.5 sm:p-4 rounded-lg biseau-plaque border-bordureTactique";
-          contact.classList.add('hidden');
-        }
-
-        desc.textContent = etat.recrutementNote || "Aucun slot de mutation clone ouvert actuellement par le Sergent Hunter.";
-
-        const indHunter = document.getElementById('indicateur-recrutement-hunter');
-        const btnBascule = document.getElementById('bouton-basculer-recrutement');
-        const txtHunter = document.getElementById('texte-note-recrutement-hunter');
-
-        if (indHunter && btnBascule && txtHunter) {
-          if (etat.recrutementOuvert) {
-            indHunter.className = "px-2 py-0.5 text-[9px] font-terminal font-bold rounded uppercase bg-emerald-950 text-emerald-300 border border-emerald-700";
-            indHunter.textContent = "STATUT ACTUEL : OUVERT";
-            btnBascule.className = "px-3 py-1.5 font-titre font-bold text-xs uppercase rounded transition bg-red-950 hover:bg-red-800 text-red-200 border border-rougeAlerte touch-target";
-            btnBascule.textContent = "⛔ FERMER LES RECRUTEMENTS";
-          } else {
-            indHunter.className = "px-2 py-0.5 text-[9px] font-terminal font-bold rounded uppercase bg-red-950 text-red-300 border border-red-800";
-            indHunter.textContent = "STATUT ACTUEL : FERMÉ";
-            btnBascule.className = "px-3 py-1.5 font-titre font-bold text-xs uppercase rounded transition bg-emerald-900 hover:bg-emerald-700 text-emerald-200 border border-vertViseur touch-target";
-            btnBascule.textContent = "✅ OUVRIR LES RECRUTEMENTS";
-          }
-          txtHunter.textContent = etat.recrutementNote;
-        }
-      }
-
-      async function basculerEtatRecrutementHunter() {
-        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
-        const nouvelEtat = !etat.recrutementOuvert;
-        etat.recrutementOuvert = nouvelEtat;
-
-        if (estConnecteFirestore) {
-          try {
-            const refConfig = doc(baseDeDonnees, 'config', 'escouade');
-            await updateDoc(refConfig, { recrutementOuvert: nouvelEtat });
-          } catch(err) {
-            console.warn("Écriture recrutement :", err);
-          }
-        }
-        AudioTactique.succes();
-        actualiserAffichageRecrutement();
-      }
-
-      async function sauvegarderNoteRecrutement(e) {
-        e.preventDefault();
-        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
-        const texte = document.getElementById('champ-note-recrutement-texte').value.trim();
-        etat.recrutementNote = texte;
-
-        if (estConnecteFirestore) {
-          try {
-            const refConfig = doc(baseDeDonnees, 'config', 'escouade');
-            await updateDoc(refConfig, { recrutementNote: texte });
-          } catch(err) {
-            console.warn("Écriture note recrutement :", err);
-          }
-        }
-        fermerBoite('boite-editer-note-recrutement');
-        AudioTactique.succes();
-        actualiserAffichageRecrutement();
       }
 
       function selectionnerOperateurAccueil(id) {
@@ -2175,7 +2086,6 @@
 
         const boutonMdp = document.getElementById('bouton-cle-mdp');
         const boutonPlan = document.getElementById('bouton-ajouter-plan-hunter');
-        const modRecrutementPoste = document.getElementById('module-gestion-recrutement-poste');
         const blocLogPds = document.getElementById('bloc-log-rapide-pds');
         const blocLogBos = document.getElementById('bloc-log-pds-bos');
         const banniereAuditBos = document.getElementById('banniere-audit-bos');
@@ -2193,7 +2103,6 @@
 
           boutonMdp.classList.add('hidden');
           boutonPlan.classList.add('hidden');
-          modRecrutementPoste.classList.add('hidden');
           blocLogPds.classList.add('hidden');
           blocLogBos.classList.remove('hidden');
           banniereAuditBos.classList.remove('hidden');
@@ -2226,17 +2135,18 @@
 
           if (etat.operateurConnecte === 'hunter') {
             boutonPlan.classList.remove('hidden');
-            modRecrutementPoste.classList.remove('hidden');
           } else {
             boutonPlan.classList.add('hidden');
-            modRecrutementPoste.classList.add('hidden');
           }
         }
 
         document.getElementById('badge-date-pds').textContent = dateAujourdhuiCivil();
 
+        const boutonRegistre = document.querySelector('.nav-bouton[data-onglet="registre"]');
+        if (boutonRegistre) boutonRegistre.classList.toggle('hidden', etat.operateurConnecte !== 'hunter');
+        if (etat.operateurConnecte === 'hunter') demarrerEcouteRegistre();
+        purgerRapportsAnciens();
         naviguerOnglet('poste-commandement');
-        actualiserAffichageRecrutement();
         verifierNotificationBlamePourMembre();
         verifierNotificationsPds();
       }
@@ -2248,6 +2158,8 @@
           () => {
             etat.operateurConnecte = null;
             etat.estCompteBOS = false;
+            if (desabonRegistre) { desabonRegistre(); desabonRegistre = null; }
+            etat.registreActivite = [];
             document.body.className = "grille-tactique-bg flex flex-col justify-between min-h-screen pb-16 sm:pb-12 text-sm select-none";
             document.getElementById('fenetre-connexion').classList.remove('hidden');
             document.getElementById('barre-navigation').classList.add('hidden');
@@ -2257,7 +2169,6 @@
             document.getElementById('banniere-audit-bos').classList.add('hidden');
             masquerToutesLesFenetres();
             selectionnerOperateurAccueil('hunter');
-            actualiserAffichageRecrutement();
           }
         );
       }
@@ -2339,7 +2250,7 @@
       }
 
       function masquerToutesLesFenetres() {
-        ['poste-commandement', 'rapports', 'effectif', 'plans', 'archives'].forEach(tab => {
+        ['poste-commandement', 'rapports', 'effectif', 'plans', 'archives', 'registre'].forEach(tab => {
           document.getElementById(`fenetre-${tab}`).classList.add('hidden');
         });
       }
@@ -2379,6 +2290,7 @@
         if (etat.ongletActif === 'effectif') afficherVueEffectif();
         if (etat.ongletActif === 'plans') afficherVuePlans();
         if (etat.ongletActif === 'archives') afficherVueArchives();
+        if (etat.ongletActif === 'registre') afficherVueRegistre();
       }
 
       function membreEstEnReglePDS(idMembre) {
@@ -2440,6 +2352,237 @@
         }
       }
 
+      // ==================== REGISTRE D'ACTIVITÉ (PDS & RAPPORTS) ====================
+      let desabonRegistre = null;
+      let purgeRapportsFaite = false;
+
+      function estEntreePds(rap) {
+        return typeof rap.nomMission === 'string' && rap.nomMission.startsWith('PRISE DE SERVICE //');
+      }
+
+      // Les anciennes prises de service enregistrées comme "missions" ne sont plus affichées dans les rapports
+      function rapportsAffichables() {
+        return etat.rapports.filter(r => !estEntreePds(r));
+      }
+
+      // Suppression automatique des rapports de mission de plus d'un mois (les statistiques sont conservées dans le registre)
+      async function purgerRapportsAnciens() {
+        if (purgeRapportsFaite || !estConnecteFirestore || !etat.operateurConnecte || etat.estCompteBOS) return;
+        purgeRapportsFaite = true;
+        const limite = Date.now() - 30 * 24 * 60 * 60 * 1000;
+        const anciens = etat.rapports.filter(r => r.id && r.dateCreation && r.dateCreation < limite);
+        if (anciens.length === 0) return;
+        try {
+          for (let i = 0; i < anciens.length; i += 400) {
+            const batch = writeBatch(baseDeDonnees);
+            anciens.slice(i, i + 400).forEach(r => batch.delete(doc(baseDeDonnees, 'missions', r.id)));
+            await batch.commit();
+          }
+        } catch (err) {
+          console.warn("Purge des rapports anciens :", err);
+        }
+      }
+
+      function demarrerEcouteRegistre() {
+        if (!estConnecteFirestore || desabonRegistre) return;
+        desabonRegistre = onSnapshot(collection(baseDeDonnees, 'registreActivite'), snap => {
+          const liste = [];
+          snap.forEach(d => liste.push({ id: d.id, ...d.data() }));
+          liste.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+          etat.registreActivite = liste;
+          if (etat.operateurConnecte === 'hunter' && etat.ongletActif === 'registre') afficherVueRegistre();
+        }, err => console.warn("Registre d'activité :", err));
+      }
+
+      function dateCivilePourTimestamp(ts) {
+        const d = new Date(ts);
+        return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+      }
+
+      // Registre + anciens rapports encore présents (PDS historiques et rapports pas encore dans le registre)
+      function toutesLesActivites() {
+        const liste = etat.registreActivite.slice();
+        const clesRapports = new Set(liste.filter(e => e.type === 'rapport').map(e => `${e.idOperateur}:${e.timestamp}`));
+        etat.rapports.forEach(r => {
+          if (!r.dateCreation) return;
+          if (estEntreePds(r)) {
+            liste.push({
+              type: 'pds', idOperateur: r.idOperateur, nomOperateur: r.nomOperateur, jour: r.date,
+              creneau: String(r.nomMission).includes('21H') ? '21h' : '18h', source: 'bouton', timestamp: r.dateCreation
+            });
+          } else if (!clesRapports.has(`${r.idOperateur}:${r.dateCreation}`)) {
+            liste.push({
+              type: 'rapport', idOperateur: r.idOperateur, nomOperateur: r.nomOperateur,
+              jour: dateCivilePourTimestamp(r.dateCreation), titre: r.nomMission || 'Sans titre', timestamp: r.dateCreation
+            });
+          }
+        });
+        return liste.sort((a, b) => b.timestamp - a.timestamp);
+      }
+
+      function jourDeEntree(e) {
+        const d = analyserDateCivile(e.jour);
+        if (!d) return null;
+        d.setHours(0, 0, 0, 0);
+        return d;
+      }
+
+      function debutSemaineDe(date) {
+        const d = new Date(date);
+        d.setHours(0, 0, 0, 0);
+        d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+        return d;
+      }
+
+      function formaterJourCourt(d) {
+        return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}`;
+      }
+
+      // Courbe SVG multi-séries (sans dépendance externe)
+      function courbeSVG(labels, series, description) {
+        const W = 700, H = 230, gauche = 38, droite = 14, haut = 14, bas = 34;
+        const largeur = W - gauche - droite, hauteur = H - haut - bas;
+        const maxVal = Math.max(1, ...series.flatMap(sr => sr.valeurs));
+        const yMax = maxVal <= 2 ? 2 : Math.ceil(maxVal / 2) * 2;
+        const x = (i) => labels.length <= 1 ? gauche + largeur / 2 : gauche + (i * largeur) / (labels.length - 1);
+        const y = (v) => haut + hauteur * (1 - v / yMax);
+
+        let svg = `<svg viewBox="0 0 ${W} ${H}" class="w-full h-auto" role="img" aria-label="${echapperTexteHTML(description)}">`;
+        [0, yMax / 2, yMax].forEach(v => {
+          svg += `<line x1="${gauche}" y1="${y(v)}" x2="${W - droite}" y2="${y(v)}" stroke="#1f2737" stroke-width="1"/>`;
+          svg += `<text x="${gauche - 6}" y="${y(v) + 3}" fill="#9ca3af" font-size="10" text-anchor="end" font-family="monospace">${v}</text>`;
+        });
+        const pas = Math.ceil(labels.length / 10);
+        labels.forEach((l, i) => {
+          if (i % pas === 0) {
+            svg += `<text x="${x(i)}" y="${H - 12}" fill="#9ca3af" font-size="10" text-anchor="middle" font-family="monospace">${echapperTexteHTML(l)}</text>`;
+          }
+        });
+        series.forEach(sr => {
+          if (labels.length > 1) {
+            const points = sr.valeurs.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+            svg += `<polyline points="${points}" fill="none" stroke="${sr.couleur}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+          }
+          sr.valeurs.forEach((v, i) => {
+            if (v > 0 || labels.length <= 1) {
+              svg += `<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="3" fill="${sr.couleur}"><title>${echapperTexteHTML(sr.nom)} — ${echapperTexteHTML(labels[i])} : ${v}</title></circle>`;
+            }
+          });
+        });
+        return svg + '</svg>';
+      }
+
+      function afficherVueRegistre() {
+        if (etat.operateurConnecte !== 'hunter') return;
+        const periode = document.getElementById('filtre-periode-registre').value;
+        const filtreOp = document.getElementById('filtre-operateur-registre').value;
+        const filtreType = document.getElementById('filtre-type-registre').value;
+
+        const aujourdhui = new Date();
+        aujourdhui.setHours(0, 0, 0, 0);
+        const limite = periode === 'tout'
+          ? null
+          : new Date(aujourdhui.getFullYear(), aujourdhui.getMonth(), aujourdhui.getDate() - (parseInt(periode, 10) - 1));
+        const ids = Object.keys(etat.operateurs).filter(id => filtreOp === 'tous' || id === filtreOp);
+
+        const toutes = toutesLesActivites();
+        const activites = toutes.filter(e => {
+          const j = jourDeEntree(e);
+          return j && (!limite || j >= limite);
+        });
+
+        // ── Cartes de synthèse par opérateur
+        const cartes = document.getElementById('cartes-stats-registre');
+        cartes.innerHTML = '';
+        ids.forEach(id => {
+          const m = etat.operateurs[id];
+          const siens = activites.filter(e => e.idOperateur === id);
+          const pds18 = siens.filter(e => e.type === 'pds' && e.creneau === '18h').length;
+          const pds21 = siens.filter(e => e.type === 'pds' && e.creneau === '21h').length;
+          const rapports = siens.filter(e => e.type === 'rapport').length;
+          const derniere = toutes.find(e => e.idOperateur === id);
+          const carte = document.createElement('div');
+          carte.className = 'bg-panneauSombre border border-bordureTactique p-3 rounded biseau-plaque font-terminal text-xs space-y-1';
+          carte.style.borderLeft = `4px solid ${m.couleur}`;
+          carte.innerHTML = `
+            <div class="font-titre font-bold text-xs text-gray-100 uppercase flex items-center gap-1.5"><span>${m.symbole}</span><span>${echapperTexteHTML(m.nom)}</span></div>
+            <div class="flex justify-between"><span class="text-gray-400">PDS validées :</span><span class="font-bold text-vertViseur">${pds18 + pds21}</span></div>
+            <div class="flex justify-between text-[10px]"><span class="text-gray-500">dont 18H / 21H :</span><span class="text-gray-300">${pds18} / ${pds21}</span></div>
+            <div class="flex justify-between"><span class="text-gray-400">Rapports rédigés :</span><span class="font-bold text-amber-400">${rapports}</span></div>
+            <div class="flex justify-between text-[10px] pt-1 border-t border-bordureTactique/50"><span class="text-gray-500">Dernière activité :</span><span class="text-gray-300">${derniere ? `${echapperTexteHTML(derniere.jour)} ${new Date(derniere.timestamp).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}` : '—'}</span></div>
+          `;
+          cartes.appendChild(carte);
+        });
+
+        // ── Courbes (par jour jusqu'à 30 jours, par semaine au-delà)
+        let debut = limite;
+        if (!debut) {
+          debut = activites.reduce((min, e) => {
+            const j = jourDeEntree(e);
+            return !min || j < min ? j : min;
+          }, null) || aujourdhui;
+        }
+        const hebdo = periode === 'tout' || parseInt(periode, 10) > 31;
+        const pasJours = hebdo ? 7 : 1;
+        const debutBuckets = hebdo ? debutSemaineDe(debut) : debut;
+        const buckets = [];
+        for (let d = new Date(debutBuckets); d <= aujourdhui; d.setDate(d.getDate() + pasJours)) buckets.push(new Date(d));
+        const labels = buckets.map(formaterJourCourt);
+        const indexDe = (j) => Math.round(((hebdo ? debutSemaineDe(j) : j) - debutBuckets) / (pasJours * 86400000));
+        const construireSeries = (type) => ids.map(id => {
+          const valeurs = new Array(buckets.length).fill(0);
+          activites.forEach(e => {
+            if (e.type !== type || e.idOperateur !== id) return;
+            const i = indexDe(jourDeEntree(e));
+            if (i >= 0 && i < valeurs.length) valeurs[i]++;
+          });
+          return { nom: etat.operateurs[id].nom, couleur: etat.operateurs[id].couleur, valeurs };
+        });
+        const axe = hebdo ? 'par semaine (date du lundi)' : 'par jour';
+
+        document.getElementById('legende-registre').innerHTML = ids.map(id => `
+          <span class="inline-flex items-center gap-1.5"><span class="inline-block w-3 h-1.5 rounded" style="background:${etat.operateurs[id].couleur}"></span>${echapperTexteHTML(etat.operateurs[id].nom)}</span>
+        `).join('') + `<span class="text-gray-500">// ${axe}</span>`;
+        document.getElementById('courbe-pds-registre').innerHTML = courbeSVG(labels, construireSeries('pds'), `PDS validées ${axe}`);
+        document.getElementById('courbe-rapports-registre').innerHTML = courbeSVG(labels, construireSeries('rapport'), `Rapports rédigés ${axe}`);
+
+        // ── Journal détaillé (date, heure, opérateur)
+        const lignes = activites.filter(e => ids.includes(e.idOperateur) && (filtreType === 'tous' || e.type === filtreType));
+        document.getElementById('compteur-registre-activite').textContent = `${lignes.length} entrée(s)`;
+        const conteneur = document.getElementById('table-registre-activite');
+        if (lignes.length === 0) {
+          conteneur.innerHTML = `<div class="text-xs text-gray-500 italic p-3 text-center border border-dashed border-bordureTactique rounded">Aucune activité enregistrée sur cette période.</div>`;
+          return;
+        }
+        const corps = lignes.slice(0, 300).map(e => {
+          const m = etat.operateurs[e.idOperateur];
+          const heure = new Date(e.timestamp).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+          const evenement = e.type === 'pds'
+            ? `<span class="text-vertViseur font-bold">PDS ${String(e.creneau || '').toUpperCase()}</span>`
+            : `<span class="text-amber-400 font-bold">Rapport rédigé</span>`;
+          const detail = e.type === 'pds'
+            ? (e.source === 'rapport' ? 'Validée via un rapport' : 'Bouton PDS')
+            : echapperTexteHTML(e.titre || '');
+          return `<tr class="border-b border-bordureTactique/40">
+            <td class="py-1 pr-3 text-gray-200 whitespace-nowrap">${echapperTexteHTML(e.jour)}</td>
+            <td class="py-1 pr-3 text-gray-400 whitespace-nowrap">${heure}</td>
+            <td class="py-1 pr-3 font-bold uppercase whitespace-nowrap" style="color:${m ? m.couleur : '#e2e8f0'}">${echapperTexteHTML(e.nomOperateur || e.idOperateur)}</td>
+            <td class="py-1 pr-3 whitespace-nowrap">${evenement}</td>
+            <td class="py-1 text-gray-300">${detail}</td>
+          </tr>`;
+        }).join('');
+        conteneur.innerHTML = `
+          <table class="w-full text-xs font-terminal text-left">
+            <thead class="text-[10px] text-gray-500 uppercase sticky top-0 bg-panneauSombre">
+              <tr><th class="py-1 pr-3">Date</th><th class="py-1 pr-3">Heure</th><th class="py-1 pr-3">Opérateur</th><th class="py-1 pr-3">Événement</th><th class="py-1">Détail</th></tr>
+            </thead>
+            <tbody>${corps}</tbody>
+          </table>
+          ${lignes.length > 300 ? `<div class="text-[10px] text-gray-500 pt-2">Affichage limité aux 300 entrées les plus récentes.</div>` : ''}
+        `;
+      }
+
+      // Prise de service par bouton (18h / 21h) : enregistrée dans le registre, plus dans les rapports
       async function executerPdsCreneau(creneau) {
         if (etat.estCompteBOS) return; // Lecture seule
         const op = etat.operateurs[etat.operateurConnecte];
@@ -2455,28 +2598,18 @@
         if (creneau === '18h') op.pdsEffectuees[dateJour].h18 = true;
         if (creneau === '21h') op.pdsEffectuees[dateJour].h21 = true;
 
-        const heureLabel = creneau === '18h' ? '18H00' : '21H00';
-        const nouveauRapport = {
-          idOperateur: op.id,
-          nomOperateur: op.nom,
-          nomMission: `PRISE DE SERVICE // OPÉRATION ${heureLabel}`,
-          secteur: `Havoc Marauder // Secteur d'engagement`,
-          date: dateJour,
-          estPresent: true,
-          description: `Prise de service officielle de ${op.nom} validée pour l'opération de ${heureLabel}.`,
-          metriqueSpecifique: `PDS ${heureLabel} Confirmée`,
-          dateCreation: Date.now()
-        };
-
+        const horodatage = Date.now();
         let ecritureReussie = false;
         if (estConnecteFirestore) {
           try {
             const batch = writeBatch(baseDeDonnees);
-            const refNouv = doc(collection(baseDeDonnees, 'missions'));
-            batch.set(refNouv, nouveauRapport);
+            batch.set(doc(collection(baseDeDonnees, 'registreActivite')), {
+              type: 'pds', idOperateur: op.id, nomOperateur: op.nom,
+              jour: dateJour, creneau, source: 'bouton', timestamp: horodatage
+            });
 
             const refOp = doc(baseDeDonnees, 'operateurs', op.id);
-            // CORRECTION : la date contient des "/" → chemin de champ via FieldPath
+            // La date contient des "/" : chemin de champ via FieldPath
             batch.update(refOp,
               'compteurSemaine', increment(op.id === 'hunter' ? 0 : 1),
               'totalStatistique', increment(1),
@@ -2489,11 +2622,10 @@
           }
         }
 
-        // CORRECTION : mise à jour locale uniquement hors Firestore (sinon doublons via onSnapshot)
+        // Mise à jour locale uniquement hors Firestore (sinon doublons via onSnapshot)
         if (!ecritureReussie) {
           if (op.id !== 'hunter') op.compteurSemaine = (op.compteurSemaine || 0) + 1;
           op.totalStatistique = (op.totalStatistique || 0) + 1;
-          etat.rapports.unshift(nouveauRapport);
         }
 
         AudioTactique.succes();
@@ -2503,7 +2635,7 @@
       // ==================== VUE : POSTE DE COMMANDEMENT ====================
       function afficherVuePosteCommandement() {
         document.getElementById('valeur-quota-affiche').textContent = etat.quotaHebdomadaire;
-        document.getElementById('total-rapports-enregistres').textContent = etat.rapports.length;
+        document.getElementById('total-rapports-enregistres').textContent = rapportsAffichables().length;
 
         const subordonnes = ['tech', 'wrecker', 'crosshair'];
         let subordonnesValides = 0;
@@ -2596,10 +2728,10 @@
 
         const fluxRecents = document.getElementById('flux-rapports-recents');
         fluxRecents.innerHTML = '';
-        const recents = etat.rapports.slice(0, 5);
+        const recents = rapportsAffichables().slice(0, 5);
 
         if (recents.length === 0) {
-          fluxRecents.innerHTML = `<p class="text-xs font-terminal text-gray-500 italic p-3 text-center border border-dashed border-bordureTactique rounded">Aucun rapport ou prise de service encodé.</p>`;
+          fluxRecents.innerHTML = `<p class="text-xs font-terminal text-gray-500 italic p-3 text-center border border-dashed border-bordureTactique rounded">Aucun rapport de mission encodé.</p>`;
         } else {
           recents.forEach(rap => {
             const div = document.createElement('div');
@@ -2676,8 +2808,8 @@
         const estHunter = etat.operateurConnecte === 'hunter';
 
         const liste = filtre === 'tous'
-          ? etat.rapports
-          : etat.rapports.filter(r => r.idOperateur === filtre || (r.membresDeploies && r.membresDeploies.includes(filtre)));
+          ? rapportsAffichables()
+          : rapportsAffichables().filter(r => r.idOperateur === filtre || (r.membresDeploies && r.membresDeploies.includes(filtre)));
 
         if (liste.length === 0) {
           conteneur.innerHTML = `<div class="text-xs font-terminal text-gray-500 p-4 text-center border border-dashed border-bordureTactique rounded">Aucun rapport enregistré pour cette sélection.</div>`;
@@ -2822,6 +2954,19 @@
             const refNouvRapport = doc(collection(baseDeDonnees, 'missions'));
             batch.set(refNouvRapport, nouveauRapport);
 
+            // Registre d'activité (conservé après la purge mensuelle des rapports)
+            const horodatage = nouveauRapport.dateCreation;
+            batch.set(doc(collection(baseDeDonnees, 'registreActivite')), {
+              type: 'rapport', idOperateur: op.id, nomOperateur: op.nom,
+              jour: dateAujourdhuiCivil(), titre: nomMission || 'Sans titre', timestamp: horodatage
+            });
+            credites.forEach(idCredite => {
+              batch.set(doc(collection(baseDeDonnees, 'registreActivite')), {
+                type: 'pds', idOperateur: idCredite, nomOperateur: etat.operateurs[idCredite].nom,
+                jour: dateCle, creneau, source: 'rapport', timestamp: horodatage
+              });
+            });
+
             beneficiaires.forEach(id => {
               const refMembre = doc(baseDeDonnees, 'operateurs', id);
               const args = ['totalStatistique', increment(id === op.id ? incrementStat : 1)];
@@ -2912,7 +3057,6 @@
         if (estHunter) {
           panneauHunter.classList.remove('hidden');
           barreMembre.classList.add('hidden');
-          actualiserAffichageRecrutement();
         } else if (estBOS) {
           panneauHunter.classList.add('hidden');
           barreMembre.classList.remove('hidden');
@@ -3690,6 +3834,10 @@
 
             const refMission = doc(collection(baseDeDonnees, 'missions'));
             batch.set(refMission, rapportHomologue);
+            batch.set(doc(collection(baseDeDonnees, 'registreActivite')), {
+              type: 'rapport', idOperateur: 'tech', nomOperateur: 'Tech',
+              jour: dateJour, titre: rapportHomologue.nomMission, timestamp: rapportHomologue.dateCreation
+            });
 
             const refTech = doc(baseDeDonnees, 'operateurs', 'tech');
             batch.update(refTech, {
@@ -3781,6 +3929,9 @@
           document.getElementById('champ-creneau-pds').dataset.manuel = '';
         });
         document.getElementById('filtre-operateurs-rapports').addEventListener('change', afficherListeRapports);
+        ['filtre-periode-registre', 'filtre-operateur-registre', 'filtre-type-registre'].forEach(idFiltre => {
+          document.getElementById(idFiltre).addEventListener('change', afficherVueRegistre);
+        });
 
         document.getElementById('formulaire-dossier-militaire').addEventListener('submit', executerSauvegardeDossierMilitaire);
         document.getElementById('bouton-reset-stat-unique').addEventListener('click', () => {
@@ -3813,13 +3964,6 @@
         document.getElementById('bouton-ouvrir-carnet-absences').addEventListener('click', ouvrirCarnetAbsences);
         document.getElementById('bouton-consulter-carnet-membre').addEventListener('click', ouvrirCarnetAbsences);
 
-        // Recrutement (Hunter)
-        document.getElementById('bouton-basculer-recrutement').addEventListener('click', basculerEtatRecrutementHunter);
-        document.getElementById('bouton-editer-note-recrutement').addEventListener('click', () => {
-          document.getElementById('champ-note-recrutement-texte').value = etat.recrutementNote;
-          ouvrirBoite('boite-editer-note-recrutement');
-        });
-        document.getElementById('formulaire-note-recrutement').addEventListener('submit', sauvegarderNoteRecrutement);
 
         // Plans d'engagement
         document.getElementById('bouton-ajouter-plan-hunter').addEventListener('click', () => {
@@ -3841,7 +3985,6 @@
         attacherTousLesEcouteurs();
         initialiserSynchronisationFirestore();
         selectionnerOperateurAccueil('hunter');
-        actualiserAffichageRecrutement();
       });
 
     })();
