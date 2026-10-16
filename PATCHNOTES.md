@@ -4,6 +4,25 @@ Les versions les plus récentes sont en haut. Le numéro de build correspond au 
 
 ---
 
+## BUILD 3.5 — Interrupteur ON / OFF des recrutements
+*16/10/2026*
+
+- **Interrupteur ON / OFF** (Hunter, onglet Recrutement) : les recrutements sont fermés par défaut.
+- **ON** : grand bandeau « Recrutements ouverts / Postuler » sur la page de connexion et formulaire de candidature ouvert.
+- **OFF** : bandeau masqué (le petit lien « Postuler » a été retiré) et `candidature.html` affiche « Recrutements fermés ».
+- Les membres voient l'état (ouvert / fermé) dans leurs candidatures reçues.
+
+---
+
+## BUILD 3.4 — Archives de recrutement et liens hors du code
+*16/10/2026*
+
+- **Archives des recrutements** : bouton « 📦 Archiver » par candidat, « Archiver les clôturés » (réussis et ratés, les « en attente » restent), panneau d'archives replié avec recherche, filtres et « Désarchiver ».
+- **Liens de recrutement** déplacés dans Firestore (visibles uniquement par Hunter) : plus aucun lien Google dans `index.html`, éditeur « ✏ Modifier les liens » et import.
+- Le bouton « Supprimer » d'un candidat remplace l'ancien « Archiver » (il retire le candidat de toutes les listes).
+
+---
+
 ## BUILD 3.3 — Résultats colorés, commentaires et recrutements passés
 *16/10/2026*
 
