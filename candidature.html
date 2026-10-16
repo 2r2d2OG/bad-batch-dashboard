@@ -91,8 +91,18 @@
       <p class="font-terminal text-gray-400 text-xs mt-1">Formulaire de candidature</p>
     </header>
 
+    <!-- ÉTAT DES RECRUTEMENTS -->
+    <section id="bloc-chargement" class="bg-panneauSombre border border-bordureTactique biseau-plaque p-6 text-center shadow-xl">
+      <p class="font-terminal text-xs text-gray-400">Vérification de l'état des recrutements…</p>
+    </section>
+    <section id="bloc-ferme" class="hidden bg-panneauSombre border border-bordureLueur biseau-plaque p-6 text-center shadow-xl">
+      <div class="text-3xl mb-2">🔒</div>
+      <h2 class="font-titre font-bold text-sm text-gray-200 uppercase tracking-wider">Recrutements fermés</h2>
+      <p class="font-terminal text-xs text-gray-400 mt-2">Les candidatures ne sont pas ouvertes pour le moment. Reviens plus tard : l'annonce apparaîtra sur le datapad de l'escouade.</p>
+    </section>
+
     <!-- FORMULAIRE -->
-    <section id="bloc-formulaire" class="bg-panneauSombre border border-bordureTactique biseau-plaque p-4 sm:p-6 shadow-xl">
+    <section id="bloc-formulaire" class="hidden bg-panneauSombre border border-bordureTactique biseau-plaque p-4 sm:p-6 shadow-xl">
       <form id="formulaire-candidature" class="space-y-4" novalidate>
         <div>
           <label class="etiquette" for="f-identite">Votre identité (Matricule Nom) <b>*</b></label>
@@ -181,7 +191,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, doc, setDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getFirestore, doc, setDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyB3Dpovo-Fsa7nNlMeUzngYl03_Vlns1jw",
@@ -196,6 +206,20 @@
     const DELAI_ENTRE_ENVOIS_MS = 30 * 60 * 1000; // une candidature toutes les 30 minutes par navigateur
     const CLE_ENVOI = 'cf99-derniere-candidature';
 
+    // État des recrutements (ON / OFF) piloté par Hunter dans la console
+    let recrutementOuvert = false;
+    let candidatureEnvoyee = false;
+    const afficherEtat = () => {
+      document.getElementById('bloc-chargement').classList.add('hidden');
+      document.getElementById('bloc-formulaire').classList.toggle('hidden', !recrutementOuvert || candidatureEnvoyee);
+      document.getElementById('bloc-ferme').classList.toggle('hidden', recrutementOuvert || candidatureEnvoyee);
+    };
+    onSnapshot(doc(baseDeDonnees, 'config', 'recrutementStatut'), d => {
+      recrutementOuvert = d.exists() && d.data().ouvert === true;
+      afficherEtat();
+    }, () => { recrutementOuvert = false; afficherEtat(); });
+    setTimeout(() => { if (!document.getElementById('bloc-chargement').classList.contains('hidden')) afficherEtat(); }, 8000);
+
     const lire = (id) => document.getElementById(id).value.trim();
     const erreur = document.getElementById('erreur-formulaire');
     const montrerErreur = (msg) => { erreur.textContent = msg; erreur.classList.remove('hidden'); };
@@ -205,6 +229,7 @@
       erreur.classList.add('hidden');
 
       if (lire('f-site') !== '') return; // robot : on ignore silencieusement
+      if (!recrutementOuvert) { montrerErreur("Les recrutements viennent d'être fermés."); return; }
 
       const champs = {
         identite: lire('f-identite'),
@@ -246,6 +271,7 @@
           new Promise((_, rejet) => setTimeout(() => rejet(new Error('delai')), 15000))
         ]);
         try { localStorage.setItem(CLE_ENVOI, String(Date.now())); } catch (err) { /* ignoré */ }
+        candidatureEnvoyee = true;
         document.getElementById('bloc-formulaire').classList.add('hidden');
         document.getElementById('bloc-confirmation').classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'smooth' });
