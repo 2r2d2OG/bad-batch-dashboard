@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CANDIDATURE // CLONE FORCE 99</title>
+  <link rel="icon" type="image/png" href="logobadbatch.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+  <script>
+    window.TW_CONFIG = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontSize: {
+            xs: ['0.8125rem', { lineHeight: '1.2rem' }],
+            sm: ['0.9375rem', { lineHeight: '1.4rem' }]
+          },
+          colors: {
+            fondCarbone: '#07090e',
+            panneauSombre: '#0c1017',
+            panneauSous: '#121722',
+            bordureTactique: '#1f2737',
+            bordureLueur: '#2b374c',
+            rougeKamino: '#b91c1c',
+            rougeAlerte: '#ff2e43',
+            ambreArmement: '#f59e0b',
+            vertViseur: '#10b981',
+            cyanTech: '#38bdf8',
+            bleuRepublique: '#3b82f6',
+            orEtatMajor: '#fbbf24'
+          },
+          fontFamily: {
+            titre: ['Orbitron', 'sans-serif'],
+            texte: ['Rajdhani', 'sans-serif'],
+            terminal: ['Share Tech Mono', 'monospace'],
+          }
+        }
+      }
+    };
+    // CSS précompilé (tailwind.css). Secours : CDN Tailwind si le fichier est introuvable.
+    function chargerTailwindSecours() {
+      if (window.__twSecours) return;
+      window.__twSecours = true;
+      var sc = document.createElement('script');
+      sc.src = 'https://cdn.tailwindcss.com';
+      sc.onload = function () { tailwind.config = window.TW_CONFIG; };
+      document.head.appendChild(sc);
+    }
+  </script>
+  <link rel="stylesheet" href="tailwind.css" onerror="chargerTailwindSecours()">
+
+  <style>
+    html { font-size: 16px; }
+    @media (min-width: 1280px) { html { font-size: 17px; } }
+    body {
+      background-color: #07090e;
+      color: #e2e8f0;
+      font-family: 'Rajdhani', sans-serif;
+      min-height: 100vh;
+      letter-spacing: 0.02em;
+    }
+    .grille-tactique-bg {
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(18, 23, 34, 0.8) 0%, rgba(7, 9, 14, 0.98) 80%),
+        linear-gradient(rgba(31, 39, 55, 0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31, 39, 55, 0.15) 1px, transparent 1px);
+      background-size: 100% 100%, 30px 30px, 30px 30px;
+    }
+    .biseau-plaque {
+      clip-path: polygon(0 8px, 8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px));
+    }
+    input, select, textarea { font-family: 'Share Tech Mono', monospace; }
+    .champ { width: 100%; background: #07090e; border: 1px solid #1f2737; border-radius: 4px; padding: 0.55rem 0.75rem; color: #f1f5f9; outline: none; font-size: 0.875rem; }
+    .champ:focus { border-color: #fbbf24; }
+    .etiquette { display: block; font-family: 'Share Tech Mono', monospace; font-size: 0.8125rem; color: #cbd5e1; margin-bottom: 0.25rem; }
+    .etiquette b { color: #ff2e43; }
+    .piege { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  </style>
+</head>
+
+<body class="grille-tactique-bg">
+  <main class="max-w-2xl mx-auto px-4 py-8 sm:py-12">
+
+    <header class="mb-6 text-center">
+      <div class="inline-block px-2 py-0.5 border border-red-700 bg-red-950/60 text-rougeAlerte text-[0.75rem] font-terminal tracking-widest uppercase mb-2">Recrutement ouvert</div>
+      <h1 class="font-titre font-black text-xl sm:text-2xl text-gray-100 tracking-wider">CLONE FORCE 99</h1>
+      <p class="font-terminal text-gray-400 text-xs mt-1">Formulaire de candidature</p>
+    </header>
+
+    <!-- FORMULAIRE -->
+    <section id="bloc-formulaire" class="bg-panneauSombre border border-bordureTactique biseau-plaque p-4 sm:p-6 shadow-xl">
+      <form id="formulaire-candidature" class="space-y-4" novalidate>
+        <div>
+          <label class="etiquette" for="f-identite">Votre identité (Matricule Nom) <b>*</b></label>
+          <input class="champ" type="text" id="f-identite" maxlength="80" required autocomplete="off">
+        </div>
+
+        <div>
+          <label class="etiquette" for="f-discord">Discord <b>*</b></label>
+          <input class="champ" type="text" id="f-discord" maxlength="60" required autocomplete="off">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="etiquette" for="f-regiment">Régiment <b>*</b></label>
+            <select class="champ" id="f-regiment" required>
+              <option value="">— Choisir —</option>
+              <option>501st</option><option>212th</option><option>41st</option><option>Shock Trooper</option>
+              <option>104th</option><option>408th</option><option>327th</option><option>B.O.S</option>
+            </select>
+          </div>
+          <div>
+            <label class="etiquette" for="f-grade">Grade <b>*</b></label>
+            <select class="champ" id="f-grade" required>
+              <option value="">— Choisir —</option>
+              <option>CMDM</option><option>CMD</option><option>VCMD</option><option>MJR</option><option>CPT</option>
+              <option>CPT 2nd</option><option>LTN</option><option>2nd LTN</option><option>ADJ-C</option><option>ADJ</option>
+              <option>SGT-C</option><option>SGT</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="etiquette" for="f-dispos">Quelles sont vos disponibilités de connexion sur la semaine ? <b>*</b></label>
+          <textarea class="champ" id="f-dispos" rows="3" maxlength="1500" required></textarea>
+        </div>
+
+        <div>
+          <label class="etiquette" for="f-poste">Le personnage qui vous intéresse ? <b>*</b></label>
+          <select class="champ" id="f-poste" required>
+            <option value="">— Choisir —</option>
+            <option value="hunter">CF-9901 Hunter</option>
+            <option value="tech">CF-9902 Tech</option>
+            <option value="wrecker">CF-9903 Wrecker</option>
+            <option value="crosshair">CF-9904 Crosshair</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="etiquette" for="f-motivations">Vos motivations <b>*</b></label>
+          <textarea class="champ" id="f-motivations" rows="4" maxlength="2000" required></textarea>
+        </div>
+
+        <div>
+          <label class="etiquette" for="f-connaissances">Vos connaissances sur la Bad Batch <b>*</b></label>
+          <textarea class="champ" id="f-connaissances" rows="4" maxlength="2000" required></textarea>
+        </div>
+
+        <div>
+          <label class="etiquette" for="f-remarques">Des choses à rajouter ? <b>*</b></label>
+          <textarea class="champ" id="f-remarques" rows="3" maxlength="1500" required></textarea>
+        </div>
+
+        <!-- Piège anti-robots : invisible pour une personne, rempli par les robots -->
+        <div class="piege" aria-hidden="true">
+          <label>Ne pas remplir <input type="text" id="f-site" tabindex="-1" autocomplete="off"></label>
+        </div>
+
+        <div id="erreur-formulaire" class="hidden text-xs font-terminal text-red-300 bg-red-950/70 border border-red-800 rounded p-2.5"></div>
+
+        <button type="submit" id="bouton-envoyer" class="w-full py-2.5 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold text-xs tracking-wider uppercase rounded transition">
+          Envoyer ma candidature
+        </button>
+        <p class="text-[0.75rem] font-terminal text-gray-500 text-center">Les champs marqués d'une étoile sont obligatoires. Ta candidature sera lue par l'escouade, qui te recontactera sur Discord.</p>
+      </form>
+    </section>
+
+    <!-- CONFIRMATION -->
+    <section id="bloc-confirmation" class="hidden bg-panneauSombre border border-green-700/60 biseau-plaque p-6 text-center shadow-xl">
+      <div class="text-3xl mb-2">✅</div>
+      <h2 class="font-titre font-bold text-sm text-vertViseur uppercase tracking-wider">Candidature transmise</h2>
+      <p class="font-terminal text-xs text-gray-300 mt-2">Merci ! L'escouade étudie ta candidature et te contactera sur Discord si elle est retenue.</p>
+    </section>
+
+    <p class="text-center mt-6 text-[0.75rem] font-terminal text-gray-600">FORCE CLONE 99 // UNITÉ BAD BATCH</p>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, doc, setDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB3Dpovo-Fsa7nNlMeUzngYl03_Vlns1jw",
+      authDomain: "bad-batch-datapad.firebaseapp.com",
+      projectId: "bad-batch-datapad",
+      storageBucket: "bad-batch-datapad.firebasestorage.app",
+      messagingSenderId: "445159897876",
+      appId: "1:445159897876:web:ae69817443abe0693fe001"
+    };
+    const baseDeDonnees = getFirestore(initializeApp(firebaseConfig));
+
+    const DELAI_ENTRE_ENVOIS_MS = 30 * 60 * 1000; // une candidature toutes les 30 minutes par navigateur
+    const CLE_ENVOI = 'cf99-derniere-candidature';
+
+    const lire = (id) => document.getElementById(id).value.trim();
+    const erreur = document.getElementById('erreur-formulaire');
+    const montrerErreur = (msg) => { erreur.textContent = msg; erreur.classList.remove('hidden'); };
+
+    document.getElementById('formulaire-candidature').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      erreur.classList.add('hidden');
+
+      if (lire('f-site') !== '') return; // robot : on ignore silencieusement
+
+      const champs = {
+        identite: lire('f-identite'),
+        discord: lire('f-discord'),
+        regiment: lire('f-regiment'),
+        grade: lire('f-grade'),
+        disponibilites: lire('f-dispos'),
+        poste: lire('f-poste'),
+        motivations: lire('f-motivations'),
+        connaissances: lire('f-connaissances'),
+        remarques: lire('f-remarques')
+      };
+      const manquants = Object.values(champs).some(v => v === '');
+      if (manquants) { montrerErreur("Merci de répondre à toutes les questions (elles sont toutes obligatoires)."); return; }
+      if (!['hunter', 'tech', 'wrecker', 'crosshair'].includes(champs.poste)) { montrerErreur("Choisis un personnage dans la liste."); return; }
+
+      try {
+        const dernier = parseInt(localStorage.getItem(CLE_ENVOI) || '0', 10);
+        const reste = DELAI_ENTRE_ENVOIS_MS - (Date.now() - dernier);
+        if (reste > 0) { montrerErreur(`Une candidature vient déjà d'être envoyée depuis ce navigateur. Réessaie dans ${Math.ceil(reste / 60000)} min.`); return; }
+      } catch (err) { /* stockage indisponible : pas de limite locale */ }
+
+      const bouton = document.getElementById('bouton-envoyer');
+      bouton.disabled = true;
+      bouton.textContent = 'Envoi en cours…';
+      try {
+        await Promise.race([
+          setDoc(doc(collection(baseDeDonnees, 'candidatures')), {
+            ...champs,
+            pseudo: champs.identite,           // nom affiché dans la console
+            statut: 'nouvelle',
+            avisCandidature: {},
+            avisEssai: {},
+            questionnaire: null,
+            theorie: null,
+            tests: {},
+            dateCreation: Date.now()
+          }),
+          new Promise((_, rejet) => setTimeout(() => rejet(new Error('delai')), 15000))
+        ]);
+        try { localStorage.setItem(CLE_ENVOI, String(Date.now())); } catch (err) { /* ignoré */ }
+        document.getElementById('bloc-formulaire').classList.add('hidden');
+        document.getElementById('bloc-confirmation').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (err) {
+        console.warn(err);
+        montrerErreur("L'envoi a échoué. Vérifie ta connexion et réessaie dans un instant.");
+        bouton.disabled = false;
+        bouton.textContent = 'Envoyer ma candidature';
+      }
+    });
+  </script>
+</body>
+</html>
