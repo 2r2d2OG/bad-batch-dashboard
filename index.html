@@ -249,6 +249,22 @@
 
     <!-- 1. ÉCRAN D'ACCUEIL / AUTHENTIFICATION & RECRUTEMENT -->
     <section id="fenetre-connexion" class="my-2 space-y-4">
+
+      <!-- BANDEAU RECRUTEMENT : affiché uniquement quand Hunter a mis les recrutements sur ON -->
+      <a id="banniere-recrutement-ouvert" href="candidature.html" target="_blank" rel="noopener"
+         class="hidden items-center justify-between gap-4 flex-wrap p-5 sm:p-7 rounded border-2 border-green-500/70 bg-gradient-to-r from-green-950/70 via-panneauSombre to-green-950/70 shadow-[0_0_30px_rgba(16,185,129,0.25)] hover:border-green-400 transition group">
+        <div class="flex items-center gap-4 min-w-0">
+          <span class="relative flex h-4 w-4 shrink-0">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-4 w-4 bg-vertViseur"></span>
+          </span>
+          <div class="min-w-0">
+            <div class="font-titre font-black text-lg sm:text-2xl text-gray-100 tracking-wider uppercase">Recrutements ouverts</div>
+            <div class="font-terminal text-sm sm:text-base text-green-200/90">Rejoins la Clone Force 99 : Hunter, Tech, Wrecker, Crosshair. Dépose ta candidature dès maintenant.</div>
+          </div>
+        </div>
+        <span class="px-6 py-3 bg-vertViseur group-hover:bg-green-400 text-fondCarbone font-titre font-black text-sm sm:text-base uppercase tracking-wider rounded transition shrink-0">Postuler →</span>
+      </a>
       
       <!-- Connexion & Fiche tactique -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
@@ -323,7 +339,7 @@
             <button type="button" id="lien-connexion-bos-discret" class="text-gray-500 hover:text-amber-400 uppercase tracking-wider transition underline decoration-dotted">
               [LIAISON HIÉRARCHIQUE B.O.S]
             </button>
-            <span class="flex items-center gap-3"><a href="candidature.html" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300 uppercase tracking-wider underline decoration-dotted">📝 Postuler</a><span>CYPHER SHA-256</span></span>
+            <span>CYPHER SHA-256</span>
           </div>
         </div>
 
@@ -788,45 +804,25 @@
       <div id="bloc-liens-recrutement" class="space-y-4">
       <div class="panneau-tactique p-3.5 rounded">
         <h2 class="font-titre font-bold text-xs sm:text-sm text-gray-100 uppercase tracking-wider">🤝 RECRUTEMENT // LIENS RAPIDES</h2>
+        <div class="flex flex-wrap items-center gap-3 mt-2 mb-1 p-2.5 rounded border border-bordureTactique bg-fondCarbone">
+          <span class="text-xs font-terminal text-gray-300">Recrutements ouverts au public :</span>
+          <button id="bouton-statut-recrutement" class="px-5 py-1.5 rounded border font-titre font-bold text-xs uppercase tracking-wider transition">OFF</button>
+          <span class="text-xs font-terminal text-gray-500">ON : bandeau « Postuler » sur la page de connexion et formulaire ouvert. OFF : bandeau masqué et formulaire fermé.</span>
+        </div>
         <p class="text-xs font-terminal text-gray-400">Raccourcis vers les documents de recrutement. Chaque lien s'ouvre dans un nouvel onglet.</p>
-      </div>
-      <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5">
-        <h3 class="font-titre text-xs uppercase tracking-wider text-gray-300 border-b border-bordureTactique pb-2 mb-3"><span class="text-amber-400">■</span> CANDIDATURES</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSe2oemwOnlIP083qXsrA__znVeQVWqLXUA3S5dKK7-kKsy1bg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" class="block bg-panneauSous border border-bordureTactique hover:border-amber-500/60 rounded p-3 transition group">
-            <div class="flex items-center gap-2 font-titre font-bold text-xs text-gray-100 uppercase"><span class="text-lg">📝</span>Formulaire de candidature<span class="ml-auto text-amber-400 group-hover:translate-x-0.5 transition">↗</span></div>
-            <p class="text-xs font-terminal text-gray-400 mt-1">Le formulaire que remplissent les candidats.</p>
-          </a>
-          <a href="https://docs.google.com/spreadsheets/d/1P6OU5bPurmd9_XYwgCAtUFjnLuumWEepwhn9w83AQRE/edit?resourcekey=&amp;gid=125751524#gid=125751524" target="_blank" rel="noopener noreferrer" class="block bg-panneauSous border border-bordureTactique hover:border-amber-500/60 rounded p-3 transition group">
-            <div class="flex items-center gap-2 font-titre font-bold text-xs text-gray-100 uppercase"><span class="text-lg">📥</span>Réponses de candidature<span class="ml-auto text-amber-400 group-hover:translate-x-0.5 transition">↗</span></div>
-            <p class="text-xs font-terminal text-gray-400 mt-1">Tableau des réponses reçues.</p>
-          </a>
+        <div class="flex flex-wrap gap-2 mt-2 text-xs font-terminal">
+          <button id="bouton-modifier-liens" class="px-2.5 py-1 border border-bordureLueur hover:border-amber-500/60 text-gray-200 rounded bg-panneauSous">✏ Modifier les liens</button>
+          <button id="bouton-import-liens" class="px-2.5 py-1 border border-bordureLueur hover:border-cyan-400/60 text-cyan-300 rounded bg-panneauSous">📥 Importer les liens</button>
+          <input type="file" id="fichier-import-liens" accept=".json,application/json" class="hidden">
         </div>
       </div>
-      <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5">
-        <h3 class="font-titre text-xs uppercase tracking-wider text-gray-300 border-b border-bordureTactique pb-2 mb-3"><span class="text-vertViseur">■</span> ÉVALUATION</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <a href="https://docs.google.com/document/d/15h3MPlHLTlVw5sFYiINWaYBW1bs0EHb8iXYmzWJLvpo/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="block bg-panneauSous border border-bordureTactique hover:border-amber-500/60 rounded p-3 transition group">
-            <div class="flex items-center gap-2 font-titre font-bold text-xs text-gray-100 uppercase"><span class="text-lg">📖</span>Bad Batch Théorique<span class="ml-auto text-amber-400 group-hover:translate-x-0.5 transition">↗</span></div>
-            <p class="text-xs font-terminal text-gray-400 mt-1">Document de référence pour la partie théorique.</p>
-          </a>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLScJmtYBog9rrHfu6VnG4GQspDt0QMY38KWLDW8aOJadmTFYdg/viewform" target="_blank" rel="noopener noreferrer" class="block bg-panneauSous border border-bordureTactique hover:border-amber-500/60 rounded p-3 transition group">
-            <div class="flex items-center gap-2 font-titre font-bold text-xs text-gray-100 uppercase"><span class="text-lg">✅</span>Grille de notation<span class="ml-auto text-amber-400 group-hover:translate-x-0.5 transition">↗</span></div>
-            <p class="text-xs font-terminal text-gray-400 mt-1">Formulaire de notation des candidats.</p>
-          </a>
-          <a href="https://docs.google.com/spreadsheets/d/107n2OamFlQsSLSnk6D_0T8L8DoUVVmfgz7uTJ0mRSH4/edit?gid=1955593593#gid=1955593593" target="_blank" rel="noopener noreferrer" class="block bg-panneauSous border border-bordureTactique hover:border-amber-500/60 rounded p-3 transition group">
-            <div class="flex items-center gap-2 font-titre font-bold text-xs text-gray-100 uppercase"><span class="text-lg">🏁</span>Résultats<span class="ml-auto text-amber-400 group-hover:translate-x-0.5 transition">↗</span></div>
-            <p class="text-xs font-terminal text-gray-400 mt-1">Tableau des résultats de l'évaluation.</p>
-          </a>
-        </div>
-      </div>
-
+      <div id="zone-liens-recrutement" class="space-y-4"></div>
       </div>
 
       <!-- CANDIDATURES REÇUES (tous les membres) -->
       <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5 space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-bordureTactique pb-2">
-          <h3 class="font-titre text-xs uppercase tracking-wider text-gray-300"><span class="text-cyanTech">■</span> CANDIDATURES REÇUES <span id="compteur-candidatures-recues" class="text-gray-500"></span></h3>
+          <h3 class="font-titre text-xs uppercase tracking-wider text-gray-300"><span class="text-cyanTech">■</span> CANDIDATURES REÇUES <span id="compteur-candidatures-recues" class="text-gray-500"></span> <span id="badge-statut-recrutement" class="ml-2 px-2 py-0.5 rounded border text-[0.6875rem] font-terminal normal-case tracking-normal"></span></h3>
           <button id="bouton-copier-lien-candidature" class="px-2.5 py-1 border border-bordureLueur hover:border-cyan-400/60 text-cyan-300 text-xs font-terminal rounded bg-panneauSous">🔗 Copier le lien du formulaire</button>
         </div>
         <p class="text-xs font-terminal text-gray-400">Donne ton avis : favorable ou défavorable à ce qu'on contacte la personne pour lancer son recrutement.</p>
@@ -856,6 +852,7 @@
             <button id="bouton-bareme-recrutement" class="hunter-seul-rec px-2.5 py-1 border border-bordureLueur hover:border-amber-500/60 text-gray-200 rounded bg-panneauSous">⚙ Barème</button>
             <button id="bouton-import-banque" class="hunter-seul-rec px-2.5 py-1 border border-bordureLueur hover:border-cyan-400/60 text-cyan-300 rounded bg-panneauSous">📥 Banque de questions</button>
             <button id="bouton-import-historique" class="hunter-seul-rec px-2.5 py-1 border border-bordureLueur hover:border-cyan-400/60 text-cyan-300 rounded bg-panneauSous">📥 Recrutements passés</button>
+            <button id="bouton-archiver-clotures" class="hunter-seul-rec px-2.5 py-1 border border-bordureLueur hover:border-amber-500/60 text-gray-200 rounded bg-panneauSous">📦 Archiver les clôturés</button>
             <input type="file" id="fichier-import-banque" accept=".json,application/json" class="hidden">
             <input type="file" id="fichier-import-historique" accept=".json,application/json" class="hidden">
           </div>
@@ -863,6 +860,15 @@
         <div id="etat-banque-recrutement" class="hunter-seul-rec text-xs font-terminal text-gray-400"></div>
         <div id="liste-candidats" class="space-y-4"></div>
       </div>
+
+      <!-- ARCHIVES DES RECRUTEMENTS (repliées par défaut) -->
+      <details id="details-archives-recrutement" class="bg-panneauSombre border border-bordureTactique rounded p-3.5">
+        <summary class="cursor-pointer font-titre text-xs uppercase tracking-wider text-gray-300"><span class="text-gray-500">■</span> ARCHIVES DES RECRUTEMENTS <span id="compteur-archives-recrutement" class="text-gray-500"></span></summary>
+        <div class="mt-3 space-y-3">
+          <input type="search" id="recherche-archive-recrutement" placeholder="Rechercher un pseudo, un régiment, un commentaire…" class="w-full bg-fondCarbone border border-bordureTactique rounded px-3 py-2 text-xs font-terminal text-gray-100 outline-none">
+          <div id="liste-archives-recrutement" class="space-y-1.5"></div>
+        </div>
+      </details>
     </section>
 
   </main>
@@ -1124,6 +1130,17 @@
     </div>
   </div>
 
+  <!-- MODALE : LIENS DE RECRUTEMENT -->
+  <div id="boite-liens" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-start justify-center p-4 overflow-y-auto">
+    <div class="bg-panneauSombre border-2 border-amber-500 biseau-plaque max-w-3xl w-full p-4 my-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-bordureTactique pb-2 mb-3">
+        <h3 class="font-titre text-xs font-bold text-amber-400 uppercase">✏ LIENS DE RECRUTEMENT</h3>
+        <button type="button" class="btn-fermer-modale text-gray-400 hover:text-white" data-modale="boite-liens">✕</button>
+      </div>
+      <div id="contenu-liens" class="space-y-3"></div>
+    </div>
+  </div>
+
   <!-- MODALE : NOUVEAU CANDIDAT -->
   <div id="boite-candidat" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-panneauSombre border-2 border-amber-500 biseau-plaque max-w-sm w-full p-4 shadow-2xl">
@@ -1287,7 +1304,7 @@
     </div>
   </div>
 
-  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.3) -->
+  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.5) -->
   <footer class="border-t border-bordureTactique bg-fondCarbone/95 py-2.5 text-xs font-terminal text-gray-500 fixed bottom-0 left-0 right-0 z-30 shadow-2xl backdrop-blur">
     <div class="max-w-screen-2xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5">
       <div class="text-gray-400 flex items-center gap-2">
@@ -1297,7 +1314,7 @@
       <div class="flex items-center gap-3">
         <span class="text-gray-500 hidden md:inline">GRANDE ARMÉE DE LA RÉPUBLIQUE</span>
         <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/60 text-amber-300 text-[0.8125rem] font-titre font-bold rounded tracking-wider shadow-[0_0_10px_rgba(245,158,11,0.25)]">
-          FIRMWARE MARAUDEUR // BUILD 3.3
+          FIRMWARE MARAUDEUR // BUILD 3.5
         </span>
       </div>
     </div>
@@ -2643,7 +2660,7 @@
         traque:       { lib: 'Test de traque', chrono: true, tmin: 240, tmax: 900, echecs: { echec: 'Échec' }, compteurs: [] }
       };
 
-      const etatRecrutement = { banque: null, bareme: null, candidats: [] };
+      const etatRecrutement = { banque: null, bareme: null, candidats: [], liens: [] };
       let desabonRecrutement = [];
       let candidatOuvertId = null;
 
@@ -2764,6 +2781,13 @@
           etatRecrutement.bareme = d.exists() ? (d.data().bareme || null) : null;
           rafraichir();
         }, err => console.warn("Barème :", err)));
+        // Les liens ne sont chargés que pour Hunter : les autres membres ne les téléchargent jamais
+        if (etat.operateurConnecte === 'hunter') {
+          desabonRecrutement.push(onSnapshot(doc(baseDeDonnees, 'config', 'recrutementLiens'), d => {
+            etatRecrutement.liens = d.exists() ? (d.data().liens || []) : [];
+            rafraichir();
+          }, err => console.warn("Liens de recrutement :", err)));
+        }
       }
 
       function arreterEcouteRecrutement() {
@@ -2772,6 +2796,7 @@
         etatRecrutement.candidats = [];
         etatRecrutement.banque = null;
         etatRecrutement.bareme = null;
+        etatRecrutement.liens = [];
       }
 
       // Code couleur du résultat d'un recrutement (choisi par Hunter)
@@ -2935,7 +2960,9 @@
         document.getElementById('bloc-liens-recrutement').classList.toggle('hidden', !hunter);
         document.querySelectorAll('.hunter-seul-rec').forEach(el => el.classList.toggle('hidden', !hunter));
 
+        afficherLiensRecrutement();
         afficherCandidaturesRecues();
+        afficherArchivesRecrutement();
 
         const b = etatRecrutement.banque;
         const infoBanque = document.getElementById('etat-banque-recrutement');
@@ -2953,7 +2980,7 @@
         const postes = Object.keys(POSTES_RECRUTEMENT).filter(p => filtre === 'tous' || filtre === p);
         const filtreResultat = document.getElementById('filtre-resultat-recrutement').value;
         const enEvaluation = etatRecrutement.candidats.filter(c => ['recrutement', 'essai'].includes(statutCandidat(c))
-          && (filtreResultat === 'tous' || resultatCandidatCouleur(c) === filtreResultat));
+          && !c.archive && (filtreResultat === 'tous' || resultatCandidatCouleur(c) === filtreResultat));
         let html = '';
         postes.forEach(p => {
           const cands = enEvaluation.filter(c => c.poste === p).map(c => ({ c, r: resultatCandidat(c, bareme) }));
@@ -2989,6 +3016,7 @@
                   ${c.commentaireEssai ? `<div class="text-xs font-terminal text-gray-300 whitespace-pre-wrap">🎭 Mission RP : ${echapperTexteHTML(c.commentaireEssai)}</div>` : ''}
                   ${resultatCandidatCouleur(c) === 'rouge' ? '' : `<div class="text-[0.75rem] font-terminal text-gray-400">Mission d'essai : ton avis ?</div>
                   ${htmlAvis(c, 'avisEssai', 'Favorable', 'Défavorable')}`}
+                  ${hunter ? `<div class="flex justify-end"><button data-archiver="${echapperTexteHTML(c.id)}" class="btn-archiver px-2.5 py-1 border border-bordureLueur hover:border-amber-500/60 text-gray-300 text-xs font-terminal rounded bg-panneauSous">📦 Archiver</button></div>` : ''}
                 </div>
               </div>`;
           });
@@ -3000,6 +3028,9 @@
         if (hunter) {
           conteneur.querySelectorAll('.ligne-candidat').forEach(btn => {
             btn.addEventListener('click', () => ouvrirFicheCandidat(btn.getAttribute('data-candidat')));
+          });
+          conteneur.querySelectorAll('.btn-archiver').forEach(btn => {
+            btn.addEventListener('click', () => archiverCandidat(btn.getAttribute('data-archiver'), true));
           });
         }
       }
@@ -3175,9 +3206,10 @@
               <div id="fiche-avancement" class="text-xs font-terminal text-gray-500"></div>
             </div>
             <div class="flex flex-wrap gap-2 font-terminal text-xs">
+              <button id="bouton-archiver-fiche" class="px-3 py-1.5 border border-bordureLueur hover:border-amber-500/60 text-gray-200 rounded bg-panneauSous">${cand.archive ? '↩ Désarchiver' : '📦 Archiver'}</button>
               <button id="bouton-refuser-candidat" class="px-3 py-1.5 bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 rounded">✖ Refuser</button>
               <button id="bouton-retenir-essai" class="px-3 py-1.5 bg-green-900/60 hover:bg-green-800 border border-green-500 text-green-200 rounded">✅ Retenir pour la mission d'essai</button>
-              <button id="bouton-archiver-candidat" class="px-3 py-1.5 bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 rounded">🗑️ Archiver le candidat</button>
+              <button id="bouton-archiver-candidat" class="px-3 py-1.5 bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 rounded">🗑️ Supprimer</button>
               <button id="bouton-enregistrer-fiche" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold uppercase rounded">Enregistrer</button>
             </div>
           </div>`;
@@ -3205,12 +3237,18 @@
           afficherVueRecrutement();
         });
         document.getElementById('bouton-archiver-candidat').addEventListener('click', () => {
-          afficherBoiteConfirmation("ARCHIVAGE D'UN CANDIDAT", `Archiver ${cand.pseudo} ? Il disparaîtra du classement.`, async () => {
+          afficherBoiteConfirmation("SUPPRESSION D'UN CANDIDAT", `Supprimer ${cand.pseudo} ? Il disparaîtra de toutes les listes, archives comprises.`, async () => {
             await ecrireCandidat(id, { supprime: true });
             etatRecrutement.candidats = etatRecrutement.candidats.filter(c => c.id !== id);
             fermerBoite('boite-fiche-candidat');
             afficherVueRecrutement();
           });
+        });
+        document.getElementById('bouton-archiver-fiche').addEventListener('click', async () => {
+          const lu = lireFicheCandidat();
+          await ecrireCandidat(id, { ...lu });           // on garde ce qui vient d'être saisi
+          await archiverCandidat(id, !cand.archive);
+          fermerBoite('boite-fiche-candidat');
         });
         document.getElementById('bouton-retenir-essai').addEventListener('click', async () => {
           const lu = lireFicheCandidat();
@@ -3292,6 +3330,211 @@
         afficherVueRecrutement();
       }
 
+
+
+      // ---- Archives des recrutements ----
+      async function archiverCandidat(id, valeur) {
+        if (!estHunterRecrutement()) return;
+        await ecrireCandidat(id, { archive: valeur, dateArchivage: valeur ? Date.now() : null });
+        AudioTactique.clic();
+        afficherNotificationTactique(valeur ? "Candidat archivé." : "Candidat sorti des archives.");
+        afficherVueRecrutement();
+      }
+
+      function archiverLesClotures() {
+        if (!estHunterRecrutement()) return;
+        const cibles = etatRecrutement.candidats.filter(c =>
+          ['recrutement', 'essai'].includes(statutCandidat(c)) && !c.archive && ['vert', 'rouge'].includes(c.resultat));
+        if (cibles.length === 0) { afficherNotificationTactique("Aucun recrutement clôturé (réussi ou raté) à archiver."); return; }
+        afficherBoiteConfirmation("ARCHIVAGE DES RECRUTEMENTS CLÔTURÉS",
+          `Archiver ${cibles.length} candidat(s) réussi(s) ou raté(s) ? Les candidats « en attente » restent dans le classement.`,
+          async () => {
+            for (const c of cibles) await ecrireCandidat(c.id, { archive: true, dateArchivage: Date.now() });
+            AudioTactique.succes();
+            afficherNotificationTactique(`${cibles.length} candidat(s) archivé(s).`);
+            afficherVueRecrutement();
+          });
+      }
+
+      function afficherArchivesRecrutement() {
+        const zone = document.getElementById('liste-archives-recrutement');
+        if (!zone) return;
+        const hunter = estHunterRecrutement();
+        const terme = (document.getElementById('recherche-archive-recrutement').value || '').trim().toLowerCase();
+        const filtreP = document.getElementById('filtre-poste-recrutement').value;
+        const filtreR = document.getElementById('filtre-resultat-recrutement').value;
+        const bareme = baremeActif();
+        const toutes = etatRecrutement.candidats.filter(c => c.archive && ['recrutement', 'essai'].includes(statutCandidat(c)));
+        document.getElementById('compteur-archives-recrutement').textContent = `(${toutes.length})`;
+        const visibles = toutes.filter(c =>
+          (filtreP === 'tous' || c.poste === filtreP)
+          && (filtreR === 'tous' || resultatCandidatCouleur(c) === filtreR)
+          && (!terme || [c.pseudo, c.regiment, c.commentaire, c.commentaireEssai].some(v => String(v || '').toLowerCase().includes(terme))));
+        if (toutes.length === 0) { zone.innerHTML = `<div class="text-xs font-terminal text-gray-500">Aucun recrutement archivé. Utilise « 📦 Archiver » sur un candidat, ou « 📦 Archiver les clôturés ».</div>`; return; }
+        if (visibles.length === 0) { zone.innerHTML = `<div class="text-xs font-terminal text-gray-500">Aucun résultat avec ces filtres.</div>`; return; }
+
+        zone.innerHTML = Object.keys(POSTES_RECRUTEMENT).map(p => {
+          const cands = visibles.filter(c => c.poste === p)
+            .map(c => ({ c, r: resultatCandidat(c, bareme) }))
+            .sort((a, b) => (b.c.dateArchivage || 0) - (a.c.dateArchivage || 0) || (b.r.moyenne ?? -1) - (a.r.moyenne ?? -1));
+          if (cands.length === 0) return '';
+          return `
+            <div class="font-titre text-[0.75rem] uppercase text-amber-400 pt-1">${POSTES_RECRUTEMENT[p].lib} <span class="text-gray-500">(${cands.length})</span></div>
+            ${cands.map(({ c, r }) => {
+              const col = COULEURS_RESULTAT[resultatCandidatCouleur(c)];
+              const notes = POSTES_RECRUTEMENT[c.poste].tests.concat(['theorie'])
+                .filter(id => r.notes[id] !== null && r.notes[id] !== undefined)
+                .map(id => `${id === 'theorie' ? 'Théorie' : TESTS_RECRUTEMENT[id].lib} <span class="text-gray-200">${r.notes[id].toFixed(1).replace('.', ',')}</span>`).join(' · ');
+              return `
+                <details class="rounded border border-bordureTactique border-l-4 ${col.ligne}">
+                  <summary class="flex items-center gap-2 p-2 cursor-pointer text-xs font-terminal">
+                    <span>${col.emoji}</span>
+                    <span class="flex-1 min-w-0 truncate text-gray-100">${echapperTexteHTML(c.pseudo)}</span>
+                    <span class="hidden sm:inline text-gray-500">${echapperTexteHTML(c.regiment || '')}</span>
+                    <span class="text-amber-300 font-bold w-14 text-right">${r.moyenne === null ? '—' : r.moyenne.toFixed(2).replace('.', ',')}</span>
+                  </summary>
+                  <div class="p-2.5 pt-0 space-y-1.5 text-xs font-terminal">
+                    <div class="${col.texte}">${col.emoji} ${col.lib}${c.dateArchivage ? ` <span class="text-gray-600">· archivé le ${new Date(c.dateArchivage).toLocaleDateString('fr-FR')}</span>` : ''}</div>
+                    ${notes ? `<div class="text-gray-500">${notes}</div>` : ''}
+                    ${c.commentaire ? `<div class="text-gray-300 whitespace-pre-wrap">💬 ${echapperTexteHTML(c.commentaire)}</div>` : ''}
+                    ${c.commentaireEssai ? `<div class="text-gray-300 whitespace-pre-wrap">🎭 Mission RP : ${echapperTexteHTML(c.commentaireEssai)}</div>` : ''}
+                    ${hunter ? `<div class="flex justify-end gap-2 pt-1">
+                      <button data-ouvrir-archive="${echapperTexteHTML(c.id)}" class="btn-ouvrir-archive px-2.5 py-1 border border-bordureLueur text-gray-300 rounded bg-panneauSous">Ouvrir la fiche</button>
+                      <button data-desarchiver="${echapperTexteHTML(c.id)}" class="btn-desarchiver px-2.5 py-1 border border-bordureLueur text-gray-300 rounded bg-panneauSous">↩ Désarchiver</button>
+                    </div>` : ''}
+                  </div>
+                </details>`;
+            }).join('')}`;
+        }).join('');
+        zone.querySelectorAll('.btn-ouvrir-archive').forEach(b => b.addEventListener('click', () => ouvrirFicheCandidat(b.getAttribute('data-ouvrir-archive'))));
+        zone.querySelectorAll('.btn-desarchiver').forEach(b => b.addEventListener('click', () => archiverCandidat(b.getAttribute('data-desarchiver'), false)));
+      }
+
+      // ---- Liens de recrutement (stockés dans Firestore, jamais dans le code) ----
+      const GROUPES_LIENS = {
+        cand: { lib: 'CANDIDATURES', couleur: 'text-amber-400', colonnes: 'md:grid-cols-2' },
+        eval: { lib: 'ÉVALUATION',   couleur: 'text-vertViseur', colonnes: 'md:grid-cols-3' }
+      };
+      let brouillonLiens = [];
+
+      function urlLienValide(u) { return /^https:\/\/[^\s]+$/i.test(u || ''); }
+
+      function afficherLiensRecrutement() {
+        const zone = document.getElementById('zone-liens-recrutement');
+        if (!zone) return;
+        if (!estHunterRecrutement()) { zone.innerHTML = ''; return; }
+        const liens = etatRecrutement.liens.filter(l => urlLienValide(l.url));
+        if (liens.length === 0) {
+          zone.innerHTML = `<div class="text-xs font-terminal text-gray-500 p-3.5 rounded border border-bordureTactique bg-panneauSombre">Aucun lien enregistré. Clique sur « 📥 Importer les liens » (fichier <span class="text-amber-300">liens-recrutement.json</span>) ou sur « ✏ Modifier les liens ».</div>`;
+          return;
+        }
+        zone.innerHTML = Object.entries(GROUPES_LIENS).map(([g, def]) => {
+          const ls = liens.filter(l => (GROUPES_LIENS[l.groupe] ? l.groupe : 'cand') === g);
+          if (ls.length === 0) return '';
+          return `
+            <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5">
+              <h3 class="font-titre text-xs uppercase tracking-wider text-gray-300 border-b border-bordureTactique pb-2 mb-3"><span class="${def.couleur}">■</span> ${def.lib}</h3>
+              <div class="grid grid-cols-1 ${def.colonnes} gap-3">
+                ${ls.map(l => `
+                  <a href="${echapperTexteHTML(l.url)}" target="_blank" rel="noopener noreferrer" class="block bg-panneauSous border border-bordureTactique hover:border-amber-500/60 rounded p-3 transition group">
+                    <div class="flex items-center gap-2 font-titre font-bold text-xs text-gray-100 uppercase"><span class="text-lg">${echapperTexteHTML(l.icone || '🔗')}</span>${echapperTexteHTML(l.titre || 'Lien')}<span class="ml-auto text-amber-400 group-hover:translate-x-0.5 transition">↗</span></div>
+                    ${l.description ? `<p class="text-xs font-terminal text-gray-400 mt-1">${echapperTexteHTML(l.description)}</p>` : ''}
+                  </a>`).join('')}
+              </div>
+            </div>`;
+        }).join('');
+      }
+
+      async function enregistrerLiens(liens) {
+        let ok = false;
+        if (estConnecteFirestore) {
+          try { await setDoc(doc(baseDeDonnees, 'config', 'recrutementLiens'), { liens }); ok = true; }
+          catch (err) { console.warn("Liens :", err); }
+        }
+        if (!ok) etatRecrutement.liens = liens;
+        AudioTactique.succes();
+        afficherNotificationTactique("Liens de recrutement enregistrés.");
+        afficherLiensRecrutement();
+      }
+
+      function dessinerEditeurLiens() {
+        const zone = document.getElementById('contenu-liens');
+        const champ = 'w-full bg-fondCarbone border border-bordureTactique rounded px-2 py-1.5 text-xs font-terminal text-gray-100 outline-none';
+        zone.innerHTML = `
+          <p class="text-xs font-terminal text-gray-400">Chaque lien doit commencer par <span class="text-amber-300">https://</span>. Ils sont enregistrés dans Firestore et visibles uniquement par Hunter.</p>
+          ${brouillonLiens.map((l, i) => `
+            <div class="p-2.5 rounded border border-bordureTactique bg-panneauSous space-y-2" data-ligne-lien="${i}">
+              <div class="grid grid-cols-12 gap-2">
+                <input class="${champ} col-span-2" data-i="${i}" data-champ="icone" value="${echapperTexteHTML(l.icone || '')}" placeholder="🔗" maxlength="4">
+                <input class="${champ} col-span-6" data-i="${i}" data-champ="titre" value="${echapperTexteHTML(l.titre || '')}" placeholder="Titre">
+                <select class="${champ} col-span-3" data-i="${i}" data-champ="groupe">
+                  <option value="cand" ${l.groupe !== 'eval' ? 'selected' : ''}>Candidatures</option>
+                  <option value="eval" ${l.groupe === 'eval' ? 'selected' : ''}>Évaluation</option>
+                </select>
+                <button type="button" class="col-span-1 bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 rounded" data-supprimer-lien="${i}" title="Supprimer">🗑️</button>
+              </div>
+              <input class="${champ}" data-i="${i}" data-champ="url" value="${echapperTexteHTML(l.url || '')}" placeholder="https://…">
+              <input class="${champ}" data-i="${i}" data-champ="description" value="${echapperTexteHTML(l.description || '')}" placeholder="Description (facultatif)" maxlength="120">
+            </div>`).join('')}
+          <div class="flex flex-wrap justify-between gap-2 pt-1 font-terminal text-xs">
+            <button type="button" id="bouton-ajouter-lien" class="px-3 py-1.5 border border-bordureLueur text-gray-300 rounded bg-panneauSous">+ Ajouter un lien</button>
+            <button type="button" id="bouton-enregistrer-liens" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold uppercase rounded">Enregistrer</button>
+          </div>
+          <div id="erreur-liens" class="hidden text-xs font-terminal text-red-300 bg-red-950/70 border border-red-800 rounded p-2"></div>`;
+        zone.querySelectorAll('[data-champ]').forEach(el => {
+          const maj = () => { brouillonLiens[parseInt(el.getAttribute('data-i'), 10)][el.getAttribute('data-champ')] = el.value; };
+          el.addEventListener('input', maj); el.addEventListener('change', maj);
+        });
+        zone.querySelectorAll('[data-supprimer-lien]').forEach(b => b.addEventListener('click', () => {
+          brouillonLiens.splice(parseInt(b.getAttribute('data-supprimer-lien'), 10), 1);
+          dessinerEditeurLiens();
+        }));
+        document.getElementById('bouton-ajouter-lien').addEventListener('click', () => {
+          brouillonLiens.push({ icone: '🔗', titre: '', url: '', groupe: 'cand', description: '' });
+          dessinerEditeurLiens();
+        });
+        document.getElementById('bouton-enregistrer-liens').addEventListener('click', async () => {
+          const erreur = document.getElementById('erreur-liens');
+          const propres = brouillonLiens
+            .map(l => ({ icone: (l.icone || '🔗').trim(), titre: (l.titre || '').trim(), url: (l.url || '').trim(), groupe: l.groupe === 'eval' ? 'eval' : 'cand', description: (l.description || '').trim() }))
+            .filter(l => l.titre || l.url);
+          const mauvais = propres.find(l => !l.titre || !urlLienValide(l.url));
+          if (mauvais) {
+            erreur.textContent = "Chaque lien doit avoir un titre et une adresse commençant par https://.";
+            erreur.classList.remove('hidden');
+            return;
+          }
+          await enregistrerLiens(propres);
+          fermerBoite('boite-liens');
+        });
+      }
+
+      function ouvrirEditeurLiens() {
+        if (!estHunterRecrutement()) return;
+        brouillonLiens = etatRecrutement.liens.map(l => ({ ...l }));
+        if (brouillonLiens.length === 0) brouillonLiens.push({ icone: '🔗', titre: '', url: '', groupe: 'cand', description: '' });
+        dessinerEditeurLiens();
+        document.getElementById('boite-liens').classList.remove('hidden');
+      }
+
+      async function importerLiensRecrutement(fichier) {
+        if (!fichier || !estHunterRecrutement()) return;
+        try {
+          const brut = JSON.parse(await fichier.text());
+          const liste = Array.isArray(brut) ? brut : brut.liens;
+          if (!Array.isArray(liste) || liste.length === 0) throw new Error("Liste vide");
+          const liens = liste.map(l => {
+            if (!l || typeof l.titre !== 'string' || !urlLienValide(l.url)) throw new Error("Lien invalide");
+            return { icone: String(l.icone || '🔗').slice(0, 4), titre: l.titre.slice(0, 80), url: l.url, groupe: l.groupe === 'eval' ? 'eval' : 'cand', description: String(l.description || '').slice(0, 120) };
+          });
+          await enregistrerLiens(liens);
+        } catch (err) {
+          console.warn("Import liens :", err);
+          AudioTactique.alerte();
+          afficherNotificationTactique("Fichier invalide : utilise liens-recrutement.json tel que fourni.");
+        }
+      }
+
       // ---- Import de la banque de questions (JSON) ----
       async function importerBanqueQuestions(fichier) {
         if (!fichier) return;
@@ -3355,7 +3598,53 @@
         }
       }
 
+      // ---- Statut des recrutements (ON / OFF) : lu par tout le monde, modifié par Hunter ----
+      let recrutementOuvert = false;
+
+      function appliquerStatutRecrutement() {
+        const bandeau = document.getElementById('banniere-recrutement-ouvert');
+        if (bandeau) {
+          bandeau.classList.toggle('hidden', !recrutementOuvert);
+          bandeau.classList.toggle('flex', recrutementOuvert);
+        }
+        const bouton = document.getElementById('bouton-statut-recrutement');
+        if (bouton) {
+          bouton.textContent = recrutementOuvert ? 'ON' : 'OFF';
+          bouton.className = 'px-5 py-1.5 rounded border font-titre font-bold text-xs uppercase tracking-wider transition ' + (recrutementOuvert
+            ? 'bg-green-600 border-green-400 text-white shadow-[0_0_12px_rgba(16,185,129,0.5)]'
+            : 'bg-panneauSous border-bordureLueur text-gray-400');
+        }
+        const badge = document.getElementById('badge-statut-recrutement');
+        if (badge) {
+          badge.textContent = recrutementOuvert ? '🟢 Recrutements ouverts' : '⚫ Recrutements fermés';
+          badge.className = 'ml-2 px-2 py-0.5 rounded border text-[0.6875rem] font-terminal normal-case tracking-normal ' + (recrutementOuvert
+            ? 'border-green-500/60 text-green-300' : 'border-bordureLueur text-gray-500');
+        }
+      }
+
+      function demarrerEcouteStatutRecrutement() {
+        if (!estConnecteFirestore) return;
+        onSnapshot(doc(baseDeDonnees, 'config', 'recrutementStatut'), d => {
+          recrutementOuvert = d.exists() && d.data().ouvert === true;
+          appliquerStatutRecrutement();
+        }, err => console.warn("Statut des recrutements :", err));
+      }
+
+      async function basculerStatutRecrutement() {
+        if (!estHunterRecrutement()) return;
+        const nouveau = !recrutementOuvert;
+        let ok = false;
+        if (estConnecteFirestore) {
+          try { await setDoc(doc(baseDeDonnees, 'config', 'recrutementStatut'), { ouvert: nouveau, majLe: Date.now() }); ok = true; }
+          catch (err) { console.warn("Statut recrutement :", err); }
+        }
+        if (!ok) { recrutementOuvert = nouveau; appliquerStatutRecrutement(); }
+        AudioTactique.succes();
+        afficherNotificationTactique(nouveau ? "Recrutements ouverts : le bandeau « Postuler » est visible sur la page de connexion." : "Recrutements fermés : bandeau masqué et formulaire fermé.");
+      }
+
       function demarrerEcouteursRecrutement() {
+        document.getElementById('bouton-statut-recrutement').addEventListener('click', basculerStatutRecrutement);
         document.getElementById('bouton-nouveau-candidat').addEventListener('click', () => ouvrirBoite('boite-candidat'));
         document.getElementById('bouton-copier-lien-candidature').addEventListener('click', async () => {
           const lien = new URL('candidature.html', location.href).href;
@@ -3366,6 +3655,14 @@
         document.getElementById('bouton-bareme-recrutement').addEventListener('click', ouvrirBareme);
         document.getElementById('filtre-poste-recrutement').addEventListener('change', afficherVueRecrutement);
         document.getElementById('filtre-resultat-recrutement').addEventListener('change', afficherVueRecrutement);
+        document.getElementById('recherche-archive-recrutement').addEventListener('input', afficherArchivesRecrutement);
+        document.getElementById('bouton-archiver-clotures').addEventListener('click', archiverLesClotures);
+        document.getElementById('bouton-modifier-liens').addEventListener('click', ouvrirEditeurLiens);
+        document.getElementById('bouton-import-liens').addEventListener('click', () => document.getElementById('fichier-import-liens').click());
+        document.getElementById('fichier-import-liens').addEventListener('change', (e) => {
+          importerLiensRecrutement(e.target.files[0]);
+          e.target.value = '';
+        });
         document.getElementById('bouton-import-historique').addEventListener('click', () => document.getElementById('fichier-import-historique').click());
         document.getElementById('fichier-import-historique').addEventListener('change', (e) => {
           importerRecrutementsPasses(e.target.files[0]);
@@ -5059,6 +5356,7 @@
         // Plans d'engagement
         document.getElementById('bouton-ajouter-plan-hunter').addEventListener('click', () => ouvrirFichePlan(''));
         demarrerEcouteursRecrutement();
+        demarrerEcouteStatutRecrutement();
         document.getElementById('formulaire-nouveau-plan').addEventListener('submit', executerCreationPlan);
 
         // Archives (Tech)
