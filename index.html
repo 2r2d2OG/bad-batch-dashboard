@@ -9,19 +9,20 @@
   <link rel="icon" type="image/png" href="logobadbatch.png">
   <link rel="shortcut icon" href="logobadbatch.png">
 
-  <!-- Tailwind CSS via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Typographies Militaires Star Wars / SF -->
+<!-- Typographies Militaires Star Wars / SF -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
   <script>
-    tailwind.config = {
+    window.TW_CONFIG = {
       darkMode: 'class',
       theme: {
         extend: {
+          fontSize: {
+            xs: ['0.8125rem', { lineHeight: '1.2rem' }],
+            sm: ['0.9375rem', { lineHeight: '1.4rem' }]
+          },
           colors: {
             fondCarbone: '#07090e',
             panneauSombre: '#0c1017',
@@ -43,8 +44,20 @@
           }
         }
       }
+    };
+
+    // Le CSS est précompilé dans tailwind.css. Si ce fichier est introuvable (oubli lors du dépôt GitHub),
+    // on retombe automatiquement sur le CDN Tailwind pour que le site reste utilisable.
+    function chargerTailwindSecours() {
+      if (window.__twSecours) return;
+      window.__twSecours = true;
+      var sc = document.createElement('script');
+      sc.src = 'https://cdn.tailwindcss.com';
+      sc.onload = function () { tailwind.config = window.TW_CONFIG; };
+      document.head.appendChild(sc);
     }
   </script>
+  <link rel="stylesheet" href="tailwind.css" onerror="chargerTailwindSecours()">
 
   <style>
     :root {
@@ -52,6 +65,10 @@
       --teinte-lueur: rgba(255, 46, 67, 0.2);
       --teinte-bordure: rgba(255, 46, 67, 0.4);
     }
+
+    html { font-size: 16px; }
+    @media (min-width: 1280px) { html { font-size: 17px; } }
+    @media (min-width: 1700px) { html { font-size: 18px; } }
 
     body {
       background-color: #07090e;
@@ -142,8 +159,9 @@
   </div>
 
   <!-- BANDEAU SUPÉRIEUR HUD AVEC LOGO BAD BATCH INTÉGRÉ -->
-  <header class="border-b border-bordureTactique bg-fondCarbone/95 backdrop-blur sticky top-0 z-40 shadow-lg">
-    <div class="max-w-7xl mx-auto px-3 sm:px-4 py-2 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2">
+  <div class="sticky top-0 z-40">
+  <header class="border-b border-bordureTactique bg-fondCarbone/95 backdrop-blur shadow-lg">
+    <div class="max-w-screen-2xl mx-auto px-3 sm:px-4 py-2 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2">
       
       <!-- Gauche : Médaillon Logo Bad Batch & Liaison ComNet -->
       <div class="flex items-center space-x-2.5 shrink-0">
@@ -153,9 +171,9 @@
         <div>
           <div class="flex items-center space-x-1.5">
             <span class="font-titre font-bold tracking-wider text-xs sm:text-sm text-gray-100 uppercase" id="titre-unite-hud">FORCE CLONE 99</span>
-            <span class="px-1.5 py-px bg-ambreArmement/15 text-ambreArmement text-[9px] font-terminal border border-ambreArmement/30 uppercase rounded-sm" id="badge-statut-hud">BAD BATCH</span>
+            <span class="px-1.5 py-px bg-ambreArmement/15 text-ambreArmement text-[0.6875rem] font-terminal border border-ambreArmement/30 uppercase rounded-sm" id="badge-statut-hud">BAD BATCH</span>
           </div>
-          <div class="text-[9px] text-gray-400 font-terminal flex items-center gap-1.5 leading-none mt-0.5">
+          <div class="text-[0.6875rem] text-gray-400 font-terminal flex items-center gap-1.5 leading-none mt-0.5">
             <span id="point-liaison" class="inline-block w-2 h-2 rounded-full bg-vertViseur shadow-[0_0_6px_#10b981]"></span>
             <span id="indicateur-liaison">LIAISON FIRESTORE : CONNECTÉE</span>
           </div>
@@ -164,14 +182,14 @@
 
       <!-- Centre : Mention Marauder / BOS -->
       <div class="hidden md:flex items-center justify-center text-center">
-        <span id="mention-terminal-centre" class="px-2.5 py-1 bg-panneauSombre border border-bordureTactique text-gray-400 text-[10px] font-terminal uppercase rounded tracking-widest">
+        <span id="mention-terminal-centre" class="px-2.5 py-1 bg-panneauSombre border border-bordureTactique text-gray-400 text-[0.75rem] font-terminal uppercase rounded tracking-widest">
           CONSOLE DU HAVOC MARAUDER // SEC-NET 99
         </span>
       </div>
 
       <!-- Droite : Commandes audio et profil opérateur compact -->
       <div class="flex items-center space-x-2 shrink-0 ml-auto sm:ml-0">
-        <button id="bouton-audio" class="px-2 py-1.5 border border-bordureTactique hover:border-bordureLueur bg-panneauSombre text-gray-300 hover:text-white rounded text-[10px] font-terminal transition">
+        <button id="bouton-audio" class="px-2 py-1.5 border border-bordureTactique hover:border-bordureLueur bg-panneauSombre text-gray-300 hover:text-white rounded text-[0.75rem] font-terminal transition">
           🔊 <span class="hidden sm:inline">SONS :</span> ACTIVÉS
         </button>
 
@@ -180,16 +198,16 @@
             <img id="avatar-profil-haut" alt="Insigne" class="w-full h-full object-contain">
           </div>
           <div class="text-left hidden sm:block leading-none pr-1">
-            <div id="nom-operateur" class="text-[11px] font-titre font-bold text-gray-100 uppercase">Hunter</div>
-            <div id="grade-operateur" class="text-[8px] font-terminal text-gray-400 mt-0.5">Sergent</div>
+            <div id="nom-operateur" class="text-[0.8125rem] font-titre font-bold text-gray-100 uppercase">Hunter</div>
+            <div id="grade-operateur" class="text-[0.6875rem] font-terminal text-gray-400 mt-0.5">Sergent</div>
           </div>
 
-          <button id="bouton-cle-mdp" title="Modifier mon mot de passe" class="px-2 py-1 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-[10px] font-terminal text-amber-300 rounded flex items-center gap-1 transition">
+          <button id="bouton-cle-mdp" title="Modifier mon mot de passe" class="px-2 py-1 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-[0.75rem] font-terminal text-amber-300 rounded flex items-center gap-1 transition">
             <span>🔑</span>
             <span class="hidden md:inline">MODIF MDP</span>
           </button>
 
-          <button id="bouton-quitter-session" title="Fermer la session" class="px-2 sm:px-2.5 py-1 bg-red-950 hover:bg-red-800 border border-rougeAlerte text-[10px] font-titre font-bold text-red-200 hover:text-white rounded transition tracking-wider shrink-0">
+          <button id="bouton-quitter-session" title="Fermer la session" class="px-2 sm:px-2.5 py-1 bg-red-950 hover:bg-red-800 border border-rougeAlerte text-[0.75rem] font-titre font-bold text-red-200 hover:text-white rounded transition tracking-wider shrink-0">
             [DÉCONNEXION]
           </button>
         </div>
@@ -199,13 +217,10 @@
   </header>
 
   <!-- Navigation Principale défilable sur mobile -->
-  <nav id="barre-navigation" class="hidden bg-fondCarbone/95 border-b border-bordureTactique sticky top-[57px] z-30 overflow-x-auto shadow-md">
-    <div class="max-w-7xl mx-auto px-3 sm:px-4 flex space-x-2 py-1.5 whitespace-nowrap">
+  <nav id="barre-navigation" class="hidden bg-fondCarbone/95 border-b border-bordureTactique overflow-x-auto shadow-md">
+    <div id="barre-navigation-interne" class="max-w-screen-2xl mx-auto px-3 sm:px-4 flex space-x-2 py-1.5 whitespace-nowrap">
       <button data-onglet="poste-commandement" class="nav-bouton px-3 py-1.5 font-titre text-xs tracking-wider border-b-2 border-rougeAlerte text-white bg-panneauSombre biseau-bouton transition flex items-center gap-1.5 shrink-0 touch-target">
         <span>📊</span> POSTE DE COMMANDEMENT
-      </button>
-      <button data-onglet="rapports" class="nav-bouton px-3 py-1.5 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-1.5 shrink-0 touch-target">
-        <span>📝</span> RAPPORTS DE MISSION
       </button>
       <button data-onglet="effectif" class="nav-bouton px-3 py-1.5 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-1.5 shrink-0 touch-target">
         <span>👥</span> EFFECTIF DE L'ESCOUADE
@@ -213,17 +228,24 @@
       <button data-onglet="plans" class="nav-bouton px-3 py-1.5 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-1.5 shrink-0 touch-target">
         <span>📋</span> PLANS TACTIQUES
       </button>
+      <button data-onglet="rapports" class="nav-bouton px-3 py-1.5 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-1.5 shrink-0 touch-target">
+        <span>📝</span> RAPPORTS DE MISSION
+      </button>
       <button data-onglet="archives" class="nav-bouton px-3 py-1.5 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-1.5 shrink-0 touch-target">
         <span>💾</span> ARCHIVES DE PIRATAGE
       </button>
       <button data-onglet="registre" class="nav-bouton hidden px-3 py-1.5 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-1.5 shrink-0 touch-target">
         <span>📈</span> REGISTRE &amp; STATS
       </button>
+      <button data-onglet="recrutement" class="nav-bouton hidden px-3 py-1.5 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-1.5 shrink-0 touch-target">
+        <span>🤝</span> RECRUTEMENT
+      </button>
     </div>
   </nav>
+  </div>
 
   <!-- CONTENU PRINCIPAL -->
-  <main class="max-w-7xl mx-auto px-3 sm:px-4 py-3 flex-grow w-full relative z-10">
+  <main class="max-w-screen-2xl mx-auto px-3 sm:px-4 py-3 flex-grow w-full relative z-10">
 
     <!-- 1. ÉCRAN D'ACCUEIL / AUTHENTIFICATION & RECRUTEMENT -->
     <section id="fenetre-connexion" class="my-2 space-y-4">
@@ -234,7 +256,7 @@
         <div class="lg:col-span-5 bg-panneauSombre border border-bordureTactique biseau-plaque p-4 sm:p-5 shadow-xl flex flex-col justify-between">
           <div>
             <div class="border-b border-bordureTactique pb-3 mb-3">
-              <span class="inline-block px-2 py-0.5 bg-rougeKamino/25 border border-rougeAlerte text-rougeAlerte font-titre text-[9px] font-bold tracking-widest uppercase rounded mb-1.5">
+              <span class="inline-block px-2 py-0.5 bg-rougeKamino/25 border border-rougeAlerte text-rougeAlerte font-titre text-[0.6875rem] font-bold tracking-widest uppercase rounded mb-1.5">
                 ACCÈS SÉCURISÉ // OPÉRATEURS CLONE FORCE 99
               </span>
               <h1 class="text-lg sm:text-xl font-titre font-black text-gray-100 tracking-wider">
@@ -253,28 +275,28 @@
                     <span class="text-lg">🦅</span>
                     <div>
                       <div class="text-xs font-titre font-bold leading-none">HUNTER</div>
-                      <div class="text-[8px] font-terminal text-gray-400 leading-none mt-1">Commandement</div>
+                      <div class="text-[0.6875rem] font-terminal text-gray-400 leading-none mt-1">Commandement</div>
                     </div>
                   </button>
                   <button type="button" data-op="tech" class="bouton-choix-op p-2 border border-bordureTactique bg-panneauSous text-gray-300 rounded biseau-bouton text-left flex items-center space-x-2 transition touch-target">
                     <span class="text-lg">💻</span>
                     <div>
                       <div class="text-xs font-titre font-bold leading-none">TECH</div>
-                      <div class="text-[8px] font-terminal text-gray-400 leading-none mt-1">Piratage &amp; Données</div>
+                      <div class="text-[0.6875rem] font-terminal text-gray-400 leading-none mt-1">Piratage &amp; Données</div>
                     </div>
                   </button>
                   <button type="button" data-op="wrecker" class="bouton-choix-op p-2 border border-bordureTactique bg-panneauSous text-gray-300 rounded biseau-bouton text-left flex items-center space-x-2 transition touch-target">
                     <span class="text-lg">💥</span>
                     <div>
                       <div class="text-xs font-titre font-bold leading-none">WRECKER</div>
-                      <div class="text-[8px] font-terminal text-gray-400 leading-none mt-1">Démolition</div>
+                      <div class="text-[0.6875rem] font-terminal text-gray-400 leading-none mt-1">Démolition</div>
                     </div>
                   </button>
                   <button type="button" data-op="crosshair" class="bouton-choix-op p-2 border border-bordureTactique bg-panneauSous text-gray-300 rounded biseau-bouton text-left flex items-center space-x-2 transition touch-target">
                     <span class="text-lg">🎯</span>
                     <div>
                       <div class="text-xs font-titre font-bold leading-none">CROSSHAIR</div>
-                      <div class="text-[8px] font-terminal text-gray-400 leading-none mt-1">Tir de précision</div>
+                      <div class="text-[0.6875rem] font-terminal text-gray-400 leading-none mt-1">Tir de précision</div>
                     </div>
                   </button>
                 </div>
@@ -297,7 +319,7 @@
           </div>
 
           <!-- BAS DE FICHE : LIEN DISCRET B.O.S INTÉGRÉ ICI -->
-          <div class="pt-3 border-t border-bordureTactique text-[10px] font-terminal text-gray-500 mt-3 flex items-center justify-between">
+          <div class="pt-3 border-t border-bordureTactique text-[0.75rem] font-terminal text-gray-500 mt-3 flex items-center justify-between">
             <button type="button" id="lien-connexion-bos-discret" class="text-gray-500 hover:text-amber-400 uppercase tracking-wider transition underline decoration-dotted">
               [LIAISON HIÉRARCHIQUE B.O.S]
             </button>
@@ -312,7 +334,7 @@
                 <span class="text-xs font-terminal text-amber-400">FICHE TACTIQUE OFFICIELLE //</span>
                 <span id="dossier-nom-grand" class="font-titre font-black text-xs sm:text-sm text-gray-100 uppercase">HUNTER (FC-99-01)</span>
               </div>
-              <span id="dossier-statut-badge" class="px-2 py-0.5 rounded text-[9px] font-terminal font-bold bg-red-950 border border-rougeAlerte text-red-300">
+              <span id="dossier-statut-badge" class="px-2 py-0.5 rounded text-[0.6875rem] font-terminal font-bold bg-red-950 border border-rougeAlerte text-red-300">
                 EN MISSION ACTIVE
               </span>
             </div>
@@ -337,21 +359,21 @@
                   <span class="text-gray-400">MODULE ARMURE :</span>
                   <span id="dossier-armure" class="text-gray-200 ml-1">Armure Katarn modifiée avec capteurs thermiques</span>
                 </div>
-                <p id="dossier-description-lore" class="text-[11px] text-gray-300 leading-relaxed bg-fondCarbone p-2 rounded border border-bordureTactique mt-1.5">
+                <p id="dossier-description-lore" class="text-[0.8125rem] text-gray-300 leading-relaxed bg-fondCarbone p-2 rounded border border-bordureTactique mt-1.5">
                   Perception sensorielle des fréquences et flux électromagnétiques. Maîtrise tactique absolue et coordination de toute l'escouade.
                 </p>
               </div>
             </div>
 
             <div>
-              <h3 class="font-titre text-[10px] uppercase tracking-wider text-gray-400 mb-1.5 flex items-center gap-1.5">
+              <h3 class="font-titre text-[0.75rem] uppercase tracking-wider text-gray-400 mb-1.5 flex items-center gap-1.5">
                 <span class="text-amber-400">■</span> ARMEMENT RÉGLEMENTAIRE &amp; ÉQUIPEMENT DE COMBAT
               </h3>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="dossier-liste-equipement"></div>
             </div>
           </div>
 
-          <div class="pt-2.5 border-t border-bordureTactique text-[9px] font-terminal text-gray-500 mt-3 flex justify-between">
+          <div class="pt-2.5 border-t border-bordureTactique text-[0.6875rem] font-terminal text-gray-500 mt-3 flex justify-between">
             <span>Dossier issu des archives de Kamino</span>
             <span>Sélectionnez un opérateur pour charger son profil</span>
           </div>
@@ -369,10 +391,10 @@
           <span class="text-xl">🏛️</span>
           <div>
             <div class="font-titre font-bold text-orEtatMajor uppercase tracking-wider">CANAL D'AUDIT HIÉRARCHIQUE // BUREAU DES OPÉRATIONS SPÉCIALES</div>
-            <div class="text-[11px] text-gray-300">Session de supervision externe en lecture seule. Surveillance de l'unité Clone Force 99.</div>
+            <div class="text-[0.8125rem] text-gray-300">Session de supervision externe en lecture seule. Surveillance de l'unité Clone Force 99.</div>
           </div>
         </div>
-        <span class="px-2 py-0.5 bg-amber-500/20 border border-orEtatMajor text-orEtatMajor text-[10px] font-titre font-bold uppercase rounded shrink-0">
+        <span class="px-2 py-0.5 bg-amber-500/20 border border-orEtatMajor text-orEtatMajor text-[0.75rem] font-titre font-bold uppercase rounded shrink-0">
           MODE INSPECTION
         </span>
       </div>
@@ -384,7 +406,7 @@
           <span class="font-bold text-rougeAlerte shrink-0 uppercase">ALERTE COMMANDEMENT :</span>
           <span id="texte-alerte-quota" class="truncate">Prises de service (PDS) incomplètes</span>
         </div>
-        <button data-action-nav="effectif" class="text-[10px] text-amber-400 hover:underline uppercase shrink-0 font-bold ml-auto sm:ml-0">
+        <button data-action-nav="effectif" class="text-[0.75rem] text-amber-400 hover:underline uppercase shrink-0 font-bold ml-auto sm:ml-0">
           Vérifier l'effectif de terrain →
         </button>
       </div>
@@ -392,43 +414,43 @@
       <!-- Synthèse hebdomadaire & Double Bouton PDS (18h & 21h INDÉPENDANTS) -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
         <div class="bg-panneauSombre border border-bordureTactique p-3 rounded biseau-plaque">
-          <span class="text-[10px] font-terminal text-gray-400 uppercase">OBJECTIF DES FORCES DE TERRAIN</span>
+          <span class="text-[0.75rem] font-terminal text-gray-400 uppercase">OBJECTIF DES FORCES DE TERRAIN</span>
           <div class="text-xl font-titre font-black text-amber-400 mt-0.5">
             <span id="valeur-quota-affiche">3</span> PDS / SEMAINE
           </div>
-          <p class="text-[10px] font-terminal text-gray-500 mt-0.5">Quota fixé par le Sergent Hunter.</p>
+          <p class="text-[0.75rem] font-terminal text-gray-500 mt-0.5">Quota fixé par le Sergent Hunter.</p>
         </div>
 
         <div class="bg-panneauSombre border border-bordureTactique p-3 rounded biseau-plaque">
-          <span class="text-[10px] font-terminal text-gray-400 uppercase">RAPPORTS AU REGISTRE</span>
+          <span class="text-[0.75rem] font-terminal text-gray-400 uppercase">RAPPORTS AU REGISTRE</span>
           <div class="text-xl font-titre font-black text-gray-100 mt-0.5" id="total-rapports-enregistres">
             0
           </div>
-          <p class="text-[10px] font-terminal text-gray-500 mt-0.5">Rapports de mission (supprimés après 1 mois).</p>
+          <p class="text-[0.75rem] font-terminal text-gray-500 mt-0.5">Rapports de mission (supprimés après 1 mois).</p>
         </div>
 
         <div class="bg-panneauSombre border border-bordureTactique p-3 rounded biseau-plaque">
-          <span class="text-[10px] font-terminal text-gray-400 uppercase">CONFORMITÉ PDS ESCOUADE</span>
+          <span class="text-[0.75rem] font-terminal text-gray-400 uppercase">CONFORMITÉ PDS ESCOUADE</span>
           <div class="text-xl font-titre font-black text-vertViseur mt-0.5" id="pourcentage-conformite">
             100%
           </div>
-          <p class="text-[10px] font-terminal text-gray-500 mt-0.5">Calculé sur les 3 subordonnés de terrain.</p>
+          <p class="text-[0.75rem] font-terminal text-gray-500 mt-0.5">Calculé sur les 3 subordonnés de terrain.</p>
         </div>
 
         <!-- LOG RAPIDE D'ACTIVITÉ : DOUBLE CRÉNEAU 18H ET 21H INDÉPENDANTS (MASQUÉ POUR BOS) -->
         <div id="bloc-log-rapide-pds" class="bg-panneauSombre border border-emerald-500/50 p-2.5 rounded biseau-plaque flex flex-col justify-between shadow-[0_0_12px_rgba(16,185,129,0.15)]">
           <div>
             <div class="flex items-center justify-between">
-              <span class="text-[10px] font-terminal text-emerald-400 uppercase font-bold">LOG RAPIDE D'ACTIVITÉ</span>
-              <span class="text-[9px] font-terminal text-gray-400" id="badge-date-pds">07/10/2026</span>
+              <span class="text-[0.75rem] font-terminal text-emerald-400 uppercase font-bold">LOG RAPIDE D'ACTIVITÉ</span>
+              <span class="text-[0.6875rem] font-terminal text-gray-400" id="badge-date-pds">07/10/2026</span>
             </div>
-            <div class="text-[11px] font-titre font-bold text-gray-200 leading-none mt-0.5">PRISE DE SERVICE (PDS)</div>
+            <div class="text-[0.8125rem] font-titre font-bold text-gray-200 leading-none mt-0.5">PRISE DE SERVICE (PDS)</div>
           </div>
           <div class="grid grid-cols-2 gap-1.5 mt-2">
-            <button id="bouton-pds-18h" class="py-1.5 px-1 bg-emerald-950/80 hover:bg-emerald-900 border border-vertViseur text-emerald-300 font-titre font-bold text-[9px] uppercase rounded transition flex items-center justify-center gap-1 touch-target">
+            <button id="bouton-pds-18h" class="py-1.5 px-1 bg-emerald-950/80 hover:bg-emerald-900 border border-vertViseur text-emerald-300 font-titre font-bold text-[0.6875rem] uppercase rounded transition flex items-center justify-center gap-1 touch-target">
               <span>⚡</span> <span id="label-btn-pds-18h">PDS 18H</span>
             </button>
-            <button id="bouton-pds-21h" class="py-1.5 px-1 bg-emerald-950/80 hover:bg-emerald-900 border border-vertViseur text-emerald-300 font-titre font-bold text-[9px] uppercase rounded transition flex items-center justify-center gap-1 touch-target">
+            <button id="bouton-pds-21h" class="py-1.5 px-1 bg-emerald-950/80 hover:bg-emerald-900 border border-vertViseur text-emerald-300 font-titre font-bold text-[0.6875rem] uppercase rounded transition flex items-center justify-center gap-1 touch-target">
               <span>⚡</span> <span id="label-btn-pds-21h">PDS 21H</span>
             </button>
           </div>
@@ -436,15 +458,15 @@
 
         <!-- REMPLACEMENT EN MODE BOS -->
         <div id="bloc-log-pds-bos" class="hidden bg-panneauSombre border border-orEtatMajor/50 p-2.5 rounded biseau-plaque flex flex-col justify-between">
-          <span class="text-[10px] font-terminal text-orEtatMajor uppercase font-bold">CONTRÔLE DES ÉMARGEMENTS</span>
+          <span class="text-[0.75rem] font-terminal text-orEtatMajor uppercase font-bold">CONTRÔLE DES ÉMARGEMENTS</span>
           <div class="text-xs font-titre font-bold text-gray-200">STATUT BOS : INSPECTION SEULE</div>
-          <p class="text-[10px] font-terminal text-gray-400 mt-1">Émargements opérationnels réservés aux effectifs déployés.</p>
+          <p class="text-[0.75rem] font-terminal text-gray-400 mt-1">Émargements opérationnels réservés aux effectifs déployés.</p>
         </div>
       </div>
 
       <!-- STATUT OPÉRATIONNEL DE L'UNITÉ -->
       <div>
-        <h3 class="font-titre text-[11px] uppercase tracking-wider text-gray-400 mb-2 flex items-center gap-1.5">
+        <h3 class="font-titre text-[0.8125rem] uppercase tracking-wider text-gray-400 mb-2 flex items-center gap-1.5">
           <span class="text-rougeAlerte">■</span> STATUT OPÉRATIONNEL DE L'UNITÉ
         </h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" id="cartes-membres-synthese"></div>
@@ -456,7 +478,7 @@
           <h3 class="font-titre text-xs uppercase tracking-wider text-gray-200 flex items-center gap-1.5">
             <span class="text-amber-400">■</span> BILAN HEBDOMADAIRE DES PDS // CONTRÔLE DISCIPLINAIRE
           </h3>
-          <span class="text-[10px] font-terminal text-gray-500">1re semaine non conforme : avertissement // récidive : blâme automatique // absences exemptées</span>
+          <span class="text-[0.75rem] font-terminal text-gray-500">1re semaine non conforme : avertissement // récidive : blâme automatique // absences exemptées</span>
         </div>
         <div id="liste-bilans-pds" class="space-y-2"></div>
       </div>
@@ -500,15 +522,15 @@
             </div>
             <div>
               <label class="block uppercase text-gray-300 mb-1">Date civile (JJ/MM/AAAA)</label>
-              <input type="text" id="champ-date-mission" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-amber-300 rounded focus:border-red-500 outline-none touch-target">
+              <input type="date" id="champ-date-mission" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-amber-300 rounded focus:border-red-500 outline-none touch-target">
             </div>
           </div>
 
           <!-- VALIDATION COLLECTIVE PAR CASES À COCHER -->
           <div class="bg-panneauSous p-2.5 rounded border border-bordureLueur space-y-1.5">
             <div class="flex items-center justify-between">
-              <span class="text-amber-400 font-bold uppercase text-[11px]">👥 OPÉRATEURS DÉPLOYÉS ENSEMBLE (VALIDATION DE QUOTA COLLECTIVE) :</span>
-              <span class="text-gray-400 text-[10px]">Cochez les frères présents pour créditer leur quota</span>
+              <span class="text-amber-400 font-bold uppercase text-[0.8125rem]">👥 OPÉRATEURS DÉPLOYÉS ENSEMBLE (VALIDATION DE QUOTA COLLECTIVE) :</span>
+              <span class="text-gray-400 text-[0.75rem]">Cochez les frères présents pour créditer leur quota</span>
             </div>
             <div class="flex flex-wrap gap-4 pt-1" id="cases-membres-collectif">
               <label class="flex items-center space-x-1.5 cursor-pointer text-gray-200">
@@ -534,22 +556,21 @@
                 <option value="absent">ABSENT / MISSION SÉPARÉE</option>
               </select>
             </div>
-            <div id="champ-specialiste-conteneur"></div>
-            <div class="md:col-span-2">
+            <div>
               <label class="block uppercase text-gray-300 mb-1">PDS validée par ce rapport</label>
               <select id="champ-creneau-pds" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none touch-target">
                 <option value="18h">PDS 18H</option>
                 <option value="21h">PDS 21H</option>
                 <option value="aucune">AUCUNE (ce rapport ne compte pas comme PDS)</option>
               </select>
-              <p id="aide-creneau-pds" class="text-[10px] text-gray-500 mt-1"></p>
+              <p id="aide-creneau-pds" class="text-[0.75rem] text-gray-500 mt-1"></p>
             </div>
             <div id="bloc-option-archive-tech" class="hidden md:col-span-2 bg-panneauSous p-2.5 rounded border border-cyan-500/40">
               <label class="flex items-center space-x-2 cursor-pointer text-cyanTech">
                 <input type="checkbox" id="check-ajouter-archive" class="rounded bg-fondCarbone border-bordureTactique text-cyanTech focus:ring-0">
                 <span>💻 Ajouter ce rapport aux Archives de piratage</span>
               </label>
-              <p class="text-[10px] text-gray-500 mt-1">À cocher uniquement pour une interception ou un piratage. Sinon, le rapport reste seulement dans le registre des missions.</p>
+              <p class="text-[0.75rem] text-gray-500 mt-1">À cocher uniquement pour une interception ou un piratage. Sinon, le rapport reste seulement dans le registre des missions.</p>
             </div>
           </div>
 
@@ -572,7 +593,7 @@
       <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5">
         <div class="flex flex-wrap items-center justify-between gap-2.5 border-b border-bordureTactique pb-2.5 mb-3">
           <h3 class="font-titre text-xs uppercase tracking-wider text-gray-200 flex items-center gap-1.5">
-            <span class="text-amber-400">■</span> REGISTRE OFFICIEL DES RAPPORTS DE MISSION <span class="text-[10px] text-gray-500 normal-case font-terminal">(supprimés après 1 mois)</span>
+            <span class="text-amber-400">■</span> REGISTRE OFFICIEL DES RAPPORTS DE MISSION <span class="text-[0.75rem] text-gray-500 normal-case font-terminal">(supprimés après 1 mois)</span>
           </h3>
           <div class="flex items-center space-x-2 font-terminal">
             <span class="text-xs text-gray-400">Filtrer par opérateur :</span>
@@ -598,7 +619,7 @@
         <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 border-b border-bordureTactique pb-2.5">
           <div>
             <div class="flex items-center space-x-2">
-              <span class="px-2 py-0.5 bg-rougeKamino text-white text-[9px] font-titre font-black uppercase rounded">COMMANDEMENT SUPÉRIEUR</span>
+              <span class="px-2 py-0.5 bg-rougeKamino text-white text-[0.6875rem] font-titre font-black uppercase rounded">COMMANDEMENT SUPÉRIEUR</span>
               <span class="text-xs font-titre font-bold text-gray-100">AUTORITÉ DIRECTE DU SERGENT HUNTER</span>
             </div>
             <p class="text-xs font-terminal text-gray-300 mt-1">
@@ -706,14 +727,14 @@
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 class="font-titre font-bold text-xs sm:text-sm text-gray-100 uppercase tracking-wider">📈 REGISTRE D'ACTIVITÉ // PDS &amp; RAPPORTS</h2>
-            <p class="text-[10px] font-terminal text-gray-400">Historique conservé même après la suppression mensuelle des rapports de mission.</p>
+            <p class="text-[0.75rem] font-terminal text-gray-400">Historique conservé même après la suppression mensuelle des rapports de mission.</p>
           </div>
           <div class="flex flex-wrap items-center gap-2 font-terminal text-xs">
             <select id="filtre-periode-registre" class="bg-fondCarbone border border-bordureTactique text-gray-200 px-2 py-1.5 rounded">
               <option value="7">7 derniers jours</option>
               <option value="30" selected>30 derniers jours</option>
               <option value="90">90 derniers jours</option>
-              <option value="tout">Tout l'historique</option>
+              <option value="180">180 derniers jours</option>
             </select>
             <select id="filtre-operateur-registre" class="bg-fondCarbone border border-bordureTactique text-gray-200 px-2 py-1.5 rounded">
               <option value="tous">Toute la Bad Batch</option>
@@ -726,6 +747,7 @@
               <option value="tous">PDS et rapports</option>
               <option value="pds">PDS uniquement</option>
               <option value="rapport">Rapports uniquement</option>
+              <option value="correction">Corrections de PDS</option>
             </select>
           </div>
         </div>
@@ -738,7 +760,7 @@
           <h3 class="font-titre text-xs uppercase tracking-wider text-gray-200 flex items-center gap-1.5">
             <span class="text-vertViseur">■</span> COURBE DES PDS VALIDÉES
           </h3>
-          <div id="legende-registre" class="flex flex-wrap gap-3 text-[10px] font-terminal text-gray-300"></div>
+          <div id="legende-registre" class="flex flex-wrap gap-3 text-[0.75rem] font-terminal text-gray-300"></div>
         </div>
         <div id="courbe-pds-registre"></div>
       </div>
@@ -755,9 +777,47 @@
       <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5 font-terminal">
         <div class="flex items-center justify-between text-xs text-gray-400 border-b border-bordureTactique pb-2 mb-2.5">
           <span>JOURNAL DÉTAILLÉ : DATE, HEURE ET OPÉRATEUR</span>
-          <span id="compteur-registre-activite">0 entrée</span>
+          <span class="flex items-center gap-3"><span id="compteur-registre-activite">0 entrée</span><button id="bouton-export-registre" class="px-2.5 py-1 border border-cyan-500/50 hover:border-cyan-400 text-cyan-300 rounded bg-panneauSous">⬇ Exporter en CSV</button></span>
         </div>
         <div id="table-registre-activite" class="max-h-96 overflow-y-auto overflow-x-auto"></div>
+      </div>
+    </section>
+
+    <!-- 8. RECRUTEMENT (HUNTER UNIQUEMENT) -->
+    <section id="fenetre-recrutement" class="hidden space-y-4">
+      <div class="panneau-tactique p-3.5 rounded">
+        <h2 class="font-titre font-bold text-xs sm:text-sm text-gray-100 uppercase tracking-wider">🤝 RECRUTEMENT // LIENS RAPIDES</h2>
+        <p class="text-xs font-terminal text-gray-400">Raccourcis vers les documents de recrutement. Chaque lien s'ouvre dans un nouvel onglet.</p>
+      </div>
+      <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5">
+        <h3 class="font-titre text-xs uppercase tracking-wider text-gray-300 border-b border-bordureTactique pb-2 mb-3"><span class="text-amber-400">■</span> CANDIDATURES</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSe2oemwOnlIP083qXsrA__znVeQVWqLXUA3S5dKK7-kKsy1bg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" class="block bg-panneauSous border border-bordureTactique hover:border-amber-500/60 rounded p-3 transition group">
+            <div class="flex items-center gap-2 font-titre font-bold text-xs text-gray-100 uppercase"><span class="text-lg">📝</span>Formulaire de candidature<span class="ml-auto text-amber-400 group-hover:translate-x-0.5 transition">↗</span></div>
+            <p class="text-xs font-terminal text-gray-400 mt-1">Le formulaire que remplissent les candidats.</p>
+          </a>
+          <a href="https://docs.google.com/spreadsheets/d/1P6OU5bPurmd9_XYwgCAtUFjnLuumWEepwhn9w83AQRE/edit?resourcekey=&amp;gid=125751524#gid=125751524" target="_blank" rel="noopener noreferrer" class="block bg-panneauSous border border-bordureTactique hover:border-amber-500/60 rounded p-3 transition group">
+            <div class="flex items-center gap-2 font-titre font-bold text-xs text-gray-100 uppercase"><span class="text-lg">📥</span>Réponses de candidature<span class="ml-auto text-amber-400 group-hover:translate-x-0.5 transition">↗</span></div>
+            <p class="text-xs font-terminal text-gray-400 mt-1">Tableau des réponses reçues.</p>
+          </a>
+        </div>
+      </div>
+      <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5">
+        <h3 class="font-titre text-xs uppercase tracking-wider text-gray-300 border-b border-bordureTactique pb-2 mb-3"><span class="text-vertViseur">■</span> ÉVALUATION</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <a href="https://docs.google.com/document/d/15h3MPlHLTlVw5sFYiINWaYBW1bs0EHb8iXYmzWJLvpo/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="block bg-panneauSous border border-bordureTactique hover:border-amber-500/60 rounded p-3 transition group">
+            <div class="flex items-center gap-2 font-titre font-bold text-xs text-gray-100 uppercase"><span class="text-lg">📖</span>Bad Batch Théorique<span class="ml-auto text-amber-400 group-hover:translate-x-0.5 transition">↗</span></div>
+            <p class="text-xs font-terminal text-gray-400 mt-1">Document de référence pour la partie théorique.</p>
+          </a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLScJmtYBog9rrHfu6VnG4GQspDt0QMY38KWLDW8aOJadmTFYdg/viewform" target="_blank" rel="noopener noreferrer" class="block bg-panneauSous border border-bordureTactique hover:border-amber-500/60 rounded p-3 transition group">
+            <div class="flex items-center gap-2 font-titre font-bold text-xs text-gray-100 uppercase"><span class="text-lg">✅</span>Grille de notation<span class="ml-auto text-amber-400 group-hover:translate-x-0.5 transition">↗</span></div>
+            <p class="text-xs font-terminal text-gray-400 mt-1">Formulaire de notation des candidats.</p>
+          </a>
+          <a href="https://docs.google.com/spreadsheets/d/107n2OamFlQsSLSnk6D_0T8L8DoUVVmfgz7uTJ0mRSH4/edit?gid=1955593593#gid=1955593593" target="_blank" rel="noopener noreferrer" class="block bg-panneauSous border border-bordureTactique hover:border-amber-500/60 rounded p-3 transition group">
+            <div class="flex items-center gap-2 font-titre font-bold text-xs text-gray-100 uppercase"><span class="text-lg">🏁</span>Résultats<span class="ml-auto text-amber-400 group-hover:translate-x-0.5 transition">↗</span></div>
+            <p class="text-xs font-terminal text-gray-400 mt-1">Tableau des résultats de l'évaluation.</p>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -777,14 +837,14 @@
       </div>
       <form id="formulaire-connexion-bos" class="space-y-3 font-terminal text-xs">
         <div>
-          <label class="block text-[11px] text-gray-300 mb-1">Identifiant d'inspection :</label>
+          <label class="block text-[0.8125rem] text-gray-300 mb-1">Identifiant d'inspection :</label>
           <input type="text" id="saisie-bos-id" required placeholder="Identifiant B.O.S" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-orEtatMajor uppercase rounded outline-none focus:border-orEtatMajor">
         </div>
         <div>
-          <label class="block text-[11px] text-gray-300 mb-1">Mot de passe de sécurité B.O.S :</label>
+          <label class="block text-[0.8125rem] text-gray-300 mb-1">Mot de passe de sécurité B.O.S :</label>
           <input type="password" id="saisie-bos-mdp" required placeholder="Mot de passe" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded outline-none focus:border-orEtatMajor">
         </div>
-        <div id="erreur-connexion-bos" class="hidden text-[10px] text-red-400 bg-red-950/70 p-2 rounded border border-red-800">
+        <div id="erreur-connexion-bos" class="hidden text-[0.75rem] text-red-400 bg-red-950/70 p-2 rounded border border-red-800">
           Accès refusé. Identifiant ou clé B.O.S non valide.
         </div>
         <div class="flex justify-end space-x-2 pt-2 border-t border-bordureTactique">
@@ -802,7 +862,7 @@
         <span class="text-2xl">⚠️</span>
         <div>
           <h3 class="font-titre text-xs sm:text-sm font-black uppercase tracking-wider">ORDRE DISCIPLINAIRE DU COMMANDEMENT</h3>
-          <div class="text-[10px] font-terminal text-gray-300">SERGENT HUNTER // SANCTION OFFICIELLE</div>
+          <div class="text-[0.75rem] font-terminal text-gray-300">SERGENT HUNTER // SANCTION OFFICIELLE</div>
         </div>
       </div>
       <div class="space-y-2 font-terminal text-xs">
@@ -811,12 +871,12 @@
           <span id="notif-blame-niveau" class="font-titre font-black text-rougeAlerte text-sm">BLÂME 1 / 3</span>
         </div>
         <div>
-          <span class="text-gray-400 block text-[10px] uppercase">Justification consignée par le Sergent Hunter :</span>
+          <span class="text-gray-400 block text-[0.75rem] uppercase">Justification consignée par le Sergent Hunter :</span>
           <div id="notif-blame-motif" class="bg-fondCarbone border border-bordureTactique p-2.5 rounded text-gray-100 text-xs mt-1 leading-relaxed">
             ...
           </div>
         </div>
-        <div class="text-[10px] text-gray-400 text-right">
+        <div class="text-[0.75rem] text-gray-400 text-right">
           Date d'enregistrement : <span id="notif-blame-date" class="text-amber-300">...</span>
         </div>
       </div>
@@ -837,15 +897,15 @@
       </div>
       <form id="formulaire-assigner-blame" class="space-y-3 font-terminal text-xs">
         <input type="hidden" id="blame-membre-cible-id">
-        <div class="bg-red-950/40 p-2 rounded border border-red-800 text-red-200 text-[11px]">
+        <div class="bg-red-950/40 p-2 rounded border border-red-800 text-red-200 text-[0.8125rem]">
           ⚠️ Au bout de 3 blâmes, le membre est suspendu pour mesure disciplinaire.
         </div>
         <div>
-          <label class="block text-[11px] text-gray-300 mb-1">Opérateur sanctionné :</label>
+          <label class="block text-[0.8125rem] text-gray-300 mb-1">Opérateur sanctionné :</label>
           <input type="text" id="blame-membre-cible-nom" readonly class="w-full bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-gray-300 rounded font-bold uppercase">
         </div>
         <div>
-          <label class="block text-[11px] text-gray-300 mb-1">Justification obligatoire du Sergent Hunter * :</label>
+          <label class="block text-[0.8125rem] text-gray-300 mb-1">Justification obligatoire du Sergent Hunter * :</label>
           <textarea id="blame-motif-texte" required rows="3" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded outline-none focus:border-rougeAlerte" placeholder="Ex: Ordre de tir prématuré, manquement au quota hebdomadaire..."></textarea>
         </div>
         <div class="flex justify-end space-x-2 pt-2 border-t border-bordureTactique">
@@ -866,11 +926,11 @@
       <form id="formulaire-gerer-absence" class="space-y-3 font-terminal text-xs">
         <input type="hidden" id="absence-membre-id">
         <div>
-          <label class="block text-[11px] text-gray-300 mb-1">Opérateur concerné :</label>
+          <label class="block text-[0.8125rem] text-gray-300 mb-1">Opérateur concerné :</label>
           <input type="text" id="absence-membre-nom" readonly class="w-full bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-gray-300 rounded font-bold uppercase">
         </div>
         <div>
-          <label class="block text-[11px] text-gray-300 mb-1">Statut d'activité :</label>
+          <label class="block text-[0.8125rem] text-gray-300 mb-1">Statut d'activité :</label>
           <select id="absence-statut-select" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-amber-400 outline-none">
             <option value="actif">🟢 ACTIF / PRÉSENT AU COMBAT</option>
             <option value="absent">🟠 DÉTACHÉ / EN ABSENCE DÉCLARÉE</option>
@@ -879,16 +939,16 @@
         <div id="champs-details-absence" class="space-y-2">
           <div class="grid grid-cols-2 gap-2">
             <div>
-              <label class="block text-[10px] text-gray-400 mb-0.5">Date de début (JJ/MM/AAAA) :</label>
-              <input type="text" id="absence-date-debut" placeholder="Ex: 08/10/2026" class="w-full bg-fondCarbone border border-bordureTactique px-2.5 py-1.5 text-gray-100 rounded focus:border-amber-400 outline-none">
+              <label class="block text-[0.75rem] text-gray-400 mb-0.5">Date de début (JJ/MM/AAAA) :</label>
+              <input type="date" id="absence-date-debut" class="w-full bg-fondCarbone border border-bordureTactique px-2.5 py-1.5 text-gray-100 rounded focus:border-amber-400 outline-none">
             </div>
             <div>
-              <label class="block text-[10px] text-gray-400 mb-0.5">Date de fin prévue (JJ/MM/AAAA) :</label>
-              <input type="text" id="absence-date-fin" placeholder="Ex: 15/10/2026" class="w-full bg-fondCarbone border border-bordureTactique px-2.5 py-1.5 text-gray-100 rounded focus:border-amber-400 outline-none">
+              <label class="block text-[0.75rem] text-gray-400 mb-0.5">Date de fin prévue (JJ/MM/AAAA) :</label>
+              <input type="date" id="absence-date-fin" class="w-full bg-fondCarbone border border-bordureTactique px-2.5 py-1.5 text-gray-100 rounded focus:border-amber-400 outline-none">
             </div>
           </div>
           <div>
-            <label class="block text-[10px] text-gray-400 mb-0.5">Motif tactique de l'absence / mission détachée :</label>
+            <label class="block text-[0.75rem] text-gray-400 mb-0.5">Motif tactique de l'absence / mission détachée :</label>
             <textarea id="absence-motif" rows="2" placeholder="Précisez la raison de l'indisponibilité..." class="w-full bg-fondCarbone border border-bordureTactique px-2.5 py-1.5 text-gray-100 rounded focus:border-amber-400 outline-none"></textarea>
           </div>
         </div>
@@ -926,14 +986,14 @@
       </div>
       <form id="formulaire-nouveau-mdp" class="space-y-2.5">
         <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Mot de passe actuel :</label>
+          <label class="block text-[0.8125rem] font-terminal text-gray-300 mb-1">Mot de passe actuel :</label>
           <input type="password" id="champ-mot-de-passe-actuel" required class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none focus:border-amber-400">
         </div>
         <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Nouveau mot de passe de sécurité :</label>
+          <label class="block text-[0.8125rem] font-terminal text-gray-300 mb-1">Nouveau mot de passe de sécurité :</label>
           <input type="password" id="champ-nouveau-mot-de-passe" required class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-amber-300 rounded outline-none focus:border-amber-400">
         </div>
-        <div id="erreur-changement-mot-de-passe" class="hidden text-[10px] font-terminal text-red-400 bg-red-950/70 p-2 rounded border border-red-800"></div>
+        <div id="erreur-changement-mot-de-passe" class="hidden text-[0.75rem] font-terminal text-red-400 bg-red-950/70 p-2 rounded border border-red-800"></div>
         <div class="flex justify-end space-x-2 pt-1.5">
           <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-xs font-terminal text-gray-400 rounded" data-modale="boite-changer-mot-de-passe">Annuler</button>
           <button type="submit" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold text-xs uppercase rounded">Mettre à jour</button>
@@ -952,41 +1012,31 @@
       <form id="formulaire-dossier-militaire" class="space-y-2.5 font-terminal text-xs">
         <input type="hidden" id="identifiant-membre-edite">
         <div>
-          <label class="block text-[11px] text-gray-300 mb-1">Date d'incorporation dans l'unité (JJ/MM/AAAA) :</label>
-          <input type="text" id="champ-date-incorporation" required placeholder="Exemple : 15/01/2024" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-amber-300 rounded outline-none">
+          <label class="block text-[0.8125rem] text-gray-300 mb-1">Date d'incorporation dans l'unité (JJ/MM/AAAA) :</label>
+          <input type="date" id="champ-date-incorporation" required class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-amber-300 rounded outline-none">
         </div>
 
         <!-- STEAM ID 64 & DISCORD (EXCLUSIF HUNTER) -->
         <div class="bg-panneauSous p-2.5 rounded border border-bordureLueur space-y-2">
-          <div class="text-[10px] font-titre text-amber-400 uppercase font-bold">Identifiants de Communication (Privé Hunter) :</div>
+          <div class="text-[0.75rem] font-titre text-amber-400 uppercase font-bold">Identifiants de Communication (Privé Hunter) :</div>
           <div>
-            <label class="block text-[10px] text-gray-400 mb-0.5">Steam ID 64 :</label>
+            <label class="block text-[0.75rem] text-gray-400 mb-0.5">Steam ID 64 :</label>
             <input type="text" id="champ-steam-id-64" placeholder="76561198..." class="w-full bg-fondCarbone border border-bordureTactique px-2.5 py-1.5 text-gray-100 rounded outline-none focus:border-amber-400">
           </div>
           <div>
-            <label class="block text-[10px] text-gray-400 mb-0.5">Compte Discord :</label>
+            <label class="block text-[0.75rem] text-gray-400 mb-0.5">Compte Discord :</label>
             <input type="text" id="champ-compte-discord" placeholder="pseudo#0000 ou @pseudo" class="w-full bg-fondCarbone border border-bordureTactique px-2.5 py-1.5 text-cyanTech rounded outline-none focus:border-cyanTech">
           </div>
         </div>
         
-        <div class="bg-fondCarbone p-2.5 rounded border border-bordureTactique">
-          <label class="block text-[11px] text-amber-400 mb-1" id="libelle-stat-edition">Compteur statistique global :</label>
-          <div class="flex items-center space-x-2">
-            <input type="number" id="champ-stat-globale" min="0" required class="flex-grow bg-panneauSombre border border-bordureTactique px-3 py-2 text-white rounded outline-none">
-            <button type="button" id="bouton-reset-stat-unique" class="px-2.5 py-2 bg-red-950/70 border border-rougeAlerte text-rougeAlerte hover:bg-rougeKamino hover:text-white rounded transition">
-              Remettre à 0
-            </button>
-          </div>
-        </div>
-
         <div id="bloc-edition-pds" class="bg-fondCarbone p-2.5 rounded border border-bordureTactique">
-          <label class="block text-[11px] text-amber-400 mb-1">PDS de la semaine en cours :</label>
+          <label class="block text-[0.8125rem] text-amber-400 mb-1">PDS de la semaine en cours :</label>
           <input type="number" id="champ-pds-semaine" min="0" max="99" class="w-full bg-panneauSombre border border-bordureTactique px-3 py-2 text-white rounded outline-none">
-          <p class="text-[10px] text-gray-500 mt-1">Corrige le compteur hebdomadaire (ex. : doublon ou oubli). Il est remis à 0 à la clôture de semaine.</p>
+          <p class="text-[0.75rem] text-gray-500 mt-1">Corrige le compteur hebdomadaire (ex. : doublon ou oubli). Il est remis à 0 à la clôture de semaine.</p>
         </div>
 
         <div>
-          <label class="block text-[11px] text-gray-300 mb-1">Notes de commandement &amp; évaluation tactique :</label>
+          <label class="block text-[0.8125rem] text-gray-300 mb-1">Notes de commandement &amp; évaluation tactique :</label>
           <textarea id="champ-notes-commandement" rows="2" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded outline-none"></textarea>
         </div>
         <div class="flex justify-end space-x-2 pt-1.5">
@@ -1001,24 +1051,25 @@
   <div id="boite-nouveau-plan" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-panneauSombre border-2 border-amber-500 biseau-plaque max-w-md w-full p-4 shadow-2xl">
       <div class="flex items-center justify-between border-b border-bordureTactique pb-2 mb-3">
-        <h3 class="font-titre text-xs font-bold text-amber-400 uppercase">ENREGISTRER UN NOUVEAU PLAN D'ENGAGEMENT</h3>
+        <h3 id="titre-modale-plan" class="font-titre text-xs font-bold text-amber-400 uppercase">ENREGISTRER UN NOUVEAU PLAN D'ENGAGEMENT</h3>
         <button type="button" class="btn-fermer-modale text-gray-400 hover:text-white" data-modale="boite-nouveau-plan">✕</button>
       </div>
       <form id="formulaire-nouveau-plan" class="space-y-2.5">
+        <input type="hidden" id="champ-id-plan">
         <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Code tactique (ex: PLAN 33)</label>
+          <label class="block text-[0.8125rem] font-terminal text-gray-300 mb-1">Code tactique (ex: PLAN 33)</label>
           <input type="text" id="champ-code-plan" required placeholder="PLAN XX" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-amber-300 rounded outline-none uppercase">
         </div>
         <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Objectif tactique principal</label>
+          <label class="block text-[0.8125rem] font-terminal text-gray-300 mb-1">Objectif tactique principal</label>
           <input type="text" id="champ-cible-plan" required placeholder="Exemple : Neutralisation de générateur à distance" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none">
         </div>
         <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Opérateurs engagés</label>
+          <label class="block text-[0.8125rem] font-terminal text-gray-300 mb-1">Opérateurs engagés</label>
           <input type="text" id="champ-meneurs-plan" required placeholder="Exemple : Crosshair &amp; Tech" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none">
         </div>
         <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Description de la manœuvre</label>
+          <label class="block text-[0.8125rem] font-terminal text-gray-300 mb-1">Description de la manœuvre</label>
           <textarea id="champ-description-plan" required rows="3" placeholder="Étapes précises de déroulement du plan..." class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none"></textarea>
         </div>
         <div class="flex justify-end space-x-2 pt-1.5">
@@ -1038,7 +1089,7 @@
       </div>
       <form id="formulaire-reglage-quota" class="space-y-2.5">
         <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">PDS requises / sem. (subordonnés) :</label>
+          <label class="block text-[0.8125rem] font-terminal text-gray-300 mb-1">PDS requises / sem. (subordonnés) :</label>
           <input type="number" id="champ-valeur-quota" min="1" max="15" required class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-amber-300 rounded outline-none">
         </div>
         <div class="flex justify-end space-x-2 pt-1.5">
@@ -1059,14 +1110,14 @@
       <form id="formulaire-reset-mdp-membre" class="space-y-2.5">
         <input type="hidden" id="reset-mdp-membre-id">
         <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Opérateur ciblé :</label>
+          <label class="block text-[0.8125rem] font-terminal text-gray-300 mb-1">Opérateur ciblé :</label>
           <input type="text" id="reset-mdp-membre-nom" readonly class="w-full bg-fondCarbone border border-bordureTactique px-3 py-1.5 text-xs font-terminal text-gray-300 rounded font-bold uppercase">
         </div>
         <div>
-          <label class="block text-[11px] font-terminal text-gray-300 mb-1">Nouveau mot de passe :</label>
+          <label class="block text-[0.8125rem] font-terminal text-gray-300 mb-1">Nouveau mot de passe :</label>
           <input type="text" id="reset-mdp-membre-valeur" autocomplete="off" placeholder="4 caractères minimum" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-amber-300 rounded outline-none focus:border-amber-400">
         </div>
-        <div id="erreur-reset-mdp-membre" class="hidden text-[10px] font-terminal text-red-400 bg-red-950/70 p-2 rounded border border-red-800"></div>
+        <div id="erreur-reset-mdp-membre" class="hidden text-[0.75rem] font-terminal text-red-400 bg-red-950/70 p-2 rounded border border-red-800"></div>
         <div class="flex justify-end space-x-2 pt-1.5">
           <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-xs font-terminal text-gray-400 rounded" data-modale="boite-reset-mdp-membre">Annuler</button>
           <button type="submit" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold text-xs uppercase rounded">Appliquer</button>
@@ -1082,7 +1133,7 @@
         <span class="text-2xl">⚠️</span>
         <div>
           <h3 class="font-titre text-xs sm:text-sm font-black uppercase tracking-wider">AVERTISSEMENT DU COMMANDEMENT // PDS</h3>
-          <div class="text-[10px] font-terminal text-gray-300">SERGENT HUNTER // CONTRÔLE HEBDOMADAIRE</div>
+          <div class="text-[0.75rem] font-terminal text-gray-300">SERGENT HUNTER // CONTRÔLE HEBDOMADAIRE</div>
         </div>
       </div>
       <div class="space-y-2 font-terminal text-xs">
@@ -1095,7 +1146,7 @@
           Si la situation se reproduit la semaine prochaine, un <strong class="text-rougeAlerte">blâme sera enregistré automatiquement</strong>.
           Une absence déclarée dans le carnet vous exempte.
         </p>
-        <div class="text-[10px] text-gray-400 text-right">Date de l'avertissement : <span id="avert-pds-date" class="text-amber-300">...</span></div>
+        <div class="text-[0.75rem] text-gray-400 text-right">Date de l'avertissement : <span id="avert-pds-date" class="text-amber-300">...</span></div>
       </div>
       <div class="flex justify-end pt-3 border-t border-bordureTactique mt-3">
         <button id="bouton-accuser-avertissement-pds" class="w-full py-2 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold text-xs uppercase biseau-bouton transition">
@@ -1112,7 +1163,7 @@
         <span class="text-2xl">📋</span>
         <div>
           <h3 class="font-titre text-xs sm:text-sm font-black uppercase tracking-wider">RAPPORT DISCIPLINAIRE AUTOMATIQUE // PDS</h3>
-          <div class="text-[10px] font-terminal text-gray-300">Sanctions appliquées à la clôture de semaine</div>
+          <div class="text-[0.75rem] font-terminal text-gray-300">Sanctions appliquées à la clôture de semaine</div>
         </div>
       </div>
       <div id="bilan-hunter-liste" class="overflow-y-auto flex-grow space-y-2 font-terminal text-xs pr-1"></div>
@@ -1141,17 +1192,17 @@
     </div>
   </div>
 
-  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 2.8) -->
+  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.0) -->
   <footer class="border-t border-bordureTactique bg-fondCarbone/95 py-2.5 text-xs font-terminal text-gray-500 fixed bottom-0 left-0 right-0 z-30 shadow-2xl backdrop-blur">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5">
+    <div class="max-w-screen-2xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5">
       <div class="text-gray-400 flex items-center gap-2">
         <span class="inline-block w-2 h-2 rounded-full bg-rougeAlerte animate-ping"></span>
         <span class="truncate">FORCE CLONE 99 // UNITÉ BAD BATCH // CONSOLE DU MARAUDEUR</span>
       </div>
       <div class="flex items-center gap-3">
         <span class="text-gray-500 hidden md:inline">GRANDE ARMÉE DE LA RÉPUBLIQUE</span>
-        <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/60 text-amber-300 text-[11px] font-titre font-bold rounded tracking-wider shadow-[0_0_10px_rgba(245,158,11,0.25)]">
-          FIRMWARE MARAUDEUR // BUILD 2.8
+        <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/60 text-amber-300 text-[0.8125rem] font-titre font-bold rounded tracking-wider shadow-[0_0_10px_rgba(245,158,11,0.25)]">
+          FIRMWARE MARAUDEUR // BUILD 3.0
         </span>
       </div>
     </div>
@@ -1171,7 +1222,12 @@
       deleteDoc,
       increment,
       FieldPath,
-      runTransaction
+      runTransaction,
+      query,
+      where,
+      orderBy,
+      limit,
+      getDocs
     } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     (function initialiserDatapadBadBatch() {
@@ -1210,6 +1266,17 @@
         const tamponHachage = await crypto.subtle.digest('SHA-256', donnees);
         const tableauOctets = Array.from(new Uint8Array(tamponHachage));
         return tableauOctets.map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+
+      // Conversion JJ/MM/AAAA (stockage) <-> AAAA-MM-JJ (sélecteur de date du navigateur)
+      function civilVersIso(chaine) {
+        const d = analyserDateCivile(chaine);
+        if (!d) return '';
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      }
+      function isoVersCivil(iso) {
+        const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+        return m ? `${m[3]}/${m[2]}/${m[1]}` : '';
       }
 
       function dateAujourdhuiCivil() {
@@ -1348,8 +1415,6 @@
           armure: 'Armure Katarn modifiée avec capteurs thermiques',
           notes: 'Perception sensorielle des fréquences électromagnétiques. Maîtrise tactique absolue, autorité de commandement et coordination de toute l\'escouade.',
           compteurSemaine: 0,
-          libelleStatistique: 'Missions coordonnées',
-          totalStatistique: 48,
           blames: 0,
           blamesHistorique: [],
           dernierBlameVu: 0,
@@ -1378,8 +1443,6 @@
           armure: 'Combinaison tactique légère intégrant un processeur de calcul',
           notes: 'Traitement analytique ultrarapide. Neutralisation et dérivation des systèmes ennemis. Surveillance du réseau central du Maraudeur.',
           compteurSemaine: 0,
-          libelleStatistique: 'Terminaux et archives piratées',
-          totalStatistique: 156,
           blames: 0,
           blamesHistorique: [],
           dernierBlameVu: 0,
@@ -1408,8 +1471,6 @@
           armure: 'Plastron d\'assaut lourd et casque renforcé anti-blast',
           notes: 'Capacité physique surdéveloppée. Maîtrise des explosifs thermiques et des charges lourdes. Maintenir l\'inventaire des détonateurs.',
           compteurSemaine: 0,
-          libelleStatistique: 'Chars MTT & blindés détruits',
-          totalStatistique: 89,
           blames: 0,
           blamesHistorique: [],
           dernierBlameVu: 0,
@@ -1438,8 +1499,6 @@
           armure: 'Armure furtive profilée noire mate anti-reflets',
           notes: 'Précision balistique naturelle sans assistance télémétrique. Rigueur absolue et isolement tactique. Entretien continu du fusil 773.',
           compteurSemaine: 0,
-          libelleStatistique: 'Tirs de précision à la tête',
-          totalStatistique: 342,
           blames: 0,
           blamesHistorique: [],
           dernierBlameVu: 0,
@@ -1499,6 +1558,63 @@
           cible: 'Protocole de ralliement et de sacrifice de l\'unité', 
           chefDeManoeuvre: 'Tous les opérateurs', 
           description: 'Protocole ultime de sauvegarde de l\'escouade. Accomplir la mission et donner sa vie pour assurer la survie des frères d\'armes.' 
+        },
+
+        {
+          id: 'p12',
+          code: 'PLAN 12',
+          cible: "Abordage d'un croiseur séparatiste",
+          chefDeManoeuvre: 'Hunter & Tech',
+          description: "Approche furtive du Havoc Marauder le long de la coque. Wrecker perce le sas, Tech prend la passerelle et verrouille les systèmes d'armement, Crosshair couvre le hangar depuis une coursive haute, Hunter dirige la progression pont par pont."
+        },
+        {
+          id: 'p18',
+          code: 'PLAN 18',
+          cible: 'Décapitation de la chaîne de commandement droïde',
+          chefDeManoeuvre: 'Crosshair & Tech',
+          description: "Tech repère le droïde de commandement ou le relais qui coordonne les bataillons. Crosshair l'abat à longue distance : les droïdes perdent leur coordination, Hunter lance l'assaut dans la confusion."
+        },
+        {
+          id: 'p31',
+          code: 'PLAN 31',
+          cible: "Infiltration sous uniforme ennemi",
+          chefDeManoeuvre: 'Hunter & Tech',
+          description: "Hunter et Tech progressent sous uniformes et codes d'identification falsifiés par Tech jusqu'à l'objectif. Wrecker et Crosshair restent en réserve, prêts à forcer l'extraction si la couverture saute."
+        },
+        {
+          id: 'p44',
+          code: 'PLAN 44',
+          cible: 'Tenir la position face à une vague de droïdes',
+          chefDeManoeuvre: 'Wrecker',
+          description: "Wrecker tient le goulet d'étranglement au corps-à-corps et au canon répéteur. Crosshair élimine les droïdes lourds depuis le point haut, Tech pose des charges de retardement, Hunter coordonne le repli par paliers."
+        },
+        {
+          id: 'p51',
+          code: 'PLAN 51',
+          cible: "Extraction d'otages ou de civils",
+          chefDeManoeuvre: 'Hunter',
+          description: "Hunter localise les cibles par signature électromagnétique et ouvre le chemin. Tech neutralise portes et verrous, Wrecker escorte les civils jusqu'au vaisseau, Crosshair verrouille les accès. La sécurité des civils passe avant l'objectif."
+        },
+        {
+          id: 'p63',
+          code: 'PLAN 63',
+          cible: "Neutralisation d'une puce inhibitrice sur un frère clone",
+          chefDeManoeuvre: 'Tech & Hunter',
+          description: "Hunter et Wrecker immobilisent le frère affecté sans le blesser. Tech scanne l'implant et désactive ou retire la puce inhibitrice. Crosshair assure la couverture pendant l'opération et le transport sécurisé."
+        },
+        {
+          id: 'p71',
+          code: 'PLAN 71',
+          cible: 'Embuscade de convoi',
+          chefDeManoeuvre: 'Crosshair & Wrecker',
+          description: "Crosshair neutralise le véhicule de tête pour bloquer la colonne, Wrecker coupe la route avec une charge de brèche, Tech brouille les communications du convoi, Hunter donne le signal et verrouille la cible prioritaire."
+        },
+        {
+          id: 'p88',
+          code: 'PLAN 88',
+          cible: "Détournement d'une navette ennemie",
+          chefDeManoeuvre: 'Tech & Hunter',
+          description: "Hunter et Wrecker prennent le poste de pilotage pendant que Tech reprogramme le transpondeur et les codes d'accès. Crosshair dégage la zone d'envol. La navette sert à l'infiltration ou à l'exfiltration de l'escouade."
         }
       ];
 
@@ -1737,7 +1853,7 @@
         const n = m.strikesPDS || 0;
         if (!n) return '';
         const texte = n === 1 ? '⚠ AVERTISSEMENT PDS EN COURS' : `⚠ ${n} SEMAINES PDS NON CONFORMES D'AFFILÉE`;
-        return `<div class="px-2 py-1 rounded border border-amber-600 bg-amber-950/70 text-amber-300 font-terminal text-[10px] font-bold">${texte}</div>`;
+        return `<div class="px-2 py-1 rounded border border-amber-600 bg-amber-950/70 text-amber-300 font-terminal text-[0.75rem] font-bold">${texte}</div>`;
       }
 
       function afficherBilansPds() {
@@ -1759,14 +1875,14 @@
           div.className = 'bg-panneauSous border border-bordureTactique p-2.5 rounded text-xs font-terminal';
           const puces = (b.resultats || []).map(r => {
             const st = STYLES_STATUT_PDS[r.statut] || STYLES_STATUT_PDS.ok;
-            return `<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded border ${st.classes} text-[10px] font-bold">
+            return `<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded border ${st.classes} text-[0.75rem] font-bold">
               ${echapperTexteHTML(r.nom)} : ${r.effectuees} / ${r.quota} — ${st.texte}${r.statut === 'blame' ? ` (n°${r.blamesApres})` : ''}
             </span>`;
           }).join('');
           div.innerHTML = `
             <div class="flex items-center justify-between mb-1.5">
               <span class="text-gray-200 font-bold uppercase">Semaine ${echapperTexteHTML(libelleSemaine(b.semaine))}</span>
-              <span class="text-[10px] ${b.sanctions > 0 ? 'text-amber-400' : 'text-vertViseur'}">${b.sanctions > 0 ? `${b.sanctions} sanction(s)` : 'Aucune sanction'}</span>
+              <span class="text-[0.75rem] ${b.sanctions > 0 ? 'text-amber-400' : 'text-vertViseur'}">${b.sanctions > 0 ? `${b.sanctions} sanction(s)` : 'Aucune sanction'}</span>
             </div>
             <div class="flex flex-wrap gap-1.5">${puces}</div>
           `;
@@ -1826,10 +1942,10 @@
               const st = STYLES_STATUT_PDS[r.statut];
               return `<div class="flex items-center justify-between gap-2">
                 <span class="text-gray-100 font-bold uppercase">${echapperTexteHTML(r.nom)} <span class="text-gray-400 font-normal">(${r.effectuees} / ${r.quota} PDS)</span></span>
-                <span class="px-1.5 py-0.5 rounded border ${st.classes} text-[10px] font-bold">${st.texte}${r.statut === 'blame' ? ` — blâme n°${r.blamesApres}/3` : ''}</span>
+                <span class="px-1.5 py-0.5 rounded border ${st.classes} text-[0.75rem] font-bold">${st.texte}${r.statut === 'blame' ? ` — blâme n°${r.blamesApres}/3` : ''}</span>
               </div>`;
             }).join('');
-          bloc.innerHTML = `<div class="text-amber-400 font-bold uppercase text-[11px]">Semaine ${echapperTexteHTML(libelleSemaine(b.semaine))}</div>${lignes}`;
+          bloc.innerHTML = `<div class="text-amber-400 font-bold uppercase text-[0.8125rem]">Semaine ${echapperTexteHTML(libelleSemaine(b.semaine))}</div>${lignes}`;
           conteneur.appendChild(bloc);
         });
 
@@ -1915,7 +2031,7 @@
           }
         }, err => console.warn(err));
 
-        const refMissions = collection(baseDeDonnees, 'missions');
+        const refMissions = query(collection(baseDeDonnees, 'missions'), where('dateCreation', '>=', Date.now() - 35 * 24 * 60 * 60 * 1000));
         onSnapshot(refMissions, snap => {
           const liste = [];
           snap.forEach(d => liste.push({ id: d.id, ...d.data() }));
@@ -1927,22 +2043,28 @@
 
         const refPlans = collection(baseDeDonnees, 'plans');
         onSnapshot(refPlans, snap => {
-          if (snap.empty) {
-            if (!snap.metadata.fromCache) {
-              PLANS_CANONIQUES.forEach(p => setDoc(doc(baseDeDonnees, 'plans', p.id), p));
-            }
-          } else {
-            const listePlans = [];
-            snap.forEach(d => listePlans.push({ id: d.id, ...d.data() }));
-            if (!listePlans.some(p => p.code === 'PLAN 0/0')) {
-              listePlans.unshift(PLANS_CANONIQUES[0]);
-            }
-            etat.plans = listePlans;
-            if (etat.operateurConnecte) afficherVuePlans();
+          const existants = new Set();
+          const listePlans = [];
+          snap.forEach(d => { existants.add(d.id); listePlans.push({ ...d.data(), id: d.id }); });
+
+          // Ajoute les plans de référence manquants (y compris les nouveaux). Les plans supprimés restent marqués « supprime ».
+          if (!snap.metadata.fromCache) {
+            PLANS_CANONIQUES.forEach(p => {
+              if (!existants.has(p.id)) {
+                setDoc(doc(baseDeDonnees, 'plans', p.id), p).catch(err => console.warn("Création plan :", err));
+              }
+            });
           }
+
+          const visibles = listePlans.filter(p => !p.supprime);
+          if (!visibles.some(p => p.code === 'PLAN 0/0')) visibles.unshift({ ...PLANS_CANONIQUES[0] });
+          const rang = (p) => { const k = PLANS_CANONIQUES.findIndex(c => c.id === p.id); return k >= 0 ? k : 1000; };
+          visibles.sort((a, b) => rang(a) - rang(b) || (a.dateCreation || 0) - (b.dateCreation || 0));
+          etat.plans = visibles;
+          if (etat.operateurConnecte) afficherVuePlans();
         }, err => console.warn(err));
 
-        const refArchives = collection(baseDeDonnees, 'archivesPiratees');
+        const refArchives = query(collection(baseDeDonnees, 'archivesPiratees'), orderBy('dateCreation', 'desc'), limit(200));
         onSnapshot(refArchives, snap => {
           const liste = [];
           snap.forEach(d => liste.push({ id: d.id, ...d.data() }));
@@ -1951,7 +2073,7 @@
           if (etat.operateurConnecte) afficherVueArchives();
         }, err => console.warn(err));
 
-        const refBilans = collection(baseDeDonnees, 'bilansPDS');
+        const refBilans = query(collection(baseDeDonnees, 'bilansPDS'), orderBy('dateCreation', 'desc'), limit(8));
         onSnapshot(refBilans, snap => {
           const liste = [];
           snap.forEach(d => liste.push({ id: d.id, ...d.data() }));
@@ -2018,7 +2140,7 @@
           div.className = 'p-2 bg-fondCarbone border border-bordureTactique rounded text-xs font-terminal';
           div.innerHTML = `
             <div class="text-amber-400 font-bold truncate">${echapperTexteHTML(eq.nom)}</div>
-            <div class="text-[10px] text-gray-400 truncate">${echapperTexteHTML(eq.desc)}</div>
+            <div class="text-[0.75rem] text-gray-400 truncate">${echapperTexteHTML(eq.desc)}</div>
           `;
           conteneurEquip.appendChild(div);
         });
@@ -2109,10 +2231,10 @@
           blocFormRapport.classList.add('hidden'); // Lecture seule
 
           mentionCentre.textContent = "INSPECTION SPÉCIALE // ÉTAT-MAJOR B.O.S";
-          mentionCentre.className = "px-2.5 py-1 bg-panneauSombre border border-orEtatMajor text-orEtatMajor text-[10px] font-terminal uppercase rounded tracking-widest";
+          mentionCentre.className = "px-2.5 py-1 bg-panneauSombre border border-orEtatMajor text-orEtatMajor text-[0.75rem] font-terminal uppercase rounded tracking-widest";
           titreHud.textContent = "BUREAU OPS SPÉCIALES";
           badgeHud.textContent = "SUPERVISION B.O.S";
-          badgeHud.className = "px-1.5 py-px bg-amber-500/15 text-orEtatMajor text-[9px] font-terminal border border-orEtatMajor/40 uppercase rounded-sm";
+          badgeHud.className = "px-1.5 py-px bg-amber-500/15 text-orEtatMajor text-[0.6875rem] font-terminal border border-orEtatMajor/40 uppercase rounded-sm";
         } else {
           // Opérateur Clone Force 99 standard
           const op = etat.operateurs[etat.operateurConnecte];
@@ -2128,10 +2250,10 @@
           blocFormRapport.classList.remove('hidden');
 
           mentionCentre.textContent = "CONSOLE DU HAVOC MARAUDER // SEC-NET 99";
-          mentionCentre.className = "px-2.5 py-1 bg-panneauSombre border border-bordureTactique text-gray-400 text-[10px] font-terminal uppercase rounded tracking-widest";
+          mentionCentre.className = "px-2.5 py-1 bg-panneauSombre border border-bordureTactique text-gray-400 text-[0.75rem] font-terminal uppercase rounded tracking-widest";
           titreHud.textContent = "FORCE CLONE 99";
           badgeHud.textContent = "BAD BATCH";
-          badgeHud.className = "px-1.5 py-px bg-ambreArmement/15 text-ambreArmement text-[9px] font-terminal border border-ambreArmement/30 uppercase rounded-sm";
+          badgeHud.className = "px-1.5 py-px bg-ambreArmement/15 text-ambreArmement text-[0.6875rem] font-terminal border border-ambreArmement/30 uppercase rounded-sm";
 
           if (etat.operateurConnecte === 'hunter') {
             boutonPlan.classList.remove('hidden');
@@ -2142,8 +2264,17 @@
 
         document.getElementById('badge-date-pds').textContent = dateAujourdhuiCivil();
 
-        const boutonRegistre = document.querySelector('.nav-bouton[data-onglet="registre"]');
-        if (boutonRegistre) boutonRegistre.classList.toggle('hidden', etat.operateurConnecte !== 'hunter');
+        ['registre', 'recrutement'].forEach(nomOnglet => {
+          const bouton = document.querySelector(`.nav-bouton[data-onglet="${nomOnglet}"]`);
+          if (bouton) bouton.classList.toggle('hidden', etat.operateurConnecte !== 'hunter');
+        });
+        const navInterne = document.getElementById('barre-navigation-interne');
+        if (navInterne) {
+          const centrer = etat.operateurConnecte === 'hunter';
+          navInterne.classList.toggle('max-w-screen-2xl', !centrer);
+          navInterne.classList.toggle('w-max', centrer);
+          navInterne.classList.toggle('mx-auto', true);
+        }
         if (etat.operateurConnecte === 'hunter') demarrerEcouteRegistre();
         purgerRapportsAnciens();
         naviguerOnglet('poste-commandement');
@@ -2250,12 +2381,13 @@
       }
 
       function masquerToutesLesFenetres() {
-        ['poste-commandement', 'rapports', 'effectif', 'plans', 'archives', 'registre'].forEach(tab => {
+        ['poste-commandement', 'rapports', 'effectif', 'plans', 'archives', 'registre', 'recrutement'].forEach(tab => {
           document.getElementById(`fenetre-${tab}`).classList.add('hidden');
         });
       }
 
       function naviguerOnglet(onglet) {
+        if ((onglet === 'registre' || onglet === 'recrutement') && etat.operateurConnecte !== 'hunter') return;
         AudioTactique.clic();
         etat.ongletActif = onglet;
         masquerToutesLesFenetres();
@@ -2272,6 +2404,7 @@
         }
 
         document.getElementById(`fenetre-${onglet}`).classList.remove('hidden');
+        if (onglet === 'rapports') initialiserFormulaireRapport();
         actualiserVueEnCours();
       }
 
@@ -2336,18 +2469,18 @@
         const lbl21 = document.getElementById('label-btn-pds-21h');
 
         if (pdsJour.h18) {
-          btn18.className = "py-1.5 px-1 bg-emerald-900/60 border border-vertViseur text-vertViseur font-titre font-bold text-[9px] uppercase rounded opacity-90 cursor-default";
+          btn18.className = "py-1.5 px-1 bg-emerald-900/60 border border-vertViseur text-vertViseur font-titre font-bold text-[0.6875rem] uppercase rounded opacity-90 cursor-default";
           lbl18.textContent = "✓ 18H VALIDÉE";
         } else {
-          btn18.className = "py-1.5 px-1 bg-emerald-950/80 hover:bg-emerald-900 border border-vertViseur text-emerald-300 font-titre font-bold text-[9px] uppercase rounded transition flex items-center justify-center gap-1 touch-target";
+          btn18.className = "py-1.5 px-1 bg-emerald-950/80 hover:bg-emerald-900 border border-vertViseur text-emerald-300 font-titre font-bold text-[0.6875rem] uppercase rounded transition flex items-center justify-center gap-1 touch-target";
           lbl18.textContent = "PDS 18H";
         }
 
         if (pdsJour.h21) {
-          btn21.className = "py-1.5 px-1 bg-emerald-900/60 border border-vertViseur text-vertViseur font-titre font-bold text-[9px] uppercase rounded opacity-90 cursor-default";
+          btn21.className = "py-1.5 px-1 bg-emerald-900/60 border border-vertViseur text-vertViseur font-titre font-bold text-[0.6875rem] uppercase rounded opacity-90 cursor-default";
           lbl21.textContent = "✓ 21H VALIDÉE";
         } else {
-          btn21.className = "py-1.5 px-1 bg-emerald-950/80 hover:bg-emerald-900 border border-vertViseur text-emerald-300 font-titre font-bold text-[9px] uppercase rounded transition flex items-center justify-center gap-1 touch-target";
+          btn21.className = "py-1.5 px-1 bg-emerald-950/80 hover:bg-emerald-900 border border-vertViseur text-emerald-300 font-titre font-bold text-[0.6875rem] uppercase rounded transition flex items-center justify-center gap-1 touch-target";
           lbl21.textContent = "PDS 21H";
         }
       }
@@ -2370,12 +2503,14 @@
         if (purgeRapportsFaite || !estConnecteFirestore || !etat.operateurConnecte || etat.estCompteBOS) return;
         purgeRapportsFaite = true;
         const limite = Date.now() - 30 * 24 * 60 * 60 * 1000;
-        const anciens = etat.rapports.filter(r => r.id && r.dateCreation && r.dateCreation < limite);
-        if (anciens.length === 0) return;
         try {
-          for (let i = 0; i < anciens.length; i += 400) {
+          // Requête dédiée : l'écoute en direct ne charge que les ~35 derniers jours
+          const anciens = await getDocs(query(collection(baseDeDonnees, 'missions'), where('dateCreation', '<', limite)));
+          const refs = [];
+          anciens.forEach(d => refs.push(d.ref));
+          for (let i = 0; i < refs.length; i += 400) {
             const batch = writeBatch(baseDeDonnees);
-            anciens.slice(i, i + 400).forEach(r => batch.delete(doc(baseDeDonnees, 'missions', r.id)));
+            refs.slice(i, i + 400).forEach(r => batch.delete(r));
             await batch.commit();
           }
         } catch (err) {
@@ -2385,7 +2520,7 @@
 
       function demarrerEcouteRegistre() {
         if (!estConnecteFirestore || desabonRegistre) return;
-        desabonRegistre = onSnapshot(collection(baseDeDonnees, 'registreActivite'), snap => {
+        desabonRegistre = onSnapshot(query(collection(baseDeDonnees, 'registreActivite'), where('timestamp', '>=', Date.now() - 180 * 24 * 60 * 60 * 1000)), snap => {
           const liste = [];
           snap.forEach(d => liste.push({ id: d.id, ...d.data() }));
           liste.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
@@ -2472,6 +2607,43 @@
         return svg + '</svg>';
       }
 
+      let derniereLigneRegistre = [];
+
+      function libelleActivite(e) {
+        if (e.type === 'pds') {
+          return { evenement: `PDS ${String(e.creneau || '').toUpperCase()}`, detail: e.source === 'rapport' ? 'Validée via un rapport' : 'Bouton PDS' };
+        }
+        if (e.type === 'correction') {
+          return { evenement: 'Correction PDS', detail: `Corrigée par Hunter : ${e.ancien} → ${e.nouveau} PDS (semaine en cours)` };
+        }
+        return { evenement: 'Rapport rédigé', detail: e.titre || '' };
+      }
+
+      // Export CSV du journal affiché (Hunter uniquement). Séparateur « ; » pour Excel en français.
+      function exporterRegistreCSV() {
+        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
+        const protege = (v) => {
+          let t = String(v ?? '');
+          if (/^[=+\-@\t\r]/.test(t)) t = "'" + t; // empêche l'exécution de formules dans un tableur
+          return `"${t.replace(/"/g, '""')}"`;
+        };
+        const lignes = [['Date', 'Heure', 'Opérateur', 'Événement', 'Détail'].map(protege).join(';')];
+        derniereLigneRegistre.forEach(e => {
+          const lib = libelleActivite(e);
+          const heure = new Date(e.timestamp).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+          lignes.push([e.jour, heure, e.nomOperateur || e.idOperateur, lib.evenement, lib.detail].map(protege).join(';'));
+        });
+        const blob = new Blob(['﻿' + lignes.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+        const lien = document.createElement('a');
+        lien.href = URL.createObjectURL(blob);
+        lien.download = `registre-activite-${civilVersIso(dateAujourdhuiCivil())}.csv`;
+        document.body.appendChild(lien);
+        lien.click();
+        lien.remove();
+        setTimeout(() => URL.revokeObjectURL(lien.href), 1000);
+        AudioTactique.succes();
+      }
+
       function afficherVueRegistre() {
         if (etat.operateurConnecte !== 'hunter') return;
         const periode = document.getElementById('filtre-periode-registre').value;
@@ -2507,9 +2679,9 @@
           carte.innerHTML = `
             <div class="font-titre font-bold text-xs text-gray-100 uppercase flex items-center gap-1.5"><span>${m.symbole}</span><span>${echapperTexteHTML(m.nom)}</span></div>
             <div class="flex justify-between"><span class="text-gray-400">PDS validées :</span><span class="font-bold text-vertViseur">${pds18 + pds21}</span></div>
-            <div class="flex justify-between text-[10px]"><span class="text-gray-500">dont 18H / 21H :</span><span class="text-gray-300">${pds18} / ${pds21}</span></div>
+            <div class="flex justify-between text-[0.75rem]"><span class="text-gray-500">dont 18H / 21H :</span><span class="text-gray-300">${pds18} / ${pds21}</span></div>
             <div class="flex justify-between"><span class="text-gray-400">Rapports rédigés :</span><span class="font-bold text-amber-400">${rapports}</span></div>
-            <div class="flex justify-between text-[10px] pt-1 border-t border-bordureTactique/50"><span class="text-gray-500">Dernière activité :</span><span class="text-gray-300">${derniere ? `${echapperTexteHTML(derniere.jour)} ${new Date(derniere.timestamp).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}` : '—'}</span></div>
+            <div class="flex justify-between text-[0.75rem] pt-1 border-t border-bordureTactique/50"><span class="text-gray-500">Dernière activité :</span><span class="text-gray-300">${derniere ? `${echapperTexteHTML(derniere.jour)} ${new Date(derniere.timestamp).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}` : '—'}</span></div>
           `;
           cartes.appendChild(carte);
         });
@@ -2548,6 +2720,7 @@
 
         // ── Journal détaillé (date, heure, opérateur)
         const lignes = activites.filter(e => ids.includes(e.idOperateur) && (filtreType === 'tous' || e.type === filtreType));
+        derniereLigneRegistre = lignes;
         document.getElementById('compteur-registre-activite').textContent = `${lignes.length} entrée(s)`;
         const conteneur = document.getElementById('table-registre-activite');
         if (lignes.length === 0) {
@@ -2557,12 +2730,10 @@
         const corps = lignes.slice(0, 300).map(e => {
           const m = etat.operateurs[e.idOperateur];
           const heure = new Date(e.timestamp).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-          const evenement = e.type === 'pds'
-            ? `<span class="text-vertViseur font-bold">PDS ${String(e.creneau || '').toUpperCase()}</span>`
-            : `<span class="text-amber-400 font-bold">Rapport rédigé</span>`;
-          const detail = e.type === 'pds'
-            ? (e.source === 'rapport' ? 'Validée via un rapport' : 'Bouton PDS')
-            : echapperTexteHTML(e.titre || '');
+          const lib = libelleActivite(e);
+          const couleurEvt = e.type === 'pds' ? 'text-vertViseur' : (e.type === 'correction' ? 'text-rougeAlerte' : 'text-amber-400');
+          const evenement = `<span class="${couleurEvt} font-bold">${echapperTexteHTML(lib.evenement)}</span>`;
+          const detail = echapperTexteHTML(lib.detail);
           return `<tr class="border-b border-bordureTactique/40">
             <td class="py-1 pr-3 text-gray-200 whitespace-nowrap">${echapperTexteHTML(e.jour)}</td>
             <td class="py-1 pr-3 text-gray-400 whitespace-nowrap">${heure}</td>
@@ -2573,12 +2744,12 @@
         }).join('');
         conteneur.innerHTML = `
           <table class="w-full text-xs font-terminal text-left">
-            <thead class="text-[10px] text-gray-500 uppercase sticky top-0 bg-panneauSombre">
+            <thead class="text-[0.75rem] text-gray-500 uppercase sticky top-0 bg-panneauSombre">
               <tr><th class="py-1 pr-3">Date</th><th class="py-1 pr-3">Heure</th><th class="py-1 pr-3">Opérateur</th><th class="py-1 pr-3">Événement</th><th class="py-1">Détail</th></tr>
             </thead>
             <tbody>${corps}</tbody>
           </table>
-          ${lignes.length > 300 ? `<div class="text-[10px] text-gray-500 pt-2">Affichage limité aux 300 entrées les plus récentes.</div>` : ''}
+          ${lignes.length > 300 ? `<div class="text-[0.75rem] text-gray-500 pt-2">Affichage limité aux 300 entrées les plus récentes.</div>` : ''}
         `;
       }
 
@@ -2612,7 +2783,6 @@
             // La date contient des "/" : chemin de champ via FieldPath
             batch.update(refOp,
               'compteurSemaine', increment(op.id === 'hunter' ? 0 : 1),
-              'totalStatistique', increment(1),
               new FieldPath('pdsEffectuees', dateJour), op.pdsEffectuees[dateJour]
             );
             await batch.commit();
@@ -2625,7 +2795,6 @@
         // Mise à jour locale uniquement hors Firestore (sinon doublons via onSnapshot)
         if (!ecritureReussie) {
           if (op.id !== 'hunter') op.compteurSemaine = (op.compteurSemaine || 0) + 1;
-          op.totalStatistique = (op.totalStatistique || 0) + 1;
         }
 
         AudioTactique.succes();
@@ -2673,15 +2842,15 @@
                 </div>
                 <div class="text-right">
                   ${estHunter ? `
-                    <span class="text-[9px] font-titre px-2 py-0.5 rounded font-black tracking-wider bg-cyan-950 text-cyanTech border border-cyanTech/60 shadow-[0_0_8px_rgba(56,189,248,0.25)]">
+                    <span class="text-[0.6875rem] font-titre px-2 py-0.5 rounded font-black tracking-wider bg-cyan-950 text-cyanTech border border-cyanTech/60 shadow-[0_0_8px_rgba(56,189,248,0.25)]">
                       SUPERVISION TACTIQUE
                     </span>
                   ` : estAbsent ? `
-                    <span class="text-[9px] font-terminal px-1.5 py-0.5 rounded font-bold whitespace-nowrap bg-amber-950 text-amber-300 border border-amber-600">
+                    <span class="text-[0.6875rem] font-terminal px-1.5 py-0.5 rounded font-bold whitespace-nowrap bg-amber-950 text-amber-300 border border-amber-600">
                       🟠 EN ABSENCE
                     </span>
                   ` : `
-                    <span class="text-[9px] font-terminal px-1.5 py-0.5 rounded font-bold whitespace-nowrap ${estOk ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800 animate-pulse'}">
+                    <span class="text-[0.6875rem] font-terminal px-1.5 py-0.5 rounded font-bold whitespace-nowrap ${estOk ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800 animate-pulse'}">
                       ${estOk ? '✓ EN RÈGLE' : '✗ PDS INCOMPLÈTES'}
                     </span>
                   `}
@@ -2691,27 +2860,23 @@
                 <span>${m.symbole}</span>
                 <span>${echapperTexteHTML(m.nom)}</span>
               </div>
-              <div class="text-[10px] font-terminal text-gray-400 mb-2 truncate">${echapperTexteHTML(m.specialite)}</div>
+              <div class="text-[0.75rem] font-terminal text-gray-400 mb-2 truncate">${echapperTexteHTML(m.specialite)}</div>
             </div>
 
             <div class="border-t border-bordureTactique pt-1.5 space-y-1">
               <div class="flex items-center justify-between text-xs font-terminal">
                 <span class="text-gray-400">Statut PDS :</span>
                 ${estHunter ? `
-                  <span class="font-bold text-cyanTech font-titre text-[10px] tracking-wider">COMMANDEMENT SUP.</span>
+                  <span class="font-bold text-cyanTech font-titre text-[0.75rem] tracking-wider">COMMANDEMENT SUP.</span>
                 ` : estAbsent ? `
-                  <span class="font-bold text-amber-300 text-[10px]">MISSION DÉTACHÉE</span>
+                  <span class="font-bold text-amber-300 text-[0.75rem]">MISSION DÉTACHÉE</span>
                 ` : `
                   <span class="font-bold ${estOk ? 'text-vertViseur' : 'text-rougeAlerte'}">${m.compteurSemaine || 0} / ${etat.quotaHebdomadaire}</span>
                 `}
               </div>
-              <div class="flex items-center justify-between text-[11px] font-terminal text-amber-400">
-                <span class="truncate pr-1">${echapperTexteHTML(m.libelleStatistique)} :</span>
-                <span class="font-bold">${m.totalStatistique || 0}</span>
-              </div>
               ${!estHunter ? `
                 ${badgeStrikePDS(m)}
-                <div class="flex items-center justify-between text-[10px] font-terminal text-gray-400 pt-0.5 border-t border-bordureTactique/40">
+                <div class="flex items-center justify-between text-[0.75rem] font-terminal text-gray-400 pt-0.5 border-t border-bordureTactique/40">
                   <span>Blâmes :</span>
                   <span class="font-bold ${(m.blames || 0) >= 3 ? 'text-rougeAlerte animate-pulse' : (m.blames || 0) > 0 ? 'text-amber-400' : 'text-gray-300'}">
                     ${m.blames || 0} / 3
@@ -2741,13 +2906,12 @@
                 <div class="flex items-center gap-1.5 flex-wrap">
                   <span class="text-rougeAlerte font-bold uppercase">${echapperTexteHTML(rap.nomOperateur)}</span>
                   <span class="text-gray-100 font-bold">${echapperTexteHTML(rap.nomMission)}</span>
-                  <span class="text-[10px] text-gray-400">[${echapperTexteHTML(rap.secteur)}]</span>
-                  <span class="px-1 py-px text-[8px] rounded ${rap.estPresent ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800'}">${rap.estPresent ? 'PRÉSENT' : 'ABSENT'}</span>
+                  <span class="text-[0.75rem] text-gray-400">[${echapperTexteHTML(rap.secteur)}]</span>
+                  <span class="px-1 py-px text-[0.6875rem] rounded ${rap.estPresent ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800'}">${rap.estPresent ? 'PRÉSENT' : 'ABSENT'}</span>
                 </div>
-                <p class="text-gray-300 text-[11px] mt-0.5 line-clamp-1">${echapperTexteHTML(rap.description)}</p>
-                ${rap.metriqueSpecifique ? `<div class="text-[10px] text-amber-400 mt-0.5">⚡ ${echapperTexteHTML(rap.metriqueSpecifique)}</div>` : ''}
+                <p class="text-gray-300 text-[0.8125rem] mt-0.5 line-clamp-1">${echapperTexteHTML(rap.description)}</p>
               </div>
-              <span class="text-[10px] text-gray-400 whitespace-nowrap ml-auto sm:ml-0">${echapperTexteHTML(rap.date)}</span>
+              <span class="text-[0.75rem] text-gray-400 whitespace-nowrap ml-auto sm:ml-0">${echapperTexteHTML(rap.date)}</span>
             `;
             fluxRecents.appendChild(div);
           });
@@ -2755,49 +2919,35 @@
       }
 
       // ==================== VUE : RAPPORTS DE MISSION ====================
+      // Initialisation du formulaire : uniquement à l'ouverture de l'onglet, après un envoi ou une réinitialisation.
+      // Les mises à jour en direct de Firestore ne touchent plus à ce que la personne est en train de saisir.
+      function initialiserFormulaireRapport() {
+        if (etat.estCompteBOS || !etat.operateurConnecte) return;
+        const op = etat.operateurs[etat.operateurConnecte];
+        if (!op) return;
+        document.getElementById('nom-auteur-rapport').textContent = `${op.nom} [${op.grade}]`;
+        document.getElementById('champ-date-mission').value = civilVersIso(dateAujourdhuiCivil());
+
+        const selCreneau = document.getElementById('champ-creneau-pds');
+        const jourPds = (op.pdsEffectuees || {})[dateAujourdhuiCivil()] || {};
+        selCreneau.dataset.manuel = '';
+        selCreneau.value = !jourPds.h18 ? '18h' : (!jourPds.h21 ? '21h' : 'aucune');
+
+        const blocArchive = document.getElementById('bloc-option-archive-tech');
+        if (blocArchive) blocArchive.classList.toggle('hidden', etat.operateurConnecte !== 'tech');
+        majAideCreneau();
+      }
+
+      function majAideCreneau() {
+        const op = etat.operateurs[etat.operateurConnecte];
+        const aide = document.getElementById('aide-creneau-pds');
+        if (!op || !aide) return;
+        const jourPds = (op.pdsEffectuees || {})[dateAujourdhuiCivil()] || {};
+        aide.textContent = `Un créneau n'est compté qu'une seule fois par jour (bouton PDS ou rapport). Aujourd'hui : PDS 18H ${jourPds.h18 ? '✓ validée' : 'non validée'} · PDS 21H ${jourPds.h21 ? '✓ validée' : 'non validée'}.`;
+      }
+
       function afficherVueRapports() {
-        if (!etat.estCompteBOS) {
-          const op = etat.operateurs[etat.operateurConnecte];
-          document.getElementById('nom-auteur-rapport').textContent = `${op.nom} [${op.grade}]`;
-          document.getElementById('champ-date-mission').value = dateAujourdhuiCivil();
-
-          const conteneurMetrique = document.getElementById('champ-specialiste-conteneur');
-          if (etat.operateurConnecte === 'wrecker') {
-            conteneurMetrique.innerHTML = `
-              <label class="block uppercase text-amber-400 mb-1">💥 Chars MTT & Blindés Détruits</label>
-              <input type="number" id="champ-metrique-specifique" min="0" value="1" class="w-full bg-fondCarbone border border-amber-500/60 px-3 py-2 text-amber-300 rounded outline-none touch-target">
-            `;
-          } else if (etat.operateurConnecte === 'crosshair') {
-            conteneurMetrique.innerHTML = `
-              <label class="block uppercase text-vertViseur mb-1">🎯 Tirs de Précision Confirmés</label>
-              <input type="number" id="champ-metrique-specifique" min="0" value="5" class="w-full bg-fondCarbone border border-vertViseur/60 px-3 py-2 text-vertViseur rounded outline-none touch-target">
-            `;
-          } else if (etat.operateurConnecte === 'tech') {
-            conteneurMetrique.innerHTML = `
-              <label class="block uppercase text-cyanTech mb-1">💻 Données et Schémas Piratés</label>
-              <input type="text" id="champ-metrique-specifique" placeholder="Ex: Clés de chiffrement séparatistes" class="w-full bg-fondCarbone border border-cyanTech/60 px-3 py-2 text-cyanTech rounded outline-none touch-target">
-            `;
-          } else {
-            conteneurMetrique.innerHTML = `
-              <label class="block uppercase text-rougeAlerte mb-1">🧭 Relevé Électromagnétique & Commandement</label>
-              <input type="text" id="champ-metrique-specifique" placeholder="Ex: Failles de défense et réseaux détectés" class="w-full bg-fondCarbone border border-red-500/60 px-3 py-2 text-gray-100 rounded outline-none touch-target">
-            `;
-          }
-        
-          // Créneau de PDS proposé par défaut : le premier créneau pas encore validé aujourd'hui
-          const selCreneau = document.getElementById('champ-creneau-pds');
-          const jourPds = (op.pdsEffectuees || {})[dateAujourdhuiCivil()] || {};
-          if (selCreneau && selCreneau.dataset.manuel !== '1') {
-            selCreneau.value = !jourPds.h18 ? '18h' : (!jourPds.h21 ? '21h' : 'aucune');
-          }
-          const blocArchive = document.getElementById('bloc-option-archive-tech');
-          if (blocArchive) blocArchive.classList.toggle('hidden', etat.operateurConnecte !== 'tech');
-          const aideCreneau = document.getElementById('aide-creneau-pds');
-          if (aideCreneau) {
-            aideCreneau.textContent = `Un créneau n'est compté qu'une seule fois par jour (bouton PDS ou rapport). Aujourd'hui : PDS 18H ${jourPds.h18 ? '✓ validée' : 'non validée'} · PDS 21H ${jourPds.h21 ? '✓ validée' : 'non validée'}.`;
-          }
-        } // CORRECTION : fermeture du if (!etat.estCompteBOS)
-
+        if (!etat.estCompteBOS) majAideCreneau();
         afficherListeRapports();
       }
 
@@ -2823,21 +2973,20 @@
             <div class="flex flex-wrap items-center justify-between gap-2 border-b border-bordureTactique pb-1.5">
               <div class="flex items-center space-x-2">
                 <span class="font-titre font-bold text-gray-100 uppercase">${echapperTexteHTML(rap.nomMission || 'MISSION SANS TITRE')}</span>
-                <span class="px-1.5 py-0.5 rounded text-[8px] font-bold ${rap.estPresent ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800'}">
+                <span class="px-1.5 py-0.5 rounded text-[0.6875rem] font-bold ${rap.estPresent ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-red-950 text-red-300 border border-red-800'}">
                   ${rap.estPresent ? '✓ PRÉSENT' : '✗ ABSENT'}
                 </span>
               </div>
-              <div class="text-gray-400 text-[10px]">
+              <div class="text-gray-400 text-[0.75rem]">
                 Secteur : <span class="text-gray-200 font-bold">${echapperTexteHTML(rap.secteur || 'Non précisé')}</span> // Date : <span class="text-amber-400">${echapperTexteHTML(rap.date)}</span>
               </div>
             </div>
             <p class="text-gray-300 text-xs leading-relaxed whitespace-pre-wrap">${echapperTexteHTML(rap.description || 'Aucun détail rédigé.')}</p>
-            <div class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-bordureTactique text-[10px]">
-              <div class="text-amber-400"><span class="font-bold">MÉTRIQUE :</span> ${echapperTexteHTML(rap.metriqueSpecifique || 'N/A')}</div>
+            <div class="flex flex-wrap items-center justify-end gap-2 pt-1 border-t border-bordureTactique text-[0.75rem]">
               <div class="flex items-center gap-3">
                 <div class="text-gray-400">Auteur : <span class="text-rougeAlerte font-bold uppercase">${echapperTexteHTML(rap.nomOperateur)}</span></div>
                 ${estHunter && rap.id ? `
-                  <button data-supprimer-rapport="${echapperTexteHTML(rap.id)}" class="btn-supprimer-rapport px-2 py-0.5 bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 font-bold rounded text-[10px] flex items-center gap-1 transition touch-target">
+                  <button data-supprimer-rapport="${echapperTexteHTML(rap.id)}" class="btn-supprimer-rapport px-2 py-0.5 bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 font-bold rounded text-[0.75rem] flex items-center gap-1 transition touch-target">
                     🗑️ Supprimer
                   </button>
                 ` : ''}
@@ -2906,10 +3055,9 @@
         const op = etat.operateurs[etat.operateurConnecte];
         const nomMission = document.getElementById('champ-nom-mission').value.trim();
         const secteur = document.getElementById('champ-secteur-mission').value.trim();
-        const date = document.getElementById('champ-date-mission').value.trim();
+        const date = isoVersCivil(document.getElementById('champ-date-mission').value) || dateAujourdhuiCivil();
         const presence = document.getElementById('champ-presence-mission').value === 'present';
         const description = document.getElementById('champ-description-mission').value.trim();
-        const metrique = document.getElementById('champ-metrique-specifique').value.trim();
         const creneau = document.getElementById('champ-creneau-pds').value; // '18h' | '21h' | 'aucune'
         const ajouterArchive = op.id === 'tech' && document.getElementById('check-ajouter-archive').checked;
         const dateCle = cleDateCivile(date);
@@ -2936,16 +3084,10 @@
           date,
           estPresent: presence,
           description,
-          metriqueSpecifique: metrique,
           membresDeploies: membresCoches,
           creneauPds: creneau,
           dateCreation: Date.now()
         };
-
-        let incrementStat = 1;
-        if (etat.operateurConnecte === 'wrecker' || etat.operateurConnecte === 'crosshair') {
-          incrementStat = parseInt(metrique, 10) || 1;
-        }
 
         let ecritureReussie = false;
         if (estConnecteFirestore) {
@@ -2968,15 +3110,12 @@
             });
 
             beneficiaires.forEach(id => {
+              if (!credites.includes(id)) return;
               const refMembre = doc(baseDeDonnees, 'operateurs', id);
-              const args = ['totalStatistique', increment(id === op.id ? incrementStat : 1)];
-              if (credites.includes(id)) {
-                args.push(
-                  'compteurSemaine', increment(id === 'hunter' ? 0 : 1),
-                  new FieldPath('pdsEffectuees', dateCle), joursApres[id]
-                );
-              }
-              batch.update(refMembre, ...args);
+              batch.update(refMembre,
+                'compteurSemaine', increment(id === 'hunter' ? 0 : 1),
+                new FieldPath('pdsEffectuees', dateCle), joursApres[id]
+              );
             });
 
             if (ajouterArchive) {
@@ -2985,7 +3124,7 @@
                 titre: `Interception : ${nomMission}`,
                 source: secteur,
                 horodatage: date,
-                contenu: `${metrique} - ${description}`,
+                contenu: description,
                 dateCreation: Date.now()
               });
             }
@@ -3002,7 +3141,6 @@
           beneficiaires.forEach(id => {
             const m = etat.operateurs[id];
             if (!m) return;
-            m.totalStatistique = (m.totalStatistique || 0) + (id === op.id ? incrementStat : 1);
             if (credites.includes(id)) {
               if (id !== 'hunter') m.compteurSemaine = (m.compteurSemaine || 0) + 1;
               if (!m.pdsEffectuees) m.pdsEffectuees = {};
@@ -3018,7 +3156,7 @@
               titre: `Interception : ${nomMission}`,
               source: secteur,
               horodatage: date,
-              contenu: `${metrique} - ${description}`,
+              contenu: description,
               dateCreation: Date.now()
             });
           }
@@ -3040,13 +3178,34 @@
         document.getElementById('check-membre-tech').checked = false;
         document.getElementById('check-membre-wrecker').checked = false;
         document.getElementById('check-membre-crosshair').checked = false;
-        document.getElementById('champ-date-mission').value = dateAujourdhuiCivil();
         document.getElementById('check-ajouter-archive').checked = false;
-        document.getElementById('champ-creneau-pds').dataset.manuel = '';
+        initialiserFormulaireRapport();
         afficherVueRapports();
       }
 
       // ==================== VUE : EFFECTIF ====================
+      // Historique des blâmes : visible par Hunter, le B.O.S et le membre concerné
+      function htmlHistoriqueBlames(m) {
+        const autorise = etat.operateurConnecte === 'hunter' || etat.estCompteBOS || etat.operateurConnecte === m.id;
+        const historique = Array.isArray(m.blamesHistorique) ? m.blamesHistorique : [];
+        if (!autorise || historique.length === 0) return '';
+        const lignes = historique.slice(0, 15).map(b => `
+          <li class="p-2 rounded border border-bordureTactique bg-fondCarbone ${b.retire ? 'opacity-60' : ''}">
+            <div class="flex flex-wrap items-center gap-2 text-[0.75rem]">
+              <span class="text-amber-300 font-bold">${echapperTexteHTML(b.date || '')}</span>
+              <span class="px-1.5 rounded border ${b.auto ? 'border-cyanTech/50 text-cyanTech' : 'border-gray-600 text-gray-300'}">${b.auto ? 'AUTOMATIQUE' : 'MANUEL'}</span>
+              <span class="text-gray-400">niveau ${parseInt(b.niveau, 10) || '?'} / 3</span>
+              ${b.retire ? '<span class="text-vertViseur font-bold">RETIRÉ</span>' : ''}
+            </div>
+            <div class="text-gray-200 text-[0.8125rem] mt-1 ${b.retire ? 'line-through' : ''}">${echapperTexteHTML(b.motif || 'Aucun motif consigné')}</div>
+          </li>`).join('');
+        return `
+          <details class="bg-panneauSous rounded border border-bordureTactique p-2 font-terminal text-xs">
+            <summary class="cursor-pointer text-amber-400 font-bold uppercase">📜 Détail des blâmes (${historique.length})</summary>
+            <ul class="mt-2 space-y-1.5">${lignes}</ul>
+          </details>`;
+      }
+
       function afficherVueEffectif() {
         const estHunter = etat.operateurConnecte === 'hunter';
         const estBOS = etat.estCompteBOS;
@@ -3105,8 +3264,8 @@
                     <span>${m.symbole}</span>
                     <span>${echapperTexteHTML(m.nom)}</span>
                   </div>
-                  <div class="text-[10px] font-terminal text-amber-400">${echapperTexteHTML(m.matricule)} // ${echapperTexteHTML(m.grade)}</div>
-                  <div class="text-[10px] font-terminal mt-0.5">
+                  <div class="text-[0.75rem] font-terminal text-amber-400">${echapperTexteHTML(m.matricule)} // ${echapperTexteHTML(m.grade)}</div>
+                  <div class="text-[0.75rem] font-terminal mt-0.5">
                     ${estAbsent ? `
                       <span class="px-1.5 py-px rounded bg-amber-950 text-amber-300 border border-amber-600 font-bold">
                         🟠 EN ABSENCE (${echapperTexteHTML(m.detailsAbsence?.debut || '')} ➔ ${echapperTexteHTML(m.detailsAbsence?.fin || '')})
@@ -3121,17 +3280,17 @@
               </div>
 
               <div class="text-right">
-                <div class="text-[8px] font-terminal uppercase text-gray-400">Statut PDS semaine</div>
+                <div class="text-[0.6875rem] font-terminal uppercase text-gray-400">Statut PDS semaine</div>
                 ${estMembreHunter ? `
-                  <div class="px-2 py-0.5 text-[9px] font-titre font-black rounded uppercase bg-cyan-950 text-cyanTech border border-cyanTech/60 shadow-[0_0_8px_rgba(56,189,248,0.25)]">
+                  <div class="px-2 py-0.5 text-[0.6875rem] font-titre font-black rounded uppercase bg-cyan-950 text-cyanTech border border-cyanTech/60 shadow-[0_0_8px_rgba(56,189,248,0.25)]">
                     SUPERVISION TACTIQUE
                   </div>
                 ` : estAbsent ? `
-                  <div class="px-1.5 py-0.5 text-[10px] font-terminal font-bold rounded bg-amber-950 text-amber-300 border border-amber-600">
+                  <div class="px-1.5 py-0.5 text-[0.75rem] font-terminal font-bold rounded bg-amber-950 text-amber-300 border border-amber-600">
                     MISSION DÉTACHÉE
                   </div>
                 ` : `
-                  <div class="px-1.5 py-0.5 text-[10px] font-terminal font-bold rounded ${estOk ? 'bg-emerald-950 text-emerald-300 border border-emerald-600' : 'bg-red-950 text-red-300 border border-red-700 animate-pulse'}">
+                  <div class="px-1.5 py-0.5 text-[0.75rem] font-terminal font-bold rounded ${estOk ? 'bg-emerald-950 text-emerald-300 border border-emerald-600' : 'bg-red-950 text-red-300 border border-red-700 animate-pulse'}">
                     ${estOk ? '✓ EN RÈGLE' : '✗ PDS INCOMPLÈTES'}
                   </div>
                 `}
@@ -3144,16 +3303,16 @@
                 <div>
                   <span class="font-bold uppercase ${seuilCritique ? 'text-rougeAlerte' : 'text-gray-300'}">BLÂMES DISCIPLINAIRES :</span>
                   <span class="font-black text-sm ml-1.5 ${seuilCritique ? 'text-white' : nbBlames > 0 ? 'text-amber-400' : 'text-gray-400'}">[ ${nbBlames} / 3 ]</span>
-                  ${seuilCritique ? `<span class="block text-[9px] text-rougeAlerte font-bold tracking-wider uppercase mt-0.5">⚠️ SEUIL DISCIPLINAIRE ATTEINT // SUSPENDU</span>` : ''}
+                  ${seuilCritique ? `<span class="block text-[0.6875rem] text-rougeAlerte font-bold tracking-wider uppercase mt-0.5">⚠️ SEUIL DISCIPLINAIRE ATTEINT // SUSPENDU</span>` : ''}
                 </div>
                 ${estHunter ? `
                   <div class="flex items-center gap-1.5">
                     ${nbBlames > 0 ? `
-                      <button data-retirer-blame="${m.id}" class="btn-retirer-blame px-2 py-1 bg-gray-800 hover:bg-gray-700 text-gray-200 text-[10px] rounded border border-gray-600 touch-target">
+                      <button data-retirer-blame="${m.id}" class="btn-retirer-blame px-2 py-1 bg-gray-800 hover:bg-gray-700 text-gray-200 text-[0.75rem] rounded border border-gray-600 touch-target">
                         - Retirer
                       </button>
                     ` : ''}
-                    <button data-attribuer-blame="${m.id}" class="btn-attribuer-blame px-2.5 py-1 bg-red-950 hover:bg-red-800 text-red-200 border border-rougeAlerte text-[10px] font-bold rounded touch-target">
+                    <button data-attribuer-blame="${m.id}" class="btn-attribuer-blame px-2.5 py-1 bg-red-950 hover:bg-red-800 text-red-200 border border-rougeAlerte text-[0.75rem] font-bold rounded touch-target">
                       + Assigner Blâme
                     </button>
                   </div>
@@ -3161,17 +3320,19 @@
               </div>
             ` : ''}
 
+            ${htmlHistoriqueBlames(m)}
+
             <!-- DONNÉES PRIVÉES VISIBLES PAR HUNTER ET PAR BOS EN AUDIT -->
             ${(estHunter || estBOS) ? `
               <div class="bg-panneauSous p-2 rounded border border-bordureLueur/80 font-terminal text-xs space-y-1">
-                <div class="text-[9px] ${estBOS ? 'text-orEtatMajor' : 'text-amber-400'} uppercase font-bold flex items-center gap-1">
+                <div class="text-[0.6875rem] ${estBOS ? 'text-orEtatMajor' : 'text-amber-400'} uppercase font-bold flex items-center gap-1">
                   <span>🔒</span> IDENTIFIANTS DE COMMUNICATION (${estBOS ? 'AUDIT B.O.S' : 'PRIVÉ HUNTER'}) :
                 </div>
-                <div class="flex justify-between items-center text-[11px]">
+                <div class="flex justify-between items-center text-[0.8125rem]">
                   <span class="text-gray-400">Steam ID 64 :</span>
                   <span class="font-bold text-gray-200">${echapperTexteHTML(m.steamId64 || 'Non renseigné')}</span>
                 </div>
-                <div class="flex justify-between items-center text-[11px]">
+                <div class="flex justify-between items-center text-[0.8125rem]">
                   <span class="text-gray-400">Discord :</span>
                   <span class="font-bold text-cyanTech">${echapperTexteHTML(m.discord || 'Non renseigné')}</span>
                 </div>
@@ -3182,16 +3343,12 @@
               <div>
                 <span class="text-gray-400">PDS de la semaine :</span>
                 ${estMembreHunter ? `
-                  <span class="font-bold text-cyanTech font-titre text-[10px] ml-1">EXEMPTÉ (COMMANDEMENT)</span>
+                  <span class="font-bold text-cyanTech font-titre text-[0.75rem] ml-1">EXEMPTÉ (COMMANDEMENT)</span>
                 ` : estAbsent ? `
-                  <span class="font-bold text-amber-300 ml-1 text-[10px]">SUSPENDU (ABSENCE)</span>
+                  <span class="font-bold text-amber-300 ml-1 text-[0.75rem]">SUSPENDU (ABSENCE)</span>
                 ` : `
                   <span class="font-bold ml-1 ${estOk ? 'text-vertViseur' : 'text-rougeAlerte'}">${m.compteurSemaine || 0} / ${etat.quotaHebdomadaire}</span>
                 `}
-              </div>
-              <div>
-                <span class="text-gray-400">${echapperTexteHTML(m.libelleStatistique)} :</span>
-                <span class="font-bold text-amber-400 ml-1">${m.totalStatistique || 0}</span>
               </div>
             </div>
 
@@ -3206,12 +3363,12 @@
                 ${(() => {
                   const jours = calculerJoursAnciennete(m.dateEntree);
                   if (jours === null) return '';
-                  return `<span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-amber-500/10 text-amber-300 border border-amber-500/30">🎖 ${jours} ${jours > 1 ? 'jours' : 'jour'}</span>`;
+                  return `<span class="px-2 py-0.5 rounded text-[0.75rem] font-bold font-mono bg-amber-500/10 text-amber-300 border border-amber-500/30">🎖 ${jours} ${jours > 1 ? 'jours' : 'jour'}</span>`;
                 })()}
               </div>
               <div>
                 <span class="text-gray-400 uppercase block">Notes de commandement :</span>
-                <div class="bg-fondCarbone p-1.5 rounded border border-bordureTactique text-gray-300 text-[11px] leading-relaxed mt-0.5">
+                <div class="bg-fondCarbone p-1.5 rounded border border-bordureTactique text-gray-300 text-[0.8125rem] leading-relaxed mt-0.5">
                   ${echapperTexteHTML(m.notes || 'Aucune observation consignée.')}
                 </div>
               </div>
@@ -3389,20 +3546,27 @@
         if (!m || (m.blames || 0) <= 0) return;
 
         const nouveauTotal = Math.max(0, m.blames - 1);
+        // Le blâme retiré reste dans l'historique, marqué « retiré »
+        const historique = Array.isArray(m.blamesHistorique) ? m.blamesHistorique.map(b => ({ ...b })) : [];
+        const premier = historique.findIndex(b => !b.retire);
+        if (premier >= 0) historique[premier].retire = true;
 
         if (estConnecteFirestore) {
           try {
             const refMembre = doc(baseDeDonnees, 'operateurs', id);
-            await updateDoc(refMembre, { blames: nouveauTotal });
+            await updateDoc(refMembre, { blames: nouveauTotal, blamesHistorique: historique });
           } catch(err) {
             console.warn("Retrait blâme :", err);
           }
         }
 
         etat.operateurs[id].blames = nouveauTotal;
+        etat.operateurs[id].blamesHistorique = historique;
         AudioTactique.succes();
         afficherVueEffectif();
       }
+
+      let dernierBlameNotifie = '';
 
       function verifierNotificationBlamePourMembre() {
         if (!etat.operateurConnecte || etat.operateurConnecte === 'hunter' || etat.estCompteBOS) return;
@@ -3410,11 +3574,15 @@
         if (!me || (me.blames || 0) === 0) return;
 
         const dernierVu = me.dernierBlameVu || 0;
+        const cleBlame = `${me.id}:${me.blames}`;
+        if (cleBlame === dernierBlameNotifie) return; // déjà affichée pendant cette session
+        if (!document.getElementById('boite-notification-blame').classList.contains('hidden')) return;
         if (me.blames > dernierVu && me.blamesHistorique && me.blamesHistorique.length > 0) {
           const dernierBlame = me.blamesHistorique[0];
           document.getElementById('notif-blame-niveau').textContent = `BLÂME ${me.blames} / 3`;
           document.getElementById('notif-blame-motif').textContent = dernierBlame.motif || 'Aucun motif consigné';
           document.getElementById('notif-blame-date').textContent = dernierBlame.date || dateAujourdhuiCivil();
+          dernierBlameNotifie = cleBlame;
           ouvrirBoite('boite-notification-blame');
           AudioTactique.alerte();
         }
@@ -3446,8 +3614,8 @@
         document.getElementById('absence-membre-id').value = m.id;
         document.getElementById('absence-membre-nom').value = `${m.nom} (${m.matricule})`;
         document.getElementById('absence-statut-select').value = m.estAbsent ? 'absent' : 'actif';
-        document.getElementById('absence-date-debut').value = m.detailsAbsence?.debut || dateAujourdhuiCivil();
-        document.getElementById('absence-date-fin').value = m.detailsAbsence?.fin || '';
+        document.getElementById('absence-date-debut').value = civilVersIso(m.detailsAbsence?.debut || dateAujourdhuiCivil());
+        document.getElementById('absence-date-fin').value = civilVersIso(m.detailsAbsence?.fin || '');
         document.getElementById('absence-motif').value = m.detailsAbsence?.motif || '';
 
         ouvrirBoite('boite-gerer-absence');
@@ -3459,8 +3627,8 @@
 
         const id = document.getElementById('absence-membre-id').value;
         const estAbsent = document.getElementById('absence-statut-select').value === 'absent';
-        const debut = document.getElementById('absence-date-debut').value.trim();
-        const fin = document.getElementById('absence-date-fin').value.trim();
+        const debut = isoVersCivil(document.getElementById('absence-date-debut').value);
+        const fin = isoVersCivil(document.getElementById('absence-date-fin').value);
         const motif = document.getElementById('absence-motif').value.trim();
 
         const m = etat.operateurs[id];
@@ -3527,12 +3695,12 @@
             div.innerHTML = `
               <div class="flex justify-between items-center text-amber-400">
                 <span class="font-bold uppercase">${echapperTexteHTML(a.nomMembre)}</span>
-                <span class="text-[10px] text-gray-400">Période : <strong class="text-gray-200">${echapperTexteHTML(a.debut)} au ${echapperTexteHTML(a.fin || 'Indéterminée')}</strong></span>
+                <span class="text-[0.75rem] text-gray-400">Période : <strong class="text-gray-200">${echapperTexteHTML(a.debut)} au ${echapperTexteHTML(a.fin || 'Indéterminée')}</strong></span>
               </div>
-              <div class="text-gray-300 text-[11px] bg-fondCarbone p-1.5 rounded border border-bordureTactique">
+              <div class="text-gray-300 text-[0.8125rem] bg-fondCarbone p-1.5 rounded border border-bordureTactique">
                 ${echapperTexteHTML(a.motif || 'Aucun motif renseigné.')}
               </div>
-              <div class="text-[9px] text-gray-500 text-right">Consigné le ${echapperTexteHTML(a.dateEnregistrement)}</div>
+              <div class="text-[0.6875rem] text-gray-500 text-right">Consigné le ${echapperTexteHTML(a.dateEnregistrement)}</div>
             `;
             conteneur.appendChild(div);
           });
@@ -3548,9 +3716,7 @@
 
         document.getElementById('identifiant-membre-edite').value = m.id;
         document.getElementById('titre-dossier-militaire').textContent = `Dossier Militaire // ${m.nom}`;
-        document.getElementById('champ-date-incorporation').value = m.dateEntree;
-        document.getElementById('champ-stat-globale').value = m.totalStatistique || 0;
-        document.getElementById('libelle-stat-edition').textContent = `Compteur "${m.libelleStatistique}" :`;
+        document.getElementById('champ-date-incorporation').value = civilVersIso(m.dateEntree);
         document.getElementById('champ-notes-commandement').value = m.notes || '';
         document.getElementById('champ-steam-id-64').value = m.steamId64 || '';
         document.getElementById('champ-compte-discord').value = m.discord || '';
@@ -3565,8 +3731,7 @@
         if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
 
         const id = document.getElementById('identifiant-membre-edite').value;
-        const dateEntree = document.getElementById('champ-date-incorporation').value.trim();
-        const stat = parseInt(document.getElementById('champ-stat-globale').value, 10) || 0;
+        const dateEntree = isoVersCivil(document.getElementById('champ-date-incorporation').value) || etat.operateurs[id].dateEntree;
         const notes = document.getElementById('champ-notes-commandement').value.trim();
         const steamId64 = document.getElementById('champ-steam-id-64').value.trim();
         const discord = document.getElementById('champ-compte-discord').value.trim();
@@ -3578,7 +3743,6 @@
             const refMembre = doc(baseDeDonnees, 'operateurs', id);
             await updateDoc(refMembre, {
               dateEntree: dateEntree,
-              totalStatistique: stat,
               notes: notes,
               steamId64: steamId64,
               discord: discord,
@@ -3589,8 +3753,21 @@
           }
         }
 
+        // Trace de la correction dans le registre d'activité (qui, quand, ancienne et nouvelle valeur)
+        const ancienPds = etat.operateurs[id].compteurSemaine || 0;
+        if (pdsSemaine !== null && pdsSemaine !== ancienPds && estConnecteFirestore) {
+          try {
+            await setDoc(doc(collection(baseDeDonnees, 'registreActivite')), {
+              type: 'correction', idOperateur: id, nomOperateur: etat.operateurs[id].nom,
+              jour: dateAujourdhuiCivil(), ancien: ancienPds, nouveau: pdsSemaine,
+              par: 'hunter', timestamp: Date.now()
+            });
+          } catch (err) {
+            console.warn("Trace de correction PDS :", err);
+          }
+        }
+
         etat.operateurs[id].dateEntree = dateEntree;
-        etat.operateurs[id].totalStatistique = stat;
         etat.operateurs[id].notes = notes;
         etat.operateurs[id].steamId64 = steamId64;
         etat.operateurs[id].discord = discord;
@@ -3664,6 +3841,7 @@
       function afficherVuePlans() {
         const conteneur = document.getElementById('conteneur-plans-tactiques');
         conteneur.innerHTML = '';
+        const estHunter = etat.operateurConnecte === 'hunter' && !etat.estCompteBOS;
 
         etat.plans.forEach(p => {
           const estPlanZero = p.code === 'PLAN 0/0';
@@ -3672,49 +3850,112 @@
           div.innerHTML = `
             <div class="flex items-center justify-between border-b border-bordureTactique pb-1.5">
               <span class="font-titre font-bold text-xs ${estPlanZero ? 'text-rougeAlerte font-black' : 'text-amber-400'} tracking-wider">${echapperTexteHTML(p.code)}</span>
-              <span class="text-[8px] font-terminal px-1.5 py-0.5 ${estPlanZero ? 'text-red-300 border-red-700 bg-red-950/60' : 'text-gray-300 border-bordureTactique bg-panneauSous'} rounded border">
+              <span class="text-[0.6875rem] font-terminal px-1.5 py-0.5 ${estPlanZero ? 'text-red-300 border-red-700 bg-red-950/60' : 'text-gray-300 border-bordureTactique bg-panneauSous'} rounded border">
                 ${estPlanZero ? 'URGENCE ABSOLUE' : 'HOMOLOGUÉ 99'}
               </span>
             </div>
             <div>
-              <div class="text-[9px] font-terminal uppercase text-gray-400">Objectif tactique :</div>
+              <div class="text-[0.6875rem] font-terminal uppercase text-gray-400">Objectif tactique :</div>
               <div class="font-titre font-bold text-xs text-gray-100">${echapperTexteHTML(p.cible)}</div>
             </div>
             <div>
-              <div class="text-[10px] font-terminal ${estPlanZero ? 'text-amber-400' : 'text-rougeAlerte'} font-bold">Chef(s) de manœuvre : ${echapperTexteHTML(p.chefDeManoeuvre)}</div>
+              <div class="text-[0.75rem] font-terminal ${estPlanZero ? 'text-amber-400' : 'text-rougeAlerte'} font-bold">Chef(s) de manœuvre : ${echapperTexteHTML(p.chefDeManoeuvre)}</div>
               <p class="text-xs font-terminal text-gray-300 mt-1 leading-relaxed bg-fondCarbone p-2 rounded border border-bordureTactique">
                 ${echapperTexteHTML(p.description)}
               </p>
             </div>
+            ${estHunter ? `
+              <div class="flex justify-end gap-2 pt-1 border-t border-bordureTactique">
+                <button data-modifier-plan="${echapperTexteHTML(p.id || '')}" class="btn-modifier-plan px-2.5 py-1 bg-panneauSous hover:bg-bordureTactique border border-bordureLueur text-xs font-terminal text-gray-200 rounded">✏ Modifier</button>
+                ${estPlanZero ? '' : `<button data-supprimer-plan="${echapperTexteHTML(p.id || '')}" class="btn-supprimer-plan px-2.5 py-1 bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 text-xs font-terminal rounded">🗑️ Supprimer</button>`}
+              </div>
+            ` : ''}
           `;
           conteneur.appendChild(div);
         });
+
+        if (estHunter) {
+          conteneur.querySelectorAll('.btn-modifier-plan').forEach(btn => {
+            btn.addEventListener('click', () => ouvrirFichePlan(btn.getAttribute('data-modifier-plan')));
+          });
+          conteneur.querySelectorAll('.btn-supprimer-plan').forEach(btn => {
+            btn.addEventListener('click', () => supprimerPlan(btn.getAttribute('data-supprimer-plan')));
+          });
+        }
+      }
+
+      function ouvrirFichePlan(idPlan) {
+        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
+        const p = idPlan ? etat.plans.find(x => x.id === idPlan) : null;
+        document.getElementById('champ-id-plan').value = p ? p.id : '';
+        document.getElementById('titre-modale-plan').textContent = p ? 'MODIFIER UN PLAN D\'ENGAGEMENT' : 'ENREGISTRER UN NOUVEAU PLAN D\'ENGAGEMENT';
+        document.getElementById('champ-code-plan').value = p ? p.code : '';
+        document.getElementById('champ-cible-plan').value = p ? p.cible : '';
+        document.getElementById('champ-meneurs-plan').value = p ? p.chefDeManoeuvre : '';
+        document.getElementById('champ-description-plan').value = p ? p.description : '';
+        ouvrirBoite('boite-nouveau-plan');
+      }
+
+      function supprimerPlan(idPlan) {
+        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
+        const p = etat.plans.find(x => x.id === idPlan);
+        if (!p || p.code === 'PLAN 0/0') return;
+        afficherBoiteConfirmation(
+          "SUPPRESSION D'UN PLAN TACTIQUE",
+          `Voulez-vous supprimer ${p.code} (${p.cible}) de la liste des plans ?`,
+          async () => {
+            let ecrit = false;
+            if (estConnecteFirestore) {
+              try {
+                // Suppression « douce » : le plan est masqué et ne sera pas recréé automatiquement
+                await setDoc(doc(baseDeDonnees, 'plans', idPlan), { supprime: true }, { merge: true });
+                ecrit = true;
+              } catch (err) {
+                console.warn("Suppression plan :", err);
+              }
+            }
+            if (!ecrit) etat.plans = etat.plans.filter(x => x.id !== idPlan);
+            AudioTactique.succes();
+            afficherVuePlans();
+          }
+        );
       }
 
       async function executerCreationPlan(e) {
         e.preventDefault();
         if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
 
+        const idPlan = document.getElementById('champ-id-plan').value;
         const code = document.getElementById('champ-code-plan').value.trim().toUpperCase();
         const cible = document.getElementById('champ-cible-plan').value.trim();
         const chefDeManoeuvre = document.getElementById('champ-meneurs-plan').value.trim();
         const description = document.getElementById('champ-description-plan').value.trim();
 
-        const nouvPlan = { code, cible, chefDeManoeuvre, description, dateCreation: Date.now() };
-
+        const donnees = { code, cible, chefDeManoeuvre, description };
         let ecrit = false;
+
         if (estConnecteFirestore) {
           try {
-            const refNouv = doc(collection(baseDeDonnees, 'plans'));
-            await setDoc(refNouv, nouvPlan);
+            if (idPlan) {
+              await setDoc(doc(baseDeDonnees, 'plans', idPlan), donnees, { merge: true });
+            } else {
+              await setDoc(doc(collection(baseDeDonnees, 'plans')), { ...donnees, dateCreation: Date.now() });
+            }
             ecrit = true;
           } catch(err) {
             console.warn("Écriture plan :", err);
           }
         }
 
-        // CORRECTION : évite le doublon avec le onSnapshot des plans
-        if (!ecrit) etat.plans.push(nouvPlan);
+        // Hors ligne uniquement : sinon le onSnapshot des plans met la liste à jour (évite les doublons)
+        if (!ecrit) {
+          if (idPlan) {
+            const p = etat.plans.find(x => x.id === idPlan);
+            if (p) Object.assign(p, donnees);
+          } else {
+            etat.plans.push({ ...donnees, id: 'local-' + Date.now(), dateCreation: Date.now() });
+          }
+        }
         fermerBoite('boite-nouveau-plan');
         AudioTactique.succes();
         afficherVuePlans();
@@ -3749,12 +3990,12 @@
               <span class="font-titre font-bold text-xs uppercase flex items-center gap-1.5">
                 <span>▶</span> ${echapperTexteHTML(a.titre)}
               </span>
-              <span class="text-[9px] text-gray-400">[ORIGINE : ${echapperTexteHTML(a.source)}] // ${echapperTexteHTML(a.horodatage)}</span>
+              <span class="text-[0.6875rem] text-gray-400">[ORIGINE : ${echapperTexteHTML(a.source)}] // ${echapperTexteHTML(a.horodatage)}</span>
             </div>
             <p class="text-gray-300 text-xs mt-1 leading-relaxed bg-fondCarbone p-2 rounded border border-bordureTactique whitespace-pre-wrap">${echapperTexteHTML(a.contenu)}</p>
             ${estHunter && a.id ? `
               <div class="flex justify-end pt-1">
-                <button data-supprimer-archive="${echapperTexteHTML(a.id)}" class="btn-supprimer-archive px-2 py-0.5 bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 font-bold rounded text-[10px] flex items-center gap-1 transition touch-target">
+                <button data-supprimer-archive="${echapperTexteHTML(a.id)}" class="btn-supprimer-archive px-2 py-0.5 bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 font-bold rounded text-[0.75rem] flex items-center gap-1 transition touch-target">
                   🗑️ Purger transmission
                 </button>
               </div>
@@ -3821,7 +4062,6 @@
           date: dateJour,
           estPresent: true,
           description: contenu,
-          metriqueSpecifique: `Transmission décryptée`,
           dateCreation: Date.now()
         };
 
@@ -3838,11 +4078,6 @@
               type: 'rapport', idOperateur: 'tech', nomOperateur: 'Tech',
               jour: dateJour, titre: rapportHomologue.nomMission, timestamp: rapportHomologue.dateCreation
             });
-
-            const refTech = doc(baseDeDonnees, 'operateurs', 'tech');
-            batch.update(refTech, {
-              totalStatistique: increment(1)
-            });
             await batch.commit();
             ecritureReussie = true;
           } catch(err) {
@@ -3854,7 +4089,6 @@
         if (!ecritureReussie) {
           etat.archivesPiratees.unshift({ id: 'arc-' + Date.now(), ...archive });
           etat.rapports.unshift(rapportHomologue);
-          etat.operateurs.tech.totalStatistique = (etat.operateurs.tech.totalStatistique || 0) + 1;
         }
 
         AudioTactique.succes();
@@ -3926,18 +4160,15 @@
         document.getElementById('formulaire-rapport-mission').addEventListener('submit', executerTransmissionRapport);
         document.getElementById('champ-creneau-pds').addEventListener('change', (ev) => { ev.target.dataset.manuel = '1'; });
         document.getElementById('formulaire-rapport-mission').addEventListener('reset', () => {
-          document.getElementById('champ-creneau-pds').dataset.manuel = '';
+          setTimeout(initialiserFormulaireRapport, 0);
         });
         document.getElementById('filtre-operateurs-rapports').addEventListener('change', afficherListeRapports);
+        document.getElementById('bouton-export-registre').addEventListener('click', exporterRegistreCSV);
         ['filtre-periode-registre', 'filtre-operateur-registre', 'filtre-type-registre'].forEach(idFiltre => {
           document.getElementById(idFiltre).addEventListener('change', afficherVueRegistre);
         });
 
         document.getElementById('formulaire-dossier-militaire').addEventListener('submit', executerSauvegardeDossierMilitaire);
-        document.getElementById('bouton-reset-stat-unique').addEventListener('click', () => {
-          document.getElementById('champ-stat-globale').value = 0;
-          AudioTactique.clic();
-        });
 
         document.getElementById('bouton-reglage-quota').addEventListener('click', () => {
           document.getElementById('champ-valeur-quota').value = etat.quotaHebdomadaire;
@@ -3966,14 +4197,7 @@
 
 
         // Plans d'engagement
-        document.getElementById('bouton-ajouter-plan-hunter').addEventListener('click', () => {
-          if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
-          document.getElementById('champ-code-plan').value = '';
-          document.getElementById('champ-cible-plan').value = '';
-          document.getElementById('champ-meneurs-plan').value = '';
-          document.getElementById('champ-description-plan').value = '';
-          ouvrirBoite('boite-nouveau-plan');
-        });
+        document.getElementById('bouton-ajouter-plan-hunter').addEventListener('click', () => ouvrirFichePlan(''));
         document.getElementById('formulaire-nouveau-plan').addEventListener('submit', executerCreationPlan);
 
         // Archives (Tech)
