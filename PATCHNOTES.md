@@ -4,6 +4,14 @@ Les versions les plus récentes sont en haut. Le numéro de build correspond au 
 
 ---
 
+## BUILD 3.6 — Recrutement ouvert au B.O.S
+*16/10/2026*
+
+- Le **B.O.S** voit l'onglet Recrutement (candidatures reçues, classement, archives) et peut donner son avis 👍 / 👎 sur les candidatures et sur la mission d'essai.
+- Son avis apparaît sous le nom « B.O.S » dans le détail visible par Hunter. Les actions de gestion restent réservées à Hunter.
+
+---
+
 ## BUILD 3.5 — Interrupteur ON / OFF des recrutements
 *16/10/2026*
 
