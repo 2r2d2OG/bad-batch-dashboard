@@ -238,7 +238,7 @@
         <span>📈</span> REGISTRE &amp; STATS
       </button>
       <button data-onglet="recrutement" class="nav-bouton hidden px-3 py-1.5 font-titre text-xs tracking-wider border-b-2 border-transparent text-gray-400 hover:text-gray-200 biseau-bouton transition flex items-center gap-1.5 shrink-0 touch-target">
-        <span>🤝</span> RECRUTEMENT
+        <span>🤝</span> RECRUTEMENT <span id="pastille-recrutement" class="hidden ml-1 px-1.5 rounded-full bg-rougeAlerte text-white text-[0.6875rem] font-terminal"></span>
       </button>
     </div>
   </nav>
@@ -323,7 +323,7 @@
             <button type="button" id="lien-connexion-bos-discret" class="text-gray-500 hover:text-amber-400 uppercase tracking-wider transition underline decoration-dotted">
               [LIAISON HIÉRARCHIQUE B.O.S]
             </button>
-            <span>CYPHER SHA-256</span>
+            <span class="flex items-center gap-3"><a href="candidature.html" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300 uppercase tracking-wider underline decoration-dotted">📝 Postuler</a><span>CYPHER SHA-256</span></span>
           </div>
         </div>
 
@@ -785,6 +785,7 @@
 
     <!-- 8. RECRUTEMENT (HUNTER UNIQUEMENT) -->
     <section id="fenetre-recrutement" class="hidden space-y-4">
+      <div id="bloc-liens-recrutement" class="space-y-4">
       <div class="panneau-tactique p-3.5 rounded">
         <h2 class="font-titre font-bold text-xs sm:text-sm text-gray-100 uppercase tracking-wider">🤝 RECRUTEMENT // LIENS RAPIDES</h2>
         <p class="text-xs font-terminal text-gray-400">Raccourcis vers les documents de recrutement. Chaque lien s'ouvre dans un nouvel onglet.</p>
@@ -818,6 +819,41 @@
             <p class="text-xs font-terminal text-gray-400 mt-1">Tableau des résultats de l'évaluation.</p>
           </a>
         </div>
+      </div>
+
+      </div>
+
+      <!-- CANDIDATURES REÇUES (tous les membres) -->
+      <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5 space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-bordureTactique pb-2">
+          <h3 class="font-titre text-xs uppercase tracking-wider text-gray-300"><span class="text-cyanTech">■</span> CANDIDATURES REÇUES <span id="compteur-candidatures-recues" class="text-gray-500"></span></h3>
+          <button id="bouton-copier-lien-candidature" class="px-2.5 py-1 border border-bordureLueur hover:border-cyan-400/60 text-cyan-300 text-xs font-terminal rounded bg-panneauSous">🔗 Copier le lien du formulaire</button>
+        </div>
+        <p class="text-xs font-terminal text-gray-400">Donne ton avis : favorable ou défavorable à ce qu'on contacte la personne pour lancer son recrutement.</p>
+        <div id="liste-candidatures-recues" class="space-y-3"></div>
+        <div id="liste-candidatures-refusees"></div>
+      </div>
+
+      <!-- ÉVALUATION & CLASSEMENT -->
+      <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5 space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-bordureTactique pb-2">
+          <h3 class="font-titre text-xs uppercase tracking-wider text-gray-300"><span class="text-rougeAlerte">■</span> ÉVALUATION &amp; CLASSEMENT</h3>
+          <div class="flex flex-wrap items-center gap-2 text-xs font-terminal">
+            <select id="filtre-poste-recrutement" class="bg-fondCarbone border border-bordureTactique rounded px-2 py-1 text-gray-200 outline-none">
+              <option value="tous">Tous les postes</option>
+              <option value="tech">Tech</option>
+              <option value="wrecker">Wrecker</option>
+              <option value="crosshair">Crosshair</option>
+              <option value="hunter">Hunter</option>
+            </select>
+            <button id="bouton-nouveau-candidat" class="hunter-seul-rec px-2.5 py-1 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold uppercase rounded">+ Nouveau candidat</button>
+            <button id="bouton-bareme-recrutement" class="hunter-seul-rec px-2.5 py-1 border border-bordureLueur hover:border-amber-500/60 text-gray-200 rounded bg-panneauSous">⚙ Barème</button>
+            <button id="bouton-import-banque" class="hunter-seul-rec px-2.5 py-1 border border-bordureLueur hover:border-cyan-400/60 text-cyan-300 rounded bg-panneauSous">📥 Banque de questions</button>
+            <input type="file" id="fichier-import-banque" accept=".json,application/json" class="hidden">
+          </div>
+        </div>
+        <div id="etat-banque-recrutement" class="hunter-seul-rec text-xs font-terminal text-gray-400"></div>
+        <div id="liste-candidats" class="space-y-4"></div>
       </div>
     </section>
 
@@ -1080,6 +1116,57 @@
     </div>
   </div>
 
+  <!-- MODALE : NOUVEAU CANDIDAT -->
+  <div id="boite-candidat" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-panneauSombre border-2 border-amber-500 biseau-plaque max-w-sm w-full p-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-bordureTactique pb-2 mb-3">
+        <h3 class="font-titre text-xs font-bold text-amber-400 uppercase">NOUVEAU CANDIDAT</h3>
+        <button type="button" class="btn-fermer-modale text-gray-400 hover:text-white" data-modale="boite-candidat">✕</button>
+      </div>
+      <form id="formulaire-candidat" class="space-y-2.5">
+        <div>
+          <label class="block text-[0.8125rem] font-terminal text-gray-300 mb-1">Pseudo du candidat</label>
+          <input type="text" id="champ-pseudo-candidat" required maxlength="40" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none">
+        </div>
+        <div>
+          <label class="block text-[0.8125rem] font-terminal text-gray-300 mb-1">Poste recruté</label>
+          <select id="champ-poste-candidat" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-gray-100 rounded outline-none">
+            <option value="tech">Tech</option>
+            <option value="wrecker">Wrecker</option>
+            <option value="crosshair">Crosshair</option>
+            <option value="hunter">Hunter</option>
+          </select>
+        </div>
+        <div class="flex justify-end space-x-2 pt-1.5">
+          <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-xs font-terminal text-gray-400 rounded" data-modale="boite-candidat">Annuler</button>
+          <button type="submit" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold text-xs uppercase rounded">Créer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODALE : FICHE CANDIDAT -->
+  <div id="boite-fiche-candidat" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-start justify-center p-4 overflow-y-auto">
+    <div class="bg-panneauSombre border-2 border-amber-500 biseau-plaque max-w-4xl w-full p-4 my-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-bordureTactique pb-2 mb-3">
+        <h3 id="titre-fiche-candidat" class="font-titre text-xs font-bold text-amber-400 uppercase">FICHE CANDIDAT</h3>
+        <button type="button" class="btn-fermer-modale text-gray-400 hover:text-white" data-modale="boite-fiche-candidat">✕</button>
+      </div>
+      <div id="contenu-fiche-candidat" class="space-y-4"></div>
+    </div>
+  </div>
+
+  <!-- MODALE : BARÈME DU RECRUTEMENT -->
+  <div id="boite-bareme" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-start justify-center p-4 overflow-y-auto">
+    <div class="bg-panneauSombre border-2 border-amber-500 biseau-plaque max-w-3xl w-full p-4 my-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-bordureTactique pb-2 mb-3">
+        <h3 class="font-titre text-xs font-bold text-amber-400 uppercase">⚙ BARÈME DU RECRUTEMENT</h3>
+        <button type="button" class="btn-fermer-modale text-gray-400 hover:text-white" data-modale="boite-bareme">✕</button>
+      </div>
+      <div id="contenu-bareme" class="space-y-3"></div>
+    </div>
+  </div>
+
   <!-- MODALE : RÉGLAGE DU QUOTA -->
   <div id="boite-reglage-quota" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-panneauSombre border-2 border-amber-500 biseau-plaque max-w-xs w-full p-4 shadow-2xl">
@@ -1192,7 +1279,7 @@
     </div>
   </div>
 
-  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.0) -->
+  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.2) -->
   <footer class="border-t border-bordureTactique bg-fondCarbone/95 py-2.5 text-xs font-terminal text-gray-500 fixed bottom-0 left-0 right-0 z-30 shadow-2xl backdrop-blur">
     <div class="max-w-screen-2xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5">
       <div class="text-gray-400 flex items-center gap-2">
@@ -1202,7 +1289,7 @@
       <div class="flex items-center gap-3">
         <span class="text-gray-500 hidden md:inline">GRANDE ARMÉE DE LA RÉPUBLIQUE</span>
         <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/60 text-amber-300 text-[0.8125rem] font-titre font-bold rounded tracking-wider shadow-[0_0_10px_rgba(245,158,11,0.25)]">
-          FIRMWARE MARAUDEUR // BUILD 3.0
+          FIRMWARE MARAUDEUR // BUILD 3.2
         </span>
       </div>
     </div>
@@ -2264,10 +2351,10 @@
 
         document.getElementById('badge-date-pds').textContent = dateAujourdhuiCivil();
 
-        ['registre', 'recrutement'].forEach(nomOnglet => {
-          const bouton = document.querySelector(`.nav-bouton[data-onglet="${nomOnglet}"]`);
-          if (bouton) bouton.classList.toggle('hidden', etat.operateurConnecte !== 'hunter');
-        });
+        const boutonRegistre = document.querySelector('.nav-bouton[data-onglet="registre"]');
+        if (boutonRegistre) boutonRegistre.classList.toggle('hidden', etat.operateurConnecte !== 'hunter');
+        const boutonRecrutement = document.querySelector('.nav-bouton[data-onglet="recrutement"]');
+        if (boutonRecrutement) boutonRecrutement.classList.toggle('hidden', !etat.operateurConnecte || etat.estCompteBOS);
         const navInterne = document.getElementById('barre-navigation-interne');
         if (navInterne) {
           const centrer = etat.operateurConnecte === 'hunter';
@@ -2276,6 +2363,7 @@
           navInterne.classList.toggle('mx-auto', true);
         }
         if (etat.operateurConnecte === 'hunter') demarrerEcouteRegistre();
+        if (etat.operateurConnecte && !etat.estCompteBOS) demarrerEcouteRecrutement();
         purgerRapportsAnciens();
         naviguerOnglet('poste-commandement');
         verifierNotificationBlamePourMembre();
@@ -2290,6 +2378,7 @@
             etat.operateurConnecte = null;
             etat.estCompteBOS = false;
             if (desabonRegistre) { desabonRegistre(); desabonRegistre = null; }
+            arreterEcouteRecrutement();
             etat.registreActivite = [];
             document.body.className = "grille-tactique-bg flex flex-col justify-between min-h-screen pb-16 sm:pb-12 text-sm select-none";
             document.getElementById('fenetre-connexion').classList.remove('hidden');
@@ -2387,7 +2476,8 @@
       }
 
       function naviguerOnglet(onglet) {
-        if ((onglet === 'registre' || onglet === 'recrutement') && etat.operateurConnecte !== 'hunter') return;
+        if (onglet === 'registre' && etat.operateurConnecte !== 'hunter') return;
+        if (onglet === 'recrutement' && (!etat.operateurConnecte || etat.estCompteBOS)) return;
         AudioTactique.clic();
         etat.ongletActif = onglet;
         masquerToutesLesFenetres();
@@ -2424,6 +2514,7 @@
         if (etat.ongletActif === 'plans') afficherVuePlans();
         if (etat.ongletActif === 'archives') afficherVueArchives();
         if (etat.ongletActif === 'registre') afficherVueRegistre();
+        if (etat.ongletActif === 'recrutement') afficherVueRecrutement();
       }
 
       function membreEstEnReglePDS(idMembre) {
@@ -2516,6 +2607,687 @@
         } catch (err) {
           console.warn("Purge des rapports anciens :", err);
         }
+      }
+
+
+      // ==================== RECRUTEMENT ====================
+      // Chaque test est converti en note /20 ; la moyenne (pondérée) de toutes les notes classe les candidats.
+      // Les données saisies sont brutes (temps, erreurs) : changer le barème recalcule immédiatement toutes les notes.
+      const POSTES_RECRUTEMENT = {
+        tech:      { lib: 'Tech',      perso: 'Tech',      tests: ['grappin', 'terminal', 'keypad'] },
+        wrecker:   { lib: 'Wrecker',   perso: 'Wrecker',   tests: ['grappin', 'bombe', 'citadelle'] },
+        crosshair: { lib: 'Crosshair', perso: 'Crosshair', tests: ['grappin', 'tirRapidite', 'tirPrecision'] },
+        hunter:    { lib: 'Hunter',    perso: 'Hunter',    tests: ['grappin', 'traque'] }
+      };
+
+      const TESTS_RECRUTEMENT = {
+        grappin:      { lib: 'Parcours grappin', chrono: true, tmin: 80, tmax: 480,
+                        echecs: { mort: 'Mort', abandon: 'Abandon', incomplet: 'Non terminé' },
+                        compteurs: [{ id: 'etapes', lib: 'Étapes sautées', pen: 3 }] },
+        terminal:     { lib: 'Hack — terminal', chrono: true, tmin: 40, tmax: 150, echecs: { mort: 'Mort', echec: 'Échec' }, compteurs: [] },
+        keypad:       { lib: 'Hack — keypad', chrono: true, tmin: 7, tmax: 30, echecs: { mort: 'Mort', echec: 'Échec' }, compteurs: [] },
+        bombe:        { lib: 'Désamorçage de bombe', chrono: true, tmin: 8, tmax: 60, echecs: { mort: 'Mort', explosee: 'Bombe explosée' }, compteurs: [] },
+        citadelle:    { lib: 'Citadelle (facile)', chrono: true, tmin: 240, tmax: 600, echecs: { abandon: 'Non faite / abandon' },
+                        compteurs: [{ id: 'morts', lib: 'Morts', pen: 2 }] },
+        tirRapidite:  { lib: 'Tir de rapidité', chrono: true, tmin: 10, tmax: 40, echecs: {}, compteurs: [] },
+        tirPrecision: { lib: 'Tir de précision', chrono: false, echecs: {},
+                        compteurs: [{ id: 'ratees', lib: 'Balles ratées', pen: 1 }, { id: 'allies', lib: 'Tirs alliés', pen: 3 }, { id: 'priorites', lib: 'Priorités oubliées', pen: 2 }] },
+        traque:       { lib: 'Test de traque', chrono: true, tmin: 240, tmax: 900, echecs: { echec: 'Échec' }, compteurs: [] }
+      };
+
+      const etatRecrutement = { banque: null, bareme: null, candidats: [] };
+      let desabonRecrutement = [];
+      let candidatOuvertId = null;
+
+      function baremeParDefaut() {
+        const b = { tests: {}, poids: { theorie: 1 }, theorieMax: 15 };
+        Object.entries(TESTS_RECRUTEMENT).forEach(([id, d]) => {
+          b.tests[id] = { pen: {} };
+          if (d.chrono) { b.tests[id].tmin = d.tmin; b.tests[id].tmax = d.tmax; }
+          d.compteurs.forEach(c => { b.tests[id].pen[c.id] = c.pen; });
+          b.poids[id] = 1;
+        });
+        return b;
+      }
+
+      function baremeActif() {
+        const defaut = baremeParDefaut();
+        const perso = etatRecrutement.bareme || {};
+        const nombre = (v, repli) => (typeof v === 'number' && isFinite(v) ? v : repli);
+        Object.keys(defaut.tests).forEach(id => {
+          const p = (perso.tests || {})[id] || {};
+          if (defaut.tests[id].tmin !== undefined) {
+            defaut.tests[id].tmin = nombre(p.tmin, defaut.tests[id].tmin);
+            defaut.tests[id].tmax = nombre(p.tmax, defaut.tests[id].tmax);
+          }
+          Object.keys(defaut.tests[id].pen).forEach(c => {
+            defaut.tests[id].pen[c] = nombre((p.pen || {})[c], defaut.tests[id].pen[c]);
+          });
+        });
+        Object.keys(defaut.poids).forEach(k => { defaut.poids[k] = nombre((perso.poids || {})[k], defaut.poids[k]); });
+        defaut.theorieMax = nombre(perso.theorieMax, defaut.theorieMax) || 15;
+        return defaut;
+      }
+
+      function formatDuree(sec) {
+        if (sec === null || sec === undefined || isNaN(sec)) return '—';
+        const m = Math.floor(sec / 60);
+        const r = Math.round((sec - m * 60) * 100) / 100;
+        return `${m}:${(r < 10 ? '0' : '') + r}`;
+      }
+
+      function arrondi2(n) { return Math.round(n * 100) / 100; }
+
+      function noteTestRecrutement(id, donnees, bareme) {
+        const def = TESTS_RECRUTEMENT[id];
+        if (!def || !donnees || !donnees.issue) return null;       // test non passé
+        if (donnees.issue !== 'ok') return 0;                      // mort, abandon, échec...
+        const b = bareme.tests[id];
+        let note = 20;
+        if (def.chrono) {
+          const sec = (parseFloat(donnees.min) || 0) * 60 + (parseFloat(donnees.sec) || 0);
+          note = b.tmax === b.tmin ? 20 : 20 * (b.tmax - sec) / (b.tmax - b.tmin);
+          note = Math.max(0, Math.min(20, note));
+        }
+        def.compteurs.forEach(c => {
+          note -= (parseFloat((donnees.counts || {})[c.id]) || 0) * b.pen[c.id];
+        });
+        return arrondi2(Math.max(0, Math.min(20, note)));
+      }
+
+      function resultatCandidat(cand, bareme) {
+        const poste = POSTES_RECRUTEMENT[cand.poste];
+        const notes = {};
+        let somme = 0, poids = 0, saisis = 0;
+        poste.tests.forEach(id => {
+          const n = noteTestRecrutement(id, (cand.tests || {})[id], bareme);
+          notes[id] = n;
+          if (n !== null) { somme += n * bareme.poids[id]; poids += bareme.poids[id]; saisis++; }
+        });
+        let noteTheorie = null;
+        if (cand.theorie !== null && cand.theorie !== undefined && cand.theorie !== '') {
+          noteTheorie = arrondi2(Math.max(0, Math.min(20, 20 * parseFloat(cand.theorie) / bareme.theorieMax)));
+          somme += noteTheorie * bareme.poids.theorie; poids += bareme.poids.theorie; saisis++;
+        }
+        notes.theorie = noteTheorie;
+        return { notes, moyenne: poids > 0 ? arrondi2(somme / poids) : null, saisis, total: poste.tests.length + 1 };
+      }
+
+      function melangerTableau(tab) {
+        const a = tab.slice();
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+
+      function genererQuestionnaire(poste) {
+        const banque = etatRecrutement.banque;
+        if (!banque) return { erreur: "Aucune banque de questions : importe d'abord le fichier JSON." };
+        const communes = Object.values(banque.communes || {}).flat();
+        const perso = (banque.personnages || {})[POSTES_RECRUTEMENT[poste].perso] || [];
+        if (communes.length < 10) return { erreur: `Il faut au moins 10 questions communes (il y en a ${communes.length}).` };
+        if (perso.length < 5) return { erreur: `Il faut au moins 5 questions pour ${POSTES_RECRUTEMENT[poste].lib} (il y en a ${perso.length}).` };
+        const tirage = [
+          ...melangerTableau(communes).slice(0, 10).map(x => ({ q: x.q, r: x.r, t: 'commune' })),
+          ...melangerTableau(perso).slice(0, 5).map(x => ({ q: x.q, r: x.r, t: 'perso' }))
+        ];
+        return { questions: melangerTableau(tirage) };
+      }
+
+      function demarrerEcouteRecrutement() {
+        if (!estConnecteFirestore || desabonRecrutement.length) return;
+        const rafraichir = () => {
+          majPastilleRecrutement();
+          if (etat.operateurConnecte && !etat.estCompteBOS && etat.ongletActif === 'recrutement') afficherVueRecrutement();
+        };
+        desabonRecrutement.push(onSnapshot(collection(baseDeDonnees, 'candidatures'), snap => {
+          const liste = [];
+          snap.forEach(d => liste.push({ id: d.id, ...d.data() }));
+          etatRecrutement.candidats = liste.filter(c => !c.supprime);
+          rafraichir();
+        }, err => console.warn("Candidatures :", err)));
+        desabonRecrutement.push(onSnapshot(doc(baseDeDonnees, 'recrutementBanque', 'banque'), d => {
+          etatRecrutement.banque = d.exists() ? d.data() : null;
+          rafraichir();
+        }, err => console.warn("Banque de questions :", err)));
+        desabonRecrutement.push(onSnapshot(doc(baseDeDonnees, 'config', 'recrutement'), d => {
+          etatRecrutement.bareme = d.exists() ? (d.data().bareme || null) : null;
+          rafraichir();
+        }, err => console.warn("Barème :", err)));
+      }
+
+      function arreterEcouteRecrutement() {
+        desabonRecrutement.forEach(f => f());
+        desabonRecrutement = [];
+        etatRecrutement.candidats = [];
+        etatRecrutement.banque = null;
+        etatRecrutement.bareme = null;
+      }
+
+      function estHunterRecrutement() { return etat.operateurConnecte === 'hunter' && !etat.estCompteBOS; }
+      function statutCandidat(c) { return c.statut || 'recrutement'; }
+      const MEMBRES_AVIS = ['hunter', 'tech', 'wrecker', 'crosshair'];
+
+      // Pastille sur l'onglet : candidatures auxquelles je n'ai pas encore donné mon avis
+      function majPastilleRecrutement() {
+        const pastille = document.getElementById('pastille-recrutement');
+        if (!pastille) return;
+        const moi = etat.operateurConnecte;
+        let n = 0;
+        if (moi && !etat.estCompteBOS) {
+          n = etatRecrutement.candidats.filter(c => statutCandidat(c) === 'nouvelle' && !((c.avisCandidature || {})[moi])).length;
+        }
+        pastille.textContent = n;
+        pastille.classList.toggle('hidden', n === 0);
+      }
+
+      function htmlInfosCandidature(c, ouvert) {
+        if (!c.identite) return '';
+        const ligne = (lib, val) => `<div><span class="text-gray-500">${lib} :</span> <span class="text-gray-100 whitespace-pre-wrap">${echapperTexteHTML(val || '—')}</span></div>`;
+        return `
+          <details ${ouvert ? 'open' : ''} class="p-2.5 rounded border border-bordureTactique bg-fondCarbone text-xs font-terminal">
+            <summary class="cursor-pointer text-cyan-300 font-bold uppercase">📄 Candidature complète</summary>
+            <div class="mt-2 space-y-1.5">
+              ${ligne('Identité', c.identite)}
+              ${ligne('Discord', c.discord)}
+              ${ligne('Régiment', c.regiment)}
+              ${ligne('Grade', c.grade)}
+              ${ligne('Poste visé', (POSTES_RECRUTEMENT[c.poste] || {}).lib)}
+              ${ligne('Disponibilités', c.disponibilites)}
+              ${ligne('Motivations', c.motivations)}
+              ${ligne('Connaissances Bad Batch', c.connaissances)}
+              ${ligne('À ajouter', c.remarques)}
+            </div>
+          </details>`;
+      }
+
+      function htmlAvis(c, champ, libPour, libContre) {
+        const avis = c[champ] || {};
+        const moi = etat.operateurConnecte;
+        const nom = (id) => (etat.operateurs[id] || {}).nom || id;
+        const pour = MEMBRES_AVIS.filter(id => avis[id] === 'pour');
+        const contre = MEMBRES_AVIS.filter(id => avis[id] === 'contre');
+        const bouton = (valeur, lib, actif, classes) => `
+          <button data-vote="${echapperTexteHTML(c.id)}" data-champ="${champ}" data-valeur="${valeur}" class="btn-vote px-2.5 py-1 rounded border text-xs font-terminal transition ${actif ? classes.actif : classes.inactif}">${lib}</button>`;
+        const detail = estHunterRecrutement()
+          ? `<div class="text-[0.75rem] font-terminal text-gray-500 w-full">Pour : ${pour.length ? pour.map(i => echapperTexteHTML(nom(i))).join(', ') : '—'} · Contre : ${contre.length ? contre.map(i => echapperTexteHTML(nom(i))).join(', ') : '—'}</div>`
+          : '';
+        return `
+          <div class="flex flex-wrap items-center gap-2">
+            ${bouton('pour', `👍 ${libPour} (${pour.length})`, avis[moi] === 'pour', { actif: 'bg-green-900/60 border-green-500 text-green-200', inactif: 'bg-panneauSous border-bordureLueur text-gray-300 hover:border-green-500/60' })}
+            ${bouton('contre', `👎 ${libContre} (${contre.length})`, avis[moi] === 'contre', { actif: 'bg-red-900/60 border-red-500 text-red-200', inactif: 'bg-panneauSous border-bordureLueur text-gray-300 hover:border-red-500/60' })}
+            ${detail}
+          </div>`;
+      }
+
+      async function voterCandidature(idCand, champ, valeur) {
+        const moi = etat.operateurConnecte;
+        if (!moi || etat.estCompteBOS || !['avisCandidature', 'avisEssai'].includes(champ)) return;
+        const c = etatRecrutement.candidats.find(x => x.id === idCand);
+        if (!c) return;
+        const nouvelle = ((c[champ] || {})[moi] === valeur) ? '' : valeur;   // un second clic retire l'avis
+        await ecrireCandidat(idCand, { [`${champ}.${moi}`]: nouvelle });
+        AudioTactique.clic();
+        majPastilleRecrutement();
+        afficherVueRecrutement();
+      }
+
+      function branchementsAvis(conteneur) {
+        conteneur.querySelectorAll('.btn-vote').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            voterCandidature(btn.getAttribute('data-vote'), btn.getAttribute('data-champ'), btn.getAttribute('data-valeur'));
+          });
+        });
+      }
+
+      function afficherCandidaturesRecues() {
+        const hunter = estHunterRecrutement();
+        const nouvelles = etatRecrutement.candidats.filter(c => statutCandidat(c) === 'nouvelle').sort((a, b) => (a.dateCreation || 0) - (b.dateCreation || 0));
+        const refusees = etatRecrutement.candidats.filter(c => statutCandidat(c) === 'refusee');
+        document.getElementById('compteur-candidatures-recues').textContent = `(${nouvelles.length})`;
+        const zone = document.getElementById('liste-candidatures-recues');
+        if (nouvelles.length === 0) {
+          zone.innerHTML = `<div class="text-xs font-terminal text-gray-500">Aucune nouvelle candidature en attente.</div>`;
+        } else {
+          zone.innerHTML = nouvelles.map(c => `
+            <div class="p-3 rounded border border-bordureTactique bg-panneauSous space-y-2">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="font-terminal text-sm text-gray-100">${echapperTexteHTML(c.identite || c.pseudo)}
+                  <span class="ml-2 px-1.5 py-0.5 rounded border border-amber-500/50 text-amber-300 text-[0.75rem]">${echapperTexteHTML((POSTES_RECRUTEMENT[c.poste] || {}).lib || '?')}</span>
+                </div>
+                <div class="text-[0.75rem] font-terminal text-gray-500">${c.dateCreation ? new Date(c.dateCreation).toLocaleDateString('fr-FR') : ''}</div>
+              </div>
+              <div class="text-xs font-terminal text-gray-400">Discord : <span class="text-gray-200">${echapperTexteHTML(c.discord || '—')}</span> · ${echapperTexteHTML(c.regiment || '—')} · ${echapperTexteHTML(c.grade || '—')}</div>
+              ${htmlInfosCandidature(c, false)}
+              ${htmlAvis(c, 'avisCandidature', 'Favorable', 'Défavorable')}
+              ${hunter ? `
+                <div class="flex flex-wrap justify-end gap-2 pt-1 border-t border-bordureTactique text-xs font-terminal">
+                  <button data-refuser="${echapperTexteHTML(c.id)}" class="btn-refuser px-3 py-1.5 bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 rounded">✖ Refuser</button>
+                  <button data-lancer="${echapperTexteHTML(c.id)}" class="btn-lancer px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold uppercase rounded">▶ Lancer le recrutement</button>
+                </div>` : ''}
+            </div>`).join('');
+          branchementsAvis(zone);
+          zone.querySelectorAll('.btn-lancer').forEach(btn => btn.addEventListener('click', async () => {
+            const id = btn.getAttribute('data-lancer');
+            await ecrireCandidat(id, { statut: 'recrutement', dateRecrutement: Date.now() });
+            const c = etatRecrutement.candidats.find(x => x.id === id);
+            if (c) c.statut = 'recrutement';
+            AudioTactique.succes();
+            afficherVueRecrutement();
+            ouvrirFicheCandidat(id);
+          }));
+          zone.querySelectorAll('.btn-refuser').forEach(btn => btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-refuser');
+            const c = etatRecrutement.candidats.find(x => x.id === id);
+            afficherBoiteConfirmation("REFUS D'UNE CANDIDATURE", `Refuser la candidature de ${c ? c.pseudo : 'ce candidat'} ?`, async () => {
+              await ecrireCandidat(id, { statut: 'refusee' });
+              if (c) c.statut = 'refusee';
+              afficherVueRecrutement();
+            });
+          }));
+        }
+
+        const zoneRef = document.getElementById('liste-candidatures-refusees');
+        if (hunter && refusees.length) {
+          zoneRef.innerHTML = `
+            <details class="text-xs font-terminal">
+              <summary class="cursor-pointer text-gray-400">Candidatures refusées (${refusees.length})</summary>
+              <ul class="mt-2 space-y-1">${refusees.map(c => `
+                <li class="flex items-center justify-between gap-2 p-2 rounded border border-bordureTactique bg-fondCarbone">
+                  <span class="text-gray-300 truncate">${echapperTexteHTML(c.pseudo)} <span class="text-gray-500">— ${echapperTexteHTML((POSTES_RECRUTEMENT[c.poste] || {}).lib || '')}</span></span>
+                  <button data-retablir="${echapperTexteHTML(c.id)}" class="btn-retablir px-2 py-1 border border-bordureLueur text-gray-300 rounded bg-panneauSous">↩ Rétablir</button>
+                </li>`).join('')}</ul>
+            </details>`;
+          zoneRef.querySelectorAll('.btn-retablir').forEach(btn => btn.addEventListener('click', async () => {
+            const id = btn.getAttribute('data-retablir');
+            await ecrireCandidat(id, { statut: 'nouvelle' });
+            const c = etatRecrutement.candidats.find(x => x.id === id);
+            if (c) c.statut = 'nouvelle';
+            afficherVueRecrutement();
+          }));
+        } else {
+          zoneRef.innerHTML = '';
+        }
+      }
+
+      function afficherVueRecrutement() {
+        if (!etat.operateurConnecte || etat.estCompteBOS) return;
+        const hunter = estHunterRecrutement();
+        document.getElementById('bloc-liens-recrutement').classList.toggle('hidden', !hunter);
+        document.querySelectorAll('.hunter-seul-rec').forEach(el => el.classList.toggle('hidden', !hunter));
+
+        afficherCandidaturesRecues();
+
+        const b = etatRecrutement.banque;
+        const infoBanque = document.getElementById('etat-banque-recrutement');
+        if (!b) {
+          infoBanque.innerHTML = `<span class="text-rougeAlerte font-bold">Aucune banque de questions.</span> Clique sur « Banque de questions » pour importer le fichier <span class="text-amber-300">banque-questions.json</span> (une seule fois).`;
+        } else {
+          const nbCommunes = Object.values(b.communes || {}).flat().length;
+          const parPerso = Object.entries(b.personnages || {}).map(([k, v]) => `${echapperTexteHTML(k)} ${v.length}`).join(' · ');
+          infoBanque.innerHTML = `Banque chargée : <span class="text-amber-300">${nbCommunes}</span> questions communes · ${parPerso}. Le questionnaire tire 10 communes + 5 du personnage recruté.`;
+        }
+
+        const filtre = document.getElementById('filtre-poste-recrutement').value;
+        const bareme = baremeActif();
+        const conteneur = document.getElementById('liste-candidats');
+        const postes = Object.keys(POSTES_RECRUTEMENT).filter(p => filtre === 'tous' || filtre === p);
+        const enEvaluation = etatRecrutement.candidats.filter(c => ['recrutement', 'essai'].includes(statutCandidat(c)));
+        let html = '';
+        postes.forEach(p => {
+          const cands = enEvaluation.filter(c => c.poste === p).map(c => ({ c, r: resultatCandidat(c, bareme) }));
+          if (cands.length === 0 && filtre === 'tous') return;
+          cands.sort((a, b2) => {
+            const ca = a.r.saisis === a.r.total ? 1 : 0, cb = b2.r.saisis === b2.r.total ? 1 : 0;
+            if (ca !== cb) return cb - ca;
+            return (b2.r.moyenne ?? -1) - (a.r.moyenne ?? -1);
+          });
+          html += `<div><div class="font-titre text-xs uppercase text-amber-400 mb-1.5">Poste : ${POSTES_RECRUTEMENT[p].lib} <span class="text-gray-500">(${cands.length})</span></div>`;
+          if (cands.length === 0) html += `<div class="text-xs font-terminal text-gray-500">Aucun candidat pour ce poste.</div>`;
+          cands.forEach(({ c, r }, i) => {
+            const complet = r.saisis === r.total;
+            const resume = POSTES_RECRUTEMENT[c.poste].tests.concat(['theorie'])
+              .filter(id => r.notes[id] !== null && r.notes[id] !== undefined)
+              .map(id => `${id === 'theorie' ? 'Théorie' : TESTS_RECRUTEMENT[id].lib} <span class="text-gray-200">${r.notes[id].toFixed(1).replace('.', ',')}</span>`).join(' · ');
+            const insigne = statutCandidat(c) === 'essai' ? `<span class="ml-2 px-1.5 rounded border border-green-500/60 text-green-300 text-[0.6875rem]">MISSION D'ESSAI</span>` : '';
+            html += `
+              <div class="mb-2 rounded border ${statutCandidat(c) === 'essai' ? 'border-green-600/60' : 'border-bordureTactique'} bg-panneauSous">
+                <button data-candidat="${echapperTexteHTML(c.id)}" class="ligne-candidat w-full text-left flex items-center gap-3 p-2.5 ${hunter ? 'hover:bg-white/5 cursor-pointer' : 'cursor-default'}">
+                  <span class="font-titre font-bold text-sm w-7 text-center ${complet && i === 0 ? 'text-amber-400' : 'text-gray-500'}">${complet ? i + 1 : '—'}</span>
+                  <span class="flex-1 min-w-0">
+                    <span class="block text-sm font-terminal text-gray-100 truncate">${echapperTexteHTML(c.pseudo)}${insigne}</span>
+                    <span class="block text-[0.75rem] font-terminal ${complet ? 'text-vertViseur' : 'text-amber-300'}">${complet ? 'Évaluation complète' : `Incomplet : ${r.saisis}/${r.total} épreuves saisies`}</span>
+                  </span>
+                  <span class="font-titre font-bold text-base ${r.moyenne === null ? 'text-gray-500' : 'text-amber-300'}">${r.moyenne === null ? '—' : r.moyenne.toFixed(2).replace('.', ',')}<span class="text-xs text-gray-500"> /20</span></span>
+                </button>
+                <div class="px-2.5 pb-2.5 space-y-2">
+                  ${resume ? `<div class="text-[0.75rem] font-terminal text-gray-500">${resume}</div>` : ''}
+                  ${htmlInfosCandidature(c, false)}
+                  <div class="text-[0.75rem] font-terminal text-gray-400">Mission d'essai : ton avis ?</div>
+                  ${htmlAvis(c, 'avisEssai', 'Favorable', 'Défavorable')}
+                </div>
+              </div>`;
+          });
+          html += `</div>`;
+        });
+        if (!html) html = `<div class="text-xs font-terminal text-gray-500">Aucun candidat en cours d'évaluation. Lance un recrutement depuis une candidature reçue.</div>`;
+        conteneur.innerHTML = html;
+        branchementsAvis(conteneur);
+        if (hunter) {
+          conteneur.querySelectorAll('.ligne-candidat').forEach(btn => {
+            btn.addEventListener('click', () => ouvrirFicheCandidat(btn.getAttribute('data-candidat')));
+          });
+        }
+      }
+
+      async function ecrireCandidat(id, patch) {
+        let ok = false;
+        if (estConnecteFirestore) {
+          try { await updateDoc(doc(baseDeDonnees, 'candidatures', id), patch); ok = true; }
+          catch (err) { console.warn("Écriture candidat :", err); }
+        }
+        if (!ok) appliquerPatchLocalCandidat(id, patch);
+      }
+
+      function appliquerPatchLocalCandidat(id, patch) {
+        const c = etatRecrutement.candidats.find(x => x.id === id);
+        if (!c) return;
+        Object.entries(patch).forEach(([cle, valeur]) => {
+          const morceaux = cle.split('.');
+          let cible = c;
+          morceaux.slice(0, -1).forEach(m => { if (typeof cible[m] !== 'object' || cible[m] === null) cible[m] = {}; cible = cible[m]; });
+          cible[morceaux[morceaux.length - 1]] = valeur;
+        });
+      }
+
+      async function executerCreationCandidat(e) {
+        e.preventDefault();
+        if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
+        const pseudo = document.getElementById('champ-pseudo-candidat').value.trim();
+        const poste = document.getElementById('champ-poste-candidat').value;
+        if (!pseudo || !POSTES_RECRUTEMENT[poste]) return;
+        const nouveau = { pseudo, poste, statut: 'recrutement', dateCreation: Date.now(), questionnaire: null, theorie: null, tests: {} };
+        let ok = false;
+        if (estConnecteFirestore) {
+          try { await setDoc(doc(collection(baseDeDonnees, 'candidatures')), nouveau); ok = true; }
+          catch (err) { console.warn("Création candidat :", err); }
+        }
+        if (!ok) etatRecrutement.candidats.push({ ...nouveau, id: 'local-' + Date.now() });
+        document.getElementById('formulaire-candidat').reset();
+        fermerBoite('boite-candidat');
+        AudioTactique.succes();
+        afficherVueRecrutement();
+      }
+
+      function htmlTestFiche(id, d, bareme) {
+        const def = TESTS_RECRUTEMENT[id];
+        d = d || {};
+        const options = [['', 'Non passé'], ['ok', 'Réussi / terminé'], ...Object.entries(def.echecs)]
+          .map(([v, l]) => `<option value="${v}" ${(d.issue || '') === v ? 'selected' : ''}>${l}</option>`).join('');
+        const chrono = def.chrono ? `
+          <div class="flex items-center gap-1">
+            <span class="text-gray-400 text-xs">Temps</span>
+            <input type="number" min="0" step="1" data-t="${id}" data-champ="min" value="${d.min ?? ''}" placeholder="min" class="w-16 bg-fondCarbone border border-bordureTactique rounded px-2 py-1 text-xs text-gray-100 outline-none">
+            <span class="text-gray-500">:</span>
+            <input type="number" min="0" step="0.01" data-t="${id}" data-champ="sec" value="${d.sec ?? ''}" placeholder="sec" class="w-20 bg-fondCarbone border border-bordureTactique rounded px-2 py-1 text-xs text-gray-100 outline-none">
+          </div>` : '';
+        const compteurs = def.compteurs.map(c => `
+          <div class="flex items-center gap-1">
+            <span class="text-gray-400 text-xs">${c.lib} <span class="text-gray-600">(−${bareme.tests[id].pen[c.id]})</span></span>
+            <input type="number" min="0" step="1" data-t="${id}" data-champ="c:${c.id}" value="${(d.counts || {})[c.id] ?? ''}" placeholder="0" class="w-16 bg-fondCarbone border border-bordureTactique rounded px-2 py-1 text-xs text-gray-100 outline-none">
+          </div>`).join('');
+        return `
+          <div class="p-3 rounded border border-bordureTactique bg-panneauSous" data-carte-test="${id}">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-titre text-xs uppercase text-gray-200">${def.lib}</span>
+              <span class="font-titre font-bold text-sm text-amber-300"><span data-note="${id}">—</span><span class="text-xs text-gray-500"> /20</span></span>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 font-terminal">
+              <select data-t="${id}" data-champ="issue" class="bg-fondCarbone border border-bordureTactique rounded px-2 py-1 text-xs text-gray-100 outline-none">${options}</select>
+              ${chrono}${compteurs}
+            </div>
+          </div>`;
+      }
+
+      function lireFicheCandidat() {
+        const cand = etatRecrutement.candidats.find(c => c.id === candidatOuvertId);
+        const tests = {};
+        POSTES_RECRUTEMENT[cand.poste].tests.forEach(id => {
+          const def = TESTS_RECRUTEMENT[id];
+          const carte = document.querySelector(`[data-carte-test="${id}"]`);
+          const o = { issue: carte.querySelector('[data-champ="issue"]').value };
+          if (def.chrono) {
+            o.min = carte.querySelector('[data-champ="min"]').value;
+            o.sec = carte.querySelector('[data-champ="sec"]').value;
+          }
+          o.counts = {};
+          def.compteurs.forEach(c => { o.counts[c.id] = carte.querySelector(`[data-champ="c:${c.id}"]`).value; });
+          tests[id] = o;
+        });
+        const th = document.getElementById('fiche-theorie').value;
+        return { tests, theorie: th === '' ? null : parseFloat(th) };
+      }
+
+      function majApercuFiche() {
+        const cand = etatRecrutement.candidats.find(c => c.id === candidatOuvertId);
+        if (!cand) return;
+        const bareme = baremeActif();
+        const lu = lireFicheCandidat();
+        const r = resultatCandidat({ ...cand, ...lu }, bareme);
+        Object.entries(r.notes).forEach(([id, n]) => {
+          const el = document.querySelector(`[data-note="${id}"]`);
+          if (el) el.textContent = n === null ? '—' : n.toFixed(2).replace('.', ',');
+        });
+        document.getElementById('fiche-moyenne').textContent = r.moyenne === null ? '—' : r.moyenne.toFixed(2).replace('.', ',');
+        document.getElementById('fiche-avancement').textContent = `${r.saisis}/${r.total} épreuves saisies`;
+      }
+
+      function ouvrirFicheCandidat(id) {
+        const cand = etatRecrutement.candidats.find(c => c.id === id);
+        if (!cand || etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
+        candidatOuvertId = id;
+        const bareme = baremeActif();
+        document.getElementById('titre-fiche-candidat').textContent = `${cand.pseudo} — ${POSTES_RECRUTEMENT[cand.poste].lib}`;
+
+        let blocQuestions;
+        if (!cand.questionnaire) {
+          blocQuestions = `<div class="text-xs font-terminal text-gray-400">Aucun questionnaire généré. Le tirage donne 10 questions de culture CF99 et 5 questions sur ${POSTES_RECRUTEMENT[cand.poste].lib}.</div>
+            <button id="bouton-generer-questionnaire" class="mt-2 px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold text-xs uppercase rounded">🎲 Générer le questionnaire</button>`;
+        } else {
+          blocQuestions = `<ol class="space-y-2 list-decimal pl-5 text-xs font-terminal">` + cand.questionnaire.map(q => `
+            <li class="pl-1">
+              <div class="text-gray-100">${echapperTexteHTML(q.q)} <span class="text-[0.6875rem] ${q.t === 'perso' ? 'text-cyan-400' : 'text-gray-500'}">[${q.t === 'perso' ? POSTES_RECRUTEMENT[cand.poste].lib : 'CF99'}]</span></div>
+              <div class="text-amber-300/90 mt-0.5">→ ${echapperTexteHTML(q.r)}</div>
+            </li>`).join('') + `</ol>
+            <button id="bouton-generer-questionnaire" class="mt-2 px-2.5 py-1 border border-bordureLueur text-gray-300 text-xs font-terminal rounded bg-panneauSous">🎲 Regénérer (remplace le questionnaire)</button>`;
+        }
+
+        document.getElementById('contenu-fiche-candidat').innerHTML = `
+          ${htmlInfosCandidature(cand, true)}
+          <div class="p-3 rounded border border-bordureTactique bg-fondCarbone">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <span class="font-titre text-xs uppercase text-gray-200">Questionnaire théorique</span>
+              <div class="flex items-center gap-2 font-terminal text-xs">
+                <span class="text-gray-400">Note</span>
+                <input type="number" id="fiche-theorie" min="0" max="${bareme.theorieMax}" step="0.5" value="${cand.theorie ?? ''}" placeholder="—" class="w-20 bg-panneauSous border border-bordureTactique rounded px-2 py-1 text-gray-100 outline-none">
+                <span class="text-gray-500">/ ${bareme.theorieMax}</span>
+                <span class="font-titre font-bold text-sm text-amber-300 ml-2"><span data-note="theorie">—</span><span class="text-xs text-gray-500"> /20</span></span>
+              </div>
+            </div>
+            ${blocQuestions}
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            ${POSTES_RECRUTEMENT[cand.poste].tests.map(t => htmlTestFiche(t, (cand.tests || {})[t], bareme)).join('')}
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-3 p-3 rounded border border-amber-500/50 bg-fondCarbone">
+            <div>
+              <div class="text-xs font-terminal text-gray-400">Moyenne générale</div>
+              <div class="font-titre font-bold text-2xl text-amber-300"><span id="fiche-moyenne">—</span><span class="text-sm text-gray-500"> /20</span></div>
+              <div id="fiche-avancement" class="text-xs font-terminal text-gray-500"></div>
+            </div>
+            <div class="flex flex-wrap gap-2 font-terminal text-xs">
+              <button id="bouton-refuser-candidat" class="px-3 py-1.5 bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 rounded">✖ Refuser</button>
+              <button id="bouton-retenir-essai" class="px-3 py-1.5 bg-green-900/60 hover:bg-green-800 border border-green-500 text-green-200 rounded">✅ Retenir pour la mission d'essai</button>
+              <button id="bouton-archiver-candidat" class="px-3 py-1.5 bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 rounded">🗑️ Archiver le candidat</button>
+              <button id="bouton-enregistrer-fiche" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold uppercase rounded">Enregistrer</button>
+            </div>
+          </div>`;
+
+        const zone = document.getElementById('contenu-fiche-candidat');
+        zone.querySelectorAll('input, select').forEach(el => {
+          el.addEventListener('input', majApercuFiche);
+          el.addEventListener('change', majApercuFiche);
+        });
+        document.getElementById('bouton-generer-questionnaire').addEventListener('click', async () => {
+          const res = genererQuestionnaire(cand.poste);
+          if (res.erreur) { afficherNotificationTactique(res.erreur); return; }
+          const lu = lireFicheCandidat();            // on garde ce qui est déjà saisi
+          await ecrireCandidat(id, { questionnaire: res.questions, theorie: lu.theorie, tests: lu.tests });
+          AudioTactique.succes();
+          ouvrirFicheCandidat(id);
+        });
+        document.getElementById('bouton-enregistrer-fiche').addEventListener('click', async () => {
+          const lu = lireFicheCandidat();
+          if (lu.theorie !== null) lu.theorie = Math.max(0, Math.min(baremeActif().theorieMax, lu.theorie));
+          await ecrireCandidat(id, { theorie: lu.theorie, tests: lu.tests });
+          AudioTactique.succes();
+          afficherNotificationTactique("Fiche du candidat enregistrée.");
+          fermerBoite('boite-fiche-candidat');
+          afficherVueRecrutement();
+        });
+        document.getElementById('bouton-archiver-candidat').addEventListener('click', () => {
+          afficherBoiteConfirmation("ARCHIVAGE D'UN CANDIDAT", `Archiver ${cand.pseudo} ? Il disparaîtra du classement.`, async () => {
+            await ecrireCandidat(id, { supprime: true });
+            etatRecrutement.candidats = etatRecrutement.candidats.filter(c => c.id !== id);
+            fermerBoite('boite-fiche-candidat');
+            afficherVueRecrutement();
+          });
+        });
+        document.getElementById('bouton-retenir-essai').addEventListener('click', async () => {
+          const lu = lireFicheCandidat();
+          await ecrireCandidat(id, { theorie: lu.theorie, tests: lu.tests, statut: 'essai' });
+          appliquerPatchLocalCandidat(id, { statut: 'essai' });
+          AudioTactique.succes();
+          afficherNotificationTactique(`${cand.pseudo} est retenu pour la mission d'essai.`);
+          fermerBoite('boite-fiche-candidat');
+          afficherVueRecrutement();
+        });
+        document.getElementById('bouton-refuser-candidat').addEventListener('click', () => {
+          afficherBoiteConfirmation("REFUS D'UN CANDIDAT", `Refuser ${cand.pseudo} ? Il quittera le classement (rétablissable depuis les candidatures refusées).`, async () => {
+            await ecrireCandidat(id, { statut: 'refusee' });
+            appliquerPatchLocalCandidat(id, { statut: 'refusee' });
+            fermerBoite('boite-fiche-candidat');
+            afficherVueRecrutement();
+          });
+        });
+        document.getElementById('boite-fiche-candidat').classList.remove('hidden');
+        majApercuFiche();
+      }
+
+      // ---- Barème modifiable ----
+      function ouvrirBareme() {
+        const b = baremeActif();
+        const ligne = (id, def) => {
+          const champs = [];
+          if (def.chrono) {
+            champs.push(`<label class="flex items-center gap-1 text-xs">20/20 jusqu'à <input type="number" min="0" step="0.01" data-b="tmin:${id}" value="${b.tests[id].tmin}" class="w-20 bg-fondCarbone border border-bordureTactique rounded px-2 py-1 text-gray-100 outline-none"> s</label>`);
+            champs.push(`<label class="flex items-center gap-1 text-xs">0/20 à partir de <input type="number" min="0" step="0.01" data-b="tmax:${id}" value="${b.tests[id].tmax}" class="w-20 bg-fondCarbone border border-bordureTactique rounded px-2 py-1 text-gray-100 outline-none"> s</label>`);
+          }
+          def.compteurs.forEach(c => champs.push(`<label class="flex items-center gap-1 text-xs">${c.lib} : −<input type="number" min="0" step="0.1" data-b="pen:${id}:${c.id}" value="${b.tests[id].pen[c.id]}" class="w-16 bg-fondCarbone border border-bordureTactique rounded px-2 py-1 text-gray-100 outline-none"> pt</label>`));
+          champs.push(`<label class="flex items-center gap-1 text-xs">Poids <input type="number" min="0" step="0.1" data-b="poids:${id}" value="${b.poids[id]}" class="w-16 bg-fondCarbone border border-bordureTactique rounded px-2 py-1 text-gray-100 outline-none"></label>`);
+          return `<div class="p-2.5 rounded border border-bordureTactique bg-panneauSous"><div class="font-titre text-xs uppercase text-gray-200 mb-1.5">${def.lib}</div><div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 font-terminal text-gray-300">${champs.join('')}</div></div>`;
+        };
+        document.getElementById('contenu-bareme').innerHTML = `
+          <p class="text-xs font-terminal text-gray-400">Chaque épreuve est notée sur 20. Les temps sont en <span class="text-amber-300">secondes</span> (ex : 1:20 = 80). Entre les deux seuils, la note baisse en ligne droite. Un poids de 2 compte double dans la moyenne, 0 retire l'épreuve. Les changements s'appliquent à tous les candidats, passés compris.</p>
+          <div class="p-2.5 rounded border border-bordureTactique bg-panneauSous">
+            <div class="font-titre text-xs uppercase text-gray-200 mb-1.5">Questionnaire théorique</div>
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 font-terminal text-gray-300">
+              <label class="flex items-center gap-1 text-xs">Note maximale <input type="number" min="1" step="1" data-b="theorieMax" value="${b.theorieMax}" class="w-16 bg-fondCarbone border border-bordureTactique rounded px-2 py-1 text-gray-100 outline-none"></label>
+              <label class="flex items-center gap-1 text-xs">Poids <input type="number" min="0" step="0.1" data-b="poids:theorie" value="${b.poids.theorie}" class="w-16 bg-fondCarbone border border-bordureTactique rounded px-2 py-1 text-gray-100 outline-none"></label>
+            </div>
+          </div>
+          ${Object.entries(TESTS_RECRUTEMENT).map(([id, def]) => ligne(id, def)).join('')}
+          <div class="flex flex-wrap justify-between gap-2 pt-1 font-terminal text-xs">
+            <button id="bouton-bareme-defaut" class="px-3 py-1.5 border border-bordureLueur text-gray-300 rounded bg-panneauSous">Rétablir les valeurs par défaut</button>
+            <button id="bouton-bareme-enregistrer" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold uppercase rounded">Enregistrer le barème</button>
+          </div>`;
+        document.getElementById('bouton-bareme-enregistrer').addEventListener('click', async () => {
+          const nouveau = baremeParDefaut();
+          document.querySelectorAll('#contenu-bareme [data-b]').forEach(inp => {
+            const v = parseFloat(inp.value);
+            if (!isFinite(v) || v < 0) return;
+            const [type, id, c] = inp.getAttribute('data-b').split(':');
+            if (type === 'theorieMax') nouveau.theorieMax = v || 15;
+            else if (type === 'poids') nouveau.poids[id] = v;
+            else if (type === 'tmin' || type === 'tmax') nouveau.tests[id][type] = v;
+            else if (type === 'pen') nouveau.tests[id].pen[c] = v;
+          });
+          await enregistrerBareme(nouveau);
+        });
+        document.getElementById('bouton-bareme-defaut').addEventListener('click', () => {
+          afficherBoiteConfirmation("BARÈME PAR DÉFAUT", "Rétablir tous les seuils, pénalités et poids par défaut ?", () => enregistrerBareme(baremeParDefaut()));
+        });
+        document.getElementById('boite-bareme').classList.remove('hidden');
+      }
+
+      async function enregistrerBareme(bareme) {
+        let ok = false;
+        if (estConnecteFirestore) {
+          try { await setDoc(doc(baseDeDonnees, 'config', 'recrutement'), { bareme }, { merge: true }); ok = true; }
+          catch (err) { console.warn("Barème :", err); }
+        }
+        if (!ok) etatRecrutement.bareme = bareme;
+        AudioTactique.succes();
+        afficherNotificationTactique("Barème enregistré : le classement est recalculé.");
+        fermerBoite('boite-bareme');
+        afficherVueRecrutement();
+      }
+
+      // ---- Import de la banque de questions (JSON) ----
+      async function importerBanqueQuestions(fichier) {
+        if (!fichier) return;
+        try {
+          const brut = JSON.parse(await fichier.text());
+          const valide = (arr) => Array.isArray(arr) && arr.every(x => x && typeof x.q === 'string' && typeof x.r === 'string');
+          if (!brut.communes || !brut.personnages) throw new Error("Structure inattendue");
+          const communes = {}, personnages = {};
+          Object.entries(brut.communes).forEach(([k, v]) => { if (!valide(v)) throw new Error("Catégorie invalide : " + k); communes[k] = v.map(x => ({ q: x.q, r: x.r })); });
+          Object.entries(brut.personnages).forEach(([k, v]) => { if (!valide(v)) throw new Error("Personnage invalide : " + k); personnages[k] = v.map(x => ({ q: x.q, r: x.r })); });
+          const banque = { communes, personnages, majLe: Date.now() };
+          let ok = false;
+          if (estConnecteFirestore) {
+            try { await setDoc(doc(baseDeDonnees, 'recrutementBanque', 'banque'), banque); ok = true; }
+            catch (err) { console.warn("Banque :", err); }
+          }
+          if (!ok) etatRecrutement.banque = banque;
+          AudioTactique.succes();
+          afficherNotificationTactique("Banque de questions importée.");
+          afficherVueRecrutement();
+        } catch (err) {
+          console.warn("Import banque :", err);
+          AudioTactique.alerte();
+          afficherNotificationTactique("Fichier invalide : utilise banque-questions.json tel que fourni.");
+        }
+      }
+
+      function demarrerEcouteursRecrutement() {
+        document.getElementById('bouton-nouveau-candidat').addEventListener('click', () => ouvrirBoite('boite-candidat'));
+        document.getElementById('bouton-copier-lien-candidature').addEventListener('click', async () => {
+          const lien = new URL('candidature.html', location.href).href;
+          try { await navigator.clipboard.writeText(lien); afficherNotificationTactique("Lien du formulaire copié."); }
+          catch (err) { window.prompt("Copie ce lien :", lien); }
+        });
+        document.getElementById('formulaire-candidat').addEventListener('submit', executerCreationCandidat);
+        document.getElementById('bouton-bareme-recrutement').addEventListener('click', ouvrirBareme);
+        document.getElementById('filtre-poste-recrutement').addEventListener('change', afficherVueRecrutement);
+        document.getElementById('bouton-import-banque').addEventListener('click', () => document.getElementById('fichier-import-banque').click());
+        document.getElementById('fichier-import-banque').addEventListener('change', (e) => {
+          importerBanqueQuestions(e.target.files[0]);
+          e.target.value = '';
+        });
       }
 
       function demarrerEcouteRegistre() {
@@ -4198,6 +4970,7 @@
 
         // Plans d'engagement
         document.getElementById('bouton-ajouter-plan-hunter').addEventListener('click', () => ouvrirFichePlan(''));
+        demarrerEcouteursRecrutement();
         document.getElementById('formulaire-nouveau-plan').addEventListener('submit', executerCreationPlan);
 
         // Archives (Tech)
