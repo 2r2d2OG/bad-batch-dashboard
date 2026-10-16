@@ -4,6 +4,15 @@ Les versions les plus récentes sont en haut. Le numéro de build correspond au 
 
 ---
 
+## BUILD 3.3 — Résultats colorés, commentaires et recrutements passés
+*16/10/2026*
+
+- **Code couleur** par candidat : 🟥 test théorique raté, 🟧 en attente, 🟩 réussi ; filtre par résultat dans le classement.
+- **Commentaires** après recrutement : commentaire général et commentaire de la mission RP, visibles par tous les membres.
+- **Import des recrutements passés** (Hunter) : 18 candidats déjà évalués, avec temps, erreurs, note théorique et commentaires.
+
+---
+
 ## BUILD 3.2 — Candidatures en ligne et avis des membres
 *16/10/2026*
 
