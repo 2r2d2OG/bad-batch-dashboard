@@ -846,10 +846,18 @@
               <option value="crosshair">Crosshair</option>
               <option value="hunter">Hunter</option>
             </select>
+            <select id="filtre-resultat-recrutement" class="bg-fondCarbone border border-bordureTactique rounded px-2 py-1 text-gray-200 outline-none">
+              <option value="tous">Tous les résultats</option>
+              <option value="vert">🟩 Réussis</option>
+              <option value="orange">🟧 En attente</option>
+              <option value="rouge">🟥 Théorie ratée</option>
+            </select>
             <button id="bouton-nouveau-candidat" class="hunter-seul-rec px-2.5 py-1 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold uppercase rounded">+ Nouveau candidat</button>
             <button id="bouton-bareme-recrutement" class="hunter-seul-rec px-2.5 py-1 border border-bordureLueur hover:border-amber-500/60 text-gray-200 rounded bg-panneauSous">⚙ Barème</button>
             <button id="bouton-import-banque" class="hunter-seul-rec px-2.5 py-1 border border-bordureLueur hover:border-cyan-400/60 text-cyan-300 rounded bg-panneauSous">📥 Banque de questions</button>
+            <button id="bouton-import-historique" class="hunter-seul-rec px-2.5 py-1 border border-bordureLueur hover:border-cyan-400/60 text-cyan-300 rounded bg-panneauSous">📥 Recrutements passés</button>
             <input type="file" id="fichier-import-banque" accept=".json,application/json" class="hidden">
+            <input type="file" id="fichier-import-historique" accept=".json,application/json" class="hidden">
           </div>
         </div>
         <div id="etat-banque-recrutement" class="hunter-seul-rec text-xs font-terminal text-gray-400"></div>
@@ -1279,7 +1287,7 @@
     </div>
   </div>
 
-  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.2) -->
+  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.3) -->
   <footer class="border-t border-bordureTactique bg-fondCarbone/95 py-2.5 text-xs font-terminal text-gray-500 fixed bottom-0 left-0 right-0 z-30 shadow-2xl backdrop-blur">
     <div class="max-w-screen-2xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5">
       <div class="text-gray-400 flex items-center gap-2">
@@ -1289,7 +1297,7 @@
       <div class="flex items-center gap-3">
         <span class="text-gray-500 hidden md:inline">GRANDE ARMÉE DE LA RÉPUBLIQUE</span>
         <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/60 text-amber-300 text-[0.8125rem] font-titre font-bold rounded tracking-wider shadow-[0_0_10px_rgba(245,158,11,0.25)]">
-          FIRMWARE MARAUDEUR // BUILD 3.2
+          FIRMWARE MARAUDEUR // BUILD 3.3
         </span>
       </div>
     </div>
@@ -2766,6 +2774,14 @@
         etatRecrutement.bareme = null;
       }
 
+      // Code couleur du résultat d'un recrutement (choisi par Hunter)
+      const COULEURS_RESULTAT = {
+        vert:   { lib: 'Réussi',                emoji: '🟩', texte: 'text-green-300', ligne: 'border-l-green-500 bg-green-950/20' },
+        orange: { lib: 'En attente',            emoji: '🟧', texte: 'text-amber-300', ligne: 'border-l-amber-500 bg-amber-950/20' },
+        rouge:  { lib: 'Test théorique raté',   emoji: '🟥', texte: 'text-red-300',   ligne: 'border-l-red-600 bg-red-950/20' }
+      };
+      function resultatCandidatCouleur(c) { return COULEURS_RESULTAT[c.resultat] ? c.resultat : 'orange'; }
+
       function estHunterRecrutement() { return etat.operateurConnecte === 'hunter' && !etat.estCompteBOS; }
       function statutCandidat(c) { return c.statut || 'recrutement'; }
       const MEMBRES_AVIS = ['hunter', 'tech', 'wrecker', 'crosshair'];
@@ -2784,7 +2800,7 @@
       }
 
       function htmlInfosCandidature(c, ouvert) {
-        if (!c.identite) return '';
+        if (!c.identite || !c.discord) return '';   // pas de bloc pour les recrutements importés (sans formulaire)
         const ligne = (lib, val) => `<div><span class="text-gray-500">${lib} :</span> <span class="text-gray-100 whitespace-pre-wrap">${echapperTexteHTML(val || '—')}</span></div>`;
         return `
           <details ${ouvert ? 'open' : ''} class="p-2.5 rounded border border-bordureTactique bg-fondCarbone text-xs font-terminal">
@@ -2935,7 +2951,9 @@
         const bareme = baremeActif();
         const conteneur = document.getElementById('liste-candidats');
         const postes = Object.keys(POSTES_RECRUTEMENT).filter(p => filtre === 'tous' || filtre === p);
-        const enEvaluation = etatRecrutement.candidats.filter(c => ['recrutement', 'essai'].includes(statutCandidat(c)));
+        const filtreResultat = document.getElementById('filtre-resultat-recrutement').value;
+        const enEvaluation = etatRecrutement.candidats.filter(c => ['recrutement', 'essai'].includes(statutCandidat(c))
+          && (filtreResultat === 'tous' || resultatCandidatCouleur(c) === filtreResultat));
         let html = '';
         postes.forEach(p => {
           const cands = enEvaluation.filter(c => c.poste === p).map(c => ({ c, r: resultatCandidat(c, bareme) }));
@@ -2954,7 +2972,7 @@
               .map(id => `${id === 'theorie' ? 'Théorie' : TESTS_RECRUTEMENT[id].lib} <span class="text-gray-200">${r.notes[id].toFixed(1).replace('.', ',')}</span>`).join(' · ');
             const insigne = statutCandidat(c) === 'essai' ? `<span class="ml-2 px-1.5 rounded border border-green-500/60 text-green-300 text-[0.6875rem]">MISSION D'ESSAI</span>` : '';
             html += `
-              <div class="mb-2 rounded border ${statutCandidat(c) === 'essai' ? 'border-green-600/60' : 'border-bordureTactique'} bg-panneauSous">
+              <div class="mb-2 rounded border border-bordureTactique border-l-4 ${COULEURS_RESULTAT[resultatCandidatCouleur(c)].ligne}">
                 <button data-candidat="${echapperTexteHTML(c.id)}" class="ligne-candidat w-full text-left flex items-center gap-3 p-2.5 ${hunter ? 'hover:bg-white/5 cursor-pointer' : 'cursor-default'}">
                   <span class="font-titre font-bold text-sm w-7 text-center ${complet && i === 0 ? 'text-amber-400' : 'text-gray-500'}">${complet ? i + 1 : '—'}</span>
                   <span class="flex-1 min-w-0">
@@ -2966,8 +2984,11 @@
                 <div class="px-2.5 pb-2.5 space-y-2">
                   ${resume ? `<div class="text-[0.75rem] font-terminal text-gray-500">${resume}</div>` : ''}
                   ${htmlInfosCandidature(c, false)}
-                  <div class="text-[0.75rem] font-terminal text-gray-400">Mission d'essai : ton avis ?</div>
-                  ${htmlAvis(c, 'avisEssai', 'Favorable', 'Défavorable')}
+                  <div class="text-[0.75rem] font-terminal ${COULEURS_RESULTAT[resultatCandidatCouleur(c)].texte}">${COULEURS_RESULTAT[resultatCandidatCouleur(c)].emoji} ${COULEURS_RESULTAT[resultatCandidatCouleur(c)].lib}</div>
+                  ${c.commentaire ? `<div class="text-xs font-terminal text-gray-300 whitespace-pre-wrap">💬 ${echapperTexteHTML(c.commentaire)}</div>` : ''}
+                  ${c.commentaireEssai ? `<div class="text-xs font-terminal text-gray-300 whitespace-pre-wrap">🎭 Mission RP : ${echapperTexteHTML(c.commentaireEssai)}</div>` : ''}
+                  ${resultatCandidatCouleur(c) === 'rouge' ? '' : `<div class="text-[0.75rem] font-terminal text-gray-400">Mission d'essai : ton avis ?</div>
+                  ${htmlAvis(c, 'avisEssai', 'Favorable', 'Défavorable')}`}
                 </div>
               </div>`;
           });
@@ -3068,7 +3089,14 @@
           tests[id] = o;
         });
         const th = document.getElementById('fiche-theorie').value;
-        return { tests, theorie: th === '' ? null : parseFloat(th) };
+        const choix = document.querySelector('input[name="fiche-resultat"]:checked');
+        return {
+          tests,
+          theorie: th === '' ? null : parseFloat(th),
+          resultat: choix ? choix.value : 'orange',
+          commentaire: document.getElementById('fiche-commentaire').value.trim(),
+          commentaireEssai: document.getElementById('fiche-commentaire-essai').value.trim()
+        };
       }
 
       function majApercuFiche() {
@@ -3122,6 +3150,24 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
             ${POSTES_RECRUTEMENT[cand.poste].tests.map(t => htmlTestFiche(t, (cand.tests || {})[t], bareme)).join('')}
           </div>
+          <div class="p-3 rounded border border-bordureTactique bg-fondCarbone space-y-3">
+            <div class="font-titre text-xs uppercase text-gray-200">Décision &amp; commentaires</div>
+            <div class="flex flex-wrap gap-2 font-terminal text-xs">
+              ${Object.entries(COULEURS_RESULTAT).map(([k, v]) => `
+                <label class="flex items-center gap-2 px-3 py-1.5 rounded border border-bordureLueur bg-panneauSous cursor-pointer ${v.texte}">
+                  <input type="radio" name="fiche-resultat" value="${k}" ${resultatCandidatCouleur(cand) === k ? 'checked' : ''}>
+                  ${v.emoji} ${v.lib}
+                </label>`).join('')}
+            </div>
+            <div>
+              <label class="block text-xs font-terminal text-gray-400 mb-1">Commentaire sur le recrutement</label>
+              <textarea id="fiche-commentaire" rows="3" maxlength="2000" class="w-full bg-panneauSous border border-bordureTactique rounded px-3 py-2 text-xs font-terminal text-gray-100 outline-none">${echapperTexteHTML(cand.commentaire || '')}</textarea>
+            </div>
+            <div>
+              <label class="block text-xs font-terminal text-gray-400 mb-1">Mission RP / mission d'essai (commentaire)</label>
+              <textarea id="fiche-commentaire-essai" rows="2" maxlength="2000" class="w-full bg-panneauSous border border-bordureTactique rounded px-3 py-2 text-xs font-terminal text-gray-100 outline-none">${echapperTexteHTML(cand.commentaireEssai || '')}</textarea>
+            </div>
+          </div>
           <div class="flex flex-wrap items-center justify-between gap-3 p-3 rounded border border-amber-500/50 bg-fondCarbone">
             <div>
               <div class="text-xs font-terminal text-gray-400">Moyenne générale</div>
@@ -3145,14 +3191,14 @@
           const res = genererQuestionnaire(cand.poste);
           if (res.erreur) { afficherNotificationTactique(res.erreur); return; }
           const lu = lireFicheCandidat();            // on garde ce qui est déjà saisi
-          await ecrireCandidat(id, { questionnaire: res.questions, theorie: lu.theorie, tests: lu.tests });
+          await ecrireCandidat(id, { questionnaire: res.questions, ...lu });
           AudioTactique.succes();
           ouvrirFicheCandidat(id);
         });
         document.getElementById('bouton-enregistrer-fiche').addEventListener('click', async () => {
           const lu = lireFicheCandidat();
           if (lu.theorie !== null) lu.theorie = Math.max(0, Math.min(baremeActif().theorieMax, lu.theorie));
-          await ecrireCandidat(id, { theorie: lu.theorie, tests: lu.tests });
+          await ecrireCandidat(id, { ...lu });
           AudioTactique.succes();
           afficherNotificationTactique("Fiche du candidat enregistrée.");
           fermerBoite('boite-fiche-candidat');
@@ -3168,8 +3214,8 @@
         });
         document.getElementById('bouton-retenir-essai').addEventListener('click', async () => {
           const lu = lireFicheCandidat();
-          await ecrireCandidat(id, { theorie: lu.theorie, tests: lu.tests, statut: 'essai' });
-          appliquerPatchLocalCandidat(id, { statut: 'essai' });
+          await ecrireCandidat(id, { ...lu, resultat: 'vert', statut: 'essai' });
+          appliquerPatchLocalCandidat(id, { resultat: 'vert', statut: 'essai' });
           AudioTactique.succes();
           afficherNotificationTactique(`${cand.pseudo} est retenu pour la mission d'essai.`);
           fermerBoite('boite-fiche-candidat');
@@ -3273,6 +3319,42 @@
         }
       }
 
+      // Import d'un fichier JSON de recrutements déjà passés (une fois). Les candidats déjà présents sont ignorés.
+      async function importerRecrutementsPasses(fichier) {
+        if (!fichier) return;
+        try {
+          const brut = JSON.parse(await fichier.text());
+          const liste = Array.isArray(brut) ? brut : brut.candidats;
+          if (!Array.isArray(liste) || liste.length === 0) throw new Error("Liste vide");
+          let importes = 0, ignores = 0;
+          for (const c of liste) {
+            if (!c || typeof c.pseudo !== 'string' || !POSTES_RECRUTEMENT[c.poste] || typeof c.id !== 'string') throw new Error("Candidat invalide");
+            if (etatRecrutement.candidats.some(x => x.id === c.id)) { ignores++; continue; }
+            const { id, ...donnees } = c;
+            donnees.statut = donnees.statut || 'recrutement';
+            donnees.dateCreation = Date.now();
+            donnees.avisCandidature = {};
+            donnees.avisEssai = {};
+            donnees.questionnaire = null;
+            donnees.historique = true;
+            let ok = false;
+            if (estConnecteFirestore) {
+              try { await setDoc(doc(baseDeDonnees, 'candidatures', id), donnees); ok = true; }
+              catch (err) { console.warn("Import candidat :", err); }
+            }
+            if (!ok) etatRecrutement.candidats.push({ ...donnees, id });
+            importes++;
+          }
+          AudioTactique.succes();
+          afficherNotificationTactique(`${importes} recrutement(s) importé(s)${ignores ? `, ${ignores} déjà présent(s)` : ''}.`);
+          afficherVueRecrutement();
+        } catch (err) {
+          console.warn("Import historique :", err);
+          AudioTactique.alerte();
+          afficherNotificationTactique("Fichier invalide : utilise recrutements-passes.json tel que fourni.");
+        }
+      }
+
       function demarrerEcouteursRecrutement() {
         document.getElementById('bouton-nouveau-candidat').addEventListener('click', () => ouvrirBoite('boite-candidat'));
         document.getElementById('bouton-copier-lien-candidature').addEventListener('click', async () => {
@@ -3283,6 +3365,12 @@
         document.getElementById('formulaire-candidat').addEventListener('submit', executerCreationCandidat);
         document.getElementById('bouton-bareme-recrutement').addEventListener('click', ouvrirBareme);
         document.getElementById('filtre-poste-recrutement').addEventListener('change', afficherVueRecrutement);
+        document.getElementById('filtre-resultat-recrutement').addEventListener('change', afficherVueRecrutement);
+        document.getElementById('bouton-import-historique').addEventListener('click', () => document.getElementById('fichier-import-historique').click());
+        document.getElementById('fichier-import-historique').addEventListener('change', (e) => {
+          importerRecrutementsPasses(e.target.files[0]);
+          e.target.value = '';
+        });
         document.getElementById('bouton-import-banque').addEventListener('click', () => document.getElementById('fichier-import-banque').click());
         document.getElementById('fichier-import-banque').addEventListener('change', (e) => {
           importerBanqueQuestions(e.target.files[0]);
