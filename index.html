@@ -1304,7 +1304,7 @@
     </div>
   </div>
 
-  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.5) -->
+  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.6) -->
   <footer class="border-t border-bordureTactique bg-fondCarbone/95 py-2.5 text-xs font-terminal text-gray-500 fixed bottom-0 left-0 right-0 z-30 shadow-2xl backdrop-blur">
     <div class="max-w-screen-2xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5">
       <div class="text-gray-400 flex items-center gap-2">
@@ -1314,7 +1314,7 @@
       <div class="flex items-center gap-3">
         <span class="text-gray-500 hidden md:inline">GRANDE ARMÉE DE LA RÉPUBLIQUE</span>
         <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/60 text-amber-300 text-[0.8125rem] font-titre font-bold rounded tracking-wider shadow-[0_0_10px_rgba(245,158,11,0.25)]">
-          FIRMWARE MARAUDEUR // BUILD 3.5
+          FIRMWARE MARAUDEUR // BUILD 3.6
         </span>
       </div>
     </div>
@@ -2379,7 +2379,7 @@
         const boutonRegistre = document.querySelector('.nav-bouton[data-onglet="registre"]');
         if (boutonRegistre) boutonRegistre.classList.toggle('hidden', etat.operateurConnecte !== 'hunter');
         const boutonRecrutement = document.querySelector('.nav-bouton[data-onglet="recrutement"]');
-        if (boutonRecrutement) boutonRecrutement.classList.toggle('hidden', !etat.operateurConnecte || etat.estCompteBOS);
+        if (boutonRecrutement) boutonRecrutement.classList.toggle('hidden', !etat.operateurConnecte);
         const navInterne = document.getElementById('barre-navigation-interne');
         if (navInterne) {
           const centrer = etat.operateurConnecte === 'hunter';
@@ -2388,7 +2388,7 @@
           navInterne.classList.toggle('mx-auto', true);
         }
         if (etat.operateurConnecte === 'hunter') demarrerEcouteRegistre();
-        if (etat.operateurConnecte && !etat.estCompteBOS) demarrerEcouteRecrutement();
+        if (etat.operateurConnecte) demarrerEcouteRecrutement();
         purgerRapportsAnciens();
         naviguerOnglet('poste-commandement');
         verifierNotificationBlamePourMembre();
@@ -2502,7 +2502,7 @@
 
       function naviguerOnglet(onglet) {
         if (onglet === 'registre' && etat.operateurConnecte !== 'hunter') return;
-        if (onglet === 'recrutement' && (!etat.operateurConnecte || etat.estCompteBOS)) return;
+        if (onglet === 'recrutement' && !etat.operateurConnecte) return;
         AudioTactique.clic();
         etat.ongletActif = onglet;
         masquerToutesLesFenetres();
@@ -2765,7 +2765,7 @@
         if (!estConnecteFirestore || desabonRecrutement.length) return;
         const rafraichir = () => {
           majPastilleRecrutement();
-          if (etat.operateurConnecte && !etat.estCompteBOS && etat.ongletActif === 'recrutement') afficherVueRecrutement();
+          if (etat.operateurConnecte && etat.ongletActif === 'recrutement') afficherVueRecrutement();
         };
         desabonRecrutement.push(onSnapshot(collection(baseDeDonnees, 'candidatures'), snap => {
           const liste = [];
@@ -2809,7 +2809,7 @@
 
       function estHunterRecrutement() { return etat.operateurConnecte === 'hunter' && !etat.estCompteBOS; }
       function statutCandidat(c) { return c.statut || 'recrutement'; }
-      const MEMBRES_AVIS = ['hunter', 'tech', 'wrecker', 'crosshair'];
+      const MEMBRES_AVIS = ['hunter', 'tech', 'wrecker', 'crosshair', 'bos'];
 
       // Pastille sur l'onglet : candidatures auxquelles je n'ai pas encore donné mon avis
       function majPastilleRecrutement() {
@@ -2817,7 +2817,7 @@
         if (!pastille) return;
         const moi = etat.operateurConnecte;
         let n = 0;
-        if (moi && !etat.estCompteBOS) {
+        if (moi) {
           n = etatRecrutement.candidats.filter(c => statutCandidat(c) === 'nouvelle' && !((c.avisCandidature || {})[moi])).length;
         }
         pastille.textContent = n;
@@ -2847,7 +2847,7 @@
       function htmlAvis(c, champ, libPour, libContre) {
         const avis = c[champ] || {};
         const moi = etat.operateurConnecte;
-        const nom = (id) => (etat.operateurs[id] || {}).nom || id;
+        const nom = (id) => id === 'bos' ? 'B.O.S' : ((etat.operateurs[id] || {}).nom || id);
         const pour = MEMBRES_AVIS.filter(id => avis[id] === 'pour');
         const contre = MEMBRES_AVIS.filter(id => avis[id] === 'contre');
         const bouton = (valeur, lib, actif, classes) => `
@@ -2865,7 +2865,7 @@
 
       async function voterCandidature(idCand, champ, valeur) {
         const moi = etat.operateurConnecte;
-        if (!moi || etat.estCompteBOS || !['avisCandidature', 'avisEssai'].includes(champ)) return;
+        if (!moi || !['avisCandidature', 'avisEssai'].includes(champ)) return;
         const c = etatRecrutement.candidats.find(x => x.id === idCand);
         if (!c) return;
         const nouvelle = ((c[champ] || {})[moi] === valeur) ? '' : valeur;   // un second clic retire l'avis
@@ -2955,7 +2955,7 @@
       }
 
       function afficherVueRecrutement() {
-        if (!etat.operateurConnecte || etat.estCompteBOS) return;
+        if (!etat.operateurConnecte) return;
         const hunter = estHunterRecrutement();
         document.getElementById('bloc-liens-recrutement').classList.toggle('hidden', !hunter);
         document.querySelectorAll('.hunter-seul-rec').forEach(el => el.classList.toggle('hidden', !hunter));
