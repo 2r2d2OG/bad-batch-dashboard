@@ -4,6 +4,16 @@ Les versions les plus récentes sont en haut. Le numéro de build correspond au 
 
 ---
 
+## BUILD 3.7 — Médailles et liaison Discord
+*25/10/2026*
+
+- **Médailles** : bouton « 🎖️ Médailles » sur chaque fiche de l'Effectif ouvrant une verrière (7 médailles d'escouade + 5 médailles B.O.S). Obtenues en couleur, non obtenues grisées. Seul Hunter attribue ou retire.
+- **Liaison Discord** (Hunter, panneau Effectif) : 3 webhooks enregistrés dans Firestore (PDS et rapports, absences, médailles) avec bouton de test. Messages RP : PDS (avec l'heure 18h / 21h), rapport de mission complet, absence (ping Hunter), retour d'absence (date de fin passée), médaille (ping du membre).
+- **ID Discord** de l'Effectif : désormais numérique (nécessaire aux pings).
+- **Rapport** : texte limité à 1500 caractères avec compteur (limite d'un message Discord).
+
+---
+
 ## BUILD 3.6 — Recrutement ouvert au B.O.S
 *16/10/2026*
 
