@@ -530,11 +530,11 @@
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div>
               <label class="block uppercase text-gray-300 mb-1">Désignation de la mission</label>
-              <input type="text" id="champ-nom-mission" placeholder="Exemple : BATAILLE D'ANAXES" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none touch-target">
+              <input type="text" id="champ-nom-mission" maxlength="100" placeholder="Exemple : BATAILLE D'ANAXES" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none touch-target">
             </div>
             <div>
               <label class="block uppercase text-gray-300 mb-1">Secteur / Planète d'intervention</label>
-              <input type="text" id="champ-secteur-mission" placeholder="Exemple : Anaxes // Complexe de communication" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none touch-target">
+              <input type="text" id="champ-secteur-mission" maxlength="100" placeholder="Exemple : Anaxes // Complexe de communication" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none touch-target">
             </div>
             <div>
               <label class="block uppercase text-gray-300 mb-1">Date civile (JJ/MM/AAAA)</label>
@@ -592,7 +592,8 @@
 
           <div>
             <label class="block uppercase text-gray-300 mb-1">Compte-rendu tactique des opérations</label>
-            <textarea id="champ-description-mission" rows="3" placeholder="Détaillez les manœuvres exécutées, la résistance adverse et les résultats obtenus..." class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none"></textarea>
+            <textarea id="champ-description-mission" rows="3" maxlength="1500" placeholder="Détaillez les manœuvres exécutées, la résistance adverse et les résultats obtenus..." class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-gray-100 rounded focus:border-red-500 outline-none"></textarea>
+            <div class="text-right text-[0.75rem] font-terminal text-gray-500 mt-0.5"><span id="compteur-description-mission">0</span> / 1500 caractères (limite d'un message Discord)</div>
           </div>
 
           <div class="flex items-center justify-end space-x-2 pt-1">
@@ -652,6 +653,9 @@
             </button>
             <button id="bouton-reset-semaine" class="px-3 py-1.5 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold text-xs uppercase biseau-bouton transition shadow touch-target">
               🔄 CLÔTURER SEMAINE &amp; RESET
+            </button>
+            <button id="bouton-liaison-discord" class="px-3 py-1.5 border border-indigo-400/60 hover:border-indigo-300 text-indigo-300 font-terminal text-xs rounded transition bg-panneauSous touch-target">
+              💬 Liaison Discord
             </button>
           </div>
         </div>
@@ -1074,8 +1078,8 @@
             <input type="text" id="champ-steam-id-64" placeholder="76561198..." class="w-full bg-fondCarbone border border-bordureTactique px-2.5 py-1.5 text-gray-100 rounded outline-none focus:border-amber-400">
           </div>
           <div>
-            <label class="block text-[0.75rem] text-gray-400 mb-0.5">Compte Discord :</label>
-            <input type="text" id="champ-compte-discord" placeholder="pseudo#0000 ou @pseudo" class="w-full bg-fondCarbone border border-bordureTactique px-2.5 py-1.5 text-cyanTech rounded outline-none focus:border-cyanTech">
+            <label class="block text-[0.75rem] text-gray-400 mb-0.5">ID Discord (numérique, utilisé pour les pings) :</label>
+            <input type="text" id="champ-compte-discord" placeholder="ex. 1154814508947214417" inputmode="numeric" class="w-full bg-fondCarbone border border-bordureTactique px-2.5 py-1.5 text-cyanTech rounded outline-none focus:border-cyanTech">
           </div>
         </div>
         
@@ -1092,6 +1096,53 @@
         <div class="flex justify-end space-x-2 pt-1.5">
           <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-gray-400 rounded" data-modale="boite-modifier-dossier">Annuler</button>
           <button type="submit" class="px-4 py-1.5 bg-rougeKamino hover:bg-red-700 text-white font-titre font-bold text-xs uppercase rounded">Valider</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODALE : VERRIÈRE DES MÉDAILLES -->
+  <div id="boite-medailles" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-panneauSombre border-2 border-amber-500/60 biseau-plaque max-w-2xl w-full max-h-[90vh] flex flex-col p-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-bordureTactique pb-2 mb-3">
+        <h3 class="font-titre text-xs sm:text-sm font-bold text-amber-300 uppercase" id="titre-medailles">🎖️ Verrière des médailles</h3>
+        <button type="button" class="btn-fermer-modale text-gray-400 hover:text-white" data-modale="boite-medailles">✕</button>
+      </div>
+      <div id="vitrine-medailles" class="overflow-y-auto flex-grow space-y-4 pr-1"></div>
+      <div class="flex justify-end pt-3">
+        <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-xs font-terminal text-gray-400 rounded" data-modale="boite-medailles">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALE : LIAISON DISCORD (HUNTER) -->
+  <div id="boite-discord" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-panneauSombre border-2 border-indigo-400/60 biseau-plaque max-w-lg w-full max-h-[90vh] overflow-y-auto p-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-bordureTactique pb-2 mb-3">
+        <h3 class="font-titre text-xs font-bold text-indigo-300 uppercase">💬 Liaison Discord // Webhooks</h3>
+        <button type="button" class="btn-fermer-modale text-gray-400 hover:text-white" data-modale="boite-discord">✕</button>
+      </div>
+      <p class="text-[0.8125rem] font-terminal text-gray-400 mb-3">Colle l'URL du webhook de chaque salon (Paramètres du salon → Intégrations → Webhooks). Les URL sont enregistrées dans Firestore, jamais dans le code. Tant qu'une URL est vide, rien n'est envoyé.</p>
+      <form id="formulaire-discord" class="space-y-3 font-terminal text-xs">
+        <div>
+          <label class="block text-gray-300 mb-1">🕒 PDS &amp; rapports de mission</label>
+          <div class="flex gap-2"><input type="text" id="webhook-pds" autocomplete="off" placeholder="https://discord.com/api/webhooks/…" class="flex-grow bg-fondCarbone border border-bordureTactique px-2.5 py-1.5 text-gray-100 rounded outline-none">
+          <button type="button" data-test-webhook="pds" class="btn-test-webhook px-2.5 py-1 border border-bordureLueur text-gray-300 rounded">Test</button></div>
+        </div>
+        <div>
+          <label class="block text-gray-300 mb-1">📅 Absences</label>
+          <div class="flex gap-2"><input type="text" id="webhook-absences" autocomplete="off" placeholder="https://discord.com/api/webhooks/…" class="flex-grow bg-fondCarbone border border-bordureTactique px-2.5 py-1.5 text-gray-100 rounded outline-none">
+          <button type="button" data-test-webhook="absences" class="btn-test-webhook px-2.5 py-1 border border-bordureLueur text-gray-300 rounded">Test</button></div>
+        </div>
+        <div>
+          <label class="block text-gray-300 mb-1">🎖️ Médailles</label>
+          <div class="flex gap-2"><input type="text" id="webhook-medailles" autocomplete="off" placeholder="https://discord.com/api/webhooks/…" class="flex-grow bg-fondCarbone border border-bordureTactique px-2.5 py-1.5 text-gray-100 rounded outline-none">
+          <button type="button" data-test-webhook="medailles" class="btn-test-webhook px-2.5 py-1 border border-bordureLueur text-gray-300 rounded">Test</button></div>
+        </div>
+        <p id="erreur-discord" class="hidden text-rougeAlerte"></p>
+        <div class="flex justify-end space-x-2 pt-1">
+          <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-gray-400 rounded" data-modale="boite-discord">Annuler</button>
+          <button type="submit" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white font-titre font-bold text-xs uppercase rounded">Enregistrer</button>
         </div>
       </form>
     </div>
@@ -1304,7 +1355,7 @@
     </div>
   </div>
 
-  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.6) -->
+  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.7) -->
   <footer class="border-t border-bordureTactique bg-fondCarbone/95 py-2.5 text-xs font-terminal text-gray-500 fixed bottom-0 left-0 right-0 z-30 shadow-2xl backdrop-blur">
     <div class="max-w-screen-2xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5">
       <div class="text-gray-400 flex items-center gap-2">
@@ -1314,7 +1365,7 @@
       <div class="flex items-center gap-3">
         <span class="text-gray-500 hidden md:inline">GRANDE ARMÉE DE LA RÉPUBLIQUE</span>
         <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/60 text-amber-300 text-[0.8125rem] font-titre font-bold rounded tracking-wider shadow-[0_0_10px_rgba(245,158,11,0.25)]">
-          FIRMWARE MARAUDEUR // BUILD 3.6
+          FIRMWARE MARAUDEUR // BUILD 3.7
         </span>
       </div>
     </div>
@@ -1773,7 +1824,256 @@
         console.warn("Liaison Firestore locale de secours :", err);
       }
 
+      // ==================== MÉDAILLES ====================
+      const MEDAILLES = [
+        { id: 'commandement',  cat: 'escouade', lib: "Médaille du Commandement",   couleur: '#fbbf24' },
+        { id: 'veteran',       cat: 'escouade', lib: "Médaille du Vétéran",        couleur: '#fbbf24' },
+        { id: 'excellence',    cat: 'escouade', lib: "Médaille de l'Excellence",   couleur: '#fbbf24' },
+        { id: 'tireur-elite',  cat: 'escouade', lib: "Médaille du Tireur d'Élite", couleur: '#fbbf24' },
+        { id: 'soldat-elite',  cat: 'escouade', lib: "Médaille du Soldat d'Élite", couleur: '#fbbf24' },
+        { id: 'survivant',     cat: 'escouade', lib: "Médaille du Survivant",      couleur: '#fbbf24' },
+        { id: 'sauveur',       cat: 'escouade', lib: "Médaille du Sauveur",        couleur: '#fbbf24' },
+        { id: 'bos-honneur',       cat: 'bos', lib: "[B.O.S] Croix d'Honneur de la B.O.S",              couleur: '#facc15' },
+        { id: 'bos-fraternite',    cat: 'bos', lib: "[B.O.S] Croix de la Fraternité",                   couleur: '#c2410c' },
+        { id: 'bos-renseignement', cat: 'bos', lib: "[B.O.S] Médaille du Renseignement",                couleur: '#f472b6' },
+        { id: 'bos-agent',         cat: 'bos', lib: "[B.O.S] Médaille de l'Agent de Terrain",           couleur: '#a78bfa' },
+        { id: 'bos-veteran-fs',    cat: 'bos', lib: "[B.O.S] Médaille du Vétéran des Forces Spéciales", couleur: '#60a5fa' }
+      ];
+      let medailleMembreOuvert = null;
+
+      function medaillesDuMembre(m) { return (m && m.medailles) || {}; }
+      function nombreMedailles(m) { return MEDAILLES.filter(d => medaillesDuMembre(m)[d.id]).length; }
+
+      function ouvrirMedailles(idMembre) {
+        if (!etat.operateurs[idMembre]) return;
+        medailleMembreOuvert = idMembre;
+        afficherVitrineMedailles();
+        ouvrirBoite('boite-medailles');
+      }
+
+      function afficherVitrineMedailles() {
+        const m = etat.operateurs[medailleMembreOuvert];
+        const zone = document.getElementById('vitrine-medailles');
+        if (!m || !zone) return;
+        const hunter = estHunterRecrutement();
+        const obtenues = medaillesDuMembre(m);
+        document.getElementById('titre-medailles').textContent = `🎖️ Verrière des médailles // ${m.nom} (${nombreMedailles(m)}/${MEDAILLES.length})`;
+        const tuile = (d) => {
+          const o = obtenues[d.id];
+          const style = o
+            ? `border-color:${d.couleur};box-shadow:0 0 14px ${d.couleur}55;background:linear-gradient(135deg,${d.couleur}22,transparent)`
+            : 'border-color:#374151';
+          const voile = o ? '' : 'filter:grayscale(1);opacity:.45';
+          return `
+            <div class="rounded border-2 p-3 flex flex-col gap-1.5" style="${style}">
+              <div class="flex items-center gap-2" style="${voile}">
+                <span class="text-2xl">${d.cat === 'bos' ? '🏅' : '🎖️'}</span>
+                <span class="font-titre font-bold text-xs sm:text-sm leading-tight" style="color:${o ? d.couleur : '#9ca3af'}">${echapperTexteHTML(d.lib)}</span>
+              </div>
+              <div class="text-[0.75rem] font-terminal ${o ? 'text-gray-200' : 'text-gray-500'}" style="${voile}">${o ? `Obtenue le ${echapperTexteHTML(o.date || '—')}` : '🔒 Non obtenue'}</div>
+              ${hunter ? `<button data-medaille="${d.id}" data-attribuer="${o ? '0' : '1'}" class="btn-basculer-medaille self-start px-2.5 py-1 rounded border text-[0.75rem] font-terminal ${o ? 'border-red-500/60 text-red-300 hover:bg-red-950' : 'border-green-500/60 text-green-300 hover:bg-green-950'}">${o ? 'Retirer' : 'Attribuer'}</button>` : ''}
+            </div>`;
+        };
+        const section = (titre, couleur, cat) => `
+          <div>
+            <div class="font-titre text-xs uppercase mb-2" style="color:${couleur}">${titre}</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">${MEDAILLES.filter(d => d.cat === cat).map(tuile).join('')}</div>
+          </div>`;
+        zone.innerHTML = section("Médailles de l'escouade", '#fbbf24', 'escouade')
+          + section("Médailles B.O.S // Haut Commandement (distinctions rares)", '#facc15', 'bos');
+        zone.querySelectorAll('.btn-basculer-medaille').forEach(b => {
+          b.addEventListener('click', () => basculerMedaille(medailleMembreOuvert, b.getAttribute('data-medaille'), b.getAttribute('data-attribuer') === '1'));
+        });
+      }
+
+      async function basculerMedaille(idMembre, idMedaille, attribuer) {
+        if (!estHunterRecrutement()) return;
+        const m = etat.operateurs[idMembre];
+        const def = MEDAILLES.find(d => d.id === idMedaille);
+        if (!m || !def) return;
+        if (!!medaillesDuMembre(m)[idMedaille] === attribuer) return;
+        const valeur = attribuer ? { date: dateAujourdhuiCivil(), ts: Date.now() } : null;
+        let ecrit = false;
+        if (estConnecteFirestore) {
+          try {
+            await updateDoc(doc(baseDeDonnees, 'operateurs', idMembre), { [`medailles.${idMedaille}`]: valeur });
+            ecrit = true;
+          } catch (err) { console.warn("Médaille :", err); }
+        }
+        // Mise à jour locale uniquement si Firestore n'a pas pris le relais
+        if (!ecrit) { m.medailles = { ...(m.medailles || {}), [idMedaille]: valeur }; }
+        AudioTactique.succes();
+        if (attribuer) discordMedaille(m, def);
+        afficherVitrineMedailles();
+        if (!ecrit) afficherVueEffectif();
+      }
+
+      // ==================== LIAISON DISCORD (webhooks) ====================
+      const ID_PING_COMMANDEMENT = '1154814508947214417';   // Hunter : pingé pour les absences
+      const LIMITE_RAPPORT_DISCORD = 1500;
+      let webhooksDiscord = { pds: '', absences: '', medailles: '' };
+      let desabonDiscord = null;
+      let webhooksCharges = false;
+
+      const urlWebhookValide = (u) => /^https:\/\/(discord|discordapp)\.com\/api\/webhooks\/\d+\/[\w-]+$/.test((u || '').trim());
+      const idDiscordValide = (v) => /^\d{17,20}$/.test((v || '').trim());
+      const choisir = (liste) => liste[Math.floor(Math.random() * liste.length)];
+      const heureMission = (creneau) => (creneau === '21h' ? '21h' : '18h');
+
+      function demarrerEcouteDiscord() {
+        if (!estConnecteFirestore || desabonDiscord) return;
+        desabonDiscord = onSnapshot(doc(baseDeDonnees, 'config', 'discordWebhooks'), d => {
+          webhooksDiscord = { pds: '', absences: '', medailles: '', ...(d.exists() ? d.data() : {}) };
+          const premier = !webhooksCharges;
+          webhooksCharges = true;
+          if (premier) verifierExpirationsAbsencesAutomatiques();   // les URL sont connues : on peut lever les absences expirées et prévenir Discord
+        }, err => { console.warn("Webhooks Discord :", err); webhooksCharges = true; });
+      }
+
+      // Envoi vers une URL donnée. Les pings ne partent que pour les ID listés dans `pings`.
+      async function envoyerVersWebhook(url, contenu, pings) {
+        if (!urlWebhookValide(url)) return false;
+        try {
+          const r = await fetch(url.trim(), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              username: 'Datapad CF99',
+              content: String(contenu).slice(0, 2000),
+              allowed_mentions: { parse: [], users: (pings || []).filter(idDiscordValide) }
+            })
+          });
+          return r.ok;
+        } catch (err) { console.warn("Discord :", err); return false; }
+      }
+      function envoyerDiscord(canal, contenu, pings) {
+        const url = webhooksDiscord[canal];
+        if (!url) return Promise.resolve(false);
+        return envoyerVersWebhook(url, contenu, pings);
+      }
+
+      function identiteRP(m) { return `**${m.nom}** (${m.matricule})`; }
+
+      function discordPds(op, creneau) {
+        const h = heureMission(creneau);
+        const msg = choisir([
+          `🟢 ${identiteRP(op)} a bien **accompli sa mission de ${h}** et assuré sa prise de service à l'heure dite. Datapad mis à jour : la Clone Force 99 peut compter sur lui.`,
+          `🟢 Prise de service validée pour ${identiteRP(op)} : mission de **${h}** exécutée à l'heure prévue. Rien à signaler, frère d'armes.`,
+          `🟢 ${identiteRP(op)} confirme avoir **mené sa mission de ${h}** conformément aux ordres. PDS enregistrée au datapad.`
+        ]);
+        envoyerDiscord('pds', msg);
+      }
+
+      function discordRapport(op, rapport, credites, creneau) {
+        const h = heureMission(creneau);
+        const deployes = (rapport.membresDeploies || []).map(id => etat.operateurs[id]).filter(Boolean).map(x => x.nom);
+        const noms = credites.map(id => (etat.operateurs[id] || {}).nom).filter(Boolean);
+        const entete = [
+          `📝 **RAPPORT DE MISSION — ${rapport.nomMission || 'Sans titre'}**`,
+          `👤 ${identiteRP(op)} · 📅 ${rapport.date}${rapport.secteur ? ` · 📍 ${rapport.secteur}` : ''}`,
+          rapport.estPresent ? `✅ Présent sur le terrain` : `⚠️ Non présent sur le terrain`,
+          deployes.length ? `🪖 Déployé avec : ${deployes.join(', ')}` : '',
+          noms.length ? `🟢 Mission de **${h}** accomplie à l'heure prévue — PDS validée pour : ${noms.join(', ')}` : '',
+          '──────────'
+        ].filter(Boolean).join('\n');
+        envoyerDiscord('pds', `${entete}\n${rapport.description || ''}`);
+      }
+
+      function discordAbsence(m, debut, fin, motif) {
+        const periode = fin ? `du **${debut}** au **${fin}**` : `à compter du **${debut}** (retour non communiqué)`;
+        const corps = choisir([
+          `🟠 ${identiteRP(m)} est **indisponible** ${periode}.`,
+          `🟠 Absence déclarée : ${identiteRP(m)} quitte le front ${periode}.`,
+          `🟠 ${identiteRP(m)} est **détaché du service actif** ${periode}.`
+        ]);
+        const fin2 = choisir([
+          `Le commandement est informé.`,
+          `Que la Force l'accompagne, nous tiendrons la position.`,
+          `Message transmis à l'état-major de l'escouade.`
+        ]);
+        envoyerDiscord('absences', `${corps}\n> Motif : *${motif || 'non communiqué'}*\n<@${ID_PING_COMMANDEMENT}> ${fin2}`, [ID_PING_COMMANDEMENT]);
+      }
+
+      function discordRetourAbsence(m) {
+        const msg = choisir([
+          `🟢 ${identiteRP(m)} est de **retour au service actif**. Fin de l'absence : bon retour parmi nous, frère d'armes.`,
+          `🟢 Fin de permission pour ${identiteRP(m)} : il **reprend sa place dans l'escouade**. Heureux de te revoir.`,
+          `🟢 ${identiteRP(m)} **rejoint de nouveau le front**. L'absence est levée.`
+        ]);
+        envoyerDiscord('absences', msg);
+      }
+
+      function discordMedaille(m, def) {
+        const id = idDiscordValide(m.discord) ? m.discord.trim() : null;
+        const ping = id ? `<@${id}> ` : '';
+        const lib = def.lib.replace('[B.O.S] ', '');
+        const msg = def.cat === 'bos'
+          ? choisir([
+              `🏅 **DÉCORATION DU HAUT COMMANDEMENT** : ${ping}${identiteRP(m)} se voit remettre la **${lib}**. Un honneur rarement accordé.`,
+              `🏅 Par décision de la **B.O.S**, ${ping}${identiteRP(m)} est décoré de la **${lib}**. L'escouade s'incline devant tant de mérite.`
+            ])
+          : choisir([
+              `🎖️ Par ordre du commandement, ${ping}${identiteRP(m)} reçoit la **${lib}**. L'escouade salue sa bravoure.`,
+              `🎖️ Le sergent Hunter décerne la **${lib}** à ${ping}${identiteRP(m)}. Bien mérité, frère d'armes.`
+            ]);
+        envoyerDiscord('medailles', msg, id ? [id] : []);
+      }
+
+      function ouvrirLiaisonDiscord() {
+        if (!estHunterRecrutement()) return;
+        ['pds', 'absences', 'medailles'].forEach(k => { document.getElementById('webhook-' + k).value = webhooksDiscord[k] || ''; });
+        document.getElementById('erreur-discord').classList.add('hidden');
+        ouvrirBoite('boite-discord');
+      }
+
+      async function enregistrerLiaisonDiscord(e) {
+        e.preventDefault();
+        if (!estHunterRecrutement()) return;
+        const val = {};
+        for (const k of ['pds', 'absences', 'medailles']) {
+          val[k] = document.getElementById('webhook-' + k).value.trim();
+          if (val[k] !== '' && !urlWebhookValide(val[k])) {
+            const err = document.getElementById('erreur-discord');
+            err.textContent = `URL invalide pour « ${k} » : elle doit ressembler à https://discord.com/api/webhooks/…`;
+            err.classList.remove('hidden');
+            AudioTactique.alerte();
+            return;
+          }
+        }
+        let ok = false;
+        if (estConnecteFirestore) {
+          try { await setDoc(doc(baseDeDonnees, 'config', 'discordWebhooks'), { ...val, majLe: Date.now() }); ok = true; }
+          catch (err) { console.warn("Enregistrement webhooks :", err); }
+        }
+        if (!ok) webhooksDiscord = { ...val };
+        fermerBoite('boite-discord');
+        AudioTactique.succes();
+        afficherNotificationTactique("Liaison Discord enregistrée.");
+      }
+
+      async function testerWebhook(canal) {
+        const url = document.getElementById('webhook-' + canal).value.trim();
+        const err = document.getElementById('erreur-discord');
+        if (!urlWebhookValide(url)) {
+          err.textContent = "URL invalide : elle doit ressembler à https://discord.com/api/webhooks/…";
+          err.classList.remove('hidden');
+          AudioTactique.alerte();
+          return;
+        }
+        err.classList.add('hidden');
+        const ok = await envoyerVersWebhook(url, "📡 **Test de liaison** — le datapad de la Clone Force 99 est connecté à ce salon.");
+        afficherNotificationTactique(ok ? "Message de test envoyé." : "Échec de l'envoi : vérifie l'URL du webhook.");
+        if (!ok) AudioTactique.alerte();
+      }
+
+      function majCompteurRapport() {
+        const c = document.getElementById('compteur-description-mission');
+        const t = document.getElementById('champ-description-mission');
+        if (c && t) c.textContent = t.value.length;
+      }
+
       function verifierExpirationsAbsencesAutomatiques() {
+        if (estConnecteFirestore && !webhooksCharges) return;   // on attend les URL Discord pour ne pas perdre le message de retour
         const maintenant = new Date();
         Object.values(etat.operateurs).forEach(async (m) => {
           if (m.estAbsent && m.detailsAbsence?.fin) {
@@ -1783,7 +2083,14 @@
               if (estConnecteFirestore) {
                 try {
                   const refMembre = doc(baseDeDonnees, 'operateurs', m.id);
-                  await updateDoc(refMembre, { estAbsent: false });
+                  // Transaction : un seul appareil lève l'absence et envoie le message de retour
+                  const leveeFaite = await runTransaction(baseDeDonnees, async (tx) => {
+                    const snap = await tx.get(refMembre);
+                    if (!snap.exists() || snap.data().estAbsent !== true) return false;
+                    tx.update(refMembre, { estAbsent: false });
+                    return true;
+                  });
+                  if (leveeFaite) discordRetourAbsence(m);
                 } catch(e) {
                   console.warn("Auto-levée absence :", e);
                 }
@@ -2116,6 +2423,7 @@
           verifierResetHebdomadaireAutomatique();
         }, err => console.warn(err));
 
+        demarrerEcouteDiscord();
         const refOperateurs = collection(baseDeDonnees, 'operateurs');
         onSnapshot(refOperateurs, snap => {
           // CORRECTION : création des documents opérateurs manquants (sinon updateDoc / batch.update échouent)
@@ -2389,6 +2697,7 @@
         }
         if (etat.operateurConnecte === 'hunter') demarrerEcouteRegistre();
         if (etat.operateurConnecte) demarrerEcouteRecrutement();
+        demarrerEcouteDiscord();
         purgerRapportsAnciens();
         naviguerOnglet('poste-commandement');
         verifierNotificationBlamePourMembre();
@@ -3955,6 +4264,7 @@
         }
 
         AudioTactique.succes();
+        discordPds(op, creneau);
         actualiserVueEnCours();
       }
 
@@ -4329,9 +4639,11 @@
           afficherNotificationTactique(`Rapport enregistré — PDS ${libelleCreneau} déjà validée aujourd'hui : aucun doublon.`);
         }
 
+        discordRapport(op, nouveauRapport, credites, creneau);
         document.getElementById('champ-nom-mission').value = '';
         document.getElementById('champ-secteur-mission').value = '';
         document.getElementById('champ-description-mission').value = '';
+        setTimeout(majCompteurRapport, 0);
         document.getElementById('check-membre-tech').checked = false;
         document.getElementById('check-membre-wrecker').checked = false;
         document.getElementById('check-membre-crosshair').checked = false;
@@ -4490,7 +4802,7 @@
                   <span class="font-bold text-gray-200">${echapperTexteHTML(m.steamId64 || 'Non renseigné')}</span>
                 </div>
                 <div class="flex justify-between items-center text-[0.8125rem]">
-                  <span class="text-gray-400">Discord :</span>
+                  <span class="text-gray-400">ID Discord :</span>
                   <span class="font-bold text-cyanTech">${echapperTexteHTML(m.discord || 'Non renseigné')}</span>
                 </div>
               </div>
@@ -4531,6 +4843,12 @@
               </div>
             </div>
 
+            <div class="pt-2 border-t border-bordureTactique flex justify-between items-center gap-2">
+              <button data-medailles-membre="${m.id}" class="btn-ouvrir-medailles px-3 py-1.5 bg-amber-500/15 hover:bg-amber-500/30 border border-amber-500/70 text-amber-300 text-xs font-terminal rounded touch-target">
+                🎖️ Médailles (${nombreMedailles(m)}/${MEDAILLES.length})
+              </button>
+            </div>
+
             ${estHunter ? `
               <div class="pt-2 border-t border-bordureTactique flex flex-wrap justify-end gap-2">
                 <button data-gerer-absence-id="${m.id}" class="btn-ouvrir-absence-hunter px-2.5 py-1 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500 text-amber-300 text-xs font-terminal rounded touch-target">
@@ -4550,6 +4868,11 @@
           const imgElem = carte.querySelector(`#casque-effectif-${m.id}`);
           attacherImageCasque(imgElem, m.id);
         });
+
+        document.querySelectorAll('.btn-ouvrir-medailles').forEach(btn => {
+          btn.addEventListener('click', () => ouvrirMedailles(btn.getAttribute('data-medailles-membre')));
+        });
+        if (medailleMembreOuvert) afficherVitrineMedailles();
 
         document.querySelectorAll('.btn-editer-dossier').forEach(btn => {
           btn.addEventListener('click', () => {
@@ -4835,6 +5158,7 @@
         cible.detailsAbsence = details;
 
         fermerBoite('boite-gerer-absence');
+        if (estAbsent) discordAbsence(m, debut, fin, motif);
         AudioTactique.succes();
         afficherVueEffectif();
       }
@@ -4892,6 +5216,7 @@
         const notes = document.getElementById('champ-notes-commandement').value.trim();
         const steamId64 = document.getElementById('champ-steam-id-64').value.trim();
         const discord = document.getElementById('champ-compte-discord').value.trim();
+        if (discord !== '' && !/^\d{17,20}$/.test(discord)) { AudioTactique.alerte(); afficherNotificationTactique("ID Discord invalide : uniquement des chiffres (17 à 20). Clic droit sur le membre dans Discord → Copier l'identifiant."); return; }
         const pdsBrut = parseInt(document.getElementById('champ-pds-semaine').value, 10);
         const pdsSemaine = (id !== 'hunter' && Number.isInteger(pdsBrut) && pdsBrut >= 0) ? pdsBrut : null;
 
@@ -5304,6 +5629,10 @@
         });
 
         document.getElementById('bouton-quitter-session').addEventListener('click', demanderDeconnexion);
+        document.getElementById('bouton-liaison-discord').addEventListener('click', ouvrirLiaisonDiscord);
+        document.getElementById('formulaire-discord').addEventListener('submit', enregistrerLiaisonDiscord);
+        document.querySelectorAll('.btn-test-webhook').forEach(b => b.addEventListener('click', () => testerWebhook(b.getAttribute('data-test-webhook'))));
+        document.getElementById('champ-description-mission').addEventListener('input', majCompteurRapport);
 
         document.querySelectorAll('.btn-fermer-modale').forEach(btn => {
           btn.addEventListener('click', () => {
