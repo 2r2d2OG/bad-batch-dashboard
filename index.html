@@ -885,14 +885,14 @@
       <div class="flex items-center justify-between border-b border-orEtatMajor/50 pb-2 mb-3">
         <div class="flex items-center space-x-2 text-orEtatMajor">
           <span class="text-xl">🏛️</span>
-          <h3 class="font-titre text-xs font-bold uppercase tracking-wider">LIAISON B.O.S // ÉTAT-MAJOR</h3>
+          <h3 class="font-titre text-xs font-bold uppercase tracking-wider">LIAISON B.O.S / B.R.S // ÉTAT-MAJOR</h3>
         </div>
         <button type="button" class="btn-fermer-modale text-gray-400 hover:text-white" data-modale="boite-connexion-bos">✕</button>
       </div>
       <form id="formulaire-connexion-bos" class="space-y-3 font-terminal text-xs">
         <div>
           <label class="block text-[0.8125rem] text-gray-300 mb-1">Identifiant d'inspection :</label>
-          <input type="text" id="saisie-bos-id" required placeholder="Identifiant B.O.S" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-orEtatMajor uppercase rounded outline-none focus:border-orEtatMajor">
+          <input type="text" id="saisie-bos-id" required placeholder="Identifiant (B.O.S ou B.R.S)" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-orEtatMajor uppercase rounded outline-none focus:border-orEtatMajor">
         </div>
         <div>
           <label class="block text-[0.8125rem] text-gray-300 mb-1">Mot de passe de sécurité B.O.S :</label>
@@ -1355,7 +1355,7 @@
     </div>
   </div>
 
-  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.7) -->
+  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.8) -->
   <footer class="border-t border-bordureTactique bg-fondCarbone/95 py-2.5 text-xs font-terminal text-gray-500 fixed bottom-0 left-0 right-0 z-30 shadow-2xl backdrop-blur">
     <div class="max-w-screen-2xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5">
       <div class="text-gray-400 flex items-center gap-2">
@@ -1365,7 +1365,7 @@
       <div class="flex items-center gap-3">
         <span class="text-gray-500 hidden md:inline">GRANDE ARMÉE DE LA RÉPUBLIQUE</span>
         <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/60 text-amber-300 text-[0.8125rem] font-titre font-bold rounded tracking-wider shadow-[0_0_10px_rgba(245,158,11,0.25)]">
-          FIRMWARE MARAUDEUR // BUILD 3.7
+          FIRMWARE MARAUDEUR // BUILD 3.8
         </span>
       </div>
     </div>
@@ -1784,6 +1784,7 @@
       const etat = {
         operateurConnecte: null,
         estCompteBOS: false, // Indicateur d'audit B.O.S
+        estCompteBRS: false, // Bureau de Renseignement Sénatorial (lecture seule, sans recrutement)
         operateurSelectionneAccueil: 'hunter',
         ongletActif: 'poste-commandement',
         quotaHebdomadaire: 3,
@@ -2581,6 +2582,7 @@
         if (estValide) {
           etat.operateurConnecte = id;
           etat.estCompteBOS = false;
+          etat.estCompteBRS = false;
           blocErreur.classList.add('hidden');
           document.getElementById('saisie-mot-de-passe').value = '';
           AudioTactique.succes();
@@ -2605,9 +2607,13 @@
           || hashSaisi === HASH_BOS
           || hashNormalise === HASH_BOS;
 
-        if (saisieId === 'BOS' && motDePasseValide) {
-          etat.operateurConnecte = 'bos';
+        const HASH_BRS = "1996395944539361789793e91364680de8f8f7186a296a39a103d9f5ad030197";
+        const brsValide = saisieId === 'BRS' && (hashSaisi === HASH_BRS || hashNormalise === HASH_BRS);
+
+        if ((saisieId === 'BOS' && motDePasseValide) || brsValide) {
+          etat.operateurConnecte = brsValide ? 'brs' : 'bos';
           etat.estCompteBOS = true;
+          etat.estCompteBRS = brsValide;
           blocErr.classList.add('hidden');
           document.getElementById('saisie-bos-id').value = '';
           document.getElementById('saisie-bos-mdp').value = '';
@@ -2655,6 +2661,18 @@
           titreHud.textContent = "BUREAU OPS SPÉCIALES";
           badgeHud.textContent = "SUPERVISION B.O.S";
           badgeHud.className = "px-1.5 py-px bg-amber-500/15 text-orEtatMajor text-[0.6875rem] font-terminal border border-orEtatMajor/40 uppercase rounded-sm";
+          if (etat.estCompteBRS) {
+            document.getElementById('nom-operateur').textContent = "BUREAU DE RENSEIGNEMENT";
+            document.getElementById('grade-operateur').textContent = "B.R.S // LECTURE SEULE";
+            mentionCentre.textContent = "INSPECTION // BUREAU DE RENSEIGNEMENT SÉNATORIAL";
+            titreHud.textContent = "BUREAU RENS. SÉNATORIAL";
+            badgeHud.textContent = "SUPERVISION B.R.S";
+            const titreBanniere = banniereAuditBos.querySelector('.font-titre');
+            if (titreBanniere) titreBanniere.textContent = "CANAL D'AUDIT // BUREAU DE RENSEIGNEMENT SÉNATORIAL";
+          } else {
+            const titreBanniere = banniereAuditBos.querySelector('.font-titre');
+            if (titreBanniere) titreBanniere.textContent = "CANAL D'AUDIT HIÉRARCHIQUE // BUREAU DES OPÉRATIONS SPÉCIALES";
+          }
         } else {
           // Opérateur Clone Force 99 standard
           const op = etat.operateurs[etat.operateurConnecte];
@@ -2687,7 +2705,7 @@
         const boutonRegistre = document.querySelector('.nav-bouton[data-onglet="registre"]');
         if (boutonRegistre) boutonRegistre.classList.toggle('hidden', etat.operateurConnecte !== 'hunter');
         const boutonRecrutement = document.querySelector('.nav-bouton[data-onglet="recrutement"]');
-        if (boutonRecrutement) boutonRecrutement.classList.toggle('hidden', !etat.operateurConnecte);
+        if (boutonRecrutement) boutonRecrutement.classList.toggle('hidden', !etat.operateurConnecte || etat.estCompteBRS);
         const navInterne = document.getElementById('barre-navigation-interne');
         if (navInterne) {
           const centrer = etat.operateurConnecte === 'hunter';
@@ -2696,7 +2714,7 @@
           navInterne.classList.toggle('mx-auto', true);
         }
         if (etat.operateurConnecte === 'hunter') demarrerEcouteRegistre();
-        if (etat.operateurConnecte) demarrerEcouteRecrutement();
+        if (etat.operateurConnecte && !etat.estCompteBRS) demarrerEcouteRecrutement();
         demarrerEcouteDiscord();
         purgerRapportsAnciens();
         naviguerOnglet('poste-commandement');
@@ -2711,6 +2729,7 @@
           () => {
             etat.operateurConnecte = null;
             etat.estCompteBOS = false;
+          etat.estCompteBRS = false;
             if (desabonRegistre) { desabonRegistre(); desabonRegistre = null; }
             arreterEcouteRecrutement();
             etat.registreActivite = [];
@@ -2811,7 +2830,7 @@
 
       function naviguerOnglet(onglet) {
         if (onglet === 'registre' && etat.operateurConnecte !== 'hunter') return;
-        if (onglet === 'recrutement' && !etat.operateurConnecte) return;
+        if (onglet === 'recrutement' && (!etat.operateurConnecte || etat.estCompteBRS)) return;
         AudioTactique.clic();
         etat.ongletActif = onglet;
         masquerToutesLesFenetres();
@@ -3118,7 +3137,7 @@
 
       function estHunterRecrutement() { return etat.operateurConnecte === 'hunter' && !etat.estCompteBOS; }
       function statutCandidat(c) { return c.statut || 'recrutement'; }
-      const MEMBRES_AVIS = ['hunter', 'tech', 'wrecker', 'crosshair', 'bos'];
+      const MEMBRES_AVIS = ['hunter', 'tech', 'wrecker', 'crosshair'];
 
       // Pastille sur l'onglet : candidatures auxquelles je n'ai pas encore donné mon avis
       function majPastilleRecrutement() {
@@ -3126,7 +3145,7 @@
         if (!pastille) return;
         const moi = etat.operateurConnecte;
         let n = 0;
-        if (moi) {
+        if (moi && !etat.estCompteBOS) {
           n = etatRecrutement.candidats.filter(c => statutCandidat(c) === 'nouvelle' && !((c.avisCandidature || {})[moi])).length;
         }
         pastille.textContent = n;
@@ -3156,9 +3175,12 @@
       function htmlAvis(c, champ, libPour, libContre) {
         const avis = c[champ] || {};
         const moi = etat.operateurConnecte;
-        const nom = (id) => id === 'bos' ? 'B.O.S' : ((etat.operateurs[id] || {}).nom || id);
+        const nom = (id) => (etat.operateurs[id] || {}).nom || id;
         const pour = MEMBRES_AVIS.filter(id => avis[id] === 'pour');
         const contre = MEMBRES_AVIS.filter(id => avis[id] === 'contre');
+        if (etat.estCompteBOS) {   // B.O.S : consultation seule, aucun avis
+          return `<div class="text-xs font-terminal text-gray-400">👍 ${libPour} (${pour.length}) · 👎 ${libContre} (${contre.length})</div>`;
+        }
         const bouton = (valeur, lib, actif, classes) => `
           <button data-vote="${echapperTexteHTML(c.id)}" data-champ="${champ}" data-valeur="${valeur}" class="btn-vote px-2.5 py-1 rounded border text-xs font-terminal transition ${actif ? classes.actif : classes.inactif}">${lib}</button>`;
         const detail = estHunterRecrutement()
@@ -3174,7 +3196,7 @@
 
       async function voterCandidature(idCand, champ, valeur) {
         const moi = etat.operateurConnecte;
-        if (!moi || !['avisCandidature', 'avisEssai'].includes(champ)) return;
+        if (!moi || etat.estCompteBOS || !['avisCandidature', 'avisEssai'].includes(champ)) return;
         const c = etatRecrutement.candidats.find(x => x.id === idCand);
         if (!c) return;
         const nouvelle = ((c[champ] || {})[moi] === valeur) ? '' : valeur;   // un second clic retire l'avis
@@ -3264,7 +3286,7 @@
       }
 
       function afficherVueRecrutement() {
-        if (!etat.operateurConnecte) return;
+        if (!etat.operateurConnecte || etat.estCompteBRS) return;
         const hunter = estHunterRecrutement();
         document.getElementById('bloc-liens-recrutement').classList.toggle('hidden', !hunter);
         document.querySelectorAll('.hunter-seul-rec').forEach(el => el.classList.toggle('hidden', !hunter));
@@ -4792,7 +4814,7 @@
             ${htmlHistoriqueBlames(m)}
 
             <!-- DONNÉES PRIVÉES VISIBLES PAR HUNTER ET PAR BOS EN AUDIT -->
-            ${(estHunter || estBOS) ? `
+            ${(estHunter || (estBOS && !etat.estCompteBRS)) ? `
               <div class="bg-panneauSous p-2 rounded border border-bordureLueur/80 font-terminal text-xs space-y-1">
                 <div class="text-[0.6875rem] ${estBOS ? 'text-orEtatMajor' : 'text-amber-400'} uppercase font-bold flex items-center gap-1">
                   <span>🔒</span> IDENTIFIANTS DE COMMUNICATION (${estBOS ? 'AUDIT B.O.S' : 'PRIVÉ HUNTER'}) :
