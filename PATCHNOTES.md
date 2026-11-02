@@ -4,6 +4,26 @@ Les versions les plus récentes sont en haut. Le numéro de build correspond au 
 
 ---
 
+## BUILD 3.9 — Durcissement des mots de passe
+*02/11/2026*
+
+- **Mot de passe B.O.S retiré du code** : il n'est plus écrit en clair nulle part. B.O.S et B.R.S ont désormais chacun un mot de passe propre, stocké en hash dans Firestore, modifiable par Hunter (boutons « 🔑 Mot de passe B.O.S / B.R.S »). Les anciens mots de passe ne fonctionnent plus.
+- **Fin du mot de passe par défaut `1234`** : un compte sans mot de passe défini ne peut plus se connecter. Hunter doit fixer un mot de passe à chaque membre via « 🔑 Réinitialiser / Changer mot de passe ».
+- **Mots de passe plus longs exigés** (10 caractères minimum) à chaque changement.
+- **Anti-brute-force** : après 5 tentatives de connexion ratées (membre ou B.O.S/B.R.S), l'appareil est bloqué temporairement.
+
+⚠️ À faire après ce build : Hunter doit fixer un mot de passe pour lui-même, chaque membre, le B.O.S et le B.R.S — plus personne ne peut se connecter tant que ce n'est pas fait.
+
+---
+
+## BUILD 3.8 — Compte B.R.S et avis réservés aux membres
+*02/11/2026*
+
+- **Compte B.R.S** (Bureau de Renseignement Sénatorial) : même lien de connexion que le B.O.S, identifiant `BRS`. Lecture seule du site, sans l'onglet Recrutement et sans les identifiants de communication (Steam / Discord). Mot de passe stocké sous forme de hash.
+- **B.O.S** : il consulte toujours le recrutement mais ne donne plus d'avis (les 👍 / 👎 sont remplacés par le décompte).
+
+---
+
 ## BUILD 3.7 — Médailles et liaison Discord
 *25/10/2026*
 
