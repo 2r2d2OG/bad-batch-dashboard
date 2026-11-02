@@ -657,6 +657,12 @@
             <button id="bouton-liaison-discord" class="px-3 py-1.5 border border-indigo-400/60 hover:border-indigo-300 text-indigo-300 font-terminal text-xs rounded transition bg-panneauSous touch-target">
               💬 Liaison Discord
             </button>
+            <button id="bouton-mdp-bos" class="px-3 py-1.5 border border-orEtatMajor/60 hover:border-orEtatMajor text-orEtatMajor font-terminal text-xs rounded transition bg-panneauSous touch-target">
+              🔑 Mot de passe B.O.S
+            </button>
+            <button id="bouton-mdp-brs" class="px-3 py-1.5 border border-orEtatMajor/60 hover:border-orEtatMajor text-orEtatMajor font-terminal text-xs rounded transition bg-panneauSous touch-target">
+              🔑 Mot de passe B.R.S
+            </button>
           </div>
         </div>
       </div>
@@ -1278,7 +1284,7 @@
         </div>
         <div>
           <label class="block text-[0.8125rem] font-terminal text-gray-300 mb-1">Nouveau mot de passe :</label>
-          <input type="text" id="reset-mdp-membre-valeur" autocomplete="off" placeholder="4 caractères minimum" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-amber-300 rounded outline-none focus:border-amber-400">
+          <input type="text" id="reset-mdp-membre-valeur" autocomplete="off" placeholder="10 caractères minimum" class="w-full bg-fondCarbone border border-bordureTactique px-3 py-2 text-xs font-terminal text-amber-300 rounded outline-none focus:border-amber-400">
         </div>
         <div id="erreur-reset-mdp-membre" class="hidden text-[0.75rem] font-terminal text-red-400 bg-red-950/70 p-2 rounded border border-red-800"></div>
         <div class="flex justify-end space-x-2 pt-1.5">
@@ -1355,7 +1361,7 @@
     </div>
   </div>
 
-  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.8) -->
+  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.9) -->
   <footer class="border-t border-bordureTactique bg-fondCarbone/95 py-2.5 text-xs font-terminal text-gray-500 fixed bottom-0 left-0 right-0 z-30 shadow-2xl backdrop-blur">
     <div class="max-w-screen-2xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5">
       <div class="text-gray-400 flex items-center gap-2">
@@ -1365,7 +1371,7 @@
       <div class="flex items-center gap-3">
         <span class="text-gray-500 hidden md:inline">GRANDE ARMÉE DE LA RÉPUBLIQUE</span>
         <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/60 text-amber-300 text-[0.8125rem] font-titre font-bold rounded tracking-wider shadow-[0_0_10px_rgba(245,158,11,0.25)]">
-          FIRMWARE MARAUDEUR // BUILD 3.8
+          FIRMWARE MARAUDEUR // BUILD 3.9
         </span>
       </div>
     </div>
@@ -1796,13 +1802,10 @@
         registreActivite: [],
         bilansPDS: [],
         carnetCharge: false,
-        motsDePasseHashes: {}
+        motsDePasseHashes: {},
+        configCharge: false,
+        accesEtatMajor: { bos: '', brs: '' }
       };
-
-      const HASH_DEFAUT = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4"; // 1234
-      ['hunter', 'tech', 'wrecker', 'crosshair'].forEach(id => {
-        etat.motsDePasseHashes[id] = HASH_DEFAUT;
-      });
 
       // Firebase Configuration
       const firebaseConfig = {
@@ -2402,10 +2405,16 @@
           return;
         }
 
+        const refAccesEtatMajor = doc(baseDeDonnees, 'config', 'accesEtatMajor');
+        onSnapshot(refAccesEtatMajor, snap => {
+          etat.accesEtatMajor = snap.exists() ? { bos: '', brs: '', ...snap.data() } : { bos: '', brs: '' };
+        }, err => console.warn("Accès État-Major :", err));
+
         const refConfigEscouade = doc(baseDeDonnees, 'config', 'escouade');
         onSnapshot(refConfigEscouade, snap => {
           if (!snap.exists()) {
-            // CORRECTION : création du document de configuration s'il n'existe pas encore
+            etat.configCharge = true;
+            // CORRECTION : création du document de configuration s'il n'existe pas encore (sans mot de passe par défaut : chaque membre doit en recevoir un de Hunter)
             if (!snap.metadata.fromCache) {
               setDoc(refConfigEscouade, {
                 quotaHebdomadaire: etat.quotaHebdomadaire,
@@ -2414,6 +2423,7 @@
             }
             return;
           }
+          etat.configCharge = true;
           const donnees = snap.data();
           if (donnees.quotaHebdomadaire) etat.quotaHebdomadaire = donnees.quotaHebdomadaire;
           etat.semaineActive = donnees.semaineActive || null;
@@ -2567,19 +2577,60 @@
         });
       }
 
+      // Anti-brute-force côté navigateur : freine les essais répétés sur cet appareil (pas une protection de la base elle-même)
+      function tentativesBloqueesPendant(cle) {
+        try {
+          const st = JSON.parse(localStorage.getItem('cf99-tentatives-connexion') || '{}');
+          const e = st[cle];
+          if (e && e.bloqueJusque && Date.now() < e.bloqueJusque) return Math.ceil((e.bloqueJusque - Date.now()) / 1000);
+        } catch (err) {}
+        return 0;
+      }
+      function enregistrerEchecConnexion(cle) {
+        try {
+          const st = JSON.parse(localStorage.getItem('cf99-tentatives-connexion') || '{}');
+          const e = st[cle] || { echecs: 0 };
+          e.echecs++;
+          if (e.echecs >= 5) e.bloqueJusque = Date.now() + Math.min(e.echecs - 4, 12) * 30000;
+          st[cle] = e;
+          localStorage.setItem('cf99-tentatives-connexion', JSON.stringify(st));
+        } catch (err) {}
+      }
+      function reinitialiserTentatives(cle) {
+        try {
+          const st = JSON.parse(localStorage.getItem('cf99-tentatives-connexion') || '{}');
+          delete st[cle];
+          localStorage.setItem('cf99-tentatives-connexion', JSON.stringify(st));
+        } catch (err) {}
+      }
+
       async function executerConnexion(e) {
         e.preventDefault();
         const id = document.getElementById('identifiant-selectionne').value;
         const saisieMDP = document.getElementById('saisie-mot-de-passe').value;
         const blocErreur = document.getElementById('erreur-connexion');
 
-        const empreinteSaisie = await calculerEmpreinteSHA256(saisieMDP);
-        const empreinteAttendue = etat.motsDePasseHashes[id] || HASH_DEFAUT;
+        const attente = tentativesBloqueesPendant('membre:' + id);
+        if (attente > 0) {
+          blocErreur.textContent = `Trop de tentatives. Réessaie dans ${attente} s.`;
+          blocErreur.classList.remove('hidden');
+          AudioTactique.alerte();
+          return;
+        }
 
-        // CORRECTION SÉCURITÉ : seule l'empreinte est comparée (on ne peut plus se connecter en saisissant le hash)
-        const estValide = (empreinteSaisie === empreinteAttendue);
+        if (estConnecteFirestore && !etat.configCharge) {
+          blocErreur.textContent = "Synchronisation en cours, réessaie dans un instant.";
+          blocErreur.classList.remove('hidden');
+          return;
+        }
+
+        const empreinteSaisie = await calculerEmpreinteSHA256(saisieMDP);
+        const empreinteAttendue = etat.motsDePasseHashes[id];
+
+        const estValide = !!empreinteAttendue && (empreinteSaisie === empreinteAttendue);
 
         if (estValide) {
+          reinitialiserTentatives('membre:' + id);
           etat.operateurConnecte = id;
           etat.estCompteBOS = false;
           etat.estCompteBRS = false;
@@ -2588,29 +2639,39 @@
           AudioTactique.succes();
           demarrerSession();
         } else {
+          enregistrerEchecConnexion('membre:' + id);
+          blocErreur.textContent = "Identifiant ou mot de passe incorrect.";
           blocErreur.classList.remove('hidden');
           AudioTactique.alerte();
         }
       }
 
-      // AUTHENTIFICATION DISCRÈTE B.O.S (BOS / BOSACCESSAUTO)
+      // AUTHENTIFICATION DISCRÈTE ÉTAT-MAJOR (B.O.S / B.R.S) : mots de passe stockés en hash dans Firestore, jamais dans le code
       async function executerConnexionBOS(e) {
         e.preventDefault();
         const saisieId = document.getElementById('saisie-bos-id').value.trim().toUpperCase();
         const saisieMdp = document.getElementById('saisie-bos-mdp').value.trim();
         const blocErr = document.getElementById('erreur-connexion-bos');
+
+        const attente = tentativesBloqueesPendant('etatmajor:' + saisieId);
+        if (attente > 0) {
+          blocErr.textContent = `Trop de tentatives. Réessaie dans ${attente} s.`;
+          blocErr.classList.remove('hidden');
+          AudioTactique.alerte();
+          return;
+        }
+        if (estConnecteFirestore && !etat.configCharge) {
+          blocErr.textContent = "Synchronisation en cours, réessaie dans un instant.";
+          blocErr.classList.remove('hidden');
+          return;
+        }
+
         const hashSaisi = await calculerEmpreinteSHA256(saisieMdp);
-        const hashNormalise = await calculerEmpreinteSHA256(saisieMdp.toUpperCase());
-        const HASH_BOS = "8bc4bbaf5901614948ba42ca36502feeb492f1ae7b2fcfa62f1ff5b4f65215d8";
+        const motDePasseValide = saisieId === 'BOS' && !!etat.accesEtatMajor.bos && hashSaisi === etat.accesEtatMajor.bos;
+        const brsValide = saisieId === 'BRS' && !!etat.accesEtatMajor.brs && hashSaisi === etat.accesEtatMajor.brs;
 
-        const motDePasseValide = saisieMdp.toUpperCase() === 'BOSACCESSAUTO'
-          || hashSaisi === HASH_BOS
-          || hashNormalise === HASH_BOS;
-
-        const HASH_BRS = "1996395944539361789793e91364680de8f8f7186a296a39a103d9f5ad030197";
-        const brsValide = saisieId === 'BRS' && (hashSaisi === HASH_BRS || hashNormalise === HASH_BRS);
-
-        if ((saisieId === 'BOS' && motDePasseValide) || brsValide) {
+        if (motDePasseValide || brsValide) {
+          reinitialiserTentatives('etatmajor:' + saisieId);
           etat.operateurConnecte = brsValide ? 'brs' : 'bos';
           etat.estCompteBOS = true;
           etat.estCompteBRS = brsValide;
@@ -2621,6 +2682,7 @@
           AudioTactique.succes();
           demarrerSession();
         } else {
+          enregistrerEchecConnexion('etatmajor:' + saisieId);
           blocErr.classList.remove('hidden');
           AudioTactique.alerte();
         }
@@ -2793,7 +2855,7 @@
         const blocErreur = document.getElementById('erreur-changement-mot-de-passe');
 
         const hashActuel = await calculerEmpreinteSHA256(actuel);
-        const attendu = etat.motsDePasseHashes[etat.operateurConnecte] || HASH_DEFAUT;
+        const attendu = etat.motsDePasseHashes[etat.operateurConnecte];
 
         const estValide = (hashActuel === attendu);
         if (!estValide) {
@@ -4941,11 +5003,12 @@
 
       function ouvrirFicheResetMdp(id) {
         if (etat.operateurConnecte !== 'hunter' || etat.estCompteBOS) return;
-        const m = etat.operateurs[id];
-        if (!m) return;
+        const special = { bos: 'B.O.S (État-Major)', brs: 'B.R.S (Bureau de Renseignement Sénatorial)' };
+        const nomAffiche = special[id] ? special[id] : (etat.operateurs[id] ? `${etat.operateurs[id].nom} (${etat.operateurs[id].matricule})` : null);
+        if (!nomAffiche) return;
 
-        document.getElementById('reset-mdp-membre-id').value = m.id;
-        document.getElementById('reset-mdp-membre-nom').value = `${m.nom} (${m.matricule})`;
+        document.getElementById('reset-mdp-membre-id').value = id;
+        document.getElementById('reset-mdp-membre-nom').value = nomAffiche;
         document.getElementById('reset-mdp-membre-valeur').value = '';
         document.getElementById('erreur-reset-mdp-membre').classList.add('hidden');
         ouvrirBoite('boite-reset-mdp-membre');
@@ -4958,17 +5021,38 @@
         const id = document.getElementById('reset-mdp-membre-id').value;
         const nouveau = document.getElementById('reset-mdp-membre-valeur').value;
         const blocErreur = document.getElementById('erreur-reset-mdp-membre');
-        const m = etat.operateurs[id];
-        if (!m) return;
+        const estEtatMajor = id === 'bos' || id === 'brs';
+        if (!estEtatMajor && !etat.operateurs[id]) return;
 
-        if (nouveau.length < 4) {
-          blocErreur.textContent = "Le mot de passe doit contenir au moins 4 caractères.";
+        if (nouveau.length < 10) {
+          blocErreur.textContent = "Le mot de passe doit contenir au moins 10 caractères (évite les modèles simples comme un prénom suivi de chiffres).";
           blocErreur.classList.remove('hidden');
           AudioTactique.alerte();
           return;
         }
 
         const nouveauHash = await calculerEmpreinteSHA256(nouveau);
+
+        if (estEtatMajor) {
+          etat.accesEtatMajor[id] = nouveauHash;
+          if (estConnecteFirestore) {
+            try {
+              await setDoc(doc(baseDeDonnees, 'config', 'accesEtatMajor'), { [id]: nouveauHash }, { merge: true });
+            } catch (err) {
+              console.warn("Écriture mot de passe État-Major :", err);
+              blocErreur.textContent = "Échec de l'enregistrement dans Firestore.";
+              blocErreur.classList.remove('hidden');
+              AudioTactique.alerte();
+              return;
+            }
+          }
+          fermerBoite('boite-reset-mdp-membre');
+          AudioTactique.succes();
+          afficherNotificationTactique("Mot de passe mis à jour.");
+          return;
+        }
+
+        const m = etat.operateurs[id];
         etat.motsDePasseHashes[id] = nouveauHash;
 
         if (estConnecteFirestore) {
@@ -5652,6 +5736,8 @@
 
         document.getElementById('bouton-quitter-session').addEventListener('click', demanderDeconnexion);
         document.getElementById('bouton-liaison-discord').addEventListener('click', ouvrirLiaisonDiscord);
+        document.getElementById('bouton-mdp-bos').addEventListener('click', () => ouvrirFicheResetMdp('bos'));
+        document.getElementById('bouton-mdp-brs').addEventListener('click', () => ouvrirFicheResetMdp('brs'));
         document.getElementById('formulaire-discord').addEventListener('submit', enregistrerLiaisonDiscord);
         document.querySelectorAll('.btn-test-webhook').forEach(b => b.addEventListener('click', () => testerWebhook(b.getAttribute('data-test-webhook'))));
         document.getElementById('champ-description-mission').addEventListener('input', majCompteurRapport);
