@@ -4,6 +4,15 @@ Les versions les plus récentes sont en haut. Le numéro de build correspond au 
 
 ---
 
+## BUILD 3.12 — Site réorganisé, confirmation Discord médailles, tableau PDS
+*04/11/2026*
+
+- Effectif, Recrutement : les outils réservés à Hunter (panneau de commandement, liens de recrutement, outils d'administration) sont maintenant dans des menus déroulants repliés par défaut, pour alléger l'affichage.
+- Médailles : avant d'envoyer l'annonce Discord d'une attribution, le site demande désormais confirmation.
+- Registre & Stats : les courbes graphiques sont remplacées par un tableau simple des PDS validées par date et par opérateur (inchangé pour les rapports).
+
+---
+
 ## BUILD 3.11 — Filtre 15 jours
 *04/11/2026*
 
