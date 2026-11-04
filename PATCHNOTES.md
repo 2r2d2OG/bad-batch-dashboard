@@ -4,6 +4,15 @@ Les versions les plus récentes sont en haut. Le numéro de build correspond au 
 
 ---
 
+## BUILD 3.10 — Absences programmées et plus souples
+*04/11/2026*
+
+- **Absence déclarée à l'avance** : si la date de début est dans le futur, le membre reste actif (badge « 🔵 ABSENCE PROGRAMMÉE // dès le JJ/MM ») et bascule automatiquement en absence ce jour-là (carnet rempli et message Discord envoyés à ce moment-là, pas à la déclaration).
+- **Jour de retour exclu de l'absence** : nouvelle case « Présent dès le dernier jour indiqué », modifiable à tout moment, y compris sur une absence déjà en cours.
+- **Modifier ou annuler une absence** : la fiche se rouvre pré-remplie (y compris pour une absence programmée), avec un bouton « 🗑️ Annuler cette absence » qui réactive le membre et retire l'entrée du carnet.
+
+---
+
 ## BUILD 3.9 — Durcissement des mots de passe
 *02/11/2026*
 
