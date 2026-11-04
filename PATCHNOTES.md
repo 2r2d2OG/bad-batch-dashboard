@@ -4,6 +4,13 @@ Les versions les plus récentes sont en haut. Le numéro de build correspond au 
 
 ---
 
+## BUILD 3.11 — Filtre 15 jours
+*04/11/2026*
+
+- Registre & Stats : ajout du format « 15 derniers jours » à côté de 7 / 30 / 90 / 180.
+
+---
+
 ## BUILD 3.10 — Absences programmées et plus souples
 *04/11/2026*
 
