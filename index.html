@@ -632,18 +632,19 @@
     <section id="fenetre-effectif" class="hidden space-y-4">
       
       <!-- PANNEAU EXCLUSIF COMMANDEMENT HUNTER -->
-      <div id="panneau-commandement-hunter" class="panneau-tactique p-4 rounded-lg flex flex-col space-y-3 border-2 border-red-600/60 shadow-xl">
-        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 border-b border-bordureTactique pb-2.5">
+      <details id="panneau-commandement-hunter" class="panneau-tactique p-4 rounded-lg border-2 border-red-600/60 shadow-xl">
+        <summary class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 pb-2.5 cursor-pointer">
           <div>
             <div class="flex items-center space-x-2">
               <span class="px-2 py-0.5 bg-rougeKamino text-white text-[0.6875rem] font-titre font-black uppercase rounded">COMMANDEMENT SUPÉRIEUR</span>
-              <span class="text-xs font-titre font-bold text-gray-100">AUTORITÉ DIRECTE DU SERGENT HUNTER</span>
+              <span class="text-xs font-titre font-bold text-gray-100">OUTILS DU SERGENT HUNTER</span>
             </div>
             <p class="text-xs font-terminal text-gray-300 mt-1">
-              Supervision tactique, contrôle des blâmes, autorisations d'absences et clôture de cycle.
+              Quota, cycle, mots de passe B.O.S/B.R.S, liaison Discord, carnet des absences. Replié pour laisser la place à l'effectif.
             </p>
           </div>
-
+        </summary>
+        <div class="flex flex-col space-y-3 border-t border-bordureTactique pt-3 mt-1">
           <div class="flex flex-wrap items-center gap-2">
             <button id="bouton-ouvrir-carnet-absences" class="px-3 py-1.5 border border-cyan-500/50 hover:border-cyan-400 text-cyan-300 font-terminal text-xs rounded transition bg-panneauSous touch-target">
               📖 CARNET DES ABSENCES
@@ -665,7 +666,7 @@
             </button>
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- BOUTONS ACTION POUR LES MEMBRES OU OBSERVATION BOS -->
       <div id="barre-actions-membre-effectif" class="flex flex-wrap items-center justify-between gap-2 p-2.5 bg-panneauSombre border border-bordureTactique rounded text-xs font-terminal">
@@ -785,20 +786,10 @@
       <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-bordureTactique pb-2 mb-2">
           <h3 class="font-titre text-xs uppercase tracking-wider text-gray-200 flex items-center gap-1.5">
-            <span class="text-vertViseur">■</span> COURBE DES PDS VALIDÉES
-          </h3>
-          <div id="legende-registre" class="flex flex-wrap gap-3 text-[0.75rem] font-terminal text-gray-300"></div>
-        </div>
-        <div id="courbe-pds-registre"></div>
-      </div>
-
-      <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5">
-        <div class="border-b border-bordureTactique pb-2 mb-2">
-          <h3 class="font-titre text-xs uppercase tracking-wider text-gray-200 flex items-center gap-1.5">
-            <span class="text-amber-400">■</span> COURBE DES RAPPORTS RÉDIGÉS
+            <span class="text-vertViseur">■</span> PDS VALIDÉES PAR DATE ET PAR OPÉRATEUR
           </h3>
         </div>
-        <div id="courbe-rapports-registre"></div>
+        <div id="tableau-pds-registre" class="overflow-x-auto"></div>
       </div>
 
       <div class="bg-panneauSombre border border-bordureTactique rounded p-3.5 font-terminal">
@@ -812,9 +803,9 @@
 
     <!-- 8. RECRUTEMENT (HUNTER UNIQUEMENT) -->
     <section id="fenetre-recrutement" class="hidden space-y-4">
-      <div id="bloc-liens-recrutement" class="space-y-4">
-      <div class="panneau-tactique p-3.5 rounded">
-        <h2 class="font-titre font-bold text-xs sm:text-sm text-gray-100 uppercase tracking-wider">🤝 RECRUTEMENT // LIENS RAPIDES</h2>
+      <div id="bloc-liens-recrutement">
+      <details class="panneau-tactique p-3.5 rounded">
+        <summary class="cursor-pointer font-titre font-bold text-xs sm:text-sm text-gray-100 uppercase tracking-wider">🤝 RECRUTEMENT // LIENS RAPIDES &amp; STATUT PUBLIC</summary>
         <div class="flex flex-wrap items-center gap-3 mt-2 mb-1 p-2.5 rounded border border-bordureTactique bg-fondCarbone">
           <span class="text-xs font-terminal text-gray-300">Recrutements ouverts au public :</span>
           <button id="bouton-statut-recrutement" class="px-5 py-1.5 rounded border font-titre font-bold text-xs uppercase tracking-wider transition">OFF</button>
@@ -826,8 +817,8 @@
           <button id="bouton-import-liens" class="px-2.5 py-1 border border-bordureLueur hover:border-cyan-400/60 text-cyan-300 rounded bg-panneauSous">📥 Importer les liens</button>
           <input type="file" id="fichier-import-liens" accept=".json,application/json" class="hidden">
         </div>
-      </div>
-      <div id="zone-liens-recrutement" class="space-y-4"></div>
+        <div id="zone-liens-recrutement" class="space-y-4 mt-3"></div>
+      </details>
       </div>
 
       <!-- CANDIDATURES REÇUES (tous les membres) -->
@@ -859,6 +850,11 @@
               <option value="orange">🟧 En attente</option>
               <option value="rouge">🟥 Théorie ratée</option>
             </select>
+          </div>
+        </div>
+        <details class="hunter-seul-rec">
+          <summary class="cursor-pointer text-xs font-terminal text-gray-400 hover:text-gray-200">🛠️ Outils de recrutement (nouveau candidat, barème, banque de questions, archivage)</summary>
+          <div class="flex flex-wrap gap-2 mt-2 text-xs font-terminal">
             <button id="bouton-nouveau-candidat" class="hunter-seul-rec px-2.5 py-1 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold uppercase rounded">+ Nouveau candidat</button>
             <button id="bouton-bareme-recrutement" class="hunter-seul-rec px-2.5 py-1 border border-bordureLueur hover:border-amber-500/60 text-gray-200 rounded bg-panneauSous">⚙ Barème</button>
             <button id="bouton-import-banque" class="hunter-seul-rec px-2.5 py-1 border border-bordureLueur hover:border-cyan-400/60 text-cyan-300 rounded bg-panneauSous">📥 Banque de questions</button>
@@ -867,8 +863,8 @@
             <input type="file" id="fichier-import-banque" accept=".json,application/json" class="hidden">
             <input type="file" id="fichier-import-historique" accept=".json,application/json" class="hidden">
           </div>
-        </div>
-        <div id="etat-banque-recrutement" class="hunter-seul-rec text-xs font-terminal text-gray-400"></div>
+          <div id="etat-banque-recrutement" class="hunter-seul-rec text-xs font-terminal text-gray-400 mt-1"></div>
+        </details>
         <div id="liste-candidats" class="space-y-4"></div>
       </div>
 
@@ -1370,7 +1366,7 @@
     </div>
   </div>
 
-  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.11) -->
+  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.12) -->
   <footer class="border-t border-bordureTactique bg-fondCarbone/95 py-2.5 text-xs font-terminal text-gray-500 fixed bottom-0 left-0 right-0 z-30 shadow-2xl backdrop-blur">
     <div class="max-w-screen-2xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5">
       <div class="text-gray-400 flex items-center gap-2">
@@ -1380,7 +1376,7 @@
       <div class="flex items-center gap-3">
         <span class="text-gray-500 hidden md:inline">GRANDE ARMÉE DE LA RÉPUBLIQUE</span>
         <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/60 text-amber-300 text-[0.8125rem] font-titre font-bold rounded tracking-wider shadow-[0_0_10px_rgba(245,158,11,0.25)]">
-          FIRMWARE MARAUDEUR // BUILD 3.11
+          FIRMWARE MARAUDEUR // BUILD 3.12
         </span>
       </div>
     </div>
@@ -1927,7 +1923,9 @@
         // Mise à jour locale uniquement si Firestore n'a pas pris le relais
         if (!ecrit) { m.medailles = { ...(m.medailles || {}), [idMedaille]: valeur }; }
         AudioTactique.succes();
-        if (attribuer) discordMedaille(m, def);
+        if (attribuer && webhooksDiscord.medailles && confirm(`Envoyer l'annonce Discord pour la médaille « ${def.nom} » attribuée à ${m.nom} ?`)) {
+          discordMedaille(m, def);
+        }
         afficherVitrineMedailles();
         if (!ecrit) afficherVueEffectif();
       }
@@ -4282,7 +4280,7 @@
           cartes.appendChild(carte);
         });
 
-        // ── Courbes (par jour jusqu'à 30 jours, par semaine au-delà)
+        // ── Tableau des PDS validées par date et par opérateur (jour par jour, 31 jours max affichés ; au-delà, regroupement par semaine)
         let debut = limite;
         if (!debut) {
           debut = activites.reduce((min, e) => {
@@ -4297,22 +4295,40 @@
         for (let d = new Date(debutBuckets); d <= aujourdhui; d.setDate(d.getDate() + pasJours)) buckets.push(new Date(d));
         const labels = buckets.map(formaterJourCourt);
         const indexDe = (j) => Math.round(((hebdo ? debutSemaineDe(j) : j) - debutBuckets) / (pasJours * 86400000));
-        const construireSeries = (type) => ids.map(id => {
-          const valeurs = new Array(buckets.length).fill(0);
-          activites.forEach(e => {
-            if (e.type !== type || e.idOperateur !== id) return;
-            const i = indexDe(jourDeEntree(e));
-            if (i >= 0 && i < valeurs.length) valeurs[i]++;
+        const tableauPds = document.getElementById('tableau-pds-registre');
+        if (buckets.length === 0 || ids.length === 0) {
+          tableauPds.innerHTML = `<div class="text-xs text-gray-500 italic p-3 text-center border border-dashed border-bordureTactique rounded">Aucune donnée sur cette période.</div>`;
+        } else {
+          const comptes = ids.map(id => {
+            const valeurs = new Array(buckets.length).fill(0);
+            activites.forEach(e => {
+              if (e.type !== 'pds' || e.idOperateur !== id) return;
+              const i = indexDe(jourDeEntree(e));
+              if (i >= 0 && i < valeurs.length) valeurs[i]++;
+            });
+            return { id, nom: etat.operateurs[id].nom, couleur: etat.operateurs[id].couleur, valeurs };
           });
-          return { nom: etat.operateurs[id].nom, couleur: etat.operateurs[id].couleur, valeurs };
-        });
-        const axe = hebdo ? 'par semaine (date du lundi)' : 'par jour';
-
-        document.getElementById('legende-registre').innerHTML = ids.map(id => `
-          <span class="inline-flex items-center gap-1.5"><span class="inline-block w-3 h-1.5 rounded" style="background:${etat.operateurs[id].couleur}"></span>${echapperTexteHTML(etat.operateurs[id].nom)}</span>
-        `).join('') + `<span class="text-gray-500">// ${axe}</span>`;
-        document.getElementById('courbe-pds-registre').innerHTML = courbeSVG(labels, construireSeries('pds'), `PDS validées ${axe}`);
-        document.getElementById('courbe-rapports-registre').innerHTML = courbeSVG(labels, construireSeries('rapport'), `Rapports rédigés ${axe}`);
+          const entetes = comptes.map(c => `<th class="py-1 px-2 text-center whitespace-nowrap" style="color:${c.couleur}">${echapperTexteHTML(c.nom)}</th>`).join('');
+          const lignesTableau = labels.map((lib, i) => {
+            const cellules = comptes.map(c => {
+              const v = c.valeurs[i];
+              return `<td class="py-1 px-2 text-center ${v ? 'text-gray-100 font-bold' : 'text-gray-600'}">${v || '—'}</td>`;
+            }).join('');
+            return `<tr class="border-b border-bordureTactique/40"><td class="py-1 pr-3 text-gray-300 whitespace-nowrap">${echapperTexteHTML(lib)}</td>${cellules}</tr>`;
+          }).join('');
+          const totaux = comptes.map(c => `<td class="py-1 px-2 text-center font-bold text-vertViseur">${c.valeurs.reduce((a, b) => a + b, 0)}</td>`).join('');
+          tableauPds.innerHTML = `
+            <table class="w-full text-xs font-terminal text-left">
+              <thead class="text-[0.75rem] text-gray-500 uppercase sticky top-0 bg-panneauSombre">
+                <tr><th class="py-1 pr-3">${hebdo ? 'Semaine du' : 'Date'}</th>${entetes}</tr>
+              </thead>
+              <tbody>${lignesTableau}</tbody>
+              <tfoot>
+                <tr class="border-t-2 border-bordureTactique"><td class="py-1.5 pr-3 text-gray-400 uppercase text-[0.75rem]">Total</td>${totaux}</tr>
+              </tfoot>
+            </table>
+          `;
+        }
 
         // ── Journal détaillé (date, heure, opérateur)
         const lignes = activites.filter(e => ids.includes(e.idOperateur) && (filtreType === 'tous' || e.type === filtreType));
