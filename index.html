@@ -1011,10 +1011,18 @@
             <label class="block text-[0.75rem] text-gray-400 mb-0.5">Motif tactique de l'absence / mission détachée :</label>
             <textarea id="absence-motif" rows="2" placeholder="Précisez la raison de l'indisponibilité..." class="w-full bg-fondCarbone border border-bordureTactique px-2.5 py-1.5 text-gray-100 rounded focus:border-amber-400 outline-none"></textarea>
           </div>
+          <label class="flex items-start gap-2 text-[0.75rem] text-gray-400">
+            <input type="checkbox" id="absence-fin-exclue" class="mt-0.5">
+            <span>Présent dès le dernier jour indiqué (jour de retour exclu de l'absence)</span>
+          </label>
+          <p class="text-[0.6875rem] text-gray-500">Si la date de début est dans le futur, le statut reste actif et bascule automatiquement en absence ce jour-là.</p>
         </div>
-        <div class="flex justify-end space-x-2 pt-2 border-t border-bordureTactique">
-          <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-gray-400 rounded" data-modale="boite-gerer-absence">Annuler</button>
-          <button type="submit" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold uppercase rounded">ENREGISTRER LE STATUT</button>
+        <div class="flex justify-between items-center pt-2 border-t border-bordureTactique">
+          <button type="button" id="bouton-supprimer-absence" class="hidden px-3 py-1.5 border border-rougeAlerte/70 text-rougeAlerte hover:bg-red-950 rounded text-[0.75rem]">🗑️ Annuler cette absence</button>
+          <div class="flex space-x-2 ml-auto">
+            <button type="button" class="btn-fermer-modale px-3 py-1.5 border border-bordureTactique text-gray-400 rounded" data-modale="boite-gerer-absence">Annuler</button>
+            <button type="submit" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-fondCarbone font-titre font-bold uppercase rounded">ENREGISTRER LE STATUT</button>
+          </div>
         </div>
       </form>
     </div>
@@ -1361,7 +1369,7 @@
     </div>
   </div>
 
-  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.9) -->
+  <!-- FOOTER MILITAIRE PERMANENT (FIRMWARE MARAUDEUR // BUILD 3.10) -->
   <footer class="border-t border-bordureTactique bg-fondCarbone/95 py-2.5 text-xs font-terminal text-gray-500 fixed bottom-0 left-0 right-0 z-30 shadow-2xl backdrop-blur">
     <div class="max-w-screen-2xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-1.5">
       <div class="text-gray-400 flex items-center gap-2">
@@ -1371,7 +1379,7 @@
       <div class="flex items-center gap-3">
         <span class="text-gray-500 hidden md:inline">GRANDE ARMÉE DE LA RÉPUBLIQUE</span>
         <span class="px-2.5 py-0.5 bg-amber-500/15 border border-amber-500/60 text-amber-300 text-[0.8125rem] font-titre font-bold rounded tracking-wider shadow-[0_0_10px_rgba(245,158,11,0.25)]">
-          FIRMWARE MARAUDEUR // BUILD 3.9
+          FIRMWARE MARAUDEUR // BUILD 3.10
         </span>
       </div>
     </div>
@@ -1454,6 +1462,17 @@
         const mois = String(d.getMonth() + 1).padStart(2, '0');
         const annee = d.getFullYear();
         return `${jour}/${mois}/${annee}`;
+      }
+
+      function analyserDateCivileDebutJournee(dateStr) {
+        if (!dateStr || typeof dateStr !== 'string') return null;
+        const parties = dateStr.trim().split('/');
+        if (parties.length !== 3) return null;
+        const j = parseInt(parties[0], 10);
+        const m = parseInt(parties[1], 10) - 1;
+        const a = parseInt(parties[2], 10);
+        if (isNaN(j) || isNaN(m) || isNaN(a)) return null;
+        return new Date(a, m, j, 0, 0, 0);
       }
 
       function analyserDateCivile(dateStr) {
@@ -2080,9 +2099,35 @@
         if (estConnecteFirestore && !webhooksCharges) return;   // on attend les URL Discord pour ne pas perdre le message de retour
         const maintenant = new Date();
         Object.values(etat.operateurs).forEach(async (m) => {
+          // Activation d'une absence programmée dont le jour de début est arrivé
+          if (!m.estAbsent && m.absencePlanifiee) {
+            const dateDebut = analyserDateCivileDebutJournee(m.absencePlanifiee.debut);
+            if (dateDebut && maintenant >= dateDebut) {
+              const details = m.absencePlanifiee;
+              if (estConnecteFirestore) {
+                try {
+                  const refMembre = doc(baseDeDonnees, 'operateurs', m.id);
+                  const gagne = await runTransaction(baseDeDonnees, async (tx) => {
+                    const snap = await tx.get(refMembre);
+                    if (!snap.exists() || snap.data().estAbsent === true || !snap.data().absencePlanifiee) return false;
+                    tx.update(refMembre, { estAbsent: true });
+                    return true;
+                  });
+                  if (gagne) await activerAbsence(m.id, details);
+                } catch (e) {
+                  console.warn("Activation absence programmée :", e);
+                }
+              } else {
+                await activerAbsence(m.id, details);
+              }
+              return;
+            }
+          }
           if (m.estAbsent && m.detailsAbsence?.fin) {
-            const dateFinAbsence = analyserDateCivile(m.detailsAbsence.fin);
-            if (dateFinAbsence && maintenant > dateFinAbsence) {
+            const finExclue = !!m.detailsAbsence.finExclue;
+            const dateFinAbsence = finExclue ? analyserDateCivileDebutJournee(m.detailsAbsence.fin) : analyserDateCivile(m.detailsAbsence.fin);
+            const depasse = dateFinAbsence && (finExclue ? maintenant >= dateFinAbsence : maintenant > dateFinAbsence);
+            if (depasse) {
               m.estAbsent = false;
               if (estConnecteFirestore) {
                 try {
@@ -2519,7 +2564,7 @@
         const refCarnet = collection(baseDeDonnees, 'carnetAbsences');
         onSnapshot(refCarnet, snap => {
           const liste = [];
-          snap.forEach(d => liste.push({ id: d.id, ...d.data() }));
+          snap.forEach(d => { if (!d.data().supprime) liste.push({ id: d.id, ...d.data() }); });
           liste.sort((a, b) => (b.dateCreation || 0) - (a.dateCreation || 0));
           etat.registreAbsencesHistorique = liste;
           etat.carnetCharge = true;
@@ -4818,7 +4863,7 @@
                     <span>${echapperTexteHTML(m.nom)}</span>
                   </div>
                   <div class="text-[0.75rem] font-terminal text-amber-400">${echapperTexteHTML(m.matricule)} // ${echapperTexteHTML(m.grade)}</div>
-                  <div class="text-[0.75rem] font-terminal mt-0.5">
+                  <div class="text-[0.75rem] font-terminal mt-0.5 flex flex-wrap gap-1">
                     ${estAbsent ? `
                       <span class="px-1.5 py-px rounded bg-amber-950 text-amber-300 border border-amber-600 font-bold">
                         🟠 EN ABSENCE (${echapperTexteHTML(m.detailsAbsence?.debut || '')} ➔ ${echapperTexteHTML(m.detailsAbsence?.fin || '')})
@@ -4828,6 +4873,11 @@
                         🟢 PRÉSENT AU COMBAT
                       </span>
                     `}
+                    ${!estAbsent && m.absencePlanifiee ? `
+                      <span class="px-1.5 py-px rounded bg-cyan-950 text-cyanTech border border-cyanTech/60 font-bold">
+                        🔵 ABSENCE PROGRAMMÉE DÈS LE ${echapperTexteHTML(m.absencePlanifiee.debut || '')}
+                      </span>
+                    ` : ''}
                   </div>
                 </div>
               </div>
@@ -5197,14 +5247,73 @@
         const m = etat.operateurs[id];
         if (!m) return;
 
+        // Une absence programmée (pas encore commencée) se modifie comme une absence en cours
+        const source = m.estAbsent ? m.detailsAbsence : (m.absencePlanifiee || m.detailsAbsence);
+
         document.getElementById('absence-membre-id').value = m.id;
         document.getElementById('absence-membre-nom').value = `${m.nom} (${m.matricule})`;
-        document.getElementById('absence-statut-select').value = m.estAbsent ? 'absent' : 'actif';
-        document.getElementById('absence-date-debut').value = civilVersIso(m.detailsAbsence?.debut || dateAujourdhuiCivil());
-        document.getElementById('absence-date-fin').value = civilVersIso(m.detailsAbsence?.fin || '');
-        document.getElementById('absence-motif').value = m.detailsAbsence?.motif || '';
+        document.getElementById('absence-statut-select').value = (m.estAbsent || m.absencePlanifiee) ? 'absent' : 'actif';
+        document.getElementById('absence-date-debut').value = civilVersIso(source?.debut || dateAujourdhuiCivil());
+        document.getElementById('absence-date-fin').value = civilVersIso(source?.fin || '');
+        document.getElementById('absence-motif').value = source?.motif || '';
+        document.getElementById('absence-fin-exclue').checked = !!source?.finExclue;
+
+        const btnSupprimer = document.getElementById('bouton-supprimer-absence');
+        btnSupprimer.classList.toggle('hidden', !(m.estAbsent || m.absencePlanifiee));
 
         ouvrirBoite('boite-gerer-absence');
+      }
+
+      // Écrit un patch sur l'opérateur (Firestore si possible, sinon état local uniquement)
+      async function appliquerPatchAbsence(id, patch) {
+        const m = etat.operateurs[id];
+        if (!m) return;
+        if (estConnecteFirestore) {
+          try {
+            await updateDoc(doc(baseDeDonnees, 'operateurs', id), patch);
+          } catch (err) {
+            console.warn("Mise à jour absence :", err);
+          }
+        }
+        Object.assign(m, patch);
+      }
+
+      // Rend une absence effective tout de suite : carnet, statut, message Discord
+      async function activerAbsence(id, details) {
+        const m = etat.operateurs[id];
+        if (!m) return;
+        const entreeCarnet = {
+          idMembre: m.id,
+          nomMembre: m.nom,
+          debut: details.debut,
+          fin: details.fin,
+          motif: details.motif,
+          finExclue: !!details.finExclue,
+          dateEnregistrement: dateAujourdhuiCivil(),
+          dateCreation: Date.now()
+        };
+        let idCarnet = null;
+        let carnetEcrit = false;
+        if (estConnecteFirestore) {
+          try {
+            const refEntree = doc(collection(baseDeDonnees, 'carnetAbsences'));
+            await setDoc(refEntree, entreeCarnet);
+            idCarnet = refEntree.id;
+            carnetEcrit = true;
+          } catch (err) {
+            console.warn("Écriture carnet :", err);
+          }
+        }
+        if (!carnetEcrit) {
+          idCarnet = 'local-' + Date.now();
+          etat.registreAbsencesHistorique.unshift({ ...entreeCarnet, id: idCarnet });
+        }
+        await appliquerPatchAbsence(id, {
+          estAbsent: true,
+          detailsAbsence: { ...details, carnetId: idCarnet },
+          absencePlanifiee: null
+        });
+        discordAbsence(m, details.debut, details.fin, details.motif);
       }
 
       async function executerSauvegardeAbsence(e) {
@@ -5212,60 +5321,62 @@
         if (etat.estCompteBOS) return;
 
         const id = document.getElementById('absence-membre-id').value;
-        const estAbsent = document.getElementById('absence-statut-select').value === 'absent';
+        const estAbsentVoulu = document.getElementById('absence-statut-select').value === 'absent';
         const debut = isoVersCivil(document.getElementById('absence-date-debut').value);
         const fin = isoVersCivil(document.getElementById('absence-date-fin').value);
         const motif = document.getElementById('absence-motif').value.trim();
+        const finExclue = document.getElementById('absence-fin-exclue').checked;
 
         const m = etat.operateurs[id];
         if (!m) return;
 
-        const details = { debut, fin, motif };
-
-        if (estAbsent) {
-          const entreeCarnet = {
-            idMembre: m.id,
-            nomMembre: m.nom,
-            debut,
-            fin,
-            motif,
-            dateEnregistrement: dateAujourdhuiCivil(),
-            dateCreation: Date.now()
-          };
-
-          let carnetEcrit = false;
-          if (estConnecteFirestore) {
-            try {
-              const refEntree = doc(collection(baseDeDonnees, 'carnetAbsences'));
-              await setDoc(refEntree, entreeCarnet);
-              carnetEcrit = true;
-            } catch(err) {
-              console.warn("Écriture carnet :", err);
-            }
-          }
-          // CORRECTION : évite le doublon avec le onSnapshot du carnet
-          if (!carnetEcrit) etat.registreAbsencesHistorique.unshift(entreeCarnet);
+        if (!estAbsentVoulu) {
+          await appliquerPatchAbsence(id, { estAbsent: false, absencePlanifiee: null });
+          fermerBoite('boite-gerer-absence');
+          AudioTactique.succes();
+          afficherVueEffectif();
+          return;
         }
 
-        if (estConnecteFirestore) {
-          try {
-            const refMembre = doc(baseDeDonnees, 'operateurs', id);
-            await updateDoc(refMembre, {
-              estAbsent: estAbsent,
-              detailsAbsence: details
-            });
-          } catch(err) {
-            console.warn("Mise à jour absence :", err);
-          }
+        const details = { debut, fin, motif, finExclue };
+        const dateDebut = analyserDateCivileDebutJournee(debut);
+        const estProgrammee = dateDebut && dateDebut > new Date();
+
+        if (estProgrammee) {
+          await appliquerPatchAbsence(id, { absencePlanifiee: { ...details, dateCreation: Date.now() } });
+          fermerBoite('boite-gerer-absence');
+          AudioTactique.succes();
+          afficherNotificationTactique(`Absence programmée dès le ${debut}. Le statut reste actif jusque-là.`);
+          afficherVueEffectif();
+          return;
         }
 
-        const cible = etat.operateurs[id];
-        cible.estAbsent = estAbsent;
-        cible.detailsAbsence = details;
-
+        await activerAbsence(id, details);
         fermerBoite('boite-gerer-absence');
-        if (estAbsent) discordAbsence(m, debut, fin, motif);
         AudioTactique.succes();
+        afficherVueEffectif();
+      }
+
+      async function executerSupprimerAbsence() {
+        if (etat.estCompteBOS) return;
+        const id = document.getElementById('absence-membre-id').value;
+        const m = etat.operateurs[id];
+        if (!m) return;
+
+        const idCarnet = m.detailsAbsence?.carnetId;
+        if (idCarnet && !String(idCarnet).startsWith('local-')) {
+          if (estConnecteFirestore) {
+            try { await updateDoc(doc(baseDeDonnees, 'carnetAbsences', idCarnet), { supprime: true }); }
+            catch (err) { console.warn("Suppression carnet :", err); }
+          }
+        } else if (idCarnet) {
+          etat.registreAbsencesHistorique = etat.registreAbsencesHistorique.filter(e => e.id !== idCarnet);
+        }
+
+        await appliquerPatchAbsence(id, { estAbsent: false, detailsAbsence: null, absencePlanifiee: null });
+        fermerBoite('boite-gerer-absence');
+        AudioTactique.succes();
+        afficherNotificationTactique("Absence annulée.");
         afficherVueEffectif();
       }
 
@@ -5786,6 +5897,7 @@
           if (etat.operateurConnecte && !etat.estCompteBOS) ouvrirFicheAbsence(etat.operateurConnecte);
         });
         document.getElementById('formulaire-gerer-absence').addEventListener('submit', executerSauvegardeAbsence);
+        document.getElementById('bouton-supprimer-absence').addEventListener('click', executerSupprimerAbsence);
         document.getElementById('bouton-ouvrir-carnet-absences').addEventListener('click', ouvrirCarnetAbsences);
         document.getElementById('bouton-consulter-carnet-membre').addEventListener('click', ouvrirCarnetAbsences);
 
